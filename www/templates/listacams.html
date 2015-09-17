@@ -1,0 +1,47 @@
+<ion-view view-title="Listado de Cámaras">
+    <ion-content>
+        <ion-list class="card">
+<!--
+            <ion-item ng-repeat="playlist in playlists" href="#/app/playlists/{{playlist.id}}">
+                {{playlist.id}} {{playlist.title}}
+            </ion-item>
+-->
+
+<!--
+          <div class="list card" ng-repeat="cam in listacams.rows">
+            <div class="item item-image">
+              <img src="{{cam[13]}}" height="50%" style="padding:5%"/>
+            </div>
+
+            <a class="item item-icon-left assertive" href="#">
+              &lt;!&ndash;<i class="icon ion-music-note"></i>&ndash;&gt;
+              &lt;!&ndash;Start listening&ndash;&gt;
+              Lugar: {{cam[0]}}<br/>
+              Concejo: {{cam[3]}}<br/>
+              Imagen: {{cam[13]}}<br/>
+              Categoría: {{cam[14]}}<br/>
+            </a>
+          </div>
+-->
+        </ion-list>
+
+
+
+
+
+      <div class="list">
+        <div ng-repeat="cam in listacams.rows">
+        <a class="item item-thumbnail-left" href="{{ cam[13] }}">
+          <img src="{{ cam[13] }}">
+          <p>Lugar: {{ cam[0] }}</p>
+          <p>Concejo: {{ cam[3] }}</p>
+          <!--<p>Imagen: {{ cam[13] }}</p>-->
+          <p>Categoría: {{cam[14]}}</p>
+        </a>
+        </div>
+      </div>
+
+
+
+    </ion-content>
+</ion-view>
