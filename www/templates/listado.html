@@ -7,17 +7,16 @@
       <!--TODO: Poner colores en el listado-->
       <!--TODO: busqueda de camaras por texto en header bar o en menu superior izquierdo-->
       <!--TODO: añadir geolocalicacion y busqueda de camaras cercanas-->
-      <!--TODO: usar ui-shref en los enlaces-->
-      <!--TODO: mapa de google en el detalle y una opción de menú con todas las camaras situadas en mapa-->
+      <!--TODO: mapa de google en el detalles-->
+      <!--TODO: Entrada de menu que muestre en mapa todas las camaras-->
       <!--TODO: usar cards de mdl en vez de este tipo de listado? probarlo a ver-->
 
       <div class="list">
-        <div collection-repeat="datos_cam in listacams.rows | filter: datos_cam[1]=concejo | filter: datos_cam[3]=categoria">
+        <!--<div collection-repeat="datos_cam in listacams.rows | filter: datos_cam[1]=concejo | filter: datos_cam[3]=categoria">-->
+        <div collection-repeat="datos_cam in listacams.rows | filter: datos_cam[1]=concejo | filter: datos_cam[3]='categoria='+categoria">
 
-          <!--<div ng-if="datos_cam[1]==elfiltro">-->
             <!--TODO: convertir estte enlace a un estilo material design lite con effecto ripple-->
             <!--TODO: para ello envolver el tag "a" con un div con estilos "mdl"-->
-            <!--TODO: se me ocurre arreglar lo del boton de atras y la animacion insertando manualmente en la historia la pagina de listado-->
             <a class="item item-thumbnail-left item-icon-right" href="#/app/detalle/{{ datos_cam[4]}}">
 
               <img src="../img/ionic.png"/>
@@ -30,7 +29,6 @@
               <p>ROWID: {{datos_cam[4]}}</p>
               <i class="icon ion-ios-arrow-right"></i>
             </a>
-          <!--</div>-->
 
 
 

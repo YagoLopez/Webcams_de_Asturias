@@ -1,4 +1,6 @@
 <ion-side-menus enable-menu-with-back-views="true">
+
+  <!-- Side Menu Content -------------------------------------------------------------------------------------------->
   <ion-side-menu-content>
     <ion-nav-bar class="bar-calm" style="height: 0px">
 
@@ -14,7 +16,9 @@
     </ion-nav-bar>
     <ion-nav-view name="menuContent"></ion-nav-view>
   </ion-side-menu-content>
+  <!-- Fin Side Menu Content ---------------------------------------------------------------------------------------->
 
+  <!-- Side Menu ---------------------------------------------------------------------------------------------------->
   <ion-side-menu side="left">
 
     <ion-header-bar class="bar-positive">
@@ -23,11 +27,11 @@
 
     <ion-content>
       <ion-list>
-        <ion-item menu-close href="#/app/tabs/listado?concejo=Llanes">
-          Llanes
+        <ion-item menu-close href="#/app/tabs/listado?categoria=1">
+          Playas
         </ion-item>
-        <ion-item menu-close href="#/app/tabs/listado?concejo=Oviedo">
-          Oviedo
+        <ion-item menu-close href="#/app/tabs/listado?categoria=2">
+          Puertos
         </ion-item>
         <ion-item menu-close href="#/app/tabs/listado?categoria=3">
           Ríos
@@ -35,7 +39,7 @@
         <ion-item menu-close href="#/app/tabs/listado?categoria=4">
           Montaña
         </ion-item>
-        <ion-item menu-close href="#/app/tabs/listado?categoria=5">
+        <ion-item menu-close href="#/app/tabs/listado">
           Listado Completo
         </ion-item>
         <ion-item menu-close ng-click="login()">
@@ -54,4 +58,6 @@
     </ion-content>
 
   </ion-side-menu>
+  <!-- Fin Side Menu ------------------------------------------------------------------------------------------------>
+
 </ion-side-menus>

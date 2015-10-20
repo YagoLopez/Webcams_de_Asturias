@@ -92,16 +92,6 @@ angular.module('webcams_asturias', ['ionic', 'webcams_asturias.controllers'])
       }
     })
 
-    //.state('app.listacams', {
-    //  url: '/listacams',
-    //  views: {
-    //    'menuContent': {
-    //      templateUrl: 'templates/listacams.html',
-    //      controller: 'ListacamsCtrl'
-    //    }
-    //  }
-    //})
-
     .state('app.single', {
       url: '/playlists/:playlistId',
       views: {

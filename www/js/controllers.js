@@ -93,22 +93,25 @@ angular.module('webcams_asturias.controllers', [])
     $scope.$on('$ionicView.afterEnter', function (viewInfo, state) {
       $ionicLoading.hide();
       //console.log('$ionicView.afterEnter', viewInfo, state);
+
     });
 
     //$scope.$on('$ionicView.enter', function() {
     //})
 
     $rootScope.concejo = $state.params.concejo;
+    /* TODO: hacer una tabla propia para las categorias en fusion tables y hacer join de
+    la tabla de webcams y la de categorias */
     $rootScope.categoria = $state.params.categoria;
     console.log('state.params en tabs ctrl', $state.params);
 
-  })// fin TabsCtrl
+})// fin TabsCtrl
 
 .controller('ListadoCtrl', function($scope, $state, $rootScope){
 
-    $scope.$on('$ionicView.enter', function() {
-      console.log('state.params en listado ctrl', $state.params);
-    })
+    //$scope.$on('$ionicView.enter', function() {
+    //  console.log('state.params en listado ctrl', $state.params);
+    //})
 
 
     //$rootScope.categoria = $state.params.categoria;
@@ -122,9 +125,9 @@ angular.module('webcams_asturias.controllers', [])
 
 .controller('MosaicoCtrl', function($scope, $state, $rootScope){
 
-    $scope.$on('$ionicView.enter', function() {
-      console.log('state.params en mosaico ctrl', $state.params);
-    })
+    //$scope.$on('$ionicView.enter', function() {
+    //  console.log('state.params en mosaico ctrl', $state.params);
+    //})
 
 
 
@@ -137,7 +140,6 @@ angular.module('webcams_asturias.controllers', [])
   //console.log('concejo en mosaico ctrl', $scope.concejo);
   //console.log('state en mosaico ctrl', $state);
 }) // fin MosaicoCtrl
-
 
 .controller('PlayasCtrl', function($rootScope, factoria_datos){
 
