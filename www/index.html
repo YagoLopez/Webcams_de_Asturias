@@ -2,56 +2,74 @@
 <html>
 
 <!-- contenido "head" antiguo -->
-  <!--<head>-->
-    <!--<meta charset="utf-8">-->
-    <!--<meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">-->
-    <!--<title></title>-->
+<!--
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+    <title></title>
 
-    <!--<link href="lib/ionic/css/ionic.css" rel="stylesheet">-->
-    <!--<link href="css/style.css" rel="stylesheet">-->
+    <link href="lib/ionic/css/ionic.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
 
-    <!--&lt;!&ndash; IF using Sass (run gulp sass first), then uncomment below and remove the CSS includes above-->
-    <!--<link href="css/ionic.app.css" rel="stylesheet">-->
-    <!--&ndash;&gt;-->
+    &lt;!&ndash; IF using Sass (run gulp sass first), then uncomment below and remove the CSS includes above
+    <link href="css/ionic.app.css" rel="stylesheet">
+    &ndash;&gt;
 
-    <!--&lt;!&ndash; ionic/angularjs js &ndash;&gt;-->
-    <!--<script src="lib/ionic/js/ionic.bundle.js"></script>-->
+    &lt;!&ndash; ionic/angularjs js &ndash;&gt;
+    <script src="lib/ionic/js/ionic.bundle.js"></script>
 
-    <!--&lt;!&ndash; cordova script (this will be a 404 during development) &ndash;&gt;-->
-    <!--<script src="cordova.js"></script>-->
+    &lt;!&ndash; cordova script (this will be a 404 during development) &ndash;&gt;
+    <script src="cordova.js"></script>
 
-    <!--&lt;!&ndash; your app's js &ndash;&gt;-->
-    <!--<script src="js/app.js"></script>-->
-    <!--<script src="js/controllers.js"></script>-->
-  <!--</head>-->
+    &lt;!&ndash; your app's js &ndash;&gt;
+    <script src="js/app.js"></script>
+    <script src="js/controllers.js"></script>
+  </head>
+-->
 <!-- fin contenido head antiguo -->
 
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
   <title></title>
-  <link href="http://fonts.googleapis.com/css?family=Roboto:300,400,500,700" type="text/css" rel="stylesheet">
-  <link href="//code.ionicframework.com/nightly/css/ionic.css" rel="stylesheet" />
-  <link rel="stylesheet" type="text/css" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
-  <link href="https://rawgit.com/delta98/ionic-material-design-lite/master/dist/css/ionic.material-design-lite.css" rel="stylesheet">
-  <link href="style.css" rel="stylesheet">
 
-  <!-- IF using Sass (run gulp sass first), then uncomment below and remove the CSS includes above
-    <link href="css/ionic.app.css" rel="stylesheet">
-    -->
-
-  <!-- ionic/angularjs js -->
-  <script src="lib/ionic/js/ionic.bundle.js"></script>
-  <script src="https://rawgit.com/delta98/ionic-material-design-lite/master/dist/js/ionic.material-design-lite.bundle.js"></script>
-  <!-- cordova script (this will be a 404 during development) -->
+  <!-- ionic framework css and fonts --------------------------------------------------------------------------------->
+  <script src="lib/ionic/js/ionic.bundle.js"></script><!-- cordova script (this will be a 404 during development) -->
   <script src="cordova.js"></script>
+  <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Roboto:300,400,500,700">
+  <link rel="stylesheet" type="text/css" href="//code.ionicframework.com/nightly/css/ionic.css"/>
+  <link rel="stylesheet" type="text/css" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+  <!-- fin ionic framework css and fonts ----------------------------------------------------------------------------->
 
-  <!-- your app's js -->
+
+  <!-- Material design lite -->
+  <script src="https://storage.googleapis.com/code.getmdl.io/1.0.5/material.min.js"></script>
+  <!--<script src="https://rawgit.com/delta98/ionic-material-design-lite/master/dist/js/ionic.material-design-lite.bundle.js"></script>-->
+  <link rel="stylesheet" href="https://storage.googleapis.com/code.getmdl.io/1.0.5/material.indigo-pink.min.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" href="https://rawgit.com/delta98/ionic-material-design-lite/master/dist/css/ionic.material-design-lite.css">
+  <!-- fin material design lite -->
+  <!--TODO: incluir fichero de angular material design lite en local en vez de CDN (si es que se va a usar)-->
+  <!--TODO: poner el texto en español en los botones y en la interfaz en general. Usar backButton.text(value) en $ionicConfigProvider-->
+
+
+  <!-- Angular Material ---------------------------------------------------------------------------------------------->
+  <!--<link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/angular_material/0.6.1/angular-material.min.css">-->
+  <!--<script src="//cdn.jsdelivr.net/hammerjs/2.0.4/hammer.js"></script>-->
+  <!--<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.6/angular-aria.min.js"></script>-->
+  <!--<script src="//ajax.googleapis.com/ajax/libs/angular_material/0.6.1/angular-material.min.js"></script>-->
+  <!-- Fin Angular Material ------------------------------------------------------------------------------------------>
+
+
+  <!-- Ficheros propios de la app ------------------------------------------------------------------------------------>
+  <link href="css/style.css" rel="stylesheet">
   <script src="js/app.js"></script>
   <script src="js/controllers.js"></script>
+  <!-- Fin ficheros propios de la app -------------------------------------------------------------------------------->
+
 </head>
 
-  <body use-material-icons ng-app="starter">
+  <body use-material-icons ng-app="webcams_asturias">
     <ion-nav-view></ion-nav-view>
   </body>
 </html>

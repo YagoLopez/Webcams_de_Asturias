@@ -1,0 +1,24 @@
+<ion-view>
+
+  <ion-nav-view name="tab-listado"></ion-nav-view>
+
+  <!--TODO: cabiar los iconos de las pestañas-->
+  <ion-tabs class="tabs-icon-top tabs-calm">
+
+    <!-- TAB LISTADO -------------------------------------------------------------------------------------------------->
+
+    <ion-tab title="Listado" icon="ion-home" href="#/app/tabs/listado?concejo={{concejo}}&categoria={{categoria}}">
+    </ion-tab>
+
+    <!-- TAB MOSAICO -------------------------------------------------------------------------------------------------->
+
+    <!--TODO: poner ionic loader al cargar el mosaico de imagenes tambien -->
+    <ion-tab title="Mosaico" icon="ion-gear-a" href="#/app/tabs/mosaico?concejo={{concejo}}&categoria={{categoria}}" >
+      <ion-nav-view name="tab-mosaico"></ion-nav-view>
+    </ion-tab>
+
+
+  </ion-tabs>
+
+</ion-view>
+

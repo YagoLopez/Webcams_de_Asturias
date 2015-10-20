@@ -1,6 +1,7 @@
-<ion-view view-title="Listado de Cámaras">
-    <ion-content>
-        <ion-list class="card">
+<ion-view view-title="Listado de Cámaras" overflow-scroll=”true”>
+    <ion-content overflow-scroll="true">
+
+        <!--<ion-list class="card">-->
 <!--
             <ion-item ng-repeat="playlist in playlists" href="#/app/playlists/{{playlist.id}}">
                 {{playlist.id}} {{playlist.title}}
@@ -8,40 +9,45 @@
 -->
 
 <!--
-          <div class="list card" ng-repeat="cam in listacams.rows">
+          <div class="list card" ng-repeat="datos_cam in listacams.rows">
             <div class="item item-image">
-              <img src="{{cam[13]}}" height="50%" style="padding:5%"/>
+              <img src="{{datos_cam[13]}}" height="50%" style="padding:5%"/>
             </div>
 
             <a class="item item-icon-left assertive" href="#">
               &lt;!&ndash;<i class="icon ion-music-note"></i>&ndash;&gt;
               &lt;!&ndash;Start listening&ndash;&gt;
-              Lugar: {{cam[0]}}<br/>
-              Concejo: {{cam[3]}}<br/>
-              Imagen: {{cam[13]}}<br/>
-              Categoría: {{cam[14]}}<br/>
+              Lugar: {{datos_cam[0]}}<br/>
+              Concejo: {{datos_cam[3]}}<br/>
+              Imagen: {{datos_cam[13]}}<br/>
+              Categoría: {{datos_cam[14]}}<br/>
             </a>
           </div>
 -->
-        </ion-list>
+        <!--</ion-list>-->
 
 
-
-
-
+      <!--TODO: Poner colores en el listado-->
+      <!--TODO: busqueda de camaras por texto en header bar o en menu superior izquierdo-->
+      <!--TODO: añadir geolocalicacion y busqueda de camaras cercanas-->
+      <!--TODO: usar ui-shref en los enlaces-->
+      <!--TODO: mapa de google en el detalle y una opción de menú con todas las camaras situadas en mapa-->
       <div class="list">
-        <div ng-repeat="cam in listacams.rows">
-        <a class="item item-thumbnail-left" href="{{ cam[13] }}">
-          <img src="{{ cam[13] }}">
-          <p>Lugar: {{ cam[0] }}</p>
-          <p>Concejo: {{ cam[3] }}</p>
-          <!--<p>Imagen: {{ cam[13] }}</p>-->
-          <p>Categoría: {{cam[14]}}</p>
+        <div collection-repeat="datos_cam in listacams.rows" force-refresh-images="false">
+
+          <a class="item item-thumbnail-left item-icon-right" href="#/app/listacams/detalle/{{ $index }}">
+
+            <!--<img ng-src="{{ datos_cam[2] }}">-->
+            <img src="img/ionic.png"/>
+
+            <p>Lugar: {{ datos_cam[0] }}</p>
+            <p>Concejo: {{ datos_cam[1] }}</p>
+            <p>Categoría: {{datos_cam[3]}}</p>
+            <!--<p>indice: {{ $index }}</p>-->
+            <i class="icon ion-ios-arrow-right"></i>
         </a>
         </div>
       </div>
 
-
-
-    </ion-content>
+  </ion-content>
 </ion-view>

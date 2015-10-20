@@ -1,0 +1,77 @@
+<ion-view title="Listado">
+  <ion-content>
+
+    Concejo: {{concejo}}<br>
+    Categoria: {{categoria}}
+
+      <!--TODO: Poner colores en el listado-->
+      <!--TODO: busqueda de camaras por texto en header bar o en menu superior izquierdo-->
+      <!--TODO: añadir geolocalicacion y busqueda de camaras cercanas-->
+      <!--TODO: usar ui-shref en los enlaces-->
+      <!--TODO: mapa de google en el detalle y una opción de menú con todas las camaras situadas en mapa-->
+      <!--TODO: usar cards de mdl en vez de este tipo de listado? probarlo a ver-->
+
+      <div class="list">
+        <div collection-repeat="datos_cam in listacams.rows | filter: datos_cam[1]=concejo | filter: datos_cam[3]=categoria">
+
+          <!--<div ng-if="datos_cam[1]==elfiltro">-->
+            <!--TODO: convertir estte enlace a un estilo material design lite con effecto ripple-->
+            <!--TODO: para ello envolver el tag "a" con un div con estilos "mdl"-->
+            <!--TODO: se me ocurre arreglar lo del boton de atras y la animacion insertando manualmente en la historia la pagina de listado-->
+            <a class="item item-thumbnail-left item-icon-right" href="#/app/detalle/{{ datos_cam[4]}}">
+
+              <img src="../img/ionic.png"/>
+              <!--<img  ng-src="{{ datos_cam[2]}}" fallback-src="http://google.com/favicon.ico""/>-->
+
+              <p>Lugar: {{ datos_cam[0] }}</p>
+              <p>Concejo: {{ datos_cam[1] }}</p>
+              <p>Categoría: {{datos_cam[3]}}</p>
+              <p>indice: {{ $index }}</p>
+              <p>ROWID: {{datos_cam[4]}}</p>
+              <i class="icon ion-ios-arrow-right"></i>
+            </a>
+          <!--</div>-->
+
+
+
+        </div>
+      </div>
+
+
+      <!-- Listado de cams usando tarjetas MDL -----------------------------------------------------------------------------
+                  <div class="list">
+                    <div collection-repeat="datos_cam in listacams.rows" style="padding:5px">
+                      <div class="item mdl-shadow--2dp" style="padding: 6px;">
+                        <img ng-src="{{ datos_cam[2] }}" style="float:left" height="100em" width="100em">
+                        <div>
+                          <span style="float:inherit; font-size: x-small; margin-left: 7px">Lugar: {{ datos_cam[0] }}</span><br>
+                          <span style="float:inherit; font-size: x-small; margin-left: 7px">Concejo: {{ datos_cam[1] }}:</span><br>
+                          <span style="float:inherit; font-size: x-small; margin-left: 7px">Categoría: {{ datos_cam[3] }}</span><br>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+      --------------------------------------------------------------------------------------------------------------------->
+
+      <!-- listado de cams usando tarjetas MDL ----------------------------------------------------------------------------
+
+                  <div class="list">
+                    <div collection-repeat="datos_cam in listacams.rows" style="padding:5px">
+                      <div class="item mdl-shadow--2dp" style="padding: 2%;">
+                        <a href="#">
+                          <img ng-src="{{ datos_cam[2] }}" style="float:left" height="30%" width="30%">
+                          <div>
+                            <span style="float:inherit; font-size: x-small; margin-left: 2%">Lugar: {{ datos_cam[0] }}<br></span>
+                            <span style="float:inherit; font-size: x-small; margin-left: 2%">Concejo: {{ datos_cam[1] }}<br></span>
+                            <span style="float:inherit; font-size: x-small; margin-left: 2%">Categoría: {{ datos_cam[3] }}</span>
+                          </div>
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+      ------------------------------------------------------------------------------------------------------------------->
+
+
+
+    </ion-content>
+</ion-view>

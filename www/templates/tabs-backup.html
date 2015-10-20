@@ -1,0 +1,154 @@
+<ion-view>
+
+  <ion-nav-view name="tab-listado">
+    <!--
+            <ion-view>
+              <ion-content overflow-scroll="true">
+                &lt;!&ndash;TODO: convertir las tabs en plantillas independientes&ndash;&gt;
+                &lt;!&ndash;TODO: Poner colores en el listado&ndash;&gt;
+                &lt;!&ndash;TODO: busqueda de camaras por texto en header bar o en menu superior izquierdo&ndash;&gt;
+                &lt;!&ndash;TODO: añadir geolocalicacion y busqueda de camaras cercanas&ndash;&gt;
+                &lt;!&ndash;TODO: usar ui-shref en los enlaces&ndash;&gt;
+                &lt;!&ndash;TODO: mapa de google en el detalle y una opción de menú con todas las camaras situadas en mapa&ndash;&gt;
+                &lt;!&ndash;TODO: usar cards de mdl en vez de este tipo de listado? probarlo a ver&ndash;&gt;
+
+
+                <div class="list">
+                  &lt;!&ndash;TODO: poner item-height e item-width para que no de error&ndash;&gt;
+                  <div collection-repeat="datos_cam in listacams.rows">
+
+                    &lt;!&ndash;TODO: convertir estte enlace a un estilo material design lite con effecto ripple&ndash;&gt;
+                    &lt;!&ndash;TODO: para ello envolver el tag "a" con un div con estilos "mdl"&ndash;&gt;
+                    <a class="item item-thumbnail-left item-icon-right" href="#/app/detalle/{{ $index }}">
+
+                      &lt;!&ndash;<img src="../img/ionic.png"/>&ndash;&gt;
+                      <img  ng-src="{{ datos_cam[2]}}" fallback-src="http://google.com/favicon.ico"/>
+
+                      <p>Lugar: {{ datos_cam[0] }}</p>
+                      <p>Concejo: {{ datos_cam[1] }}</p>
+                      <p>Categoría: {{datos_cam[3]}}</p>
+                      &lt;!&ndash;<p>indice: {{ $index }}</p>&ndash;&gt;
+                      <i class="icon ion-ios-arrow-right"></i>
+                    </a>
+                  </div>
+                </div>
+
+    &lt;!&ndash; Listado de cams usando tarjetas MDL -&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;
+                <div class="list">
+                  <div collection-repeat="datos_cam in listacams.rows" style="padding:5px">
+                    <div class="item mdl-shadow&#45;&#45;2dp" style="padding: 6px;">
+                      <img ng-src="{{ datos_cam[2] }}" style="float:left" height="100em" width="100em">
+                      <div>
+                        <span style="float:inherit; font-size: x-small; margin-left: 7px">Lugar: {{ datos_cam[0] }}</span><br>
+                        <span style="float:inherit; font-size: x-small; margin-left: 7px">Concejo: {{ datos_cam[1] }}:</span><br>
+                        <span style="float:inherit; font-size: x-small; margin-left: 7px">Categoría: {{ datos_cam[3] }}</span><br>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+    -&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&ndash;&gt;
+
+    &lt;!&ndash; listado de cams usando tarjetas MDL &#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;
+
+                <div class="list">
+                  <div collection-repeat="datos_cam in listacams.rows" style="padding:5px">
+                    <div class="item mdl-shadow&#45;&#45;2dp" style="padding: 2%;">
+                      <a href="#">
+                        <img ng-src="{{ datos_cam[2] }}" style="float:left" height="30%" width="30%">
+                        <div>
+                          <span style="float:inherit; font-size: x-small; margin-left: 2%">Lugar: {{ datos_cam[0] }}<br></span>
+                          <span style="float:inherit; font-size: x-small; margin-left: 2%">Concejo: {{ datos_cam[1] }}<br></span>
+                          <span style="float:inherit; font-size: x-small; margin-left: 2%">Categoría: {{ datos_cam[3] }}</span>
+                        </div>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+    -&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&ndash;&gt;
+
+
+
+              </ion-content>
+            </ion-view>
+    -->
+  </ion-nav-view>
+
+  <!--TODO: cabiar los iconos de las pestañas-->
+  <ion-tabs class="tabs-icon-top tabs-calm">
+
+    <!-- TAB LISTADO -------------------------------------------------------------------------------------------------->
+
+    <ion-tab title="Listado" icon="ion-home" href="#/app/tabs/listado">
+    </ion-tab>
+
+    <!-- TAB MOSAICO -------------------------------------------------------------------------------------------------->
+
+    <!--TODO: poner ionic loader al cargar el mosaico de imagenes tambien -->
+    <ion-tab title="Mosaico" icon="ion-gear-a" href="#app/tabs/mosaico">
+      <ion-nav-view name="tab-mosaico">
+      <!--
+      <ion-view>
+        <ion-content>
+
+
+&lt;!&ndash; -&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;
+
+        <style>
+          .gallery {
+          -webkit-flex-wrap: wrap;
+          flex-wrap: wrap;
+          }
+        </style>
+
+        <div class="gallery">
+          <span ng-repeat="datos_cam in listacams.rows">
+            <img src="img/ionic.png" width="150px">
+          </span>
+         </div>
+
+&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&ndash;&gt;
+
+
+          <div class="row" ng-repeat="datos_cam in listacams.rows" ng-if="$index%3 === 0" force-refresh-images="true" style="padding:0">
+
+            <div class="col col-33" ng-if="$index < listacams.rows.length" style="padding:0">
+              <a href="{{ listacams.rows[$index][2] }}" target="_blank">
+                &lt;!&ndash;<img ng-src="{{ listacams.rows[$index][2] }}" width="100%" />&ndash;&gt;
+                <img src="http://lorempixel.com/400/200/sports/1/" >
+              </a>
+              <span style="font-size: xx-small">{{ listacams.rows[$index][0] }}</span>
+
+            </div>
+
+            <div class="col col-33" ng-if="$index+1 < listacams.rows.length" style="padding:0">
+              <a href="{{ listacams.rows[$index+1][2] }}" target="_blank">
+                &lt;!&ndash;<img ng-src="{{ listacams.rows[$index+1][2] }}" width="100%" />&ndash;&gt;
+                <img src="http://lorempixel.com/400/200/sports/1/" >
+              </a>
+              <span style="font-size: xx-small">{{ listacams.rows[$index+1][0] }}</span>
+
+            </div>
+
+            <div class="col col-33" ng-if="$index+2 < listacams.rows.length" style="padding:0">
+              <a href="{{ listacams.rows[$index+2][2] }}" target="_blank">
+                &lt;!&ndash;<img ng-src="{{ listacams.rows[$index+2][2] }}" width="100%" />&ndash;&gt;
+                <img src="http://lorempixel.com/400/200/sports/1/" >
+              </a>
+              <span style="font-size: xx-small">{{ listacams.rows[$index+2][0] }}</span>
+            </div>
+
+          </div>
+
+
+
+        </ion-content>
+      </ion-view>
+-->
+      </ion-nav-view>
+    </ion-tab>
+
+
+  </ion-tabs>
+
+</ion-view>
+

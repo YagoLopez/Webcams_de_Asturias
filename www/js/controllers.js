@@ -1,4 +1,4 @@
-angular.module('starter.controllers', [])
+angular.module('webcams_asturias.controllers', [])
 
 .controller('AppCtrl', function($scope, $ionicModal, $timeout) {
 
@@ -52,26 +52,111 @@ angular.module('starter.controllers', [])
   ];
 })
 
-.controller('PlaylistCtrl', function($scope, $stateParams) {
-})
+.controller('PlaylistCtrl', function($scope) {
+  })
 
-.controller('ObtenerDatosCtrl', function($scope, $http) {
-    //var url_api = "https://www.googleapis.com/fusiontables/v2/query?sql=SELECT%20*%20FROM%201gX5maFbqFyRziZiUYlpOBYhcC1v9lGkKqCXvZREF&key=AIzaSyBsdouSTimjrC2xHmbGgOt8VfbLBWc9Gps";
+.controller('DetallecamCtrl', function($scope, $stateParams, $ionicLoading, DATOS_URL, $filter, $rootScope) {
 
-    var API_ENDPOINT = 'https://www.googleapis.com/fusiontables/v2/query';
-    var FUSION_TABLE = '1gX5maFbqFyRziZiUYlpOBYhcC1v9lGkKqCXvZREF';
-    var API_KEY = 'AIzaSyBsdouSTimjrC2xHmbGgOt8VfbLBWc9Gps';
-    var SQL_QUERY = 'SELECT Lugar,Concejo,Imagen,Categoria FROM '+FUSION_TABLE;
+    //TODO: unficar la plantilla loading en una constante
+    // mostrar loader
+    $ionicLoading.show({template:'Cargando datos...', noBackdrop:true});
 
-    var url = API_ENDPOINT+ '?sql=' +SQL_QUERY+ '&key=' +API_KEY;
+    // guarda en scope rowid que es el id de la camara
+    $scope.rowid = $stateParams.rowid;
 
-    console.log("url: ", encodeURI(url));
+    // ocultar loader despues de cargar la vista
+    $scope.$on('$ionicView.afterEnter', function (viewInfo, state) {
+      $ionicLoading.hide();
+      //console.log('$ionicView.afterEnter', viewInfo, state);
+    });
 
-    $http.get( encodeURI(url) ).success(
-      function(data) {
-        console.log(data);
-        $scope.listacams= data;
-      }).error(function() {
-        console.log('error recuperando datos');
-      })
+    //$scope.detallecam = $filter('filter')($rootScope.listacams.rows, $scope.rowid, true);
+    //console.log('rowid', $scope.rowid);
+    //console.log('detalle cam', $scope.detallecam);
+
+}) //fin DetallecamCtrl
+
+/*
+.controller('ListacamsCtrl', function($rootScope, $scope, factoria_datos, $ionicLoading, DATOS_URL) {
+
+  // despues de cargar la pagina con los datos remotos ocultar el loader
+  $scope.$on('$ionicView.afterEnter', function (viewInfo, state) {
+    $ionicLoading.hide();
+    //console.log('$ionicView.afterEnter', viewInfo, state);
   });
+}) // fin ListacamsCtrl
+*/
+
+.controller('TabsCtrl', function($scope, $state, $ionicLoading, $rootScope, $location, $window){
+
+    // despues de cargar la pagina con los datos remotos ocultar el loader
+    $scope.$on('$ionicView.afterEnter', function (viewInfo, state) {
+      $ionicLoading.hide();
+      //console.log('$ionicView.afterEnter', viewInfo, state);
+    });
+
+    //$scope.$on('$ionicView.enter', function() {
+    //})
+
+    $rootScope.concejo = $state.params.concejo;
+    $rootScope.categoria = $state.params.categoria;
+    console.log('state.params en tabs ctrl', $state.params);
+
+  })// fin TabsCtrl
+
+.controller('ListadoCtrl', function($scope, $state, $rootScope){
+
+    $scope.$on('$ionicView.enter', function() {
+      console.log('state.params en listado ctrl', $state.params);
+    })
+
+
+    //$rootScope.categoria = $state.params.categoria;
+    //$rootScope.concejo = $state.params.concejo;
+  //  $scope.$parent.concejo = $state.params.concejo;
+  //  $scope.$parent.categoria = $state.params.categoria;
+  //console.log('categoria en listado ctrl', $scope.categoria);
+  //console.log('concejo en listado ctrl', $scope.concejo);
+  //console.log('state en listado ctrl', $state);
+}) // fin ListadoCtrl
+
+.controller('MosaicoCtrl', function($scope, $state, $rootScope){
+
+    $scope.$on('$ionicView.enter', function() {
+      console.log('state.params en mosaico ctrl', $state.params);
+    })
+
+
+
+
+    //$rootScope.categoria = $state.params.categoria;
+    //$rootScope.concejo = $state.params.concejo;
+  //  $scope.$parent.concejo = $state.params.concejo;
+  //  $scope.$parent.categoria = $state.params.categoria;
+  //console.log('categoria en mosaico ctrl', $scope.categoria);
+  //console.log('concejo en mosaico ctrl', $scope.concejo);
+  //console.log('state en mosaico ctrl', $state);
+}) // fin MosaicoCtrl
+
+
+.controller('PlayasCtrl', function($rootScope, factoria_datos){
+
+  }
+) // fin coltroller PlayasCtrl
+
+.controller('PuertosCtrl', function($rootScope, factoria_datos){
+
+  }
+) // fin coltroller PuertosCtrl
+
+.controller('RiosCtrl', function($rootScope, factoria_datos){
+
+  }
+) // fin coltroller RiosCtrl
+
+.controller('MontanaCtrl', function($rootScope, factoria_datos){
+
+  }
+) // fin coltroller MontanaCtrl
+
+;

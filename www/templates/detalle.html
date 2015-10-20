@@ -1,0 +1,132 @@
+<ion-view view-title="Detalle">
+  <ion-content class="padding">
+
+
+    <div ng-repeat="datos_cam in listacams.rows">
+      <div ng-if="datos_cam[4] == rowid">
+
+        <!-- Ionic Card ---------------------------------------------------------------------------------------------->
+        <div class="list card">
+          <!--
+          <div class="item item-avatar">
+            <i class="icon ion-card"></i>
+            <img src="/img/ionic.png">
+            <h2>Pretty Hate Machine</h2>
+            <p>Nine Inch Nails</p>
+          </div>
+          -->
+
+          <!--TODO: poner un boton para refrescar la pagina-->
+          <!--TODO: poner advertencia: si no ser carga la imagen probar a recargar la pagina-->
+          <div class="item item-image">
+            <a href="{{ datos_cam[2] }}" target="_blank">
+              <!--<img src="{{ datos_cam[2] }}" style="padding:5%"/>-->
+              <img id="img_detalle" src="../img/ionic.png" style="padding:5%"/>
+            </a>
+          </div>
+
+          <div class="list list-inset">
+            <div class="item">
+              <i class="icon ion-android-locate"></i>
+              <b>Lugar: </b>{{ datos_cam[0] }}
+            </div>
+            <div class="item">
+              <i class="icon ion-android-locate"></i>
+              <b>Concejo: </b>{{ datos_cam[1] }}
+            </div>
+            <div class="item">
+              <i class="icon ion-android-locate"></i>
+              <b>Categoría: </b>{{ datos_cam[3] }}
+            </div>
+          </div>
+          <!--
+        <a class="item item-icon-left assertive" href="{{ listacams.rows[cam_index][2] }}" target="_blank">
+          <i class="icon ion-arrow-expand"></i>
+          Ampliar imagen
+        </a>
+        -->
+          <div class="item">
+            <a class="button icon-right button-calm" href="{{ datos_cam[2] }}" target="_blank">
+              <i class="icon ion-arrow-expand"></i>
+              &nbsp;Ampliar imagen
+            </a>
+          </div>
+        </div>
+        <!-- Fin Ionic Card ------------------------------------------------------------------------------------------>
+
+        <!-- prueba material design lite - Wide card with share menu button ------------------------------------------>
+        <!--
+
+            <style>
+              .demo-card-wide.mdl-card {
+                width: 90%;
+              }
+              .demo-card-wide > .mdl-card__title {
+                color: #fff;
+                height: 176px;
+                background: url('img/ionic.png') center / cover;
+              }
+              .demo-card-wide > .mdl-card__menu {
+                color: #fff;
+              }
+            </style>
+        -->
+        <div class="item demo-card-wide mdl-card mdl-shadow--4dp" style="margin:5%; width: 90%;">
+          <div class="mdl-card__title">
+            <h2 class="mdl-card__title-text">Welcome</h2>
+          </div>
+          <div class="mdl-card__supporting-text">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+            Mauris sagittis pellentesque lacus eleifend lacinia...
+          </div>
+          <div class="mdl-card__actions mdl-card--border">
+            <!-- Colored raised button -->
+            <a class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effec mdl-button--colored">
+              Ampliar imagen
+            </a>
+          </div>
+          <div class="mdl-card__actions mdl-card--border">
+            <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+              View Updates
+            </a>
+            <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored">
+              Button
+            </button>
+          </div>
+        </div>
+        <!-- fin prueba material design lite ------------------------------------------------------------------------->
+
+        <!-- prueba angular material ------------------------------------------------------------------------------------->
+        <!--
+        <md-card class="md-whiteframe-4dp">
+          <img ng-src="../img/ionic.png" class="md-card-image" alt="Washed Out">
+          <md-card-content>
+            <md-divedr></md-divedr>
+            <h2 class="md-title">Paracosm</h2>
+            <p>
+              The titles of Washed Out's breakthrough song and the first single from Paracosm share the
+              two most important words in Ernest Greene's musical language: feel it. It's a simple request, as well...
+            </p>
+            <md-divedr></md-divedr>
+
+          </md-card-content>
+          <md-divider></md-divider>
+          <div class="md-actions" layout="row" layout-align="end center">
+            <md-button>Action 1</md-button>
+            <md-button>Action 2</md-button>
+            <md-button class="md-raised md-primary">
+              <i class="icon ion-ionic"></i>
+              Primary</md-button>
+          </div>
+          <md-divider></md-divider>
+        </md-card>
+        -->
+        <!-- fin angular material ---------------------------------------------------------------------------------------->
+
+      </div>
+    </div>
+
+
+
+  </ion-content>
+</ion-view>

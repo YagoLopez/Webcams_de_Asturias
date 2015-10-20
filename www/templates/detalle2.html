@@ -1,0 +1,48 @@
+<ion-view view-title="Detalles">
+  <ion-content class="padding">
+    <div class="list card">
+
+      <!--<div class="item item-avatar">-->
+        <!--<i class="icon ion-card"></i>-->
+        <!--<img src="/img/ionic.png">-->
+        <!--<h2>Pretty Hate Machine</h2>-->
+        <!--<p>Nine Inch Nails</p>-->
+      <!--</div>-->
+
+      <!--TODO: poner iconos en el listado de detalles-->
+      <div class="item item-image">
+        <a href="{{ url_cam }}">
+          <img src="{{ url_cam }}" style="padding:5%"/>
+        </a>
+      </div>
+
+      <!--<p>indice cam: {{cam_index}}</p>-->
+      <!--<div style="padding:5%">-->
+      <!--Lugar: {{listacams2.rows[cam_index][0]}}<br>-->
+      <!--Concejo: {{listacams2.rows[cam_index][1]}}<br>-->
+      <!--Categoría: {{listacams2.rows[cam_index][3]}}<br>-->
+      <!--<a href="{{listacams2.rows[cam_index][2]}}">Ampliar imagen</a>-->
+      <!--</div>-->
+
+      <div class="list list-inset">
+        <div class="item">
+          <i class="icon ion-music-note"></i>
+          <b>Lugar: </b>{{ lugar }}
+        </div>
+        <div class="item">
+          <b>Concejo: </b>{{ concejo }}
+        </div>
+        <div class="item">
+          <b>Categoría: </b>{{ categoria }}
+        </div>
+      </div>
+
+
+      <a class="item item-icon-left assertive" href="{{ url_cam }}">
+        <i class="icon ion-music-note"></i>
+        Ampliar imagen
+      </a>
+
+    </div>
+  </ion-content>
+</ion-view>
