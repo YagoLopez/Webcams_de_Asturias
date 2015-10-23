@@ -87,7 +87,7 @@ angular.module('webcams_asturias.controllers', [])
 }) // fin ListacamsCtrl
 */
 
-.controller('TabsCtrl', function($scope, $state, $ionicLoading, $rootScope, $location, $window){
+.controller('TabsCtrl', function($scope, $stateParams, $ionicLoading, $rootScope){
 
     // despues de cargar la pagina con los datos remotos ocultar el loader
     $scope.$on('$ionicView.afterEnter', function (viewInfo, state) {
@@ -99,28 +99,39 @@ angular.module('webcams_asturias.controllers', [])
     //$scope.$on('$ionicView.enter', function() {
     //})
 
-    $rootScope.concejo = $state.params.concejo;
+    $rootScope.concejo = $stateParams.concejo;
     /* TODO: hacer una tabla propia para las categorias en fusion tables y hacer join de
     la tabla de webcams y la de categorias */
-    $rootScope.categoria = $state.params.categoria;
-    console.log('state.params en tabs ctrl', $state.params);
+    $rootScope.categoria = $stateParams.categoria;
+    console.log('stateParams en tabs ctrl', $stateParams);
 
-})// fin TabsCtrl
+    $scope.fltrConcejo = function(cam) {
+      //TODO: quitar acentos para hacer mejor la búsqueda por concejo
+      if ( !$stateParams.concejo )
+        return cam;
+      else
+        return cam[1].toLowerCase() == $stateParams.concejo.toLowerCase();
+    }
 
-.controller('ListadoCtrl', function($scope, $state, $rootScope){
+    $scope.fltrCategoria = function(cam) {
+      if ( !$stateParams.categoria )
+        return cam;
+      else {
+        //if(cam[3] == 'categoria=' + $stateParams.categoria)
+        //console.log('cam[3]', cam[3]);
+        return cam[3] == 'categoria=' + $stateParams.categoria;
+      }
+    }
+
+  })// fin TabsCtrl
+
+.controller('ListadoCtrl', function($scope, $state, $filter){
 
     //$scope.$on('$ionicView.enter', function() {
     //  console.log('state.params en listado ctrl', $state.params);
     //})
 
 
-    //$rootScope.categoria = $state.params.categoria;
-    //$rootScope.concejo = $state.params.concejo;
-  //  $scope.$parent.concejo = $state.params.concejo;
-  //  $scope.$parent.categoria = $state.params.categoria;
-  //console.log('categoria en listado ctrl', $scope.categoria);
-  //console.log('concejo en listado ctrl', $scope.concejo);
-  //console.log('state en listado ctrl', $state);
 }) // fin ListadoCtrl
 
 .controller('MosaicoCtrl', function($scope, $state, $rootScope){
@@ -129,9 +140,6 @@ angular.module('webcams_asturias.controllers', [])
     //  console.log('state.params en mosaico ctrl', $state.params);
     //})
 
-
-
-
     //$rootScope.categoria = $state.params.categoria;
     //$rootScope.concejo = $state.params.concejo;
   //  $scope.$parent.concejo = $state.params.concejo;
@@ -139,6 +147,12 @@ angular.module('webcams_asturias.controllers', [])
   //console.log('categoria en mosaico ctrl', $scope.categoria);
   //console.log('concejo en mosaico ctrl', $scope.concejo);
   //console.log('state en mosaico ctrl', $state);
+
+    $scope.images = [];
+    for (var i = 0; i < 100; i++) {
+      $scope.images.push({id: i, src: "http://placehold.it/50x50"});
+    }
+
 }) // fin MosaicoCtrl
 
 .controller('PlayasCtrl', function($rootScope, factoria_datos){

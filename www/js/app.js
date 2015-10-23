@@ -1,9 +1,4 @@
 
-// angular.module is a global place for creating, registering and retrieving Angular modules
-// 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
-// the 2nd parameter is an array of 'requires'
-// 'starter.controllers' is found in controllers.js
-
 // url completa para consultar fusion table. Usar como plantilla
 //var url_api = "https://www.googleapis.com/fusiontables/v2/query?sql=SELECT%20*%20FROM%201gX5maFbqFyRziZiUYlpOBYhcC1v9lGkKqCXvZREF&key=AIzaSyBsdouSTimjrC2xHmbGgOt8VfbLBWc9Gps";
 
@@ -58,102 +53,101 @@ angular.module('webcams_asturias', ['ionic', 'webcams_asturias.controllers'])
 .config(function($stateProvider, $urlRouterProvider) {
   $stateProvider
 
-    .state('app', {
-    url: '/app',
-    abstract: true,
-    templateUrl: 'templates/menu.html',
-    controller: 'AppCtrl'
+  .state('app', {
+  url: '/app',
+  abstract: true,
+  templateUrl: 'templates/menu.html',
+  controller: 'AppCtrl'
   })
 
   .state('app.search', {
-    url: '/search',
-    views: {
-      'menuContent': {
-        templateUrl: 'templates/search.html'
-      }
-    }
+  url: '/search',
+  views: {
+  'menuContent': {
+    templateUrl: 'templates/search.html'
+  }
+  }
   })
 
   .state('app.browse', {
-      url: '/browse',
-      views: {
-        'menuContent': {
-          templateUrl: 'templates/browse.html'
-        }
-      }
-    })
-    .state('app.playlists', {
-      url: '/playlists',
-      views: {
-        'menuContent': {
-          templateUrl: 'templates/playlists.html',
-          controller: 'PlaylistsCtrl'
-        }
-      }
-    })
+  url: '/browse',
+  views: {
+    'menuContent': {
+      templateUrl: 'templates/browse.html'
+    }
+  }
+  })
 
-    .state('app.single', {
-      url: '/playlists/:playlistId',
-      views: {
-        'menuContent': {
-          templateUrl: 'templates/playlist.html',
-          controller: 'PlaylistCtrl'
-        }
-      }
-    })
+  .state('app.playlists', {
+  url: '/playlists',
+  views: {
+    'menuContent': {
+      templateUrl: 'templates/playlists.html',
+      controller: 'PlaylistsCtrl'
+    }
+  }
+  })
 
-    .state('app.detalle', {
-      url: '/detalle/:rowid',
-      name: 'detalle',
-      views: {
-        'menuContent': {
-          templateUrl: 'templates/detalle.html',
-          controller: 'DetallecamCtrl'
-        }
-      }
-    })
+  .state('app.single', {
+  url: '/playlists/:playlistId',
+  views: {
+    'menuContent': {
+      templateUrl: 'templates/playlist.html',
+      controller: 'PlaylistCtrl'
+    }
+  }
+  })
 
-    //TODO: utilizar resolve en la definicion de estado para obtener datos remotos en vez de en metodo run(). Probar a ver
+  .state('app.detalle', {
+  url: '/detalle/:rowid',
+  name: 'detalle',
+  views: {
+    'menuContent': {
+      templateUrl: 'templates/detalle.html',
+      controller: 'DetallecamCtrl'
+    }
+  }
+  })
+
+  //TODO: utilizar resolve en la definicion de estado para obtener datos remotos en vez de en metodo run(). Probar a ver
   .state('app.tabs', {
-      url: '/tabs?categoria&concejo',
-      cache:false,
-      views: {
-        'menuContent': {
-          templateUrl: 'templates/tabs.html',
-          controller: 'TabsCtrl'
-        }
-      }
-    })
+  url: '/tabs?categoria&concejo',
+  cache:false,
+  views: {
+    'menuContent': {
+      templateUrl: 'templates/tabs.html',
+      controller: 'TabsCtrl'
+    }
+  }
+  })
 
   .state('app.tabs.listado', {
-      url: '/listado',
-      views: {
-        'tab-listado': {
-        templateUrl: 'templates/listado.html',
-        controller:'ListadoCtrl'
-        }
-      }
-    })
-
-    //probar a recoger los parametros de query string en un resolver
-  .state('app.tabs.mosaico', {
-    url: '/mosaico',
-    views: {
-      'tab-mosaico': {
-        templateUrl: 'templates/mosaico.html',
-        controller: 'MosaicoCtrl'
-      }
+  url: '/listado',
+  views: {
+    'tab-listado': {
+    templateUrl: 'templates/listado.html',
+    controller:'ListadoCtrl'
     }
+  }
+  })
+
+  .state('app.tabs.mosaico', {
+  url: '/mosaico',
+  views: {
+  'tab-mosaico': {
+    templateUrl: 'templates/mosaico.html',
+    controller: 'MosaicoCtrl'
+    }
+  }
   })
 
 ; // fin de estados
 
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/app/tabs/listado');
-});
+})
 
-// factoria para obtencion de datos remotos
-angular.module('webcams_asturias').factory('factoria_datos', function($http, DATOS_URL){
+.factory('factoria_datos', function($http, DATOS_URL){
 
   //TODO: intentar resolver aqui la promesa. Devolver los datos concatenando aqui "then" de esta forma:
   var getRemoteData = function( sql_query_string ) {
@@ -189,17 +183,15 @@ angular.module('webcams_asturias').factory('factoria_datos', function($http, DAT
     getRemoteData: getRemoteData,
     getRemoteImg: getRemoteImg
   }
-});
+})
 
-// constantes
-angular.module('webcams_asturias').constant('DATOS_URL', {
+.constant('DATOS_URL', {
     API_ENDPOINT: 'https://www.googleapis.com/fusiontables/v2/query',
     FUSION_TABLE_ID: '1gX5maFbqFyRziZiUYlpOBYhcC1v9lGkKqCXvZREF',
     API_KEY: 'AIzaSyBsdouSTimjrC2xHmbGgOt8VfbLBWc9Gps'
   }
 ) // fin constant
 
-// directiva fallbackSrc
 .directive('fallbackSrc', function () {
   var fallbackSrc = {
     link: function postLink(scope, iElement, iAttrs) {
@@ -209,7 +201,36 @@ angular.module('webcams_asturias').constant('DATOS_URL', {
     }
   }
   return fallbackSrc;
-});
+})
+
+/*
+.filter('concejoFltr', function(){
+
+  var filtro = function(datos_cam, concejo){
+    console.log('datos_cam.rows desde filter', datos_cam.rows)
+  if (!concejo)
+    return datos_cam.rows;
+  else
+    return datos_cam.rows;
+  }
+return filtro;
+    /!*
+      $scope.isActive = function(user) {
+        return user.User.Stats[0].active === "1";
+      };
+      and then in your HTML:
+
+        <div ng-repeat="user in _users | filter:isActive">
+        {{user.User.userid}}
+      </div>
+    *!/
+
+    //var myRedObjects = $filter('filter')(myObjects, { color: "red" });
+
+
+})
+*/
+
 
 
 // CORS request
@@ -219,3 +240,4 @@ angular.module('webcams_asturias').constant('DATOS_URL', {
 //    delete $httpProvider.defaults.headers.common['X-Requested-With'];
 //  });
 
+; // FIN

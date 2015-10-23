@@ -5,7 +5,7 @@
     <ion-nav-bar class="bar-calm" style="height: 0px">
 
       <ion-nav-back-button class="button-icon ion-arrow-left-c">
-        Volver
+
       </ion-nav-back-button>
 
       <ion-nav-buttons side="left">
@@ -27,16 +27,23 @@
 
     <ion-content>
       <ion-list>
-        <ion-item menu-close href="#/app/tabs/listado?categoria=1">
+        <!--
+        1 poblaciones/Zonas Urbanas
+        2 Puertos
+        3 Montaña
+        5 Ríos
+        7 playas
+        -->
+        <ion-item menu-close href="#/app/tabs/listado?categoria=7">
           Playas
         </ion-item>
         <ion-item menu-close href="#/app/tabs/listado?categoria=2">
           Puertos
         </ion-item>
-        <ion-item menu-close href="#/app/tabs/listado?categoria=3">
+        <ion-item menu-close href="#/app/tabs/listado?categoria=5">
           Ríos
         </ion-item>
-        <ion-item menu-close href="#/app/tabs/listado?categoria=4">
+        <ion-item menu-close href="#/app/tabs/listado?categoria=3">
           Montaña
         </ion-item>
         <ion-item menu-close href="#/app/tabs/listado">
@@ -55,6 +62,7 @@
           Playlists
         </ion-item>
       </ion-list>
+
     </ion-content>
 
   </ion-side-menu>

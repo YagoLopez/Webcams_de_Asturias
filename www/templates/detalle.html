@@ -2,8 +2,7 @@
   <ion-content class="padding">
 
 
-    <div ng-repeat="datos_cam in listacams.rows">
-      <div ng-if="datos_cam[4] == rowid">
+    <div ng-repeat="cam in listacams.rows | filter: (cam[4]=rowid) : true">
 
         <!-- Ionic Card ---------------------------------------------------------------------------------------------->
         <div class="list card">
@@ -19,8 +18,8 @@
           <!--TODO: poner un boton para refrescar la pagina-->
           <!--TODO: poner advertencia: si no ser carga la imagen probar a recargar la pagina-->
           <div class="item item-image">
-            <a href="{{ datos_cam[2] }}" target="_blank">
-              <!--<img src="{{ datos_cam[2] }}" style="padding:5%"/>-->
+            <a href="{{ cam[2] }}" target="_blank">
+              <!--<img src="{{ cam[2] }}" style="padding:5%"/>-->
               <img id="img_detalle" src="../img/ionic.png" style="padding:5%"/>
             </a>
           </div>
@@ -28,15 +27,15 @@
           <div class="list list-inset">
             <div class="item">
               <i class="icon ion-android-locate"></i>
-              <b>Lugar: </b>{{ datos_cam[0] }}
+              <b>Lugar: </b>{{ cam[0] }}
             </div>
             <div class="item">
               <i class="icon ion-android-locate"></i>
-              <b>Concejo: </b>{{ datos_cam[1] }}
+              <b>Concejo: </b>{{ cam[1] }}
             </div>
             <div class="item">
               <i class="icon ion-android-locate"></i>
-              <b>Categoría: </b>{{ datos_cam[3] }}
+              <b>Categoría: </b>{{ cam[3] }}
             </div>
           </div>
           <!--
@@ -46,7 +45,7 @@
         </a>
         -->
           <div class="item">
-            <a class="button icon-right button-calm" href="{{ datos_cam[2] }}" target="_blank">
+            <a class="button icon-right button-calm" href="{{ cam[2] }}" target="_blank">
               <i class="icon ion-arrow-expand"></i>
               &nbsp;Ampliar imagen
             </a>
@@ -123,7 +122,6 @@
         -->
         <!-- fin angular material ---------------------------------------------------------------------------------------->
 
-      </div>
     </div>
 
 
