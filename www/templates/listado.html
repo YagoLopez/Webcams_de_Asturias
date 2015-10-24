@@ -9,29 +9,34 @@
       <!--TODO: usar cards de mdl en vez de este tipo de listado? probarlo a ver-->
 
       <div class="list">
-        <div collection-repeat="cam in listacams.rows | filter:cam[1]=concejo | filter:cam[3]='categoria='+categoria">
+
+        <div collection-repeat="cam in listacams.rows | filter:(cam[1]=concejo) | filter:(cam[3]='categoria='+categoria)">
 
             <!--TODO: convertir estte enlace a un estilo material design lite con effecto ripple-->
             <!--TODO: para ello envolver el tag "a" con un div con estilos "mdl"-->
-            <a class="item item-thumbnail-left item-icon-right" href="#/app/detalle/{{ cam[4]}}">
+          <a class="item item-thumbnail-left item-icon-right" href="#/app/detalle/{{ cam[4]}}"
+              style="border-width: 2px;border-style: outset;">
 
-              <img src="../img/ionic.png"/>
-              <!--<img  ng-src="{{ cam[2]}}" fallback-src="http://google.com/favicon.ico""/>-->
-              <p style="font-size:small">Lugar: {{ cam[0] }}</p>
-              <p style="font-size:small">Concejo: {{ cam[1] }}</p>
-              <!-- DEBUG INFO -->
-<!--
-              <p>Categoría: {{cam[3]}}</p>
-              <p>indice: {{ $index }}</p>
-              <p>ROWID: {{cam[4]}}</p>
--->
-              <!-- FIN DEBUG INFO -->
-              <i class="icon ion-ios-arrow-right"></i>
-            </a>
+            <!--TODO: cuando falla al cargar la imagen avisar al usuario en el listado que puede intentar recargarla-->
+            <!--TODO: arreglar lo de los estilos css. pasarlos a fichero-->
+            <!--TODO: poner animación en el listado-->
+            <!--<img src="../img/ionic.png"/>-->
+            <img  ng-src="{{ cam[2]}}" fallback-src="http://google.com/favicon.ico"/>
+            <p><span style="color:#28a54c"><b>&#187;</b>&nbsp;Lugar: </span><span style="font-size:small">{{ cam[0] }}</span></p>
+            <p><span style="color:#28a54c"><b>&#187;</b>&nbsp;Concejo: </span><span style="font-size:small">{{ cam[1] }}</span></p>
+            <!-- DEBUG INFO -->
+            <!--
+            <p>Categoría: {{cam[3]}}</p>
+            <p>indice: {{ $index }}</p>
+            <p>ROWID: {{cam[4]}}</p>
+            -->
+            <!-- FIN DEBUG INFO -->
+            <i class="icon ion-android-exit" style="color: #387ef5;"></i>
 
-
+          </a>
 
         </div>
+
       </div>
 
 
