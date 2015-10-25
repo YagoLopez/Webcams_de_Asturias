@@ -1,40 +1,39 @@
 <ion-view title="Listado">
   <ion-content>
 
-    concejo: {{$location.search().concejo}}<br>
-    categoria: {{$location.search().categoria}}
-
-
       <!--TODO: Poner colores en el listado-->
       <!--TODO: busqueda de camaras por texto en header bar o en menu superior izquierdo-->
       <!--TODO: añadir geolocalicacion y busqueda de camaras cercanas-->
-      <!--TODO: usar ui-shref en los enlaces-->
-      <!--TODO: mapa de google en el detalle y una opción de menú con todas las camaras situadas en mapa-->
+      <!--TODO: mapa de google en el detalles-->
+      <!--TODO: Entrada de menu que muestre en mapa todas las camaras-->
       <!--TODO: usar cards de mdl en vez de este tipo de listado? probarlo a ver-->
+      <!--TODO: Usar el menu login para hacer la busqueda avanzada usando un dialog box-->
 
       <div class="list">
-        <div collection-repeat="datos_cam in listacams.rows | filter: datos_cam[1]=concejo | filter: datos_cam[3]=categoria">
-          <!--<div ng-if="datos_cam[1]==elfiltro">-->
-            <!--TODO: convertir estte enlace a un estilo material design lite con effecto ripple-->
-            <!--TODO: para ello envolver el tag "a" con un div con estilos "mdl"-->
-            <!--TODO: se me ocurre arreglar lo del boton de atras y la animacion insertando manualmente en la historia la pagina de listado-->
-            <a class="item item-thumbnail-left item-icon-right" href="#/app/detalle/{{ datos_cam[4]}}">
+        <div ng-repeat="cam in listacams.rows | filter:(cam[1]=concejo) | filter:(cam[3]='categoria='+categoria)">
 
-              <img src="../img/ionic.png"/>
-              <!--<img  ng-src="{{ datos_cam[2]}}" fallback-src="http://google.com/favicon.ico""/>-->
+          <!--TODO: cuando falla al cargar la imagen avisar al usuario en el listado que puede intentar recargarla-->
+          <!--TODO: poner animación en el listado-->
 
-              <p>Lugar: {{ datos_cam[0] }}</p>
-              <p>Concejo: {{ datos_cam[1] }}</p>
-              <p>Categoría: {{datos_cam[3]}}</p>
-              <p>indice: {{ $index }}</p>
-              <p>ROWID: {{datos_cam[4]}}</p>
-              <p>concejo: {{concejo}}</p>
-              <p>categoria: {{categoria}}</p>
-              <i class="icon ion-ios-arrow-right"></i>
-            </a>
-          <!--</div>-->
-
-
+          <a class="item item-thumbnail-left item-icon-right enlaceListado chat-item item-remove-animate"
+             href="#/app/detalle/{{ cam[4]}}">
+            <img src="../img/ionic.png"/>
+            <div class="divListado">
+              <!--<img  ng-src="{{ cam[2]}}" fallback-src="http://google.com/favicon.ico"/>-->
+              <p>
+                <span class="resalteListado"><b>&#187;</b> Lugar: </span>
+                <span class="textoListado">{{ cam[0] }}</span>
+              </p>
+              <p>
+                <span class="resalteListado"><b>&#187;</b> Concejo: </span>
+                <span class="textoListado">{{ cam[1] }}</span>
+              </p>
+              <!--<p>Categoría: {{cam[3]}}</p>-->
+              <!--<p>indice: {{ $index }}</p>-->
+              <!--<p>ROWID: {{cam[4]}}</p>-->
+            </div>
+            <i class="icon ion-android-exit" style="color: #387ef5;"></i>
+          </a>
 
         </div>
       </div>
@@ -42,13 +41,13 @@
 
       <!-- Listado de cams usando tarjetas MDL -----------------------------------------------------------------------------
                   <div class="list">
-                    <div collection-repeat="datos_cam in listacams.rows" style="padding:5px">
+                    <div collection-repeat="cam in listacams.rows" style="padding:5px">
                       <div class="item mdl-shadow--2dp" style="padding: 6px;">
-                        <img ng-src="{{ datos_cam[2] }}" style="float:left" height="100em" width="100em">
+                        <img ng-src="{{ cam[2] }}" style="float:left" height="100em" width="100em">
                         <div>
-                          <span style="float:inherit; font-size: x-small; margin-left: 7px">Lugar: {{ datos_cam[0] }}</span><br>
-                          <span style="float:inherit; font-size: x-small; margin-left: 7px">Concejo: {{ datos_cam[1] }}:</span><br>
-                          <span style="float:inherit; font-size: x-small; margin-left: 7px">Categoría: {{ datos_cam[3] }}</span><br>
+                          <span style="float:inherit; font-size: x-small; margin-left: 7px">Lugar: {{ cam[0] }}</span><br>
+                          <span style="float:inherit; font-size: x-small; margin-left: 7px">Concejo: {{ cam[1] }}:</span><br>
+                          <span style="float:inherit; font-size: x-small; margin-left: 7px">Categoría: {{ cam[3] }}</span><br>
                         </div>
                       </div>
                     </div>
@@ -58,14 +57,14 @@
       <!-- listado de cams usando tarjetas MDL ----------------------------------------------------------------------------
 
                   <div class="list">
-                    <div collection-repeat="datos_cam in listacams.rows" style="padding:5px">
+                    <div collection-repeat="cam in listacams.rows" style="padding:5px">
                       <div class="item mdl-shadow--2dp" style="padding: 2%;">
                         <a href="#">
-                          <img ng-src="{{ datos_cam[2] }}" style="float:left" height="30%" width="30%">
+                          <img ng-src="{{ cam[2] }}" style="float:left" height="30%" width="30%">
                           <div>
-                            <span style="float:inherit; font-size: x-small; margin-left: 2%">Lugar: {{ datos_cam[0] }}<br></span>
-                            <span style="float:inherit; font-size: x-small; margin-left: 2%">Concejo: {{ datos_cam[1] }}<br></span>
-                            <span style="float:inherit; font-size: x-small; margin-left: 2%">Categoría: {{ datos_cam[3] }}</span>
+                            <span style="float:inherit; font-size: x-small; margin-left: 2%">Lugar: {{ cam[0] }}<br></span>
+                            <span style="float:inherit; font-size: x-small; margin-left: 2%">Concejo: {{ cam[1] }}<br></span>
+                            <span style="float:inherit; font-size: x-small; margin-left: 2%">Categoría: {{ cam[3] }}</span>
                           </div>
                         </a>
                       </div>

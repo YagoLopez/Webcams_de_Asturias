@@ -76,28 +76,13 @@ angular.module('webcams_asturias.controllers', [])
 
 }) //fin DetallecamCtrl
 
-/*
-.controller('ListacamsCtrl', function($rootScope, $scope, factoria_datos, $ionicLoading, DATOS_URL) {
-
-  // despues de cargar la pagina con los datos remotos ocultar el loader
-  $scope.$on('$ionicView.afterEnter', function (viewInfo, state) {
-    $ionicLoading.hide();
-    //console.log('$ionicView.afterEnter', viewInfo, state);
-  });
-}) // fin ListacamsCtrl
-*/
-
 .controller('TabsCtrl', function($scope, $stateParams, $ionicLoading, $rootScope){
 
-    // despues de cargar la pagina con los datos remotos ocultar el loader
-    $scope.$on('$ionicView.afterEnter', function (viewInfo, state) {
-      $ionicLoading.hide();
-      //console.log('$ionicView.afterEnter', viewInfo, state);
-
-    });
-
-    //$scope.$on('$ionicView.enter', function() {
-    //})
+    // plantilla html para ionic loader
+    //var template_loader = "<ion-spinner icon='lines' class='spinner-calm'></ion-spinner><br/>Cargando datos...";
+    var template_loader = "Cargando datos...";
+    // mostrar loader
+    $ionicLoading.show({template:template_loader, noBackdrop:true});
 
     $rootScope.concejo = $stateParams.concejo;
     /* TODO: hacer una tabla propia para las categorias en fusion tables y hacer join de
@@ -105,6 +90,7 @@ angular.module('webcams_asturias.controllers', [])
     $rootScope.categoria = $stateParams.categoria;
     console.log('stateParams en tabs ctrl', $stateParams);
 
+/*
     $scope.fltrConcejo = function(cam) {
       //TODO: quitar acentos para hacer mejor la búsqueda por concejo
       if ( !$stateParams.concejo )
@@ -122,14 +108,17 @@ angular.module('webcams_asturias.controllers', [])
         return cam[3] == 'categoria=' + $stateParams.categoria;
       }
     }
+*/
+
+    // despues de cargar la pagina con los datos remotos ocultar el loader
+    $scope.$on('$ionicView.afterEnter', function (viewInfo, state) {
+      $ionicLoading.hide();
+      //console.log('$ionicView.afterEnter', viewInfo, state);
+    });
 
   })// fin TabsCtrl
 
 .controller('ListadoCtrl', function($scope, $state, $filter){
-
-    //$scope.$on('$ionicView.enter', function() {
-    //  console.log('state.params en listado ctrl', $state.params);
-    //})
 
 
 }) // fin ListadoCtrl
@@ -147,11 +136,6 @@ angular.module('webcams_asturias.controllers', [])
   //console.log('categoria en mosaico ctrl', $scope.categoria);
   //console.log('concejo en mosaico ctrl', $scope.concejo);
   //console.log('state en mosaico ctrl', $state);
-
-    $scope.images = [];
-    for (var i = 0; i < 100; i++) {
-      $scope.images.push({id: i, src: "http://placehold.it/50x50"});
-    }
 
 }) // fin MosaicoCtrl
 
@@ -175,4 +159,55 @@ angular.module('webcams_asturias.controllers', [])
   }
 ) // fin coltroller MontanaCtrl
 
-;
+.controller('RepeatCtrl', function ($scope){
+    $scope.items = 'abcdefghijklmnopqrstuvwxyz'.split("");
+  })
+
+
+.controller('ChatsCtrl', function($scope){
+    // With the new view caching in Ionic, Controllers are only called
+    // when they are recreated or on app start, instead of every page change.
+    // To listen for when this page is active (for example, to refresh data),
+    // listen for the $ionicView.enter event:
+    //
+    //$scope.$on('$ionicView.enter', function(e) {
+    //});
+
+    $scope.items = 'abcdefghijklmnopqrstuvwxyz'.split("");
+
+    var chats = [{
+      id: 0,
+      name: 'Ben Sparrow',
+      lastText: 'You on your way?',
+      face: 'https://pbs.twimg.com/profile_images/514549811765211136/9SgAuHeY.png'
+    }, {
+      id: 1,
+      name: 'Max Lynx',
+      lastText: 'Hey, it\'s me',
+      face: 'https://avatars3.githubusercontent.com/u/11214?v=3&s=460'
+    }, {
+      id: 2,
+      name: 'Adam Bradleyson',
+      lastText: 'I should buy a boat',
+      face: 'https://pbs.twimg.com/profile_images/479090794058379264/84TKj_qa.jpeg'
+    }, {
+      id: 3,
+      name: 'Perry Governor',
+      lastText: 'Look at my mukluks!',
+      face: 'https://pbs.twimg.com/profile_images/598205061232103424/3j5HUXMY.png'
+    }, {
+      id: 4,
+      name: 'Mike Harrington',
+      lastText: 'This is wicked good ice cream.',
+      face: 'https://pbs.twimg.com/profile_images/578237281384841216/R3ae1n61.png'
+    }];
+
+
+
+    $scope.chats = chats;
+
+
+
+  })
+
+; // FIN

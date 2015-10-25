@@ -10,7 +10,6 @@
 
 angular.module('webcams_asturias', ['ionic', 'webcams_asturias.controllers'])
 
-// inicializacion
 .run(function($ionicPlatform, $ionicLoading, factoria_datos, DATOS_URL, $rootScope) {
   $ionicPlatform.ready(function() {
 
@@ -27,14 +26,14 @@ angular.module('webcams_asturias', ['ionic', 'webcams_asturias.controllers'])
 
     // cargar datos remotos durante la fase de inicializacion ------------------------------------------------------
 
-    // plantilla html para ionic loader
-    var template_loader = "<ion-spinner icon='lines' class='spinner-calm'></ion-spinner><br/>Cargando datos...";
-
-    // mostrar loader
-    $ionicLoading.show({template:template_loader, noBackdrop:true});
+    //// plantilla html para ionic loader
+    ////var template_loader = "<ion-spinner icon='lines' class='spinner-calm'></ion-spinner><br/>Cargando datos...";
+    //var template_loader = "Cargando datos...";
+    //// mostrar loader
+    //$ionicLoading.show({template:template_loader, noBackdrop:true});
 
     // construir sql query: seleccionar el listado completo de camaras
-    var sql_query_string = 'SELECT Lugar,Concejo,Imagen,Categoria,ROWID FROM '+ DATOS_URL.FUSION_TABLE_ID;
+    var sql_query_string = 'SELECT Lugar,Concejo,Imagen,Categoria,rowid FROM '+ DATOS_URL.FUSION_TABLE_ID;
 
     // obtener datos remotos
     factoria_datos.getRemoteData( sql_query_string ).success(function(data){
@@ -49,7 +48,6 @@ angular.module('webcams_asturias', ['ionic', 'webcams_asturias.controllers'])
   });
 })
 
-// rutas
 .config(function($stateProvider, $urlRouterProvider) {
   $stateProvider
 
@@ -63,9 +61,10 @@ angular.module('webcams_asturias', ['ionic', 'webcams_asturias.controllers'])
   .state('app.search', {
   url: '/search',
   views: {
-  'menuContent': {
-    templateUrl: 'templates/search.html'
-  }
+    'menuContent': {
+      templateUrl: 'templates/search.html',
+      controller: 'ChatsCtrl'
+    }
   }
   })
 
@@ -100,7 +99,6 @@ angular.module('webcams_asturias', ['ionic', 'webcams_asturias.controllers'])
 
   .state('app.detalle', {
   url: '/detalle/:rowid',
-  name: 'detalle',
   views: {
     'menuContent': {
       templateUrl: 'templates/detalle.html',
@@ -189,8 +187,7 @@ angular.module('webcams_asturias', ['ionic', 'webcams_asturias.controllers'])
     API_ENDPOINT: 'https://www.googleapis.com/fusiontables/v2/query',
     FUSION_TABLE_ID: '1gX5maFbqFyRziZiUYlpOBYhcC1v9lGkKqCXvZREF',
     API_KEY: 'AIzaSyBsdouSTimjrC2xHmbGgOt8VfbLBWc9Gps'
-  }
-) // fin constant
+})
 
 .directive('fallbackSrc', function () {
   var fallbackSrc = {

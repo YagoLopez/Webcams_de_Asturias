@@ -1,44 +1,45 @@
 <ion-view title="Mosaico">
   <ion-content>
 
-  <!--TODO: crear filtros basados en las condiciones de filtrado de las vistas-->
-  <!--TODO: al hacer click en la imagen ir al detalle-->
+    <!--TODO: filtrar por texto introducido por el usuario-->
+    <!--TODO: al hacer click en la imagen para ir al detalle-->
+    <!--TODO: añadir loader en galería-->
 
-  <div class="grid">
-    <div class="row"
-         ng-repeat="cam in cams = (listacams.rows | filter:(cam[1]=concejo) | filter:(cam[3]='categoria='+categoria))"
-         ng-if="$index % 3 === 0" force-refresh-images="true" style="padding:0; margin:0px;">
+    <div class="grid">
+      <div class="row"
+           ng-repeat="cam in cams = (listacams.rows | filter:(cam[1]=concejo) | filter:(cam[3]='categoria='+categoria))"
+           ng-if="$index % 3 === 0" force-refresh-images="true" style="padding:0; margin:0px;">
 
 
-      <div class="col col-33" ng-if="$index < cams.length" style="padding:2px;">
-        <a href="{{ cams[$index][2] }}" target="_blank">
-          <!--<img ng-src="{{ cams[$index][2] }}" width="100%" />-->
-          <img src="http://lorempixel.com/400/200/sports/1/" width="100%"  >
-        </a>
-        <span style="font-size: xx-small">{{ cams[$index][0] }}</span>
+        <div class="col col-33" ng-if="$index < cams.length" style="padding:2px;">
+          <a href="#/app/detalle/{{ cam[4]}}" target="_blank">
+            <!--<img ng-src="{{ cams[$index][2] }}" width="100%" />-->
+            <img src="http://lorempixel.com/400/200/sports/1/" width="100%"  >
+          </a>
+          <span style="font-size: xx-small;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;">{{ cams[$index][0] }}</span>
+        </div>
+
+
+        <div class="col col-33" ng-if="$index+1 < cams.length" style="padding:2px;">
+          <a href="{{ cams[$index+1][2] }}" target="_blank">
+            <!--<img ng-src="{{ cams[$index+1][2] }}" width="100%" />-->
+            <img src="http://lorempixel.com/400/200/sports/1/" width="100%" >
+          </a>
+          <span style="font-size: xx-small">{{ cams[$index+1][0] }}</span>
+        </div>
+
+
+        <div class="col col-33" ng-if="$index+2 < cams.length" style="padding:2px;">
+          <a href="{{ cams[$index+2][2] }}" target="_blank">
+            <!--<img ng-src="{{ cams[$index+2][2] }}" width="100%" />-->
+            <img src="http://lorempixel.com/400/200/sports/1/" width="100%" >
+          </a>
+          <span style="font-size: xx-small">{{ cams[$index+2][0] }}</span>
+        </div>
+
+
       </div>
-
-
-      <div class="col col-33" ng-if="$index+1 < cams.length" style="padding:2px;">
-        <a href="{{ cams[$index+1][2] }}" target="_blank">
-          <!--<img ng-src="{{ cams[$index+1][2] }}" width="100%" />-->
-          <img src="http://lorempixel.com/400/200/sports/1/" width="100%" >
-        </a>
-        <span style="font-size: xx-small">{{ cams[$index+1][0] }}</span>
-      </div>
-
-
-      <div class="col col-33" ng-if="$index+2 < cams.length" style="padding:2px;">
-        <a href="{{ cams[$index+2][2] }}" target="_blank">
-          <!--<img ng-src="{{ cams[$index+2][2] }}" width="100%" />-->
-          <img src="http://lorempixel.com/400/200/sports/1/" width="100%" >
-        </a>
-        <span style="font-size: xx-small">{{ cams[$index+2][0] }}</span>
-      </div>
-
-
     </div>
-  </div>
 
 
   </ion-content>

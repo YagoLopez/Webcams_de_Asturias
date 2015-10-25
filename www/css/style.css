@@ -3,23 +3,6 @@
   /*top: 127px;*/
   top:200px;
 }
-/*
-animacion items listado
-
-.chat-item.ng-enter {
-  background-color: yellow;
-  -webkit-animation: fadeInLeft 1s;
-  animation: fadeInLeft 1s;
-}
-
-.chat-item.ng-enter-stagger {
-  -webkit-animation-delay:200ms;
-  animation-delay:200ms;
-
-  /!* override to make sure it's not inherited from other styles *!/
-  -webkit-animation-duration:0;
-  animation-duration:0;
-}*/
 
 .divListado {
   margin-top:15px;
@@ -37,3 +20,28 @@ animacion items listado
 .textoListado {
   font-size:small
 }
+
+
+
+
+
+
+.chat-item.ng-enter {
+  -webkit-animation: fadeInLeft 1s;
+  animation: fadeInLeft 1s;
+}
+
+.chat-item.ng-enter-stagger {
+  -webkit-animation-delay:200ms;
+  animation-delay:200ms;
+  /* override to make sure it's not inherited from other styles */
+  -webkit-animation-duration:0;
+  animation-duration:0;
+}
+
+
+
+
+
+
+
