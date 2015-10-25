@@ -10,12 +10,13 @@
       <!--TODO: Usar el menu login para hacer la busqueda avanzada usando un dialog box-->
 
       <div class="list">
-        <div collection-repeat="cam in listacams.rows | filter:(cam[1]=concejo) | filter:(cam[3]='categoria='+categoria)">
+        <div ng-repeat="cam in listacams.rows | filter:(cam[1]=concejo) | filter:(cam[3]='categoria='+categoria)">
 
           <!--TODO: cuando falla al cargar la imagen avisar al usuario en el listado que puede intentar recargarla-->
           <!--TODO: poner animación en el listado-->
 
-          <a class="item item-thumbnail-left item-icon-right enlaceListado" href="#/app/detalle/{{ cam[4]}}">
+          <a class="item item-thumbnail-left item-icon-right enlaceListado animated zoomIn"
+             href="#/app/detalle/{{ cam[4]}}">
             <img src="../img/ionic.png"/>
             <div class="divListado">
               <!--<img  ng-src="{{ cam[2]}}" fallback-src="http://google.com/favicon.ico"/>-->
