@@ -1,6 +1,6 @@
 angular.module('webcams_asturias.controllers', [])
 
-.controller('AppCtrl', function($scope, $ionicModal, $timeout) {
+.controller('AppCtrl', function($scope, $ionicModal, $timeout, $ionicFilterBar, $rootScope) {
 
   // With the new view caching in Ionic, Controllers are only called
   // when they are recreated or on app start, instead of every page change.
@@ -39,7 +39,22 @@ angular.module('webcams_asturias.controllers', [])
       $scope.closeLogin();
     }, 1000);
   };
-})
+
+
+  $scope.showFilterBar = function () {
+    filterBarInstance = $ionicFilterBar.show({
+      items: $rootScope.listacams.rows,
+      update: function (filteredItems) {
+        $scope.items = filteredItems;
+        console.log('items', filteredItems);
+      }
+      //filterProperties: 'description'
+    });
+  };
+
+
+
+  })
 
 .controller('PlaylistsCtrl', function($scope) {
   $scope.playlists = [
@@ -76,7 +91,7 @@ angular.module('webcams_asturias.controllers', [])
 
 }) //fin DetallecamCtrl
 
-.controller('TabsCtrl', function($scope, $stateParams, $ionicLoading, $rootScope){
+.controller('TabsCtrl', function($scope, $stateParams, $ionicLoading, $rootScope, $ionicFilterBar){
 
     // plantilla html para ionic loader
     //var template_loader = "<ion-spinner icon='lines' class='spinner-calm'></ion-spinner><br/>Cargando datos...";
@@ -115,6 +130,9 @@ angular.module('webcams_asturias.controllers', [])
       $ionicLoading.hide();
       //console.log('$ionicView.afterEnter', viewInfo, state);
     });
+
+
+
 
   })// fin TabsCtrl
 

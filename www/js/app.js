@@ -8,7 +8,7 @@
 //TODO: hacer una funcion que se encargue de cargar las imagenes remotas y que avise cuando no se pueden cargar y de
 //intentar cargarlas de nuevo
 
-angular.module('webcams_asturias', ['ionic', 'webcams_asturias.controllers'])
+angular.module('webcams_asturias', ['ionic', 'webcams_asturias.controllers', 'jett.ionic.filter.bar'])
 
 .run(function($ionicPlatform, $ionicLoading, factoria_datos, DATOS_URL, $rootScope) {
   $ionicPlatform.ready(function() {
