@@ -45,3 +45,35 @@
 
 
 
+/*
+.search-bar {
+  top: 44px;
+  transition: all ease-in-out 250ms;
+  z-index: 15;
+
+}
+
+.search-bar.button,
+input {
+  transition: all ease-in-out 250ms;
+}
+
+.search-bar.button.ng-hide {
+  margin-right: -67px;
+}
+
+.search-bar.search-bar-focused {
+   top: 0;
+ }
+
+.has-search-bar {
+  margin-top: -2px;
+  top: 88px;
+  transition: top ease-in-out 250ms;
+
+}
+
+has-search-bar.search-bar-focused {
+   top: 44px;
+}
+*/

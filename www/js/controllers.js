@@ -78,17 +78,27 @@ angular.module('webcams_asturias.controllers', [])
 
 .controller('TabsCtrl', function($scope, $stateParams, $ionicLoading, $rootScope){
 
-    // plantilla html para ionic loader
-    //var template_loader = "<ion-spinner icon='lines' class='spinner-calm'></ion-spinner><br/>Cargando datos...";
-    var template_loader = "Cargando datos...";
     // mostrar loader
+    var spinner_icon = "<ion-spinner icon='lines' class='spinner-calm'></ion-spinner><br/>";
+    var template_loader = "Cargando datos...";
     $ionicLoading.show({template:template_loader, noBackdrop:true});
 
+    // obtener parametros de url
     $rootScope.concejo = $stateParams.concejo;
-    /* TODO: hacer una tabla propia para las categorias en fusion tables y hacer join de
-    la tabla de webcams y la de categorias */
     $rootScope.categoria = $stateParams.categoria;
     console.log('stateParams en tabs ctrl', $stateParams);
+
+    // despues de cargar la pagina con los datos ocultar el loader
+    $scope.$on('$ionicView.afterEnter', function (viewInfo, state) {
+      $ionicLoading.hide();
+      //console.log('$ionicView.afterEnter', viewInfo, state);
+    });
+
+
+/*
+     TODO: hacer una tabla propia para las categorias en fusion tables y hacer join de
+     la tabla de webcams y la de categorias
+*/
 
 /*
     $scope.fltrConcejo = function(cam) {
@@ -110,16 +120,9 @@ angular.module('webcams_asturias.controllers', [])
     }
 */
 
-    // despues de cargar la pagina con los datos remotos ocultar el loader
-    $scope.$on('$ionicView.afterEnter', function (viewInfo, state) {
-      $ionicLoading.hide();
-      //console.log('$ionicView.afterEnter', viewInfo, state);
-    });
-
-  })// fin TabsCtrl
+})// fin TabsCtrl
 
 .controller('ListadoCtrl', function($scope, $state, $filter){
-
 
 }) // fin ListadoCtrl
 
@@ -139,30 +142,12 @@ angular.module('webcams_asturias.controllers', [])
 
 }) // fin MosaicoCtrl
 
-.controller('PlayasCtrl', function($rootScope, factoria_datos){
 
-  }
-) // fin coltroller PlayasCtrl
 
-.controller('PuertosCtrl', function($rootScope, factoria_datos){
-
-  }
-) // fin coltroller PuertosCtrl
-
-.controller('RiosCtrl', function($rootScope, factoria_datos){
-
-  }
-) // fin coltroller RiosCtrl
-
-.controller('MontanaCtrl', function($rootScope, factoria_datos){
-
-  }
-) // fin coltroller MontanaCtrl
 
 .controller('RepeatCtrl', function ($scope){
     $scope.items = 'abcdefghijklmnopqrstuvwxyz'.split("");
   })
-
 
 .controller('ChatsCtrl', function($scope){
     // With the new view caching in Ionic, Controllers are only called

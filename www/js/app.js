@@ -5,9 +5,6 @@
 // url de las categorias codificada con urlencode. Usar como plantilla
 //http%3A%2F%2Fwebcamsdeasturias.com%2Finterior.php%3Fcategoria%3D1
 
-//TODO: hacer una funcion que se encargue de cargar las imagenes remotas y que avise cuando no se pueden cargar y de
-//intentar cargarlas de nuevo
-
 angular.module('webcams_asturias', ['ionic', 'webcams_asturias.controllers'])
 
 .run(function($ionicPlatform, $ionicLoading, factoria_datos, DATOS_URL, $rootScope) {
@@ -154,32 +151,34 @@ angular.module('webcams_asturias', ['ionic', 'webcams_asturias.controllers'])
     return $http.get( encodeURI(url), {cache: true} );
   }
 
-  var getRemoteImg = function ( url ) {
-    //var resultado = $http.get( url, {cache: true, headers: {
-    //  'Access-Control-Allow-Headers': 'image/jpg',
-    //  'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
-    //  'Access-Control-Allow-Origin': '*'
-    //}} )
-    //  .success(function(data, status, header, config){
-    //  console.log('data', data);
-    //  console.log('data', status);
-    //  console.log('data', header);
-    //  console.log('data', config);
-    //
-    //})
-    //  .error(function(data, status, header, config){
-    //    console.log('data', data);
-    //    console.log('data', status);
-    //    console.log('data', header);
-    //    console.log('data', config);
-    //
-    //})
+  //TODO: implementar funcion getLocalData
+  var getLocalData = function(pathFile){
   }
 
-  // TODO: hacer funcion getLocalData para obtener datos en local
+  //TODO: hacer un filtro que englobe los dos?
+  var fltrConcejo = function(cam, concejo) {
+   //TODO: quitar acentos para hacer mejor la búsqueda por concejo
+   if ( !concejo )
+     return cam;
+   else
+    return cam[1].toLowerCase() == concejo.toLowerCase();
+  }
+
+  var fltrCategoria = function(cam, categoria) {
+   if ( !categoria )
+     return cam;
+   else {
+     //if(cam[3] == 'categoria=' + categoria)
+     //console.log('cam[3]', cam[3]);
+     return cam[3] == 'categoria=' + categoria;
+   }
+  }
+
   return {
     getRemoteData: getRemoteData,
-    getRemoteImg: getRemoteImg
+    getLocalData:  getLocalData,
+    fltrConcejo:   fltrConcejo,
+    fltrCategoria: fltrCategoria,
   }
 })
 
@@ -199,6 +198,16 @@ angular.module('webcams_asturias', ['ionic', 'webcams_asturias.controllers'])
   }
   return fallbackSrc;
 })
+
+
+
+
+
+
+
+
+
+
 
 /*
 .filter('concejoFltr', function(){
@@ -227,8 +236,6 @@ return filtro;
 
 })
 */
-
-
 
 // CORS request
 //angular.module('webcams_asturias')

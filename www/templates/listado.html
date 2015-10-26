@@ -1,5 +1,5 @@
 <ion-view title="Listado">
-  <ion-content>
+  <ion-content class="has-header has-search-bar">
 
       <!--TODO: Poner colores en el listado-->
       <!--TODO: busqueda de camaras por texto en header bar o en menu superior izquierdo-->
@@ -9,12 +9,28 @@
       <!--TODO: usar cards de mdl en vez de este tipo de listado? probarlo a ver-->
       <!--TODO: Usar el menu login para hacer la busqueda avanzada usando un dialog box-->
 
-      <div class="list">
+      <!--TODO: evitar animaciones al hacer la búsqueda. Puede ser en el evento onclick de la caja de texto-->
+      <!--TODO: poner la barra de busqueda dentro de una sub-header para que no haga scroll-->
+      <!--TODO: posibilidad de usar un boton redondo con lupa para activar la busqueda-->
+
+
+<!--
+    <label class="item item-input">
+      <i class="icon ion-search placeholder-icon"></i>
+      <input type="search" placeholder="Buscar..." ng-model="search">
+    </label>
+-->
+
+    <div class="list">
+
+      <div ng-repeat="cam in listacams.rows"
+           class="">
+<!--
         <div ng-repeat="cam in listacams.rows | filter:(cam[1]=concejo) | filter:(cam[3]='categoria='+categoria)"
              class="chat-item item-remove-animate">
+-->
 
-          <!--TODO: cuando falla al cargar la imagen avisar al usuario en el listado que puede intentar recargarla-->
-          <!--TODO: poner animación en el listado-->
+          <!--TODO: cuando falla al cargar una imagen poner un texto con aviso en el listado para intentar recargarla-->
 
           <a class="item item-thumbnail-left item-icon-right"
              href="#/app/detalle/{{ cam[4]}}">
@@ -38,40 +54,6 @@
 
         </div>
       </div>
-
-
-      <!-- Listado de cams usando tarjetas MDL -----------------------------------------------------------------------------
-                  <div class="list">
-                    <div collection-repeat="cam in listacams.rows" style="padding:5px">
-                      <div class="item mdl-shadow--2dp" style="padding: 6px;">
-                        <img ng-src="{{ cam[2] }}" style="float:left" height="100em" width="100em">
-                        <div>
-                          <span style="float:inherit; font-size: x-small; margin-left: 7px">Lugar: {{ cam[0] }}</span><br>
-                          <span style="float:inherit; font-size: x-small; margin-left: 7px">Concejo: {{ cam[1] }}:</span><br>
-                          <span style="float:inherit; font-size: x-small; margin-left: 7px">Categoría: {{ cam[3] }}</span><br>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-      --------------------------------------------------------------------------------------------------------------------->
-
-      <!-- listado de cams usando tarjetas MDL ----------------------------------------------------------------------------
-
-                  <div class="list">
-                    <div collection-repeat="cam in listacams.rows" style="padding:5px">
-                      <div class="item mdl-shadow--2dp" style="padding: 2%;">
-                        <a href="#">
-                          <img ng-src="{{ cam[2] }}" style="float:left" height="30%" width="30%">
-                          <div>
-                            <span style="float:inherit; font-size: x-small; margin-left: 2%">Lugar: {{ cam[0] }}<br></span>
-                            <span style="float:inherit; font-size: x-small; margin-left: 2%">Concejo: {{ cam[1] }}<br></span>
-                            <span style="float:inherit; font-size: x-small; margin-left: 2%">Categoría: {{ cam[3] }}</span>
-                          </div>
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-      ------------------------------------------------------------------------------------------------------------------->
 
 
 
