@@ -8,6 +8,8 @@
 //TODO: hacer una funcion que se encargue de cargar las imagenes remotas y que avise cuando no se pueden cargar y de
 //intentar cargarlas de nuevo
 
+//TODO: probar a hacer el filtrado de datos y la busqueda usando defian.js en lugar de los filtros de angular
+
 angular.module('webcams_asturias', ['ionic', 'webcams_asturias.controllers', 'jett.ionic.filter.bar'])
 
 .run(function($ionicPlatform, $ionicLoading, factoria_datos, DATOS_URL, $rootScope) {
@@ -32,17 +34,17 @@ angular.module('webcams_asturias', ['ionic', 'webcams_asturias.controllers', 'je
     //// mostrar loader
     //$ionicLoading.show({template:template_loader, noBackdrop:true});
 
-    // construir sql query: seleccionar el listado completo de camaras
+/*    // construir sql query: seleccionar el listado completo de camaras
     var sql_query_string = 'SELECT Lugar,Concejo,Imagen,Categoria,rowid FROM '+ DATOS_URL.FUSION_TABLE_ID;
 
     // obtener datos remotos
     factoria_datos.getRemoteData( sql_query_string ).success(function(data){
       // guarda datos remotos en $rootScope para compartir entre controladores
       $rootScope.listacams = data;
-      console.log('$rootScope.listacams', $rootScope.listacams);
+      console.log('$rootScope.listacams en metodo run', $rootScope.listacams);
     }).error(function(data, status){
         console.log('Error obteniendo datos remotos: ', status);
-    })
+    })*/
     // fin cargar datos remotos durante la fase de inicializacion --------------------------------------------------
 
   });
@@ -109,14 +111,21 @@ angular.module('webcams_asturias', ['ionic', 'webcams_asturias.controllers', 'je
 
   //TODO: utilizar resolve en la definicion de estado para obtener datos remotos en vez de en metodo run(). Probar a ver
   .state('app.tabs', {
-  url: '/tabs?categoria&concejo',
-  cache:false,
-  views: {
-    'menuContent': {
-      templateUrl: 'templates/tabs.html',
-      controller: 'TabsCtrl'
-    }
-  }
+    url: '/tabs?categoria&concejo',
+    cache:false,
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/tabs.html',
+        controller: 'TabsCtrl'
+      }
+    }//,
+    //resolve: {
+    //  resolvedCams: function ($q, factoria_datos) {
+    //    return factoria_datos;
+    //  }
+    //}
+
+
   })
 
   .state('app.tabs.listado', {
@@ -153,6 +162,21 @@ angular.module('webcams_asturias', ['ionic', 'webcams_asturias.controllers', 'je
     console.log("url", encodeURI(url));
     return $http.get( encodeURI(url), {cache: true} );
   }
+
+
+
+    //var getRemoteData = function( sql_query_string ) {
+    //  var url = DATOS_URL.API_ENDPOINT+ '?sql=' +sql_query_string+ '&key=' +DATOS_URL.API_KEY;
+    //  console.log("url", encodeURI(url));
+    //  var promesa = $http.get( encodeURI(url), {cache: true}).success(function(data){
+    //    return data;
+    //  });
+    //  return promesa
+    //}
+
+
+
+
 
   var getRemoteImg = function ( url ) {
     //var resultado = $http.get( url, {cache: true, headers: {

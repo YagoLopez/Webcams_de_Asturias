@@ -41,6 +41,7 @@ angular.module('webcams_asturias.controllers', [])
   };
 
 
+/*
   $scope.showFilterBar = function () {
     filterBarInstance = $ionicFilterBar.show({
       items: $rootScope.listacams.rows,
@@ -51,6 +52,7 @@ angular.module('webcams_asturias.controllers', [])
       //filterProperties: 'description'
     });
   };
+*/
 
 
 
@@ -91,17 +93,17 @@ angular.module('webcams_asturias.controllers', [])
 
 }) //fin DetallecamCtrl
 
-.controller('TabsCtrl', function($scope, $stateParams, $ionicLoading, $rootScope, $ionicFilterBar){
+.controller('TabsCtrl', function($scope, $stateParams, $ionicLoading, $rootScope, $ionicFilterBar, /*resolvedCams,*/ factoria_datos, DATOS_URL){
 
-    // plantilla html para ionic loader
-    //var template_loader = "<ion-spinner icon='lines' class='spinner-calm'></ion-spinner><br/>Cargando datos...";
-    var template_loader = "Cargando datos...";
     // mostrar loader
+    var icono_spinner = "<ion-spinner icon='lines' class='spinner-calm'></ion-spinner><br/>";
+    var template_loader = "Cargando datos...";
     $ionicLoading.show({template:template_loader, noBackdrop:true});
 
-    $rootScope.concejo = $stateParams.concejo;
     /* TODO: hacer una tabla propia para las categorias en fusion tables y hacer join de
-    la tabla de webcams y la de categorias */
+     la tabla de webcams y la de categorias */
+
+    $rootScope.concejo = $stateParams.concejo;
     $rootScope.categoria = $stateParams.categoria;
     console.log('stateParams en tabs ctrl', $stateParams);
 
@@ -125,20 +127,61 @@ angular.module('webcams_asturias.controllers', [])
     }
 */
 
+
+    var sql_query_string = 'SELECT Lugar,Concejo,Imagen,Categoria,rowid FROM '+ DATOS_URL.FUSION_TABLE_ID;
+    factoria_datos.getRemoteData(sql_query_string).success(function(data){
+
+      $rootScope.listacams = data;
+      $rootScope.items = data.rows;
+
+      console.log('$rootScope.listacams en tabs ctrl', $rootScope.listacams);
+      console.log('$rootScope.items en tabs ctrl', $rootScope.items);
+
+      $scope.showFilterBar = function () {
+        filterBarInstance = $ionicFilterBar.show({
+          items: $rootScope.listacams.rows,
+          update: function (filteredItems, filteredText) {
+            $rootScope.items = filteredItems;
+            //console.log('filteredItems', filteredItems);
+          }
+          //filterProperties: 'description'
+        });
+      };
+
+    }).error(function(data, status) {
+      console.log('Error obteniendo datos remotos: ', status);
+    });
+
+
+
+
+
+
+
+    //var sql_query_string = 'SELECT Lugar,Concejo,Imagen,Categoria,rowid FROM '+ DATOS_URL.FUSION_TABLE_ID;
+    //$scope.resolvedCams = resolvedCams.getRemoteData(sql_query_string).success(function(data) {
+    //  $rootScope.resolvedCams2 = data;
+    //  console.log('resolvedCams2', $scope.resolvedCams2);
+    //})
+
+
+    //var sql_query_string = 'SELECT Lugar,Concejo,Imagen,Categoria,rowid FROM '+ DATOS_URL.FUSION_TABLE_ID;
+    //factoria_datos.getRemoteData(sql_query_string).then(function(data){
+    //  $rootScope.resolvedCams = data.data;
+    //  console.log('$rootScope.resolvedCams.data', $rootScope.resolvedCams);
+    //});
+
+
+
     // despues de cargar la pagina con los datos remotos ocultar el loader
     $scope.$on('$ionicView.afterEnter', function (viewInfo, state) {
       $ionicLoading.hide();
       //console.log('$ionicView.afterEnter', viewInfo, state);
     });
 
-
-
-
   })// fin TabsCtrl
 
-.controller('ListadoCtrl', function($scope, $state, $filter){
-
-
+.controller('ListadoCtrl', function($scope, $state, factoria_datos, $rootScope, DATOS_URL){
 }) // fin ListadoCtrl
 
 .controller('MosaicoCtrl', function($scope, $state, $rootScope){
