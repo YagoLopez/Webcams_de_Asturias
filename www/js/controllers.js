@@ -152,6 +152,9 @@ angular.module('webcams_asturias.controllers', [])
           update: function (filteredItems, filteredText) {
             $rootScope.items = filteredItems;
             //console.log('filteredItems', filteredItems);
+          },
+          expression: function (filterText, cam, index, array) {
+            //return value.propertyName === filterText || value.anotherPropertyName === filterText;
           }
           //filterProperties: 'description'
         });
