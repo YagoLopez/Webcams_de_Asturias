@@ -156,55 +156,18 @@ angular.module('webcams_asturias', ['ionic', 'webcams_asturias.controllers', 'je
 
 .factory('factoria_datos', function($http, DATOS_URL){
 
-  //TODO: intentar resolver aqui la promesa. Devolver los datos concatenando aqui "then" de esta forma:
-  var getRemoteData = function( sql_query_string ) {
-    var url = DATOS_URL.API_ENDPOINT+ '?sql=' +sql_query_string+ '&key=' +DATOS_URL.API_KEY;
-    console.log("url", encodeURI(url));
-    return $http.get( encodeURI(url), {cache: true} );
-  }
+    // TODO: hacer funcion getLocalData para obtener datos en local
+    var getLocalData = function(){};
 
-
-
-    //var getRemoteData = function( sql_query_string ) {
-    //  var url = DATOS_URL.API_ENDPOINT+ '?sql=' +sql_query_string+ '&key=' +DATOS_URL.API_KEY;
-    //  console.log("url", encodeURI(url));
-    //  var promesa = $http.get( encodeURI(url), {cache: true}).success(function(data){
-    //    return data;
-    //  });
-    //  return promesa
-    //}
-
-
-
-
-
-  var getRemoteImg = function ( url ) {
-    //var resultado = $http.get( url, {cache: true, headers: {
-    //  'Access-Control-Allow-Headers': 'image/jpg',
-    //  'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
-    //  'Access-Control-Allow-Origin': '*'
-    //}} )
-    //  .success(function(data, status, header, config){
-    //  console.log('data', data);
-    //  console.log('data', status);
-    //  console.log('data', header);
-    //  console.log('data', config);
-    //
-    //})
-    //  .error(function(data, status, header, config){
-    //    console.log('data', data);
-    //    console.log('data', status);
-    //    console.log('data', header);
-    //    console.log('data', config);
-    //
-    //})
-  }
-
-  // TODO: hacer funcion getLocalData para obtener datos en local
-  return {
-    getRemoteData: getRemoteData,
-    getRemoteImg: getRemoteImg
-  }
+    var getRemoteData = function( sql_query_string ) {
+      var url = DATOS_URL.API_ENDPOINT+ '?sql=' +sql_query_string+ '&key=' +DATOS_URL.API_KEY;
+      console.log("url", encodeURI(url));
+      return $http.get( encodeURI(url), {cache: true} );
+    }
+    return {
+      getRemoteData: getRemoteData,
+      getLocalData: getLocalData
+    }
 })
 
 .constant('DATOS_URL', {

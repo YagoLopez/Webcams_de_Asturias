@@ -1,6 +1,6 @@
 angular.module('webcams_asturias.controllers', [])
 
-.controller('AppCtrl', function($scope, $ionicModal, $timeout, $ionicFilterBar, $rootScope) {
+.controller('AppCtrl', function($scope, $ionicModal, $timeout, $rootScope) {
 
   // With the new view caching in Ionic, Controllers are only called
   // when they are recreated or on app start, instead of every page change.
@@ -93,53 +93,62 @@ angular.module('webcams_asturias.controllers', [])
 
 }) //fin DetallecamCtrl
 
-.controller('TabsCtrl', function($scope, $stateParams, $ionicLoading, $rootScope, $ionicFilterBar, /*resolvedCams,*/ factoria_datos, DATOS_URL){
+.controller('TabsCtrl', function($scope, $stateParams, $ionicLoading, $rootScope, $ionicFilterBar, factoria_datos, DATOS_URL, $filter){
 
     // mostrar loader
     var icono_spinner = "<ion-spinner icon='lines' class='spinner-calm'></ion-spinner><br/>";
     var template_loader = "Cargando datos...";
     $ionicLoading.show({template:template_loader, noBackdrop:true});
 
-    /* TODO: hacer una tabla propia para las categorias en fusion tables y hacer join de
-     la tabla de webcams y la de categorias */
+    /*
+    TODO: hacer una tabla propia para las categorias en fusion tables y hacer join de
+    la tabla de webcams y la de categorias
+    TODO: Hacer tabla para concejos
+    */
 
+    // obtiene parametros de url
     $rootScope.concejo = $stateParams.concejo;
     $rootScope.categoria = $stateParams.categoria;
     console.log('stateParams en tabs ctrl', $stateParams);
 
-/*
-    $scope.fltrConcejo = function(cam) {
-      //TODO: quitar acentos para hacer mejor la búsqueda por concejo
-      if ( !$stateParams.concejo )
-        return cam;
-      else
-        return cam[1].toLowerCase() == $stateParams.concejo.toLowerCase();
-    }
-
-    $scope.fltrCategoria = function(cam) {
-      if ( !$stateParams.categoria )
-        return cam;
-      else {
-        //if(cam[3] == 'categoria=' + $stateParams.categoria)
-        //console.log('cam[3]', cam[3]);
-        return cam[3] == 'categoria=' + $stateParams.categoria;
-      }
-    }
-*/
-
-
     var sql_query_string = 'SELECT Lugar,Concejo,Imagen,Categoria,rowid FROM '+ DATOS_URL.FUSION_TABLE_ID;
     factoria_datos.getRemoteData(sql_query_string).success(function(data){
 
+
+      function estaEnCategoria(categoria, idCategoria) {
+        return (categoria.indexOf('categoria='+idCategoria) > -1);
+      }
+
+      // filtra las cams por los parametros de la url: concejo y categoria
+      var camsFiltradasPorUrl = $filter('filter')(data.rows, function(cam){
+          var concejoCam = cam[1];
+          var categoriaCam = cam[3];
+          var idCategoriaCam = $rootScope.categoria;
+          if ($rootScope.concejo && $rootScope.categoria)
+            return ((concejoCam.toLowerCase()== $rootScope.concejo.toLowerCase()) && (estaEnCategoria(categoriaCam, idCategoriaCam)));
+          else {
+            if ($rootScope.concejo)
+              return (concejoCam.toLowerCase() == $rootScope.concejo.toLowerCase());
+            if ($rootScope.categoria)
+              return (estaEnCategoria(categoriaCam, idCategoriaCam));
+          }
+        });
+      console.log('camsFiltradasPorUrl', camsFiltradasPorUrl);
+
+      // listacams contiene las cams sin filtrar
+      // items contiene las cams despues de ser filtradas
       $rootScope.listacams = data;
-      $rootScope.items = data.rows;
+      if (camsFiltradasPorUrl.length == 0)
+        camsFiltradasPorUrl = data.rows;
+      $rootScope.items = camsFiltradasPorUrl;
+      //console.log('$rootScope.listacams en tabs ctrl', $rootScope.listacams);
+      //console.log('$rootScope.items en tabs ctrl', $rootScope.items);
 
-      console.log('$rootScope.listacams en tabs ctrl', $rootScope.listacams);
-      console.log('$rootScope.items en tabs ctrl', $rootScope.items);
-
+      // filtra las cams segun una cadena de texto que haya introducido el usuario
+      // este filtro se aplica sobre los datos previamente filtrados por url
       $scope.showFilterBar = function () {
         filterBarInstance = $ionicFilterBar.show({
-          items: $rootScope.listacams.rows,
+          items: camsFiltradasPorUrl,
           update: function (filteredItems, filteredText) {
             $rootScope.items = filteredItems;
             //console.log('filteredItems', filteredItems);
@@ -148,15 +157,20 @@ angular.module('webcams_asturias.controllers', [])
         });
       };
 
+
+
     }).error(function(data, status) {
       console.log('Error obteniendo datos remotos: ', status);
     });
 
 
 
-
-
-
+    //TODO: arreglar que se muestre y se oculte bien el loader
+    // despues de cargar la pagina con los datos remotos ocultar el loader
+    $scope.$on('$ionicView.afterEnter', function (viewInfo, state) {
+      $ionicLoading.hide();
+      //console.log('$ionicView.afterEnter', viewInfo, state);
+    });
 
     //var sql_query_string = 'SELECT Lugar,Concejo,Imagen,Categoria,rowid FROM '+ DATOS_URL.FUSION_TABLE_ID;
     //$scope.resolvedCams = resolvedCams.getRemoteData(sql_query_string).success(function(data) {
@@ -173,11 +187,6 @@ angular.module('webcams_asturias.controllers', [])
 
 
 
-    // despues de cargar la pagina con los datos remotos ocultar el loader
-    $scope.$on('$ionicView.afterEnter', function (viewInfo, state) {
-      $ionicLoading.hide();
-      //console.log('$ionicView.afterEnter', viewInfo, state);
-    });
 
   })// fin TabsCtrl
 
