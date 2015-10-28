@@ -93,6 +93,13 @@ angular.module('webcams_asturias.controllers', [])
 
 }) //fin DetallecamCtrl
 
+
+
+
+
+
+
+
 .controller('TabsCtrl', function($scope, $stateParams, $ionicLoading, $rootScope, $ionicFilterBar, factoria_datos, DATOS_URL, $filter){
 
     // mostrar loader
@@ -121,51 +128,58 @@ angular.module('webcams_asturias.controllers', [])
 
       // filtra las cams por los parametros de la url: concejo y categoria
       var camsFiltradasPorUrl = $filter('filter')(data.rows, function(cam){
-          var concejoCam = cam[1];
-          var categoriaCam = cam[3];
-          var idCategoriaCam = $rootScope.categoria;
-          if ($rootScope.concejo && $rootScope.categoria)
-            return ((concejoCam.toLowerCase()== $rootScope.concejo.toLowerCase()) && (estaEnCategoria(categoriaCam, idCategoriaCam)));
-          else {
-            if ($rootScope.concejo)
-              return (concejoCam.toLowerCase() == $rootScope.concejo.toLowerCase());
-            if ($rootScope.categoria)
-              return (estaEnCategoria(categoriaCam, idCategoriaCam));
-          }
-        });
-      console.log('camsFiltradasPorUrl', camsFiltradasPorUrl);
+        var concejoCam = cam[1];
+        var categoriaCam = cam[3];
+        var idCategoriaCam = $rootScope.categoria;
+        //TODO: intentar asignar cadena vacia cuando los parametros son nulos para simplificar el codigo
+        if ($rootScope.concejo && $rootScope.categoria)
+          return ((concejoCam.toLowerCase()== $rootScope.concejo.toLowerCase()) && (estaEnCategoria(categoriaCam, idCategoriaCam)));
+        else {
+          if ($rootScope.concejo)
+            return (concejoCam.toLowerCase() == $rootScope.concejo.toLowerCase());
+          if ($rootScope.categoria)
+            return (estaEnCategoria(categoriaCam, idCategoriaCam));
+        }
+      });
+      //console.log('camsFiltradasPorUrl', camsFiltradasPorUrl);
 
       // listacams contiene las cams sin filtrar
       // items contiene las cams despues de ser filtradas
       $rootScope.listacams = data;
       if (camsFiltradasPorUrl.length == 0)
         camsFiltradasPorUrl = data.rows;
-      $rootScope.items = camsFiltradasPorUrl;
+      $scope.items = camsFiltradasPorUrl;
       //console.log('$rootScope.listacams en tabs ctrl', $rootScope.listacams);
-      //console.log('$rootScope.items en tabs ctrl', $rootScope.items);
+      console.log('$scope.items antes de filtrado', $scope.items);
 
       // filtra las cams segun una cadena de texto que haya introducido el usuario
       // este filtro se aplica sobre los datos previamente filtrados por url
-      $scope.showFilterBar = function () {
+      $rootScope.showFilterBar = function () {
+        console.log('show filter bar');
         filterBarInstance = $ionicFilterBar.show({
           items: camsFiltradasPorUrl,
           update: function (filteredItems, filteredText) {
-            $rootScope.items = filteredItems;
+            //console.log('$ionicfilterbar', $ionicFilterBar);
+            //console.log('filterbarinstance', filterBarInstance);
+            $scope.items = filteredItems;
             //console.log('filteredItems', filteredItems);
-          },
-          expression: function (filterText, cam, index, array) {
-            //return value.propertyName === filterText || value.anotherPropertyName === filterText;
-          }
-          //filterProperties: 'description'
+            console.log('$scope.items despues de filtrado', $scope.items);
+          }//,
+          //expression: function (filterText, cam, index, array) {
+          //  //return value.propertyName === filterText || value.anotherPropertyName === filterText;
+          //},
+          //cancel: function(){
+          //},
+          //done: function(){
+          //}
+          ////filterProperties: 'description'
         });
       };
-
 
 
     }).error(function(data, status) {
       console.log('Error obteniendo datos remotos: ', status);
     });
-
 
 
     //TODO: arreglar que se muestre y se oculte bien el loader
@@ -187,11 +201,21 @@ angular.module('webcams_asturias.controllers', [])
     //  $rootScope.resolvedCams = data.data;
     //  console.log('$rootScope.resolvedCams.data', $rootScope.resolvedCams);
     //});
-
-
-
-
   })// fin TabsCtrl
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 .controller('ListadoCtrl', function($scope, $state, factoria_datos, $rootScope, DATOS_URL){
 }) // fin ListadoCtrl
