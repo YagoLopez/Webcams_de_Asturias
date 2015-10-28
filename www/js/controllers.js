@@ -93,14 +93,11 @@ angular.module('webcams_asturias.controllers', [])
 
 }) //fin DetallecamCtrl
 
+.controller('TabsCtrl', function($scope, $stateParams, $ionicLoading, $rootScope, $ionicFilterBar, factoria_datos, DATOS_URL, $filter, $ionicScrollDelegate){
 
 
-
-
-
-
-
-.controller('TabsCtrl', function($scope, $stateParams, $ionicLoading, $rootScope, $ionicFilterBar, factoria_datos, DATOS_URL, $filter){
+    $rootScope.mostrarIconoBusqueda = true;
+    $rootScope.animarItems = true;
 
     // mostrar loader
     var icono_spinner = "<ion-spinner icon='lines' class='spinner-calm'></ion-spinner><br/>";
@@ -141,7 +138,6 @@ angular.module('webcams_asturias.controllers', [])
             return (estaEnCategoria(categoriaCam, idCategoriaCam));
         }
       });
-      //console.log('camsFiltradasPorUrl', camsFiltradasPorUrl);
 
       // listacams contiene las cams sin filtrar
       // items contiene las cams despues de ser filtradas
@@ -149,21 +145,19 @@ angular.module('webcams_asturias.controllers', [])
       if (camsFiltradasPorUrl.length == 0)
         camsFiltradasPorUrl = data.rows;
       $scope.items = camsFiltradasPorUrl;
-      //console.log('$rootScope.listacams en tabs ctrl', $rootScope.listacams);
-      console.log('$scope.items antes de filtrado', $scope.items);
 
       // filtra las cams segun una cadena de texto que haya introducido el usuario
       // este filtro se aplica sobre los datos previamente filtrados por url
+      //TODO: desactivar la animacion del listado al mostrar search bar y volver a activarla al cerrarla
+      //TODO: usar ng-show para mostrar/ocultar la barra de busqueda
+      // se podría hacer con ng-if=$scope.searchbaractive o algo parecido
       $rootScope.showFilterBar = function () {
-        console.log('show filter bar');
+        $rootScope.animarItems = false;
         filterBarInstance = $ionicFilterBar.show({
-          items: camsFiltradasPorUrl,
+          items: $scope.items,
           update: function (filteredItems, filteredText) {
-            //console.log('$ionicfilterbar', $ionicFilterBar);
-            //console.log('filterbarinstance', filterBarInstance);
             $scope.items = filteredItems;
-            //console.log('filteredItems', filteredItems);
-            console.log('$scope.items despues de filtrado', $scope.items);
+            $ionicScrollDelegate.scrollTop(true);
           }//,
           //expression: function (filterText, cam, index, array) {
           //  //return value.propertyName === filterText || value.anotherPropertyName === filterText;
@@ -176,11 +170,9 @@ angular.module('webcams_asturias.controllers', [])
         });
       };
 
-
     }).error(function(data, status) {
       console.log('Error obteniendo datos remotos: ', status);
     });
-
 
     //TODO: arreglar que se muestre y se oculte bien el loader
     // despues de cargar la pagina con los datos remotos ocultar el loader
@@ -189,33 +181,8 @@ angular.module('webcams_asturias.controllers', [])
       //console.log('$ionicView.afterEnter', viewInfo, state);
     });
 
-    //var sql_query_string = 'SELECT Lugar,Concejo,Imagen,Categoria,rowid FROM '+ DATOS_URL.FUSION_TABLE_ID;
-    //$scope.resolvedCams = resolvedCams.getRemoteData(sql_query_string).success(function(data) {
-    //  $rootScope.resolvedCams2 = data;
-    //  console.log('resolvedCams2', $scope.resolvedCams2);
-    //})
 
-
-    //var sql_query_string = 'SELECT Lugar,Concejo,Imagen,Categoria,rowid FROM '+ DATOS_URL.FUSION_TABLE_ID;
-    //factoria_datos.getRemoteData(sql_query_string).then(function(data){
-    //  $rootScope.resolvedCams = data.data;
-    //  console.log('$rootScope.resolvedCams.data', $rootScope.resolvedCams);
-    //});
   })// fin TabsCtrl
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 .controller('ListadoCtrl', function($scope, $state, factoria_datos, $rootScope, DATOS_URL){
 }) // fin ListadoCtrl
