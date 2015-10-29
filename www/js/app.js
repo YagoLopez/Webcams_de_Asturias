@@ -5,7 +5,12 @@
 // url de las categorias codificada con urlencode. Usar como plantilla
 //http%3A%2F%2Fwebcamsdeasturias.com%2Finterior.php%3Fcategoria%3D1
 
-angular.module('webcams_asturias', ['ionic', 'webcams_asturias.controllers'])
+//TODO: hacer una funcion que se encargue de cargar las imagenes remotas y que avise cuando no se pueden cargar y de
+//intentar cargarlas de nuevo
+
+//TODO: probar a hacer el filtrado de datos y la busqueda usando defian.js en lugar de los filtros de angular
+
+angular.module('webcams_asturias', ['ionic', 'webcams_asturias.controllers', 'jett.ionic.filter.bar'])
 
 .run(function($ionicPlatform, $ionicLoading, factoria_datos, DATOS_URL, $rootScope) {
   $ionicPlatform.ready(function() {
@@ -29,17 +34,17 @@ angular.module('webcams_asturias', ['ionic', 'webcams_asturias.controllers'])
     //// mostrar loader
     //$ionicLoading.show({template:template_loader, noBackdrop:true});
 
-    // construir sql query: seleccionar el listado completo de camaras
+/*    // construir sql query: seleccionar el listado completo de camaras
     var sql_query_string = 'SELECT Lugar,Concejo,Imagen,Categoria,rowid FROM '+ DATOS_URL.FUSION_TABLE_ID;
 
     // obtener datos remotos
     factoria_datos.getRemoteData( sql_query_string ).success(function(data){
       // guarda datos remotos en $rootScope para compartir entre controladores
       $rootScope.listacams = data;
-      console.log('$rootScope.listacams', $rootScope.listacams);
+      console.log('$rootScope.listacams en metodo run', $rootScope.listacams);
     }).error(function(data, status){
         console.log('Error obteniendo datos remotos: ', status);
-    })
+    })*/
     // fin cargar datos remotos durante la fase de inicializacion --------------------------------------------------
 
   });
@@ -106,14 +111,21 @@ angular.module('webcams_asturias', ['ionic', 'webcams_asturias.controllers'])
 
   //TODO: utilizar resolve en la definicion de estado para obtener datos remotos en vez de en metodo run(). Probar a ver
   .state('app.tabs', {
-  url: '/tabs?categoria&concejo',
-  cache:false,
-  views: {
-    'menuContent': {
-      templateUrl: 'templates/tabs.html',
-      controller: 'TabsCtrl'
-    }
-  }
+    url: '/tabs?categoria&concejo',
+    cache:false,
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/tabs.html',
+        controller: 'TabsCtrl'
+      }
+    }//,
+    //resolve: {
+    //  resolvedCams: function ($q, factoria_datos) {
+    //    return factoria_datos;
+    //  }
+    //}
+
+
   })
 
   .state('app.tabs.listado', {
@@ -144,42 +156,18 @@ angular.module('webcams_asturias', ['ionic', 'webcams_asturias.controllers'])
 
 .factory('factoria_datos', function($http, DATOS_URL){
 
-  //TODO: intentar resolver aqui la promesa. Devolver los datos concatenando aqui "then" de esta forma:
-  var getRemoteData = function( sql_query_string ) {
-    var url = DATOS_URL.API_ENDPOINT+ '?sql=' +sql_query_string+ '&key=' +DATOS_URL.API_KEY;
-    console.log("url", encodeURI(url));
-    return $http.get( encodeURI(url), {cache: true} );
-  }
+    // TODO: hacer funcion getLocalData para obtener datos en local
+    var getLocalData = function(){};
 
-  //TODO: implementar funcion getLocalData
-  var getLocalData = function(pathFile){
-  }
-
-  //TODO: hacer un filtro que englobe los dos?
-  var fltrConcejo = function(cam, concejo) {
-   //TODO: quitar acentos para hacer mejor la búsqueda por concejo
-   if ( !concejo )
-     return cam;
-   else
-    return cam[1].toLowerCase() == concejo.toLowerCase();
-  }
-
-  var fltrCategoria = function(cam, categoria) {
-   if ( !categoria )
-     return cam;
-   else {
-     //if(cam[3] == 'categoria=' + categoria)
-     //console.log('cam[3]', cam[3]);
-     return cam[3] == 'categoria=' + categoria;
-   }
-  }
-
-  return {
-    getRemoteData: getRemoteData,
-    getLocalData:  getLocalData,
-    fltrConcejo:   fltrConcejo,
-    fltrCategoria: fltrCategoria,
-  }
+    var getRemoteData = function( sql_query_string ) {
+      var url = DATOS_URL.API_ENDPOINT+ '?sql=' +sql_query_string+ '&key=' +DATOS_URL.API_KEY;
+      console.log("url", encodeURI(url));
+      return $http.get( encodeURI(url), {cache: true} );
+    }
+    return {
+      getRemoteData: getRemoteData,
+      getLocalData: getLocalData
+    }
 })
 
 .constant('DATOS_URL', {
@@ -198,16 +186,6 @@ angular.module('webcams_asturias', ['ionic', 'webcams_asturias.controllers'])
   }
   return fallbackSrc;
 })
-
-
-
-
-
-
-
-
-
-
 
 /*
 .filter('concejoFltr', function(){
@@ -236,6 +214,8 @@ return filtro;
 
 })
 */
+
+
 
 // CORS request
 //angular.module('webcams_asturias')

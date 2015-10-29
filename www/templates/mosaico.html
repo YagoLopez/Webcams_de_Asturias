@@ -6,9 +6,17 @@
     <!--TODO: añadir loader en galería-->
 
     <div class="grid">
+<!--
       <div class="row"
            ng-repeat="cam in cams = (listacams.rows | filter:(cam[1]=concejo) | filter:(cam[3]='categoria='+categoria))"
            ng-if="$index % 3 === 0" force-refresh-images="true" style="padding:0; margin:0px;">
+-->
+
+      <div class="row"
+           ng-repeat="cam in items"
+           ng-if="$index % 3 === 0" force-refresh-images="true" style="padding:0; margin:0px;">
+
+
 
         <!--TODO: poner ion-item en lugar de div-->
         <div class="col col-33 animated zoomIn" ng-if="$index < cams.length" style="padding:2px;">
