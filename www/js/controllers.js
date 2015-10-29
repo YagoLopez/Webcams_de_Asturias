@@ -41,8 +41,6 @@ angular.module('webcams_asturias.controllers', [])
   };
 
 
-  $rootScope.mostrarIconoBusqueda = false;
-
   })
 
 .controller('PlaylistsCtrl', function($scope) {
@@ -83,10 +81,8 @@ angular.module('webcams_asturias.controllers', [])
 
 .controller('TabsCtrl', function($scope, $stateParams, $ionicLoading, $rootScope, $ionicFilterBar, factoria_datos, DATOS_URL, $filter, $ionicScrollDelegate, $ionicModal){
 
-
-    $rootScope.mostrarIconoBusqueda = true;
     $rootScope.animarListItems = true;
-
+    console.log('showSearchBar', $rootScope.showSearchbar);
     // mostrar loader
     var icono_spinner = "<ion-spinner icon='lines' class='spinner-calm'></ion-spinner><br/>";
     var template_loader = "Cargando datos...";
@@ -144,12 +140,14 @@ angular.module('webcams_asturias.controllers', [])
       //encuentra "Puerto de Llanes"
       $rootScope.showFilterBar = function () {
         $rootScope.animarListItems = false;
-        filterBarInstance = $ionicFilterBar.show({
+        $scope.filterBarInstance = $ionicFilterBar.show({
           items: $scope.items,
           update: function (filteredItems, filteredText) {
             $scope.items = filteredItems;
             $ionicScrollDelegate.scrollTop(false);
-          }//,
+          },
+          cancelText: 'Cancelar',
+          //,
           //expression: function (filterText, cam, index, array) {
           //  //return value.propertyName === filterText || value.anotherPropertyName === filterText;
           //},
@@ -164,6 +162,7 @@ angular.module('webcams_asturias.controllers', [])
       $ionicLoading.hide();
 
     }).error(function(data, status) {
+      $ionicLoading.hide();
       console.log('Error obteniendo datos remotos: ', status);
     });
 

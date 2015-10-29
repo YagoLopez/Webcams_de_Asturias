@@ -156,8 +156,9 @@ angular.module('webcams_asturias', ['ionic', 'webcams_asturias.controllers', 'je
 
 .factory('factoria_datos', function($http, DATOS_URL){
 
-    // TODO: hacer funcion getLocalData para obtener datos en local
-    var getLocalData = function(){};
+    var getLocalData = function(){
+      // TODO: hacer funcion getLocalData para obtener datos en local
+    };
 
     var getRemoteData = function( sql_query_string ) {
       var url = DATOS_URL.API_ENDPOINT+ '?sql=' +sql_query_string+ '&key=' +DATOS_URL.API_KEY;
