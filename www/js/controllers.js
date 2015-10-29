@@ -59,6 +59,7 @@ angular.module('webcams_asturias.controllers', [])
 .controller('PlaylistCtrl', function($scope) {
   })
 
+//TODO: no se necesita este controlador
 .controller('DetallecamCtrl', function($scope, $stateParams, $ionicLoading, DATOS_URL, $filter, $rootScope) {
 
     //TODO: unficar la plantilla loading en una constante
@@ -102,6 +103,7 @@ angular.module('webcams_asturias.controllers', [])
     $rootScope.categoria = $stateParams.categoria;
     console.log('stateParams en tabs ctrl', $stateParams);
 
+    //TODO: cachear las imagenes
     var sql_query_string = 'SELECT Lugar,Concejo,Imagen,Categoria,rowid FROM '+ DATOS_URL.FUSION_TABLE_ID;
     factoria_datos.getRemoteData(sql_query_string).success(function(data){
 
@@ -138,6 +140,8 @@ angular.module('webcams_asturias.controllers', [])
       //TODO: desactivar la animacion del listado al mostrar search bar y volver a activarla al cerrarla
       //TODO: usar ng-show para mostrar/ocultar la barra de busqueda
       // se podría hacer con ng-if=$scope.searchbaractive o algo parecido
+      //TODO: Habría que mejorar la búsqueda para que fuera menos estricta. Por ejemplo, si se introduce "puerto llanes" no se
+      //encuentra "Puerto de Llanes"
       $rootScope.showFilterBar = function () {
         $rootScope.animarListItems = false;
         filterBarInstance = $ionicFilterBar.show({
@@ -156,6 +160,8 @@ angular.module('webcams_asturias.controllers', [])
           ////filterProperties: 'description'
         });
       };
+
+      $ionicLoading.hide();
 
     }).error(function(data, status) {
       console.log('Error obteniendo datos remotos: ', status);
@@ -183,7 +189,7 @@ angular.module('webcams_asturias.controllers', [])
     //TODO: arreglar que se muestre y se oculte bien el loader
     // despues de cargar la pagina con los datos remotos ocultar el loader
     $scope.$on('$ionicView.afterEnter', function (viewInfo, state) {
-      $ionicLoading.hide();
+      //$ionicLoading.hide();
       //console.log('$ionicView.afterEnter', viewInfo, state);
     });
 
