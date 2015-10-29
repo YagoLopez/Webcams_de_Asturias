@@ -10,7 +10,7 @@
       <!--TODO: Usar el menu login para hacer la busqueda avanzada usando un dialog box-->
       <!--TODO: cuando falla al cargar la imagen avisar al usuario en el listado que puede intentar recargarla-->
       <!--TODO: poner animación en el listado-->
-
+      <!--TODO: poner la categoria en el titulo-->
       <div class="list">
 <!--
         <div ng-repeat="cam in listacams.rows | filter:(cam[1]=concejo) | filter:(cam[3]='categoria='+categoria)"
@@ -20,10 +20,10 @@
         <div ng-repeat="cam in cams = (items | filter:(cam[1]=concejo) | filter:(cam[3]='categoria='+categoria))")
              class="">
 -->
-        <div ng-repeat="cam in items" ng-class="{'chat-item':animarItems}" class="item-remove-animate">
+        <div ng-repeat="cam in items" ng-class="{'chat-item':animarListItems}" class="item-remove-animate">
 
-
-          <a class="item item-thumbnail-left item-icon-right" href="#/app/detalle/{{ cam[4]}}">
+          <div class="item item-thumbnail-left item-icon-right" ng-click="showModal(cam[4])">
+          <!--<a class="item item-thumbnail-left item-icon-right" href="#/app/detalle/{{ cam[4]}}">-->
             <img src="../img/ionic.png"/>
             <!--<img  ng-src="{{ cam[2]}}" fallback-src="http://google.com/favicon.ico"/>-->
             <div class="divListado">
@@ -39,8 +39,12 @@
               <!--<p>indice: {{ $index }}</p>-->
               <!--<p>ROWID: {{cam[4]}}</p>-->
             </div>
-            <i class="icon ion-android-exit" style="color: #387ef5;"></i>
-          </a>
+            <!--<i class="icon ion-android-exit" style="color: #387ef5;"></i>-->
+            <!--<i class="icon ion-log-in" style="color: #387ef5;"></i>-->
+            <i class="icon ion-images" style="color: #387ef5;"></i>
+
+          <!--</a>-->
+            </div>
 
         </div>
       </div>

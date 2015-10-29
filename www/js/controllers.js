@@ -41,20 +41,7 @@ angular.module('webcams_asturias.controllers', [])
   };
 
 
-/*
-  $scope.showFilterBar = function () {
-    filterBarInstance = $ionicFilterBar.show({
-      items: $rootScope.listacams.rows,
-      update: function (filteredItems) {
-        $scope.items = filteredItems;
-        console.log('items', filteredItems);
-      }
-      //filterProperties: 'description'
-    });
-  };
-*/
-
-
+  $rootScope.mostrarIconoBusqueda = false;
 
   })
 
@@ -93,11 +80,11 @@ angular.module('webcams_asturias.controllers', [])
 
 }) //fin DetallecamCtrl
 
-.controller('TabsCtrl', function($scope, $stateParams, $ionicLoading, $rootScope, $ionicFilterBar, factoria_datos, DATOS_URL, $filter, $ionicScrollDelegate){
+.controller('TabsCtrl', function($scope, $stateParams, $ionicLoading, $rootScope, $ionicFilterBar, factoria_datos, DATOS_URL, $filter, $ionicScrollDelegate, $ionicModal){
 
 
     $rootScope.mostrarIconoBusqueda = true;
-    $rootScope.animarItems = true;
+    $rootScope.animarListItems = true;
 
     // mostrar loader
     var icono_spinner = "<ion-spinner icon='lines' class='spinner-calm'></ion-spinner><br/>";
@@ -123,7 +110,7 @@ angular.module('webcams_asturias.controllers', [])
         return (categoria.indexOf('categoria='+idCategoria) > -1);
       }
 
-      // filtra las cams por los parametros de la url: concejo y categoria
+      // FILTRO 1: filtra las cams por los parametros de la url: concejo y categoria ////////////////////////////////
       var camsFiltradasPorUrl = $filter('filter')(data.rows, function(cam){
         var concejoCam = cam[1];
         var categoriaCam = cam[3];
@@ -139,25 +126,25 @@ angular.module('webcams_asturias.controllers', [])
         }
       });
 
-      // listacams contiene las cams sin filtrar
-      // items contiene las cams despues de ser filtradas
+      // $rootScope.listacams contiene las cams sin filtrar
+      // $rootScope.items contiene las cams filtradas por parametros de url
       $rootScope.listacams = data;
       if (camsFiltradasPorUrl.length == 0)
         camsFiltradasPorUrl = data.rows;
       $scope.items = camsFiltradasPorUrl;
 
-      // filtra las cams segun una cadena de texto que haya introducido el usuario
+      // FILTRO 2: filtra las cams segun una cadena de texto que haya introducido el usuario ///////////////////////
       // este filtro se aplica sobre los datos previamente filtrados por url
       //TODO: desactivar la animacion del listado al mostrar search bar y volver a activarla al cerrarla
       //TODO: usar ng-show para mostrar/ocultar la barra de busqueda
       // se podría hacer con ng-if=$scope.searchbaractive o algo parecido
       $rootScope.showFilterBar = function () {
-        $rootScope.animarItems = false;
+        $rootScope.animarListItems = false;
         filterBarInstance = $ionicFilterBar.show({
           items: $scope.items,
           update: function (filteredItems, filteredText) {
             $scope.items = filteredItems;
-            $ionicScrollDelegate.scrollTop(true);
+            $ionicScrollDelegate.scrollTop(false);
           }//,
           //expression: function (filterText, cam, index, array) {
           //  //return value.propertyName === filterText || value.anotherPropertyName === filterText;
@@ -173,6 +160,25 @@ angular.module('webcams_asturias.controllers', [])
     }).error(function(data, status) {
       console.log('Error obteniendo datos remotos: ', status);
     });
+
+    // DIALOGO MODAL /////////////////////////////////////////////////////////////////////////////////////////////////
+    $ionicModal.fromTemplateUrl('templates/login.html', {
+      scope: $scope,
+      animation: 'scale-in'
+    }).then(function(modal) {
+      $scope.modal = modal;
+    });
+
+    $scope.showModal= function (rowid){
+      $scope.rowid = rowid;
+      $scope.modal.show();
+      $ionicScrollDelegate.scrollTop(false);
+    }
+    // Triggered in the login modal to close it
+    $scope.closeLogin = function() {
+      $scope.modal.hide();
+    };
+    // FIN DIALOGO MODAL /////////////////////////////////////////////////////////////////////////////////////////////
 
     //TODO: arreglar que se muestre y se oculte bien el loader
     // despues de cargar la pagina con los datos remotos ocultar el loader
