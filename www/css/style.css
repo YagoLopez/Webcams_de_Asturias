@@ -3,29 +3,20 @@
   /*top: 127px;*/
   top:200px;
 }
-
 .divListado {
   margin-top:15px;
 }
-
 .enlaceListado{
   border-width:2px;
   border-style:outset;
 }
-
 .resalteListado{
   color:#28a54c
 }
-
 .textoListado {
   font-size:small
 }
-
-
-
-
-
-
+/*****************************************/
 .chat-item.ng-enter {
   -webkit-animation: fadeInLeft 1s;
   animation: fadeInLeft 1s;
@@ -38,10 +29,7 @@
   -webkit-animation-duration:0;
   animation-duration:0;
 }
-
-
-
-
+/*****************************************/
 .scale-in {
   -webkit-transform: scale(0.0);
   transform: scale(0.0);
@@ -63,9 +51,7 @@
   -webkit-transition: all ease-in-out 250ms;
   transition: all ease-in-out 250ms;
 }
-
 /*********************************/
-
 .slide-in-right {
   -webkit-transform: translateX(100%);
   transform: translateX(100%); }

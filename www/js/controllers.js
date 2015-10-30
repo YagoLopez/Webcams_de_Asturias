@@ -79,16 +79,19 @@ angular.module('webcams_asturias.controllers', [])
 
 }) //fin DetallecamCtrl
 
-.controller('TabsCtrl', function($scope, $stateParams, $ionicLoading, $rootScope, $ionicFilterBar, factoria_datos, DATOS_URL, $filter, $ionicScrollDelegate, $ionicModal){
+.controller('TabsCtrl', function($scope, $stateParams, $ionicLoading, $rootScope, $ionicFilterBar,
+                                 factoria_datos, DATOS_URL, $filter, $ionicScrollDelegate, $ionicModal){
 
-    $rootScope.animarListItems = true;
-    // elimina search bar si la hubiera
-    if ($rootScope.filterBarInstance)
-      $rootScope.filterBarInstance();
     // mostrar loader
     var icono_spinner = "<ion-spinner icon='lines' class='spinner-calm'></ion-spinner><br/>";
     var template_loader = "Cargando datos...";
     $ionicLoading.show({template:template_loader, noBackdrop:true});
+
+    $rootScope.animarListItems = true;
+    // elimina search bar si la hubiera al mostrar la vista
+    if ($rootScope.filterBarInstance)
+      $rootScope.filterBarInstance();
+
 
     /*
     TODO: hacer una tabla propia para las categorias en fusion tables y hacer join de

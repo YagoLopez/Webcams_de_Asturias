@@ -1,7 +1,6 @@
 <ion-view title="Listado">
-  <!--TODO: cambiar el tema de la barra de busqueda a material design-->
   <ion-content overflow-scroll=’true’>
-
+      <!--TODO: cambiar el tema de la barra de busqueda a material design-->
       <!--TODO: añadir geolocalicacion y busqueda de camaras cercanas-->
       <!--TODO: mapa de google en el detalles-->
       <!--TODO: Entrada de menu que muestre en mapa todas las camaras-->
@@ -16,9 +15,7 @@
              class="">
 -->
         <div ng-repeat="cam in items" ng-class="{'chat-item':animarListItems}" class="item-remove-animate">
-
           <div class="item item-thumbnail-left item-icon-right" ng-click="showModal(cam[4])">
-          <!--<a class="item item-thumbnail-left item-icon-right" href="#/app/detalle/{{ cam[4]}}">-->
             <img src="../img/ionic.png"/>
             <!--<img  ng-src="{{ cam[2]}}" fallback-src="http://google.com/favicon.ico"/>-->
             <div class="divListado">
@@ -37,9 +34,7 @@
             <!--<i class="icon ion-android-exit" style="color: #387ef5;"></i>-->
             <!--<i class="icon ion-log-in" style="color: #387ef5;"></i>-->
             <i class="icon ion-images" style="color: #387ef5;"></i>
-          <!--</a>-->
             </div>
-
         </div>
       </div>
 
