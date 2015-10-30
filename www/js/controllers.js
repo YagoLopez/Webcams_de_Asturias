@@ -82,7 +82,9 @@ angular.module('webcams_asturias.controllers', [])
 .controller('TabsCtrl', function($scope, $stateParams, $ionicLoading, $rootScope, $ionicFilterBar, factoria_datos, DATOS_URL, $filter, $ionicScrollDelegate, $ionicModal){
 
     $rootScope.animarListItems = true;
-
+    // elimina search bar si la hubiera
+    if ($rootScope.filterBarInstance)
+      $rootScope.filterBarInstance();
     // mostrar loader
     var icono_spinner = "<ion-spinner icon='lines' class='spinner-calm'></ion-spinner><br/>";
     var template_loader = "Cargando datos...";
@@ -101,7 +103,6 @@ angular.module('webcams_asturias.controllers', [])
     //TODO: cachear las imagenes
     var sql_query_string = 'SELECT Lugar,Concejo,Imagen,Categoria,rowid FROM '+ DATOS_URL.FUSION_TABLE_ID;
     factoria_datos.getRemoteData(sql_query_string).success(function(data){
-
 
       function estaEnCategoria(categoria, idCategoria) {
         return (categoria.indexOf('categoria='+idCategoria) > -1);
@@ -133,19 +134,18 @@ angular.module('webcams_asturias.controllers', [])
       // FILTRO 2: filtra las cams segun una cadena de texto que haya introducido el usuario ///////////////////////
       // este filtro se aplica sobre los datos previamente filtrados por url
       //TODO: desactivar la animacion del listado al mostrar search bar y volver a activarla al cerrarla
-      //TODO: usar ng-show para mostrar/ocultar la barra de busqueda
-      // se podría hacer con ng-if=$scope.searchbaractive o algo parecido
       //TODO: Habría que mejorar la búsqueda para que fuera menos estricta. Por ejemplo, si se introduce "puerto llanes" no se
       //encuentra "Puerto de Llanes"
       $rootScope.showFilterBar = function () {
         $rootScope.animarListItems = false;
-        $scope.filterBarInstance = $ionicFilterBar.show({
+        $rootScope.filterBarInstance = $ionicFilterBar.show({
           items: $scope.items,
           update: function (filteredItems, filteredText) {
             $scope.items = filteredItems;
             $ionicScrollDelegate.scrollTop(false);
           },
           cancelText: 'Cancelar',
+          cancelOnStateChange: false
           //,
           //expression: function (filterText, cam, index, array) {
           //  //return value.propertyName === filterText || value.anotherPropertyName === filterText;

@@ -1,11 +1,11 @@
-<ion-modal-view title="Detalle">
+<ion-modal-view>
   <ion-header-bar>
-    <h1 class="title">Login</h1>
+    <h1 class="title">Datos de la Ubicación</h1>
     <div class="buttons">
-      <button class="button button-clear" ng-click="closeModal()">Close</button>
+      <button class="button button-clear" ng-click="closeModal()">Cerrar</button>
     </div>
   </ion-header-bar>
-  <ion-content overflow-scroll=’true’>
+  <ion-content>
 <!--
     <form ng-submit="doLogin()">
       <div class="list">
@@ -24,8 +24,6 @@
     </form>
 -->
 
-
-    <!-- --------------------------------------------------------------------------------------------  -->
 
     <div ng-repeat="cam in listacams.rows | filter: (cam[4]=rowid) : true">
 
