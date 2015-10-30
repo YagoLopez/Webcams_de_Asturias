@@ -13,7 +13,7 @@ angular.module('webcams_asturias.controllers', [])
   $scope.loginData = {};
 
   // Create the login modal that we will use later
-  $ionicModal.fromTemplateUrl('templates/login.html', {
+  $ionicModal.fromTemplateUrl('templates/detalle.html', {
     scope: $scope
   }).then(function(modal) {
     $scope.modal = modal;
@@ -82,7 +82,7 @@ angular.module('webcams_asturias.controllers', [])
 .controller('TabsCtrl', function($scope, $stateParams, $ionicLoading, $rootScope, $ionicFilterBar, factoria_datos, DATOS_URL, $filter, $ionicScrollDelegate, $ionicModal){
 
     $rootScope.animarListItems = true;
-    console.log('showSearchBar', $rootScope.showSearchbar);
+
     // mostrar loader
     var icono_spinner = "<ion-spinner icon='lines' class='spinner-calm'></ion-spinner><br/>";
     var template_loader = "Cargando datos...";
@@ -97,7 +97,6 @@ angular.module('webcams_asturias.controllers', [])
     // obtiene parametros de url
     $rootScope.concejo = $stateParams.concejo;
     $rootScope.categoria = $stateParams.categoria;
-    console.log('stateParams en tabs ctrl', $stateParams);
 
     //TODO: cachear las imagenes
     var sql_query_string = 'SELECT Lugar,Concejo,Imagen,Categoria,rowid FROM '+ DATOS_URL.FUSION_TABLE_ID;
@@ -167,7 +166,7 @@ angular.module('webcams_asturias.controllers', [])
     });
 
     // DIALOGO MODAL /////////////////////////////////////////////////////////////////////////////////////////////////
-    $ionicModal.fromTemplateUrl('templates/login.html', {
+    $ionicModal.fromTemplateUrl('templates/detalle.html', {
       scope: $scope,
       animation: 'scale-in'
     }).then(function(modal) {
@@ -180,7 +179,7 @@ angular.module('webcams_asturias.controllers', [])
       $ionicScrollDelegate.scrollTop(false);
     }
     // Triggered in the login modal to close it
-    $scope.closeLogin = function() {
+    $scope.closeModal = function () {
       $scope.modal.hide();
     };
     // FIN DIALOGO MODAL /////////////////////////////////////////////////////////////////////////////////////////////
