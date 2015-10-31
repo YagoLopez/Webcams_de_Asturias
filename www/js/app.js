@@ -10,7 +10,7 @@
 
 //TODO: probar a hacer el filtrado de datos y la busqueda usando defian.js en lugar de los filtros de angular
 
-angular.module('webcams_asturias', ['ionic', 'webcams_asturias.controllers', 'jett.ionic.filter.bar' ])
+angular.module('webcams_asturias', ['ionic', 'webcams_asturias.controllers', 'jett.ionic.filter.bar', 'ksSwiper' ])
 
 .run(function($ionicPlatform, $ionicLoading, factoria_datos, DATOS_URL, $rootScope) {
   $ionicPlatform.ready(function() {
@@ -65,7 +65,7 @@ angular.module('webcams_asturias', ['ionic', 'webcams_asturias.controllers', 'je
   views: {
     'menuContent': {
       templateUrl: 'templates/search.html',
-      controller: 'ChatsCtrl'
+      controller: 'SearchCtrl'
     }
   }
   })
@@ -215,8 +215,6 @@ return filtro;
 
 })
 */
-
-
 
 // CORS request
 //angular.module('webcams_asturias')

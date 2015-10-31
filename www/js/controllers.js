@@ -177,9 +177,9 @@ angular.module('webcams_asturias.controllers', [])
     });
 
     $scope.showModal= function (rowid){
+      $ionicScrollDelegate.scrollTop(false);
       $scope.rowid = rowid;
       $scope.modal.show();
-      $ionicScrollDelegate.scrollTop(false);
     }
     // Triggered in the login modal to close it
     $scope.closeModal = function () {
@@ -187,12 +187,29 @@ angular.module('webcams_asturias.controllers', [])
     };
     // FIN DIALOGO MODAL /////////////////////////////////////////////////////////////////////////////////////////////
 
+
+    // SWIPER ////////////////////////////////////////////////////////////////////////////////////////////////////////
+/*    console.log('swiper');
+    $scope.swiper = {};
+    $scope.next = function(){
+      $scope.swiper.slideNext();
+    };
+
+    $scope.onReadySwiper = function (swiper) {
+      swiper.on('slideChangeStart', function () {
+        console.log('slideChangeStart');
+      });
+    };*/
+
+    // FIN SWIPER ////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
     //TODO: arreglar que se muestre y se oculte bien el loader
     // despues de cargar la pagina con los datos remotos ocultar el loader
-    $scope.$on('$ionicView.afterEnter', function (viewInfo, state) {
+    //$scope.$on('$ionicView.afterEnter', function (viewInfo, state) {
       //$ionicLoading.hide();
       //console.log('$ionicView.afterEnter', viewInfo, state);
-    });
+    //});
 
 
   })// fin TabsCtrl
@@ -241,50 +258,49 @@ angular.module('webcams_asturias.controllers', [])
   })
 
 
-.controller('ChatsCtrl', function($scope){
-    // With the new view caching in Ionic, Controllers are only called
-    // when they are recreated or on app start, instead of every page change.
-    // To listen for when this page is active (for example, to refresh data),
-    // listen for the $ionicView.enter event:
-    //
-    //$scope.$on('$ionicView.enter', function(e) {
-    //});
-
-    $scope.items = 'abcdefghijklmnopqrstuvwxyz'.split("");
-
-    var chats = [{
-      id: 0,
-      name: 'Ben Sparrow',
-      lastText: 'You on your way?',
-      face: 'https://pbs.twimg.com/profile_images/514549811765211136/9SgAuHeY.png'
-    }, {
-      id: 1,
-      name: 'Max Lynx',
-      lastText: 'Hey, it\'s me',
-      face: 'https://avatars3.githubusercontent.com/u/11214?v=3&s=460'
-    }, {
-      id: 2,
-      name: 'Adam Bradleyson',
-      lastText: 'I should buy a boat',
-      face: 'https://pbs.twimg.com/profile_images/479090794058379264/84TKj_qa.jpeg'
-    }, {
-      id: 3,
-      name: 'Perry Governor',
-      lastText: 'Look at my mukluks!',
-      face: 'https://pbs.twimg.com/profile_images/598205061232103424/3j5HUXMY.png'
-    }, {
-      id: 4,
-      name: 'Mike Harrington',
-      lastText: 'This is wicked good ice cream.',
-      face: 'https://pbs.twimg.com/profile_images/578237281384841216/R3ae1n61.png'
-    }];
 
 
+.controller('SwiperCtrl', function($scope){
 
-    $scope.chats = chats;
+    //console.log('searchctrl');
+
+    $scope.swiper = {};
+
+    $scope.options = {
+      loop: false
+    };
+
+    $scope.next = function() {
+      $scope.swiper.slideNext();
+    };
+    $scope.prev = function() {
+      $scope.swiper.slidePrev();
+    };
+
+    $scope.generateSlides = function(number) {
+      return new Array(number);
+    };
+
+    $scope.activeThree = [1, 2];
+
+    $scope.updateActiveThree = function(activeSlide) {
+      // Simple test. The example in jij project is better. Because it factors in total amount of items and if active item is 0 the previous item is not -1, but lastitem index
+      $scope.activeThree = [
+        activeSlide - 1,
+        activeSlide,
+        activeSlide + 1
+      ];
+    };
 
 
+    $scope.onReadySwiper = function(swiper) {
+      swiper.on('onSlideChangeStart', function() {
+        $scope.updateActiveThree($scope.swiper.activeIndex);
+        console.log('fired');
+      });
+    };
 
-  })
+  }) // fin SearchCtrl controller
+
 
 ; // FIN

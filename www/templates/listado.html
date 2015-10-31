@@ -9,12 +9,14 @@
       <!--TODO: cuando falla al cargar la imagen avisar al usuario en el listado que puede intentar recargarla-->
       <!--TODO: poner animación en el listado-->
       <!--TODO: poner la categoria en el titulo-->
+      <!--TODO: probar a usar "track by" en "ng-repeat" para optimizar el filtrado-->
       <div class="list">
 <!--
         <div ng-repeat="cam in cams = (items | filter:(cam[1]=concejo) | filter:(cam[3]='categoria='+categoria))")
              class="">
 -->
-        <div ng-repeat="cam in items" ng-class="{'chat-item':animarListItems}" class="item-remove-animate">
+        <!--<div ng-repeat="cam in items" ng-class="{'chat-item':animarListItems}" class="item-remove-animate">-->
+        <div ng-repeat="cam in items" ng-class="{}" class="item-remove-animate">
           <div class="item item-thumbnail-left item-icon-right" ng-click="showModal(cam[4])">
             <img src="../img/ionic.png"/>
             <!--<img  ng-src="{{ cam[2]}}" fallback-src="http://google.com/favicon.ico"/>-->

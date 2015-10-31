@@ -32,21 +32,67 @@
     <div ng-repeat="cam in listacams.rows | filter: (cam[4]=rowid) : true">
 
       <!-- Ionic Card ---------------------------------------------------------------------------------------------->
-      <div class="list card">
-        <!--
+      <div class="list card" ng-controller="SwiperCtrl">
+<!--
         <div class="item item-avatar">
           <i class="icon ion-card"></i>
           <img src="/img/ionic.png">
           <h2>Pretty Hate Machine</h2>
           <p>Nine Inch Nails</p>
         </div>
-        -->
+-->
 
         <div class="item item-image">
-          <a href="{{ cam[2] }}" target="_blank">
+          <!--<a href="{{ cam[2] }}" target="_blank">-->
             <!--<img src="{{ cam[2] }}" style="padding:5%"/>-->
-            <img id="img_detalle" src="../img/ionic.png" style="padding:5%"/>
-          </a>
+            <!--<img id="img_detalle" src="../img/ionic.png" style="padding:5%"/>-->
+          <!--</a>-->
+
+
+
+
+          <style>
+            .myslides {
+              background: #eee;
+              font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+              font-size: 14px;
+              color: #000;
+              margin: 0;
+              padding: 0;
+              height: 500px;
+              border-bottom: 1px solid gray;
+            }
+            .swiper-container {
+              width: 100%;
+              height: 100%;
+            }
+            .swiper-slide {
+              text-align: center;
+              font-size: 18px;
+              background: none;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              background: grey url('http://www.broadwaybalancesamerica.com/images/ajax-loader.gif') no-repeat center;
+            }
+            .swiper-slide .slide-img {
+              width: 100%;
+              height: 100%;
+              background-size: contain;
+              background-position: center;
+              background-repeat: no-repeat;
+            }
+          </style>
+
+            <div class="myslides">
+              <ks-swiper-container swiper="swiper" on-ready="onReadySwiper(swiper)" override-parameters="options">
+                <ks-swiper-slide class="swiper-slide" ng-repeat="slide in generateSlides(5) track by $index">
+                  <div class="slide-img" ng-if="activeThree.indexOf($index+1) > -1"
+                       style="background-image: url('http://loremflickr.com/500/500?random={{$index+1}}')"></div>
+                </ks-swiper-slide>
+              </ks-swiper-container>
+            </div>
+
         </div>
 
         <div class="list list-inset">
@@ -70,6 +116,8 @@
       </a>
       -->
         <div class="item">
+          <button ng-click="prev()">Prev</button>
+          <button ng-click="next()">Next</button>
           <a class="button icon-right button-calm" href="{{ cam[2] }}" target="_blank">
             <i class="icon ion-arrow-expand"></i>
             &nbsp;Ampliar imagen
