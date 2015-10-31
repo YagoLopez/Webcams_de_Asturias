@@ -302,5 +302,14 @@ angular.module('webcams_asturias.controllers', [])
 
   }) // fin SearchCtrl controller
 
+.controller('TestCtrl', function($scope) {
+  console.log('prueba de controlador');
+  $scope.swiper = {};
+
+  $scope.next = function () {
+    $scope.swiper.slideNext();
+    console.log('swiper.slideNext()');
+  }
+}) // fin TestCtrl
 
 ; // FIN
