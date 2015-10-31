@@ -169,7 +169,7 @@ angular.module('webcams_asturias.controllers', [])
     });
 
     // DIALOGO MODAL /////////////////////////////////////////////////////////////////////////////////////////////////
-    $ionicModal.fromTemplateUrl('templates/detalle.html', {
+    $ionicModal.fromTemplateUrl('templates/detalle3.html', {
       scope: $scope,
       animation: 'scale-in'
     }).then(function(modal) {

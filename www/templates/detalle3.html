@@ -1,0 +1,44 @@
+<!--TODO: poner un boton para refrescar la pagina-->
+<!--TODO: poner advertencia: si no ser carga la imagen probar a recargar la pagina-->
+<!--TODO: animar las cards con animate.css-->
+<!--TODO: agrandar la sombra de la card-->
+<!--TODO: poder pasar a la camara siguiente usando algo parecido a tinder cards-->
+<!--TODO: hacer lazy loading-->
+<!--TODO: poner scroll vertical en cadaa pagina de swipe-->
+<ion-modal-view>
+  <ion-header-bar>
+    <h1 class="title">Detalles</h1>
+    <div class="buttons">
+      <button class="button button-clear" ng-click="closeModal()">Cerrar</button>
+    </div>
+  </ion-header-bar>
+  <ion-content>
+<div ng-controller="TestCtrl">
+  <ks-swiper-container swiper="swiper">
+    <ks-swiper-slide class="swiper-slide" ng-repeat="s in [1,2,3,4,5,6,7,8,9,10,11,12,13,14]">
+      <div class="list card">
+        <div class="item item-image">
+          <img ng-src="http://api.randomuser.me/portraits/thumb/men/{{s}}.jpg">
+        </div>
+        <div class="list list-inset">
+          <div class="item">
+            <i class="icon ion-android-locate"></i>
+            <b>Lugar: </b>{{ cam[0] }}
+          </div>
+          <div class="item">
+            <i class="icon ion-android-locate"></i>
+            <b>Concejo: </b>{{ cam[1] }}
+          </div>
+          <div class="item">
+            <i class="icon ion-android-locate"></i>
+            <b>Categoría: </b>{{ cam[3] }}
+          </div>
+        </div>
+      </div>
+    </ks-swiper-slide>
+  </ks-swiper-container>
+  <button ng-click="prev()">Prev</button>
+  <button ng-click="next()">Next</button>
+</div>
+  </ion-content>
+</ion-modal-view>

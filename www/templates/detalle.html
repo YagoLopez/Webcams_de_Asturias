@@ -47,6 +47,7 @@
             <!--<img src="{{ cam[2] }}" style="padding:5%"/>-->
             <!--<img id="img_detalle" src="../img/ionic.png" style="padding:5%"/>-->
           <!--</a>-->
+
           <!-- swiper ----------------------------------------------------------------------------------------------->
 <!--
           <style type="text/css">
@@ -90,20 +91,16 @@
             </ks-swiper-container>
           </div>
 -->
-
-
+          <!--TODO: hacer lazy loading-->
           <div ng-controller="TestCtrl">
             <ks-swiper-container swiper="swiper">
               <ks-swiper-slide class="swiper-slide" ng-repeat="s in [1,2,3,4,5,6,7,8,9,10,11,12,13,14]">
-                <img ng-src="http://api.randomuser.me/portraits/thumb/men/{{s}}.jpg">
+                  <img ng-src="http://api.randomuser.me/portraits/thumb/men/{{s}}.jpg">
               </ks-swiper-slide>
             </ks-swiper-container>
             <button ng-click="prev()">Prev</button>
             <button ng-click="next()">Next</button>
           </div>
-
-
-
           <!-- swiper ----------------------------------------------------------------------------------------------->
         </div>
 
@@ -129,8 +126,6 @@
       </a>
       -->
         <div class="item">
-          <button ng-click="prev()">Prev</button>
-          <button ng-click="next()">Next</button>
           <a class="button icon-right button-calm" href="{{ cam[2] }}" target="_blank">
             <i class="icon ion-arrow-expand"></i>
             &nbsp;Ampliar imagen
