@@ -6,6 +6,7 @@
 <!--TODO: hacer lazy loading-->
 <!--TODO: poner scroll vertical en cadaa pagina de swipe-->
 <!--TODO: parametrizar la imagen que se muestra por primera vez en swiper-->
+<!--TODO: lazy loading de imagenes-->
 <ion-modal-view>
   <ion-header-bar>
     <h1 class="title">Detalles</h1>
@@ -28,11 +29,12 @@
     itemIndex: {{itemIndex}}
     <div ng-controller="SwiperCtrl">
       <ks-swiper-container swiper="swiper"
+                           override-parameters="{'preloadImages':0, 'lazyLoading':1, 'lazyLoadingInPrevNext':1}"
                            slides-per-view="1"
                            slides-per-column="1"
                            space-between="0"
-                           pagination-is-active="true"
-                           pagination-clickable="true"
+                           pagination-is-active="false"
+                           pagination-clickable="false"
                            show-nav-buttons="false"
                            loop="false"
                            direction="horizontal"
@@ -42,8 +44,11 @@
           <div class="list card">
             <div class="item item-image">
               <!--<img ng-src="http://api.randomuser.me/portraits/thumb/men/{{$index}}.jpg">-->
-              <img ng-src="../img/ionic.png">
+              <!--<img ng-src="../img/ionic.png">-->
               <!--<img ng-src="{{cam[2]}}">-->
+              <div class="slide-img"
+                   style="background-image: url('http://loremflickr.com/500/500?random={{$index+1}}')"></div>
+
             </div>
             <div class="list list-inset">
               <div class="item">

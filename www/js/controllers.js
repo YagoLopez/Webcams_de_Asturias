@@ -169,7 +169,7 @@ angular.module('webcams_asturias.controllers', [])
     });
 
     /* DIALOGO MODAL *************************************************************************************************/
-    $ionicModal.fromTemplateUrl('templates/detalle3.html', {
+    $ionicModal.fromTemplateUrl('templates/detalle4.html', {
       scope: $scope,
       animation: 'scale-in'
     }).then(function(modal) {
@@ -181,11 +181,7 @@ angular.module('webcams_asturias.controllers', [])
       // indice en el array de items filtrados: items[indice]
       $scope.itemIndex = itemIndex;
       $scope.rowid = rowid;
-      console.log('itemIndex', $scope.itemIndex);
-      console.log('indice antes', $rootScope.swiper.activeIndex);
       $rootScope.swiper.activeIndex = itemIndex;
-      console.log('indice despues', $rootScope.swiper.activeIndex);
-      //console.log('swiper', $rootScope.swiper);
       $ionicScrollDelegate.scrollTop(false);
       $scope.modal.show();
     }
@@ -252,6 +248,7 @@ angular.module('webcams_asturias.controllers', [])
 
 
 
+/*
 .controller('SearchCtrl', function($scope){
 
     //console.log('searchctrl');
@@ -299,6 +296,56 @@ angular.module('webcams_asturias.controllers', [])
     };
 
   }) // fin SearchCtrl controller
+*/
+
+
+  .controller('SearchCtrl', function($rootScope){
+
+    $rootScope.swiper = {};
+
+    $rootScope.options = {
+      loop: false
+    };
+
+    $rootScope.next = function() {
+      $rootScope.swiper.slideNext();
+    };
+    $rootScope.prev = function() {
+      $rootScope.swiper.slidePrev();
+    };
+
+    $rootScope.generateSlides = function(number) {
+      return new Array(number);
+    };
+
+    $rootScope.activeThree = [1, 2];
+
+    $rootScope.updateActiveThree = function(activeSlide) {
+      // Simple test. The example in jij project is better. Because it factors in total amount of items and if active item is 0 the previous item is not -1, but lastitem index
+      $rootScope.activeThree = [
+        activeSlide - 1,
+        activeSlide,
+        activeSlide + 1
+      ];
+    };
+
+
+    $rootScope.onReadySwiper = function(swiper) {
+      $rootScope.swiper = swiper;
+      $rootScope.swiper.activeIndex = 1;
+      //swiper.slideTo(5);
+      //console.log('index despues', swiper.activeIndex);
+
+      $rootScope.swiper.on('onSlideChangeStart', function() {
+        $rootScope.updateActiveThree($rootScope.swiper.activeIndex);
+
+
+      });
+    };
+
+  }) // fin SearchCtrl controller
+
+
 
 /*
 .controller('SwiperCtrl3', function($scope) {
@@ -358,11 +405,12 @@ angular.module('webcams_asturias.controllers', [])
     }
     $rootScope.onReadySwiper = function (swiper) {
       $rootScope.swiper = swiper;
-      //console.log('indice antes', $rootScope.swiper.activeIndex);
-      //$rootScope.gotoSlide(1);
-      //console.log('indice despues', $rootScope.swiper.activeIndex);
+      $rootScope.swiper.params.preloadImages = false;
+      $rootScope.swiper.params.lazyLoading = true;
+      console.log('swiper', $rootScope.swiper);
+
       swiper.on('slideChangeStart', function () {
-        console.log('indice de slide cambiado', $rootScope.swiper.activeIndex);
+        //console.log('indice de slide cambiado', $rootScope.swiper.activeIndex);
       });
     };
 
