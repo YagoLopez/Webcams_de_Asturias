@@ -18,7 +18,7 @@
         <!--<div ng-repeat="cam in items" ng-class="{'chat-item':animarListItems}" class="item-remove-animate">-->
         <div ng-repeat="cam in items" ng-class="{}" class="item-remove-animate">
           <!--TODO: en vez de pasar rowid y luego buscar en toda la lista de camaras, pasar como parametros a "showModal()": Lugar, Concejo, Imagen, Categoría y rowid-->
-          <div class="item item-thumbnail-left item-icon-right" ng-click="showModal(cam[4])">
+          <div class="item item-thumbnail-left item-icon-right" ng-click="showModal(cam[4], $index)">
             <img src="../img/ionic.png"/>
             <!--<img  ng-src="{{ cam[2]}}" fallback-src="http://google.com/favicon.ico"/>-->
             <div class="divListado">

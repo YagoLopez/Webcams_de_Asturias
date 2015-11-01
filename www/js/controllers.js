@@ -176,9 +176,17 @@ angular.module('webcams_asturias.controllers', [])
       $scope.modal = modal;
     });
 
-    $scope.showModal= function (rowid){
-      $ionicScrollDelegate.scrollTop(false);
+    //TODO: a lo mejor se puede usar solo itemIndex para filtrar la camara y no usar rowid
+    $scope.showModal= function (rowid, itemIndex){
+      // indice en el array de items filtrados: items[indice]
+      $scope.itemIndex = itemIndex;
       $scope.rowid = rowid;
+      console.log('itemIndex', $scope.itemIndex);
+      console.log('indice antes', $rootScope.swiper.activeIndex);
+      $rootScope.swiper.activeIndex = itemIndex;
+      console.log('indice despues', $rootScope.swiper.activeIndex);
+      //console.log('swiper', $rootScope.swiper);
+      $ionicScrollDelegate.scrollTop(false);
       $scope.modal.show();
     }
     // Triggered in the login modal to close it
@@ -292,6 +300,7 @@ angular.module('webcams_asturias.controllers', [])
 
   }) // fin SearchCtrl controller
 
+/*
 .controller('SwiperCtrl3', function($scope) {
   $scope.swiper = {};
 
@@ -307,17 +316,16 @@ angular.module('webcams_asturias.controllers', [])
   $scope.prev = function(){
     $scope.swiper.slidePrev();
   }
-
+  $scope.gotoSlide = function (slide_index){
+    $scope.swiper.activeIndex = slide_index;
+  }
   $scope.onReadySwiper = function (swiper) {
-    console.log('swiperctrl3');
-
     $scope.swiper = swiper;
     console.log('indice antes', $scope.swiper.activeIndex);
-    $scope.swiper.activeIndex = 1;
+    $scope.gotoSlide(1);;
     console.log('indice despues', $scope.swiper.activeIndex);
-
     swiper.on('slideChangeStart', function () {
-
+      console.log('indice de slide cambiado', $scope.swiper.activeIndex);
     });
   };
 
@@ -327,5 +335,42 @@ angular.module('webcams_asturias.controllers', [])
 
 
 }) // fin swiperctrl3
+*/
+
+
+.controller('SwiperCtrl', function($rootScope) {
+    $rootScope.swiper = {};
+
+    $rootScope.options = {
+      //'loop': 0,
+      //'preloadImages':0,
+      //'lazyLoading': 0
+    };
+
+    $rootScope.next = function () {
+      $rootScope.swiper.slideNext();
+    }
+    $rootScope.prev = function(){
+      $rootScope.swiper.slidePrev();
+    }
+    $rootScope.gotoSlide = function (slide_index){
+      $rootScope.swiper.activeIndex = slide_index;
+    }
+    $rootScope.onReadySwiper = function (swiper) {
+      $rootScope.swiper = swiper;
+      //console.log('indice antes', $rootScope.swiper.activeIndex);
+      //$rootScope.gotoSlide(1);
+      //console.log('indice despues', $rootScope.swiper.activeIndex);
+      swiper.on('slideChangeStart', function () {
+        console.log('indice de slide cambiado', $rootScope.swiper.activeIndex);
+      });
+    };
+
+
+
+
+
+
+  }) // fin swiperctrl3
 
 ; // FIN
