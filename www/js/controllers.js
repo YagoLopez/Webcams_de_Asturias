@@ -168,7 +168,7 @@ angular.module('webcams_asturias.controllers', [])
       console.log('Error obteniendo datos remotos: ', status);
     });
 
-    // DIALOGO MODAL /////////////////////////////////////////////////////////////////////////////////////////////////
+    /* DIALOGO MODAL *************************************************************************************************/
     $ionicModal.fromTemplateUrl('templates/detalle3.html', {
       scope: $scope,
       animation: 'scale-in'
@@ -185,23 +185,7 @@ angular.module('webcams_asturias.controllers', [])
     $scope.closeModal = function () {
       $scope.modal.hide();
     };
-    // FIN DIALOGO MODAL /////////////////////////////////////////////////////////////////////////////////////////////
-
-
-    // SWIPER ////////////////////////////////////////////////////////////////////////////////////////////////////////
-/*    console.log('swiper');
-    $scope.swiper = {};
-    $scope.next = function(){
-      $scope.swiper.slideNext();
-    };
-
-    $scope.onReadySwiper = function (swiper) {
-      swiper.on('slideChangeStart', function () {
-        console.log('slideChangeStart');
-      });
-    };*/
-
-    // FIN SWIPER ////////////////////////////////////////////////////////////////////////////////////////////////////
+    /* FIN DIALOGO MODAL *********************************************************************************************/
 
 
     //TODO: arreglar que se muestre y se oculte bien el loader
@@ -260,7 +244,7 @@ angular.module('webcams_asturias.controllers', [])
 
 
 
-.controller('SwiperCtrl', function($scope){
+.controller('SearchCtrl', function($scope){
 
     //console.log('searchctrl');
 
@@ -294,22 +278,54 @@ angular.module('webcams_asturias.controllers', [])
 
 
     $scope.onReadySwiper = function(swiper) {
+      $scope.swiper = swiper;
+      $scope.swiper.activeIndex = 1;
+      //swiper.slideTo(5);
+      //console.log('index despues', swiper.activeIndex);
+
       swiper.on('onSlideChangeStart', function() {
         $scope.updateActiveThree($scope.swiper.activeIndex);
-        console.log('fired');
+
+
       });
     };
 
   }) // fin SearchCtrl controller
 
-.controller('TestCtrl', function($scope) {
-  console.log('prueba de controlador');
+.controller('SwiperCtrl3', function($scope) {
   $scope.swiper = {};
+
+  $scope.options = {
+    //'loop': 0,
+    //'preloadImages':0,
+    //'lazyLoading': 0
+  };
 
   $scope.next = function () {
     $scope.swiper.slideNext();
-    console.log('swiper.slideNext()');
   }
-}) // fin TestCtrl
+  $scope.prev = function(){
+    $scope.swiper.slidePrev();
+  }
+
+  $scope.onReadySwiper = function (swiper) {
+    console.log('swiperctrl3');
+
+    $scope.swiper = swiper;
+    console.log('indice antes', $scope.swiper.activeIndex);
+    $scope.swiper.activeIndex = 1;
+    console.log('indice despues', $scope.swiper.activeIndex);
+
+    swiper.on('slideChangeStart', function () {
+
+    });
+  };
+
+
+
+
+
+
+}) // fin swiperctrl3
 
 ; // FIN
