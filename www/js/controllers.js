@@ -165,17 +165,10 @@ angular.module('webcams_asturias.controllers', [])
       $ionicLoading.hide();
 
 
-
-
-
-
-
-
-
       // DIALOGO MODAL ----------------------------------------------------------------------------------------------
       $ionicModal.fromTemplateUrl('templates/detalle6.html', {
         scope: $scope,
-        //animation: 'scale-in'
+        animation: 'scale-in'
       }).then(function(modal) {
         $scope.modal = modal;
       });
@@ -186,11 +179,10 @@ angular.module('webcams_asturias.controllers', [])
         $scope.itemIndex = itemIndex;
         $scope.rowid = rowid;
         $ionicSlideBoxDelegate.slide(itemIndex);
-        //$ionicScrollDelegate.scrollTop(false);
+        $ionicScrollDelegate.scrollTop(false);
         //$ionicSlideBoxDelegate.update();
         $scope.modal.show();
       }
-
 
       // Triggered in the login modal to close it
       $scope.closeModal = function () {
@@ -198,44 +190,17 @@ angular.module('webcams_asturias.controllers', [])
       };
     // FIN DIALOGO MODAL ----------------------------------------------------------------------------------------------
 
-
-
-
-
-
-
-
-
-
-
-
-
     }).error(function(data, status) {
       $ionicLoading.hide();
       console.log('Error obteniendo datos remotos: ', status);
     });
 
-    /* FIN DIALOGO MODAL *********************************************************************************************/
-
-
-
-
-
-    //$scope.$on('$ionicView.enter', function(){
-    //  $ionicSlideBoxDelegate.update();
-    //})
-    //$scope.nextSlide = function() {
-    //  $ionicSlideBoxDelegate.next();
-    //}
-    //$scope.prevSlide = function() {
-    //  $ionicSlideBoxDelegate.previous();
-    //}
-
-
-
-
-
-
+    $scope.nextSlide = function() {
+      $ionicSlideBoxDelegate.next();
+    }
+    $scope.prevSlide = function() {
+      $ionicSlideBoxDelegate.previous();
+    }
 
     //TODO: arreglar que se muestre y se oculte bien el loader
     // despues de cargar la pagina con los datos remotos ocultar el loader
