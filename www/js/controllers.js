@@ -164,38 +164,57 @@ angular.module('webcams_asturias.controllers', [])
 
       $ionicLoading.hide();
 
+
+
+
+
+
+
+
+
+      // DIALOGO MODAL ----------------------------------------------------------------------------------------------
+      $ionicModal.fromTemplateUrl('templates/detalle6.html', {
+        scope: $scope,
+        //animation: 'scale-in'
+      }).then(function(modal) {
+        $scope.modal = modal;
+      });
+
+      //TODO: a lo mejor se puede usar solo itemIndex para filtrar la camara y no usar rowid
+      $scope.showModal= function (rowid, itemIndex){
+        // indice en el array de items filtrados: itemIndex = items[indice]
+        $scope.itemIndex = itemIndex;
+        $scope.rowid = rowid;
+        $ionicSlideBoxDelegate.slide(itemIndex);
+        //$ionicScrollDelegate.scrollTop(false);
+        //$ionicSlideBoxDelegate.update();
+        $scope.modal.show();
+      }
+
+
+      // Triggered in the login modal to close it
+      $scope.closeModal = function () {
+        $scope.modal.hide();
+      };
+    // FIN DIALOGO MODAL ----------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
     }).error(function(data, status) {
       $ionicLoading.hide();
       console.log('Error obteniendo datos remotos: ', status);
     });
 
-    /* DIALOGO MODAL *************************************************************************************************/
-    $ionicModal.fromTemplateUrl('templates/detalle6.html', {
-      scope: $scope,
-      animation: 'scale-in'
-    }).then(function(modal) {
-      $scope.modal = modal;
-    });
-
-    //TODO: a lo mejor se puede usar solo itemIndex para filtrar la camara y no usar rowid
-    $scope.showModal= function (rowid, itemIndex){
-
-      $scope.modal.show();
-      $rootScope.itemIndex = itemIndex;
-      $scope.rowid = rowid;
-      //console.log('slidebox delegate', $ionicSlideBoxDelegate._instances[0]);
-      // indice en el array de items filtrados: items[indice]
-      $ionicSlideBoxDelegate.slide(1, 10000);
-      $ionicScrollDelegate.scrollTop(false);
-      //$ionicSlideBoxDelegate.update();
-
-    }
-
-
-    // Triggered in the login modal to close it
-    $scope.closeModal = function () {
-      $scope.modal.hide();
-    };
     /* FIN DIALOGO MODAL *********************************************************************************************/
 
 

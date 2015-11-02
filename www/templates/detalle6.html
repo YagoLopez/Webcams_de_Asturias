@@ -24,16 +24,19 @@
         margin-right:4%;
         margin-left:4%;
       }
+      .slider {
+        height: 100%;
+      }
     </style>
-    <ion-slide-box show-pager="false">
-      <ion-slide ng-repeat="cam in items">
+    <ion-slide-box show-pager="false" delegate-handle="slider">
+      <ion-slide ng-repeat="cam in items" width="100px" heigth="100px">
         <div class="list card">
           <div class="item item-image" style="height:100%; width:100%">
-            <!--<img ng-src="http://api.randomuser.me/portraits/thumb/men/{{$index}}.jpg">-->
-            <!--<img ng-src="../img/ionic.png">-->
+            <img ng-src="http://api.randomuser.me/portraits/thumb/men/{{$index}}.jpg">
+            <!--<img ng-src="../img/ionic.png" width="100px" height="100px">-->
             <!--<img ng-src="{{cam[2]}}">-->
             <!--<img image-lazy-src="http://loremflickr.com/500/500?random={{$index+1}}" image-lazy-loader="lines">-->
-            <img ng-src="http://loremflickr.com/500/500?random={{$index+1}}">
+            <!--<img ng-src="http://loremflickr.com/500/500?random={{$index+1}}" width="100px" height="100px">-->
           </div>
           <div class="list list-inset">
             <div class="item">
