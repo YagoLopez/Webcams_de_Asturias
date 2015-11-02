@@ -80,7 +80,8 @@ angular.module('webcams_asturias.controllers', [])
 }) //fin DetallecamCtrl
 
 .controller('TabsCtrl', function($scope, $stateParams, $ionicLoading, $rootScope, $ionicFilterBar,
-                                 factoria_datos, DATOS_URL, $filter, $ionicScrollDelegate, $ionicModal, $ionicSlideBoxDelegate){
+                                 factoria_datos, DATOS_URL, $filter, $ionicScrollDelegate, $ionicModal,
+                                 $ionicSlideBoxDelegate){
 
     // mostrar loader
     var icono_spinner = "<ion-spinner icon='lines' class='spinner-calm'></ion-spinner><br/>";
@@ -179,12 +180,51 @@ angular.module('webcams_asturias.controllers', [])
     //TODO: a lo mejor se puede usar solo itemIndex para filtrar la camara y no usar rowid
     $scope.showModal= function (rowid, itemIndex){
       // indice en el array de items filtrados: items[indice]
-      $scope.itemIndex = itemIndex;
+      $rootScope.itemIndex = itemIndex;
       $scope.rowid = rowid;
+
+
+
+      console.log('slidebox delegate', $ionicSlideBoxDelegate._instances[0]);
       //$rootScope.swiper.activeIndex = itemIndex;
-      $ionicSlideBoxDelegate.slide(itemIndex);
-      $ionicScrollDelegate.scrollTop(false);
+      //$ionicSlideBoxDelegate.slide(itemIndex);
+      // setTimeout es necesario por un bug en $ionicSlideBoxDelegate.slide()
+      //setTimeout(function() {
+      //  $ionicSlideBoxDelegate.slide(itemIndex);
+      //  $ionicSlideBoxDelegate.update();
+      //  $scope.$apply();
+      //});
+      //$ionicSlideBoxDelegate.slide(itemIndex, 3000);
+
+/*
+      var intervalId = $interval( function() {
+        if( slideCounter < maxSlides) {
+
+          slideCounter++;
+          console.log('Adding a slide');
+          $scope.data.slides.push( {
+            title : "Slide " + slideCounter,
+            data : "Slide " + slideCounter + ' Content'
+          });
+
+          $ionicSlideBoxDelegate.update();
+        } else {
+          console.log('All full!');
+          $interval.cancel(intervalId);
+        }
+      }, 3000);
+*/
+
+
+
+
+
+      //$ionicScrollDelegate.scrollTop(false);
       $scope.modal.show();
+      $ionicSlideBoxDelegate.slide(itemIndex);
+
+      $ionicSlideBoxDelegate.update();
+
     }
     // Triggered in the login modal to close it
     $scope.closeModal = function () {
@@ -389,7 +429,7 @@ angular.module('webcams_asturias.controllers', [])
 
 
 .controller('SwiperCtrl', function($rootScope) {
-    $rootScope.swiper = {};
+/*    $rootScope.swiper = {};
 
     $rootScope.options = {
       //'loop': 0,
@@ -415,7 +455,7 @@ angular.module('webcams_asturias.controllers', [])
       swiper.on('slideChangeStart', function () {
         //console.log('indice de slide cambiado', $rootScope.swiper.activeIndex);
       });
-    };
+    };*/
 
 
 

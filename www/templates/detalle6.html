@@ -14,7 +14,7 @@
       <button class="button button-clear" ng-click="closeModal()">Cerrar</button>
     </div>
   </ion-header-bar>
-  <ion-content lazy-scroll>
+  <ion-content>
 
     <style>
       .card {
@@ -25,8 +25,8 @@
         margin-left:4%;
       }
     </style>
-
-    <ion-slide-box on-slide-changed="slideHasChanged($index)">
+itemIndex: {{itemIndex}}
+    <ion-slide-box show-pager="false">
       <ion-slide ng-repeat="cam in items">
         <div class="list card">
           <div class="item item-image" style="height:100%; width:100%">
