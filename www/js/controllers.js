@@ -80,7 +80,7 @@ angular.module('webcams_asturias.controllers', [])
 }) //fin DetallecamCtrl
 
 .controller('TabsCtrl', function($scope, $stateParams, $ionicLoading, $rootScope, $ionicFilterBar,
-                                 factoria_datos, DATOS_URL, $filter, $ionicScrollDelegate, $ionicModal){
+                                 factoria_datos, DATOS_URL, $filter, $ionicScrollDelegate, $ionicModal, $ionicSlideBoxDelegate){
 
     // mostrar loader
     var icono_spinner = "<ion-spinner icon='lines' class='spinner-calm'></ion-spinner><br/>";
@@ -169,7 +169,7 @@ angular.module('webcams_asturias.controllers', [])
     });
 
     /* DIALOGO MODAL *************************************************************************************************/
-    $ionicModal.fromTemplateUrl('templates/detalle4.html', {
+    $ionicModal.fromTemplateUrl('templates/detalle6.html', {
       scope: $scope,
       animation: 'scale-in'
     }).then(function(modal) {
@@ -181,7 +181,8 @@ angular.module('webcams_asturias.controllers', [])
       // indice en el array de items filtrados: items[indice]
       $scope.itemIndex = itemIndex;
       $scope.rowid = rowid;
-      $rootScope.swiper.activeIndex = itemIndex;
+      //$rootScope.swiper.activeIndex = itemIndex;
+      $ionicSlideBoxDelegate.slide(itemIndex);
       $ionicScrollDelegate.scrollTop(false);
       $scope.modal.show();
     }
@@ -191,7 +192,9 @@ angular.module('webcams_asturias.controllers', [])
     };
     /* FIN DIALOGO MODAL *********************************************************************************************/
 
-
+    $scope.nextSlide = function() {
+      $ionicSlideBoxDelegate.next();
+    }
     //TODO: arreglar que se muestre y se oculte bien el loader
     // despues de cargar la pagina con los datos remotos ocultar el loader
     //$scope.$on('$ionicView.afterEnter', function (viewInfo, state) {
