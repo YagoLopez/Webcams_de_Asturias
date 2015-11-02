@@ -179,34 +179,15 @@ angular.module('webcams_asturias.controllers', [])
 
     //TODO: a lo mejor se puede usar solo itemIndex para filtrar la camara y no usar rowid
     $scope.showModal= function (rowid, itemIndex){
-/*
-      $scope.modal.show();
-      //console.log('slidebox delegate', $ionicSlideBoxDelegate._instances[0]);
-      //$ionicScrollDelegate.scrollTop(false);
-      // indice en el array de items filtrados: items[indice]
-      $rootScope.itemIndex = itemIndex;
-      $scope.rowid = rowid;
-      $ionicSlideBoxDelegate.slide(1, 3000);
-      $ionicSlideBoxDelegate.update();
-*/
-
 
       $scope.modal.show();
-      //console.log('slidebox delegate', $ionicSlideBoxDelegate._instances[0]);
-      //$ionicScrollDelegate.scrollTop(false);
-      // indice en el array de items filtrados: items[indice]
       $rootScope.itemIndex = itemIndex;
       $scope.rowid = rowid;
-      $ionicSlideBoxDelegate.slide(1, 5000);
+      //console.log('slidebox delegate', $ionicSlideBoxDelegate._instances[0]);
+      // indice en el array de items filtrados: items[indice]
+      $ionicSlideBoxDelegate.slide(1, 10000);
+      $ionicScrollDelegate.scrollTop(false);
       //$ionicSlideBoxDelegate.update();
-
-
-
-
-
-
-
-
 
     }
 
