@@ -179,24 +179,64 @@ angular.module('webcams_asturias.controllers', [])
 
     //TODO: a lo mejor se puede usar solo itemIndex para filtrar la camara y no usar rowid
     $scope.showModal= function (rowid, itemIndex){
+/*
+      $scope.modal.show();
+      //console.log('slidebox delegate', $ionicSlideBoxDelegate._instances[0]);
+      //$ionicScrollDelegate.scrollTop(false);
       // indice en el array de items filtrados: items[indice]
       $rootScope.itemIndex = itemIndex;
       $scope.rowid = rowid;
-      //console.log('slidebox delegate', $ionicSlideBoxDelegate._instances[0]);
-      $ionicScrollDelegate.scrollTop(false);
-      $scope.modal.show();
-      $ionicSlideBoxDelegate.slide(itemIndex, 3000);
+      $ionicSlideBoxDelegate.slide(1, 3000);
       $ionicSlideBoxDelegate.update();
+*/
+
+
+      $scope.modal.show();
+      //console.log('slidebox delegate', $ionicSlideBoxDelegate._instances[0]);
+      //$ionicScrollDelegate.scrollTop(false);
+      // indice en el array de items filtrados: items[indice]
+      $rootScope.itemIndex = itemIndex;
+      $scope.rowid = rowid;
+      $ionicSlideBoxDelegate.slide(1, 5000);
+      //$ionicSlideBoxDelegate.update();
+
+
+
+
+
+
+
+
+
     }
+
+
     // Triggered in the login modal to close it
     $scope.closeModal = function () {
       $scope.modal.hide();
     };
     /* FIN DIALOGO MODAL *********************************************************************************************/
 
-    $scope.nextSlide = function() {
-      $ionicSlideBoxDelegate.next();
-    }
+
+
+
+
+    //$scope.$on('$ionicView.enter', function(){
+    //  $ionicSlideBoxDelegate.update();
+    //})
+    //$scope.nextSlide = function() {
+    //  $ionicSlideBoxDelegate.next();
+    //}
+    //$scope.prevSlide = function() {
+    //  $ionicSlideBoxDelegate.previous();
+    //}
+
+
+
+
+
+
+
     //TODO: arreglar que se muestre y se oculte bien el loader
     // despues de cargar la pagina con los datos remotos ocultar el loader
     //$scope.$on('$ionicView.afterEnter', function (viewInfo, state) {
@@ -237,62 +277,9 @@ angular.module('webcams_asturias.controllers', [])
     $scope.items = 'abcdefghijklmnopqrstuvwxyz'.split("");
   })
 
-
-
+.controller('SearchCtrl', function($rootScope){
 
 /*
-.controller('SearchCtrl', function($scope){
-
-    //console.log('searchctrl');
-
-    $scope.swiper = {};
-
-    $scope.options = {
-      loop: false
-    };
-
-    $scope.next = function() {
-      $scope.swiper.slideNext();
-    };
-    $scope.prev = function() {
-      $scope.swiper.slidePrev();
-    };
-
-    $scope.generateSlides = function(number) {
-      return new Array(number);
-    };
-
-    $scope.activeThree = [1, 2];
-
-    $scope.updateActiveThree = function(activeSlide) {
-      // Simple test. The example in jij project is better. Because it factors in total amount of items and if active item is 0 the previous item is not -1, but lastitem index
-      $scope.activeThree = [
-        activeSlide - 1,
-        activeSlide,
-        activeSlide + 1
-      ];
-    };
-
-
-    $scope.onReadySwiper = function(swiper) {
-      $scope.swiper = swiper;
-      $scope.swiper.activeIndex = 1;
-      //swiper.slideTo(5);
-      //console.log('index despues', swiper.activeIndex);
-
-      swiper.on('onSlideChangeStart', function() {
-        $scope.updateActiveThree($scope.swiper.activeIndex);
-
-
-      });
-    };
-
-  }) // fin SearchCtrl controller
-*/
-
-
-  .controller('SearchCtrl', function($rootScope){
-
     $rootScope.swiper = {};
 
     $rootScope.options = {
@@ -334,83 +321,9 @@ angular.module('webcams_asturias.controllers', [])
 
       });
     };
+*/
 
   }) // fin SearchCtrl controller
 
-
-
-/*
-.controller('SwiperCtrl3', function($scope) {
-  $scope.swiper = {};
-
-  $scope.options = {
-    //'loop': 0,
-    //'preloadImages':0,
-    //'lazyLoading': 0
-  };
-
-  $scope.next = function () {
-    $scope.swiper.slideNext();
-  }
-  $scope.prev = function(){
-    $scope.swiper.slidePrev();
-  }
-  $scope.gotoSlide = function (slide_index){
-    $scope.swiper.activeIndex = slide_index;
-  }
-  $scope.onReadySwiper = function (swiper) {
-    $scope.swiper = swiper;
-    console.log('indice antes', $scope.swiper.activeIndex);
-    $scope.gotoSlide(1);;
-    console.log('indice despues', $scope.swiper.activeIndex);
-    swiper.on('slideChangeStart', function () {
-      console.log('indice de slide cambiado', $scope.swiper.activeIndex);
-    });
-  };
-
-
-
-
-
-
-}) // fin swiperctrl3
-*/
-
-
-.controller('SwiperCtrl', function($rootScope) {
-/*    $rootScope.swiper = {};
-
-    $rootScope.options = {
-      //'loop': 0,
-      //'preloadImages':0,
-      //'lazyLoading': 0
-    };
-
-    $rootScope.next = function () {
-      $rootScope.swiper.slideNext();
-    }
-    $rootScope.prev = function(){
-      $rootScope.swiper.slidePrev();
-    }
-    $rootScope.gotoSlide = function (slide_index){
-      $rootScope.swiper.activeIndex = slide_index;
-    }
-    $rootScope.onReadySwiper = function (swiper) {
-      $rootScope.swiper = swiper;
-      $rootScope.swiper.params.preloadImages = false;
-      $rootScope.swiper.params.lazyLoading = true;
-      console.log('swiper', $rootScope.swiper);
-
-      swiper.on('slideChangeStart', function () {
-        //console.log('indice de slide cambiado', $rootScope.swiper.activeIndex);
-      });
-    };*/
-
-
-
-
-
-
-  }) // fin swiperctrl3
 
 ; // FIN
