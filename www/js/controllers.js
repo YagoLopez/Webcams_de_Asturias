@@ -182,10 +182,10 @@ angular.module('webcams_asturias.controllers', [])
       // indice en el array de items filtrados: items[indice]
       $rootScope.itemIndex = itemIndex;
       $scope.rowid = rowid;
-      console.log('slidebox delegate', $ionicSlideBoxDelegate._instances[0]);
-      //$ionicScrollDelegate.scrollTop(false);
+      //console.log('slidebox delegate', $ionicSlideBoxDelegate._instances[0]);
+      $ionicScrollDelegate.scrollTop(false);
       $scope.modal.show();
-      $ionicSlideBoxDelegate.slide(itemIndex);
+      $ionicSlideBoxDelegate.slide(itemIndex, 3000);
       $ionicSlideBoxDelegate.update();
     }
     // Triggered in the login modal to close it
