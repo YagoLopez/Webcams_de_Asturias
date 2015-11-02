@@ -182,49 +182,11 @@ angular.module('webcams_asturias.controllers', [])
       // indice en el array de items filtrados: items[indice]
       $rootScope.itemIndex = itemIndex;
       $scope.rowid = rowid;
-
-
-
       console.log('slidebox delegate', $ionicSlideBoxDelegate._instances[0]);
-      //$rootScope.swiper.activeIndex = itemIndex;
-      //$ionicSlideBoxDelegate.slide(itemIndex);
-      // setTimeout es necesario por un bug en $ionicSlideBoxDelegate.slide()
-      //setTimeout(function() {
-      //  $ionicSlideBoxDelegate.slide(itemIndex);
-      //  $ionicSlideBoxDelegate.update();
-      //  $scope.$apply();
-      //});
-      //$ionicSlideBoxDelegate.slide(itemIndex, 3000);
-
-/*
-      var intervalId = $interval( function() {
-        if( slideCounter < maxSlides) {
-
-          slideCounter++;
-          console.log('Adding a slide');
-          $scope.data.slides.push( {
-            title : "Slide " + slideCounter,
-            data : "Slide " + slideCounter + ' Content'
-          });
-
-          $ionicSlideBoxDelegate.update();
-        } else {
-          console.log('All full!');
-          $interval.cancel(intervalId);
-        }
-      }, 3000);
-*/
-
-
-
-
-
       //$ionicScrollDelegate.scrollTop(false);
       $scope.modal.show();
       $ionicSlideBoxDelegate.slide(itemIndex);
-
       $ionicSlideBoxDelegate.update();
-
     }
     // Triggered in the login modal to close it
     $scope.closeModal = function () {
@@ -249,19 +211,6 @@ angular.module('webcams_asturias.controllers', [])
 }) // fin ListadoCtrl
 
 .controller('MosaicoCtrl', function($scope, $state, $rootScope){
-
-    //$scope.$on('$ionicView.enter', function() {
-    //  console.log('state.params en mosaico ctrl', $state.params);
-    //})
-
-    //$rootScope.categoria = $state.params.categoria;
-    //$rootScope.concejo = $state.params.concejo;
-  //  $scope.$parent.concejo = $state.params.concejo;
-  //  $scope.$parent.categoria = $state.params.categoria;
-  //console.log('categoria en mosaico ctrl', $scope.categoria);
-  //console.log('concejo en mosaico ctrl', $scope.concejo);
-  //console.log('state en mosaico ctrl', $state);
-
 }) // fin MosaicoCtrl
 
 .controller('PlayasCtrl', function($rootScope, factoria_datos){
