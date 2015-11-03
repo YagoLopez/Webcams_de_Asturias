@@ -178,7 +178,7 @@ angular.module('webcams_asturias.controllers', [])
         // indice en el array de items filtrados: itemIndex = items[indice]
         $scope.itemIndex = itemIndex;
         $scope.rowid = rowid;
-        $ionicSlideBoxDelegate.slide(itemIndex);
+        $ionicSlideBoxDelegate.slide(itemIndex, 3000);
         $ionicScrollDelegate.scrollTop(false);
         //$ionicSlideBoxDelegate.update();
         $scope.modal.show();
