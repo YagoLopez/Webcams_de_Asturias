@@ -128,11 +128,11 @@ angular.module('webcams_asturias.controllers', [])
         }
       });
 
-      // $rootScope.listacams contiene las cams sin filtrar
-      // $rootScope.items contiene las cams filtradas por parametros de url
+      // listacams contiene las cams sin filtrar
       $rootScope.listacams = data;
       if (camsFiltradasPorUrl.length == 0)
         camsFiltradasPorUrl = data.rows;
+      // items contiene las cams inicialmente filtradas por parametros de url
       $scope.items = camsFiltradasPorUrl;
 
       // FILTRO 2: filtra las cams segun una cadena de texto que haya introducido el usuario ///////////////////////
@@ -178,9 +178,9 @@ angular.module('webcams_asturias.controllers', [])
         // indice en el array de items filtrados: itemIndex = items[indice]
         $scope.itemIndex = itemIndex;
         $scope.rowid = rowid;
-        $ionicSlideBoxDelegate.slide(itemIndex, 3000);
+        //$ionicSlideBoxDelegate.slide(itemIndex, 3000);
         $ionicScrollDelegate.scrollTop(false);
-        //$ionicSlideBoxDelegate.update();
+        $ionicSlideBoxDelegate.update();
         $scope.modal.show();
       }
 

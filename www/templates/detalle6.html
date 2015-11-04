@@ -22,7 +22,8 @@
         /*height: 100%;*/
       /*}*/
     </style>
-    <ion-slide-box show-pager="false">
+    itemIndex: {{itemIndex}}
+    <ion-slide-box show-pager="false" active-slide="itemIndex">
       <ion-slide ng-repeat="cam in items">
         <div class="list card">
           <div class="item item-image" style="height:100%; width:100%">
