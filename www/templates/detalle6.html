@@ -26,10 +26,11 @@
       <ion-slide ng-repeat="cam in items">
         <div class="list card">
           <div class="item item-image" style="height:100%; width:100%">
-            <img ng-src="http://api.randomuser.me/portraits/thumb/men/{{$index}}.jpg">
+            <!--<img ng-src="http://api.randomuser.me/portraits/thumb/men/{{$index}}.jpg">-->
             <!--<img ng-src="../img/ionic.png">-->
             <!--<img ng-src="{{cam[2]}}">-->
-            <!--<img image-lazy-src="http://loremflickr.com/500/500?random={{$index+1}}" image-lazy-loader="lines">-->
+            <!--<img  ng-src="{{ cam[2]}}" fallback-src="http://google.com/favicon.ico"/>-->
+            <img ng-src="http://loremflickr.com/500/500?random={{$index+1}}">
             <!--<img ng-src="http://loremflickr.com/500/500?random={{$index+1}}">-->
           </div>
           <div class="list list-inset">
