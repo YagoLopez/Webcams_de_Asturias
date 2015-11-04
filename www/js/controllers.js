@@ -105,8 +105,8 @@ angular.module('webcams_asturias.controllers', [])
     $rootScope.categoria = $stateParams.categoria;
 
     //TODO: cachear las imagenes
-    var sql_query_string = 'SELECT Lugar,Concejo,Imagen,Categoria,rowid FROM '+ DATOS_URL.FUSION_TABLE_ID;
-    factoria_datos.getRemoteData(sql_query_string).success(function(data){
+    var sql_query = 'SELECT Lugar,Concejo,Imagen,Categoria,rowid FROM '+ DATOS_URL.FUSION_TABLE_ID;
+    factoria_datos.getRemoteData(sql_query).success(function(data){
 
       function estaEnCategoria(categoria, idCategoria) {
         return (categoria.indexOf('categoria='+idCategoria) > -1);
@@ -174,11 +174,11 @@ angular.module('webcams_asturias.controllers', [])
       });
 
       //TODO: a lo mejor se puede usar solo itemIndex para filtrar la camara y no usar rowid
-      $scope.showModal= function (rowid, itemIndex){
+      $scope.showModal= function (itemIndex){
         // indice en el array de items filtrados: itemIndex = items[indice]
-        $scope.itemIndex = itemIndex;
-        $scope.rowid = rowid;
-        //$ionicSlideBoxDelegate.slide(itemIndex, 3000);
+        $rootScope.itemIndex = itemIndex;
+        console.log('itemIndex', itemIndex);
+        $ionicSlideBoxDelegate.slide(itemIndex, 3000);
         $ionicScrollDelegate.scrollTop(false);
         $ionicSlideBoxDelegate.update();
         $scope.modal.show();
@@ -201,6 +201,9 @@ angular.module('webcams_asturias.controllers', [])
     $scope.prevSlide = function() {
       $ionicSlideBoxDelegate.previous();
     }
+    $scope.$on('$destroy', function() {
+      $scope.modal.remove();
+    });
 
     //TODO: arreglar que se muestre y se oculte bien el loader
     // despues de cargar la pagina con los datos remotos ocultar el loader
@@ -218,76 +221,12 @@ angular.module('webcams_asturias.controllers', [])
 .controller('MosaicoCtrl', function($scope, $state, $rootScope){
 }) // fin MosaicoCtrl
 
-.controller('PlayasCtrl', function($rootScope, factoria_datos){
-
-  }
-) // fin coltroller PlayasCtrl
-
-.controller('PuertosCtrl', function($rootScope, factoria_datos){
-
-  }
-) // fin coltroller PuertosCtrl
-
-.controller('RiosCtrl', function($rootScope, factoria_datos){
-
-  }
-) // fin coltroller RiosCtrl
-
-.controller('MontanaCtrl', function($rootScope, factoria_datos){
-
-  }
-) // fin coltroller MontanaCtrl
-
 .controller('RepeatCtrl', function ($scope){
     $scope.items = 'abcdefghijklmnopqrstuvwxyz'.split("");
   })
 
-.controller('SearchCtrl', function($rootScope){
-
-/*
-    $rootScope.swiper = {};
-
-    $rootScope.options = {
-      loop: false
-    };
-
-    $rootScope.next = function() {
-      $rootScope.swiper.slideNext();
-    };
-    $rootScope.prev = function() {
-      $rootScope.swiper.slidePrev();
-    };
-
-    $rootScope.generateSlides = function(number) {
-      return new Array(number);
-    };
-
-    $rootScope.activeThree = [1, 2];
-
-    $rootScope.updateActiveThree = function(activeSlide) {
-      // Simple test. The example in jij project is better. Because it factors in total amount of items and if active item is 0 the previous item is not -1, but lastitem index
-      $rootScope.activeThree = [
-        activeSlide - 1,
-        activeSlide,
-        activeSlide + 1
-      ];
-    };
-
-
-    $rootScope.onReadySwiper = function(swiper) {
-      $rootScope.swiper = swiper;
-      $rootScope.swiper.activeIndex = 1;
-      //swiper.slideTo(5);
-      //console.log('index despues', swiper.activeIndex);
-
-      $rootScope.swiper.on('onSlideChangeStart', function() {
-        $rootScope.updateActiveThree($rootScope.swiper.activeIndex);
-
-
-      });
-    };
-*/
-
+.controller('SearchCtrl', function($scope){
+  $scope.miarray=[1,2,3,4,5,6,7,8,9];
   }) // fin SearchCtrl controller
 
 

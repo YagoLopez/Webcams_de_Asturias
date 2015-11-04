@@ -1,5 +1,7 @@
 <ion-view title="Listado">
-  <ion-content overflow-scroll=’true’>
+  <!--<ion-content overflow-scroll=’true’>-->
+    <ion-content>
+
       <!--TODO: cambiar el tema de la barra de busqueda a material design-->
       <!--TODO: añadir geolocalicacion y busqueda de camaras cercanas-->
       <!--TODO: mapa de google en el detalles-->
@@ -13,13 +15,13 @@
       <div class="list">
 
         <div ng-repeat="cam in items" ng-class="{'chat-item':animarListItems}" class="item-remove-animate">
-        <!--<div ng-repeat="cam in items" ng-class="{}" class="item-remove-animate">-->
-          <!--TODO: en vez de pasar rowid y luego buscar en toda la lista de camaras, pasar como parametros a "showModal()": Lugar, Concejo, Imagen, Categoría y rowid-->
-          <div class="item item-thumbnail-left item-icon-right" ng-click="showModal(cam[4], $index)">
+        <!--<div collection-repeat="cam in items" ng-class="{}" class="item-remove-animate">-->
+          <div class="item item-thumbnail-left item-icon-right" ng-click="showModal( $index )">
             <!--<img ng-src="http://api.randomuser.me/portraits/thumb/men/{{$index}}.jpg">-->
             <!--<img src="../img/ionic.png"/>-->
             <!--<img  ng-src="{{ cam[2]}}" fallback-src="http://google.com/favicon.ico"/>-->
             <!--<img  ng-src="{{ cam[2]}}">-->
+            <!--<img ng-src="http://loremflickr.com/500/500?random={{$index+1}}">-->
             <img ng-src="http://loremflickr.com/500/500?random={{$index+1}}">
             <div class="divListado">
               <p>

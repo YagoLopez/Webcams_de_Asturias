@@ -7,5 +7,6 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="ionic.bundle" level="application" />
+    <orderEntry type="library" name="img-src-ondemand" level="application" />
   </component>
 </module>

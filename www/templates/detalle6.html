@@ -18,11 +18,18 @@
         margin-right:4%;
         margin-left:4%;
       }
+      .modal{ /* full screen */
+        top: 0 ;
+        bottom: 0 ;
+        left: 0 ;
+        right: 0 ;
+        width: 100% ;
+      }
       /*.slider {*/
         /*height: 100%;*/
       /*}*/
     </style>
-    itemIndex: {{itemIndex}}
+
     <ion-slide-box show-pager="false" active-slide="itemIndex">
       <ion-slide ng-repeat="cam in items">
         <div class="list card">
@@ -32,7 +39,6 @@
             <!--<img ng-src="{{cam[2]}}">-->
             <!--<img  ng-src="{{ cam[2]}}" fallback-src="http://google.com/favicon.ico"/>-->
             <img ng-src="http://loremflickr.com/500/500?random={{$index+1}}">
-            <!--<img ng-src="http://loremflickr.com/500/500?random={{$index+1}}">-->
           </div>
           <div class="list list-inset">
             <div class="item">
@@ -47,7 +53,6 @@
               <i class="icon ion-android-locate"></i>
               <b>Categoría: </b>{{ cam[3] }}
             </div>
-
           </div>
         </div>
       </ion-slide>
