@@ -8102,13 +8102,14 @@ ionic.views.Slider = ionic.views.View.inherit({
 
     function setup() {
 
-      // do not setup if the container has no width
+       //do not setup if the container has no width
       //if (!container.offsetWidth) {
       //  return;
       //}
       if (!container.offsetWidth && !element.children.length) {
         return;
       }
+
       // cache slides
       slides = element.children;
       length = slides.length;
