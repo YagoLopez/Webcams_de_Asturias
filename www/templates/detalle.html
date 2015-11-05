@@ -1,6 +1,8 @@
 <!--TODO: poner un boton para refrescar la pagina-->
 <!--TODO: poner advertencia: si no ser carga la imagen probar a recargar la pagina-->
 <!--TODO: lazy loading de imagenes-->
+<!--TODO: cambiar los iconos bullet-list del texto del detalle-->
+<!--TODO: desactivar botones siguiente anterior al llegar al final del listado-->
 <ion-modal-view>
   <ion-header-bar>
     <h1 class="title">Detalles</h1>
@@ -31,7 +33,7 @@
     </style>
 
     <div>
-    <ion-slide-box show-pager="false" active-slide="itemIndex">
+    <ion-slide-box show-pager="false">
       <ion-slide ng-repeat="cam in items">
         <div class="list card">
           <div class="item item-image" style="height:100%; width:100%">
@@ -43,26 +45,24 @@
           </div>
 
           <div class="item item-body">
+            <p>
+              <i class="icon ion-android-locate"></i>
+              <b>Lugar: </b>{{ cam[0] }}
+            </p>
+            <p>
+              <i class="icon ion-android-locate"></i>
+              <b>Concejo: </b>{{ cam[1] }}
+            </p>
+              <!--<p>-->
+                <!--<i class="icon ion-android-locate"></i>-->
+                <!--<b>Categoría: </b>{{ cam[3] }}-->
+              <!--</p>-->
             <div class="button-bar">
-              <a class="button button-positive icon-left ion-chevron-left" ng-click="prevSlide()">Anterior</a>
+              <a class="button button-positive icon-left ion-chevron-left" ng-click="prevSlide()"></a>
               <a class="button button-positive" ng-click="">Recargar</a>
-              <a class="button button-positive icon-right ion-chevron-right" ng-click="nextSlide()">Siguiente</a>
+              <a class="button button-positive icon-right ion-chevron-right" ng-click="nextSlide()"></a>
             </div>
 
-          <p>
-            <i class="icon ion-android-locate"></i>
-            <b>Lugar: </b>{{ cam[0] }}
-          </p>
-          <p>
-            <i class="icon ion-android-locate"></i>
-            <b>Concejo: </b>{{ cam[1] }}
-          </p>
-<!--
-          <p>
-            <i class="icon ion-android-locate"></i>
-            <b>Categoría: </b>{{ cam[3] }}
-          </p>
--->
           </div>
         </div>
       </ion-slide>
