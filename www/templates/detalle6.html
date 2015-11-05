@@ -40,30 +40,33 @@
             <!--<img  ng-src="{{ cam[2]}}" fallback-src="http://google.com/favicon.ico"/>-->
             <img ng-src="http://loremflickr.com/500/500?random={{$index+1}}">
           </div>
-          <div class="list list-inset">
-            <div class="item">
-              <i class="icon ion-android-locate"></i>
-              <b>Lugar: </b>{{ cam[0] }}
+
+          <div class="item item-body">
+            <div class="button-bar">
+              <a class="button button-positive icon-left ion-chevron-left" ng-click="prevSlide()">Anterior</a>
+              <a class="button button-positive" ng-click="">Recargar</a>
+              <a class="button button-positive icon-right ion-chevron-right" ng-click="nextSlide()">Siguiente</a>
             </div>
-            <div class="item">
-              <i class="icon ion-android-locate"></i>
-              <b>Concejo: </b>{{ cam[1] }}
-            </div>
-            <div class="item">
-              <i class="icon ion-android-locate"></i>
-              <b>Categoría: </b>{{ cam[3] }}
-            </div>
+
+          <p>
+            <i class="icon ion-android-locate"></i>
+            <b>Lugar: </b>{{ cam[0] }}
+          </p>
+          <p>
+            <i class="icon ion-android-locate"></i>
+            <b>Concejo: </b>{{ cam[1] }}
+          </p>
+<!--
+          <p>
+            <i class="icon ion-android-locate"></i>
+            <b>Categoría: </b>{{ cam[3] }}
+          </p>
+-->
           </div>
         </div>
       </ion-slide>
     </ion-slide-box>
 
-    <span class="item">
-      <button ng-click="nextSlide()">Siguiente</button>
-    </span>
-    <span class="item">
-      <button ng-click="prevSlide()">Anterior</button>
-    </span>
 
 
   </ion-content>
