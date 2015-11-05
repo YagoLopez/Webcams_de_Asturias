@@ -152,15 +152,6 @@ angular.module('webcams_asturias.controllers', [])
           },
           cancelText: 'Cancelar',
           cancelOnStateChange: false
-          //,
-          //expression: function (filterText, cam, index, array) {
-          //  //return value.propertyName === filterText || value.anotherPropertyName === filterText;
-          //},
-          //cancel: function(){
-          //},
-          //done: function(){
-          //}
-          ////filterProperties: 'description'
         });
       };
 
@@ -180,7 +171,7 @@ angular.module('webcams_asturias.controllers', [])
         // indice en el array de items filtrados: itemIndex = items[indice]
         $rootScope.itemIndex = itemIndex;
         $ionicSlideBoxDelegate.slide(itemIndex);
-        $ionicScrollDelegate.scrollTop(false);
+        //$ionicScrollDelegate.scrollTop(false);
         //$ionicSlideBoxDelegate.update();
         $scope.modal.show();
       }
@@ -203,9 +194,6 @@ angular.module('webcams_asturias.controllers', [])
     $scope.prevSlide = function() {
       $ionicSlideBoxDelegate.previous();
     }
-    $scope.$on('$destroy', function() {
-      $scope.modal.remove();
-    });
 
     //TODO: arreglar que se muestre y se oculte bien el loader
     // despues de cargar la pagina con los datos remotos ocultar el loader

@@ -57,17 +57,113 @@
                 <!--<i class="icon ion-android-locate"></i>-->
                 <!--<b>Categoría: </b>{{ cam[3] }}-->
               <!--</p>-->
-            <div class="button-bar">
               <a class="button button-positive icon-left ion-chevron-left" ng-click="prevSlide()"></a>
               <a class="button button-positive" ng-click="">Recargar</a>
               <a class="button button-positive icon-right ion-chevron-right" ng-click="nextSlide()"></a>
-            </div>
+
+<!--
+            <md-button class="md-raised md-primary" ng-click="prevSlide()">
+              <i class="icon ion-chevron-left"></i>
+              Anterior
+            </md-button>
+
+            <md-button class="md-raised md-primary" ng-click="">
+              <i class="icon ion-ios-reload"></i>
+              Recargar
+            </md-button>
+            <md-button class="md-raised md-primary" ng-click="nextSlide()">
+              <i class="icon ion-chevron-right"></i>
+              Siguiente
+            </md-button>
+-->
+
+          <div class="item item-text-wrap">
+            This is a basic Card with some text.
+          </div>
 
           </div>
+
+          <div class="item item-divider">
+            I'm a Footer in a Card!
+          </div>
+
+          <div class="item tabs tabs-secondary tabs-icon-left">
+            <a class="tab-item" href="#">
+              <i class="icon ion-thumbsup"></i>
+              Like
+            </a>
+            <a class="tab-item" href="#">
+              <i class="icon ion-chatbox"></i>
+              Comment
+            </a>
+            <a class="tab-item" href="#">
+              <i class="icon ion-share"></i>
+              Share
+            </a>
+          </div>
+
+        </div><!-- card -->
+
+
+        <div class="card">
+          <div class="item item-divider">
+            Información Meteorológica
+          </div>
+          <div class="item item-text-wrap">
+            This is a basic Card with some text.
+          </div>
+          <div class="item item-divider">
+            I'm a Footer in a Card!
+          </div>
         </div>
+
+        <div class="card">
+          <div class="item item-divider">
+            Mapa
+          </div>
+          <div class="item item-text-wrap">
+            Decidir si incluir aquí el mapa o hacer un estado nuevo con una página nueva. Creo que va a ser mejor eso
+            así se reutilizaría el mapa para cada lugar y sería más eficiente. No se cargarían un mapa para cada slide
+          </div>
+          <div class="item item-divider">
+            I'm a Footer in a Card!
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="item item-divider">
+            Información del Lugar
+          </div>
+          <div class="item item-text-wrap">
+            This is a basic Card with some text.
+          </div>
+          <div class="item item-divider">
+            I'm a Footer in a Card!
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="item item-divider">
+            Información de Google Places o Enlace
+          </div>
+          <div class="item item-text-wrap">
+            This is a basic Card with some text.
+          </div>
+          <div class="item item-divider">
+            I'm a Footer in a Card!
+          </div>
+        </div>
+
+
       </ion-slide>
     </ion-slide-box>
     </div>
+
+<!--
+    <md-button class="md-fab md-fab-bottom-right" aria-label="Add" ng-click="showAdd($event)">
+      <i class="icon ion-chevron-right"></i>
+    </md-button>
+-->
 
   </ion-content>
 </ion-modal-view>
