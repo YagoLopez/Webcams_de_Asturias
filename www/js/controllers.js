@@ -9,6 +9,7 @@ angular.module('webcams_asturias.controllers', [])
   //$scope.$on('$ionicView.enter', function(e) {
   //});
 
+/*
   // Form data for the login modal
   $scope.loginData = {};
 
@@ -40,6 +41,7 @@ angular.module('webcams_asturias.controllers', [])
     }, 1000);
   };
 
+*/
 
   })
 
@@ -166,7 +168,7 @@ angular.module('webcams_asturias.controllers', [])
 
 
       // DIALOGO MODAL ----------------------------------------------------------------------------------------------
-      $ionicModal.fromTemplateUrl('templates/detalle6.html', {
+      $ionicModal.fromTemplateUrl('templates/detalle.html', {
         scope: $scope,
         animation: 'scale-in'
       }).then(function(modal) {
@@ -177,18 +179,12 @@ angular.module('webcams_asturias.controllers', [])
       $scope.showModal= function (itemIndex){
         // indice en el array de items filtrados: itemIndex = items[indice]
         $rootScope.itemIndex = itemIndex;
-        $ionicSlideBoxDelegate.slide(itemIndex, 3000);
+        $ionicSlideBoxDelegate.slide(itemIndex);
         $ionicScrollDelegate.scrollTop(false);
         //$ionicSlideBoxDelegate.update();
         $scope.modal.show();
       }
 
-/*
-      // Triggered in the login modal to close it
-      $scope.closeModal = function () {
-        $scope.modal.hide();
-      };
-*/
     // FIN DIALOGO MODAL ----------------------------------------------------------------------------------------------
 
     }).error(function(data, status) {
