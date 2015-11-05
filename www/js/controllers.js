@@ -177,17 +177,18 @@ angular.module('webcams_asturias.controllers', [])
       $scope.showModal= function (itemIndex){
         // indice en el array de items filtrados: itemIndex = items[indice]
         $rootScope.itemIndex = itemIndex;
-        console.log('itemIndex', itemIndex);
         $ionicSlideBoxDelegate.slide(itemIndex, 3000);
         $ionicScrollDelegate.scrollTop(false);
-        $ionicSlideBoxDelegate.update();
+        //$ionicSlideBoxDelegate.update();
         $scope.modal.show();
       }
 
+/*
       // Triggered in the login modal to close it
       $scope.closeModal = function () {
         $scope.modal.hide();
       };
+*/
     // FIN DIALOGO MODAL ----------------------------------------------------------------------------------------------
 
     }).error(function(data, status) {
@@ -195,6 +196,11 @@ angular.module('webcams_asturias.controllers', [])
       console.log('Error obteniendo datos remotos: ', status);
     });
 
+
+    // Triggered in the login modal to close it
+    $scope.closeModal = function () {
+      $scope.modal.hide();
+    };
     $scope.nextSlide = function() {
       $ionicSlideBoxDelegate.next();
     }
@@ -215,8 +221,10 @@ angular.module('webcams_asturias.controllers', [])
 
   })// fin TabsCtrl
 
-.controller('ListadoCtrl', function($scope, $state, factoria_datos, $rootScope, DATOS_URL){
-}) // fin ListadoCtrl
+.controller('ListadoCtrl', function($scope, $rootScope,
+                                    $ionicModal, $ionicSlideBoxDelegate, $ionicScrollDelegate){
+
+  }) // fin ListadoCtrl
 
 .controller('MosaicoCtrl', function($scope, $state, $rootScope){
 }) // fin MosaicoCtrl
@@ -225,9 +233,15 @@ angular.module('webcams_asturias.controllers', [])
     $scope.items = 'abcdefghijklmnopqrstuvwxyz'.split("");
   })
 
-.controller('SearchCtrl', function($scope){
+
+
+
+
+.controller('SearchCtrl', function($scope, $ionicModal, $ionicSlideBoxDelegate, $ionicScrollDelegate){
+    console.log('search ctrl');
   $scope.miarray=[1,2,3,4,5,6,7,8,9];
-  }) // fin SearchCtrl controller
+
+ }) // fin SearchCtrl controller
 
 
 ; // FIN
