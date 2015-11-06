@@ -57,9 +57,6 @@
                 <!--<i class="icon ion-android-locate"></i>-->
                 <!--<b>Categoría: </b>{{ cam[3] }}-->
               <!--</p>-->
-              <a class="button button-positive icon-left ion-chevron-left" ng-click="prevSlide()"></a>
-              <a class="button button-positive" ng-click="">Recargar</a>
-              <a class="button button-positive icon-right ion-chevron-right" ng-click="nextSlide()"></a>
 
 <!--
             <md-button class="md-raised md-primary" ng-click="prevSlide()">
@@ -88,18 +85,25 @@
           </div>
 
           <div class="item tabs tabs-secondary tabs-icon-left">
-            <a class="tab-item" href="#">
-              <i class="icon ion-thumbsup"></i>
-              Like
+            <a class="tab-item" href="#" ng-click="prevSlide()">
+              <i class="icon ion-chevron-left"></i>
+              Anterior
             </a>
             <a class="tab-item" href="#">
-              <i class="icon ion-chatbox"></i>
-              Comment
+              <i class="icon ion-ios-reload" ng-click="reload()"></i>
+              Recargar
             </a>
             <a class="tab-item" href="#">
-              <i class="icon ion-share"></i>
-              Share
+              <i class="icon ion-chevron-right" ng-click="nextSlide()"></i>
+              Siguiente
             </a>
+          </div>
+
+
+          <div class="item tabs tabs-secondary tabs-icon-left">
+            <button class="button button-positive icon-left ion-chevron-left" ng-click="prevSlide()"></button>
+            <button class="button button-positive" ng-click="">Recargar</button>
+            <button class="button button-positive icon-right ion-chevron-right" ng-click="nextSlide()"></button>
           </div>
 
         </div><!-- card -->
@@ -110,7 +114,10 @@
             Información Meteorológica
           </div>
           <div class="item item-text-wrap">
-            This is a basic Card with some text.
+            Igual conviene poner aquí pestañas que se cargen asíncronamente con la información de abajo para no recargar
+            el slide box con demasiados elementos. Probar a ver si hay pestañas asíncronas en angular material o buscar
+            alguna directiva. También directivas de ionic con pestañas asíncronas, casi mejor primero.<br>También estoy
+            viendo que existe la posiblidad de cargar el mapa en diferido con lazy loading. Probar a ver.
           </div>
           <div class="item item-divider">
             I'm a Footer in a Card!
@@ -144,7 +151,8 @@
 
         <div class="card">
           <div class="item item-divider">
-            Información de Google Places o Enlace
+            Información de Google Places o Enlace. Puede que esté bien poner la información de google places en el mismo
+            sitio que el mapa local de la cámara
           </div>
           <div class="item item-text-wrap">
             This is a basic Card with some text.

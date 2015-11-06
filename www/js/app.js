@@ -112,7 +112,6 @@ angular.module('webcams_asturias', ['ionic', 'webcams_asturias.controllers', 'je
   //TODO: utilizar resolve en la definicion de estado para obtener datos remotos en vez de en metodo run(). Probar a ver
   .state('app.tabs', {
     url: '/tabs?categoria&concejo',
-    cache:false,
     views: {
       'menuContent': {
         templateUrl: 'templates/tabs.html',
@@ -124,8 +123,6 @@ angular.module('webcams_asturias', ['ionic', 'webcams_asturias.controllers', 'je
     //    return factoria_datos;
     //  }
     //}
-
-
   })
 
   .state('app.tabs.listado', {
@@ -148,6 +145,25 @@ angular.module('webcams_asturias', ['ionic', 'webcams_asturias.controllers', 'je
   }
   })
 
+  .state('app.mapa-local', {
+    url: '/mapa-local',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/mapa-local.html',
+        controller: 'MapaLocalCtrl'
+      }
+    }
+  })
+
+    .state('app.mapa-global', {
+      url: '/mapa-global',
+      views: {
+        'menuContent': {
+          templateUrl: 'templates/mapa-global.html',
+          controller: 'MapaGlobalCtrl'
+        }
+      }
+    })
 ; // fin de estados
 
   // if none of the above states are matched, use this as the fallback

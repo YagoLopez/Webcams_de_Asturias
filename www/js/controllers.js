@@ -213,6 +213,14 @@ angular.module('webcams_asturias.controllers', [])
 .controller('MosaicoCtrl', function($scope, $state, $rootScope){
 }) // fin MosaicoCtrl
 
+.controller('MapaGlobalCtrl', function($scope){
+
+}) // fin MapaGlobalCtrl
+
+.controller('MapaLocallCtrl', function($scope){
+
+}) // fin MapaLocalCtrl
+
 .controller('RepeatCtrl', function ($scope){
     $scope.items = 'abcdefghijklmnopqrstuvwxyz'.split("");
   })
