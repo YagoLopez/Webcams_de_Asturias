@@ -213,21 +213,26 @@ angular.module('webcams_asturias.controllers', [])
 .controller('MosaicoCtrl', function($scope, $state, $rootScope){
 }) // fin MosaicoCtrl
 
-.controller('MapaGlobalCtrl', function($scope){
-/*      var myLatlng = new google.maps.LatLng(43.07493,-89.381388);
+.controller('MapaGlobalCtrl', function($scope, $stateParams){
 
-      var mapOptions = {
-        center: myLatlng,
-        zoom: 16,
-        mapTypeId: google.maps.MapTypeId.ROADMAP
-      };
-      var map = new google.maps.Map(document.getElementById("map"),
-        mapOptions);*/
+  var latOviedo = 43.3667;
+  var lonOviedo = -5.8333;
+  var zoomInicial = 8;
+
+  // Si no se proporcionan coordenadas, centrar el mapa en Oviedo por defecto
+  var latMap = $stateParams.lat || latOviedo;
+  var lonMap = $stateParams.lon || lonOviedo;
+  var zoom = $stateParams.zoom || zoomInicial;
+
+  console.log('latmap', latMap);
+  console.log('lonmap', lonMap);
+  console.log('zoom', zoom);
 
   var mapDiv = document.getElementById('map');
-  var map = new google.maps.Map(mapDiv, {
-    center: new google.maps.LatLng(43.3667, -5.8333), // Oviedo
-    zoom: 8,
+  var map = new google.maps.Map(mapDiv,
+  {
+    center: new google.maps.LatLng( latMap, lonMap ), // Oviedo
+    zoom: parseInt(zoom),
     mapTypeId: google.maps.MapTypeId.TERRAIN
   });
 

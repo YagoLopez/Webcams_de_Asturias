@@ -146,7 +146,7 @@ angular.module('webcams_asturias', ['ionic', 'webcams_asturias.controllers', 'je
   })
 
   .state('app.mapa-global', {
-    url: '/mapa-global',
+    url: '/mapa-global?lat&lon&zoom',
     views: {
       'menuContent': {
         templateUrl: 'templates/mapa-global.html',
