@@ -224,26 +224,50 @@ angular.module('webcams_asturias.controllers', [])
       var map = new google.maps.Map(document.getElementById("map"),
         mapOptions);*/
 
-        var mapDiv = document.getElementById('map');
-        var map = new google.maps.Map(mapDiv, {
-          center: new google.maps.LatLng(43.3667, -5.8333), // Oviedo
-          zoom: 6,
-          mapTypeId: google.maps.MapTypeId.TERRAIN
-        });
+  var mapDiv = document.getElementById('map');
+  var map = new google.maps.Map(mapDiv, {
+    center: new google.maps.LatLng(43.3667, -5.8333), // Oviedo
+    zoom: 8,
+    mapTypeId: google.maps.MapTypeId.TERRAIN
+  });
 
-        layer = new google.maps.FusionTablesLayer({
-          map: map,
-          heatmap: { enabled: false },
-          query: {
-            select: "col7",
-            from: "1gX5maFbqFyRziZiUYlpOBYhcC1v9lGkKqCXvZREF",
-            where: ""
-          },
-          options: {
-            styleId: 1,
-            templateId: 4
-          }
+  layer = new google.maps.FusionTablesLayer({
+    map: map,
+    heatmap: { enabled: false },
+    query: {
+      select: "col0",
+      from: "1gX5maFbqFyRziZiUYlpOBYhcC1v9lGkKqCXvZREF",
+      where: ""
+    },
+    options: {
+      styleId: 3,
+      templateId: 5
+    }
+  });
+
+  /*
+  // Try HTML5 geolocation
+      if (navigator.geolocation) {
+        console.log("Device supports Geolocation");
+        navigator.geolocation.getCurrentPosition(function(position) {
+          console.log("Enter getCurrentPosition");
+          var pos = new google.maps.LatLng(position.coords.latitude,
+            position.coords.longitude);
+          console.log(pos);
+          $scope.map.setCenter(pos);
+
+          var myLocation = new google.maps.Marker({
+            position: pos,
+            map: $scope.map,
+            content: 'Your location'
+          });
         });
+      } else {
+        // Device doesn't support Geolocation
+        console.log("Device doesn't support Geolocation");
+      }
+    };
+  */
 
 }) // fin MapaGlobalCtrl
 
