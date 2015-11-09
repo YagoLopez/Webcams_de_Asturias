@@ -214,20 +214,43 @@ angular.module('webcams_asturias.controllers', [])
 }) // fin MosaicoCtrl
 
 .controller('MapaGlobalCtrl', function($scope){
+/*      var myLatlng = new google.maps.LatLng(43.07493,-89.381388);
+
+      var mapOptions = {
+        center: myLatlng,
+        zoom: 16,
+        mapTypeId: google.maps.MapTypeId.ROADMAP
+      };
+      var map = new google.maps.Map(document.getElementById("map"),
+        mapOptions);*/
+
+        var mapDiv = document.getElementById('map');
+        var map = new google.maps.Map(mapDiv, {
+          center: new google.maps.LatLng(43.3667, -5.8333), // Oviedo
+          zoom: 6,
+          mapTypeId: google.maps.MapTypeId.TERRAIN
+        });
+
+        layer = new google.maps.FusionTablesLayer({
+          map: map,
+          heatmap: { enabled: false },
+          query: {
+            select: "col7",
+            from: "1gX5maFbqFyRziZiUYlpOBYhcC1v9lGkKqCXvZREF",
+            where: ""
+          },
+          options: {
+            styleId: 1,
+            templateId: 4
+          }
+        });
 
 }) // fin MapaGlobalCtrl
 
-.controller('MapaLocallCtrl', function($scope){
-
-}) // fin MapaLocalCtrl
 
 .controller('RepeatCtrl', function ($scope){
     $scope.items = 'abcdefghijklmnopqrstuvwxyz'.split("");
   })
-
-
-
-
 
 .controller('SearchCtrl', function($scope, $ionicModal, $ionicSlideBoxDelegate, $ionicScrollDelegate){
     console.log('search ctrl');

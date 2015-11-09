@@ -145,25 +145,15 @@ angular.module('webcams_asturias', ['ionic', 'webcams_asturias.controllers', 'je
   }
   })
 
-  .state('app.mapa-local', {
-    url: '/mapa-local',
+  .state('app.mapa-global', {
+    url: '/mapa-global',
     views: {
       'menuContent': {
-        templateUrl: 'templates/mapa-local.html',
-        controller: 'MapaLocalCtrl'
+        templateUrl: 'templates/mapa-global.html',
+        controller: 'MapaGlobalCtrl'
       }
     }
   })
-
-    .state('app.mapa-global', {
-      url: '/mapa-global',
-      views: {
-        'menuContent': {
-          templateUrl: 'templates/mapa-global.html',
-          controller: 'MapaGlobalCtrl'
-        }
-      }
-    })
 ; // fin de estados
 
   // if none of the above states are matched, use this as the fallback
