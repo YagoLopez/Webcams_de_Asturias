@@ -146,7 +146,7 @@ angular.module('webcams_asturias', ['ionic', 'webcams_asturias.controllers', 'je
   })
 
   .state('app.mapa-global', {
-    url: '/mapa-global?lat&lon&zoom',
+    url: '/mapa-global?lat&lon&zoom&lugar&concejo&categoria',
     views: {
       'menuContent': {
         templateUrl: 'templates/mapa-global.html',
@@ -162,14 +162,14 @@ angular.module('webcams_asturias', ['ionic', 'webcams_asturias.controllers', 'je
 
 .factory('factoria_datos', function($http, DATOS_URL){
 
-    var getLocalData = function(){
-      // TODO: hacer funcion getLocalData para obtener datos en local
-    };
-
     var getRemoteData = function( sql_query_string ) {
       var url = DATOS_URL.API_ENDPOINT+ '?sql=' +sql_query_string+ '&key=' +DATOS_URL.API_KEY;
       console.log("url", encodeURI(url));
       return $http.get( encodeURI(url), {cache: true} );
+    }
+
+    var getLocalData = function(){
+      return $http.get('datos.json');
     }
     return {
       getRemoteData: getRemoteData,

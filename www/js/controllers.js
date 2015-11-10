@@ -218,15 +218,22 @@ angular.module('webcams_asturias.controllers', [])
   var latOviedo = 43.3667;
   var lonOviedo = -5.8333;
   var zoomInicial = 8;
+  //var filtro = "Concejo = 'Llanes'";
 
   // Si no se proporcionan coordenadas, centrar el mapa en Oviedo por defecto
   var latMap = $stateParams.lat || latOviedo;
   var lonMap = $stateParams.lon || lonOviedo;
   var zoom = $stateParams.zoom || zoomInicial;
+  var lugar = $stateParams.lugar;
+  var concejo = $stateParams.concejo;
+  var categoria = $stateParams.categoria;
 
   console.log('latmap', latMap);
   console.log('lonmap', lonMap);
   console.log('zoom', zoom);
+  console.log('lugar', lugar);
+    console.log('concejo', concejo);
+    console.log('categoria', categoria);
 
   var mapDiv = document.getElementById('map');
   var map = new google.maps.Map(mapDiv,
@@ -240,15 +247,70 @@ angular.module('webcams_asturias.controllers', [])
     map: map,
     heatmap: { enabled: false },
     query: {
-      select: "col0",
+      select: "col7",
       from: "1gX5maFbqFyRziZiUYlpOBYhcC1v9lGkKqCXvZREF",
       where: ""
     },
     options: {
-      styleId: 3,
-      templateId: 5
+      styleId: 6,
+      templateId: 8
     }
   });
+
+
+
+/*
+  var geocoder = new google.maps.Geocoder();
+  geocoder.geocode( {
+    'address': 'playa de barro, llanes',
+    'componentRestrictions': {
+      //locality:'llanes'
+      //administrative_area:'llanes'
+    }
+  }, function(results, status) {
+    if (status == google.maps.GeocoderStatus.OK) {
+      map.setCenter(results[0].geometry.location);
+      console.log('resultados geocoder', results);
+      var marker = new google.maps.Marker({
+        map: map,
+        position: results[0].geometry.location
+      });
+    } else {
+      console.log("Fallo geocoder. Status: " + status);
+    }
+  });*/
+
+
+
+
+
+
+
+function hallaCoordenadas(lugar, concejo) {
+  var resultado ="";
+  var query = "'"+lugar+","+concejo+"'";
+  console.log('query');
+  var asturias = new google.maps.LatLng(43, -5);
+  var request = {
+    location: asturias,
+    radius: '10',
+    query: query
+  };
+  service = new google.maps.places.PlacesService(map);
+  service.textSearch(request, callback);
+  function callback(results, status) {
+    if (status == google.maps.places.PlacesServiceStatus.OK) {
+      resultado = new google.maps.LatLng(results[0].geometry.location.lat() , results[0].geometry.location.lng());
+      map.setCenter(resultado);
+
+    }
+  }
+  //console.log('resultado', resultado);
+
+}
+    hallaCoordenadas('playa de poo', 'llanes');
+    //console.log('test', test);
+
 
   /*
   // Try HTML5 geolocation
