@@ -302,13 +302,14 @@ function hallaCoordenadas(lugar, concejo) {
     if (status == google.maps.places.PlacesServiceStatus.OK) {
       resultado = new google.maps.LatLng(results[0].geometry.location.lat() , results[0].geometry.location.lng());
       map.setCenter(resultado);
+      map.setZoom(12);
 
     }
   }
   //console.log('resultado', resultado);
 
 }
-    hallaCoordenadas('playa de poo', 'llanes');
+    hallaCoordenadas('cudillero', 'cudillero');
     //console.log('test', test);
 
 
