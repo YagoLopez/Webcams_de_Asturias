@@ -260,6 +260,7 @@ angular.module('webcams_asturias.controllers', [])
     function callback(results, status) {
       if (status == google.maps.places.PlacesServiceStatus.OK) {
         //resultado = new google.maps.LatLng(results[0].geometry.location.lat() , results[0].geometry.location.lng());
+        console.log('icon', results[0].icon);
         fn(results[0].geometry.location);
       }
     }
@@ -273,6 +274,13 @@ angular.module('webcams_asturias.controllers', [])
       hallaCoordenadas(lugar, concejo, function(coords){
       mapa.setCenter(coords);
       mapa.setZoom(13);
+      var marker = new google.maps.Marker({
+        position: coords,
+        map: mapa,
+        title: 'Hello World!',
+        //animation: google.maps.Animation.DROP,
+        icon: 'https://storage.googleapis.com/support-kms-prod/SNP_2752125_en_v0'
+      });
     });
   }
 // ---------------------------------------------------------------------------
