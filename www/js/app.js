@@ -145,12 +145,13 @@ angular.module('webcams_asturias', ['ionic', 'webcams_asturias.controllers', 'je
   }
   })
 
-  .state('app.mapa-global', {
-    url: '/mapa-global?lat&lon&zoom&lugar&concejo&categoria',
+  .state('app.mapa', {
+    url: '/mapa?lugar&concejo&categoria',
+    cache: false,
     views: {
       'menuContent': {
-        templateUrl: 'templates/mapa-global.html',
-        controller: 'MapaGlobalCtrl'
+        templateUrl: 'templates/mapa.html',
+        controller: 'MapaCtrl'
       }
     }
   })

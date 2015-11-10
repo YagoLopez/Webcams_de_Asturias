@@ -213,107 +213,71 @@ angular.module('webcams_asturias.controllers', [])
 .controller('MosaicoCtrl', function($scope, $state, $rootScope){
 }) // fin MosaicoCtrl
 
-.controller('MapaGlobalCtrl', function($scope, $stateParams){
-
-  var latOviedo = 43.3667;
-  var lonOviedo = -5.8333;
-  var zoomInicial = 8;
-  //var filtro = "Concejo = 'Llanes'";
-
-  // Si no se proporcionan coordenadas, centrar el mapa en Oviedo por defecto
-  var latMap = $stateParams.lat || latOviedo;
-  var lonMap = $stateParams.lon || lonOviedo;
-  var zoom = $stateParams.zoom || zoomInicial;
-  var lugar = $stateParams.lugar;
-  var concejo = $stateParams.concejo;
-  var categoria = $stateParams.categoria;
-
-  console.log('latmap', latMap);
-  console.log('lonmap', lonMap);
-  console.log('zoom', zoom);
-  console.log('lugar', lugar);
-    console.log('concejo', concejo);
-    console.log('categoria', categoria);
-
-  var mapDiv = document.getElementById('map');
-  var map = new google.maps.Map(mapDiv,
-  {
-    center: new google.maps.LatLng( latMap, lonMap ), // Oviedo
-    zoom: parseInt(zoom),
-    mapTypeId: google.maps.MapTypeId.TERRAIN
-  });
-
-  layer = new google.maps.FusionTablesLayer({
-    map: map,
-    heatmap: { enabled: false },
-    query: {
-      select: "col7",
-      from: "1gX5maFbqFyRziZiUYlpOBYhcC1v9lGkKqCXvZREF",
-      where: ""
-    },
-    options: {
-      styleId: 6,
-      templateId: 8
-    }
-  });
-
-
+.controller('MapaCtrl', function($scope, $stateParams){
 
 /*
-  var geocoder = new google.maps.Geocoder();
-  geocoder.geocode( {
-    'address': 'playa de barro, llanes',
-    'componentRestrictions': {
-      //locality:'llanes'
-      //administrative_area:'llanes'
+  1) crear mapa
+  2) si no hay NI lugar NI concejo -> mapa por defecto
+     en cualquier otro caso -> crear mapa en funcion de parametros: lugar, concejo (categoria?)
+ */
+
+  var OVIEDO = {lat: 43.3667, lng: -5.8333}; // centro de mapa por defecto
+  var mapa = null;
+  var filtro = '';
+  var lugar = $stateParams.lugar || '';
+  var concejo = $stateParams.concejo || '';
+
+  function creaMapa(){
+    var mapaDiv = document.getElementById('mapa');
+    var map = new google.maps.Map(mapaDiv,  {
+      mapTypeId: google.maps.MapTypeId.TERRAIN
+    });
+    layer = new google.maps.FusionTablesLayer({
+      map: map,
+      //heatmap: { enabled: false },
+      query: {
+        select: "col7",
+        from: "1gX5maFbqFyRziZiUYlpOBYhcC1v9lGkKqCXvZREF",
+        where: filtro
+      },
+      options: {
+        styleId: 6,
+        templateId: 8
+      }
+    });
+    return map;
+  } // CrearMapa()
+
+  function hallaCoordenadas (pLugar, pConcejo, fn){
+    //var query = "'"+pLugar+","+pConcejo+"'";
+    var request = {
+      location: OVIEDO,
+      radius: '1',
+      query: "'"+pLugar+","+pConcejo+"'"
+    };
+    placesService = new google.maps.places.PlacesService(mapa);
+    placesService.textSearch(request, callback);
+    function callback(results, status) {
+      if (status == google.maps.places.PlacesServiceStatus.OK) {
+        //resultado = new google.maps.LatLng(results[0].geometry.location.lat() , results[0].geometry.location.lng());
+        fn(results[0].geometry.location);
+      }
     }
-  }, function(results, status) {
-    if (status == google.maps.GeocoderStatus.OK) {
-      map.setCenter(results[0].geometry.location);
-      console.log('resultados geocoder', results);
-      var marker = new google.maps.Marker({
-        map: map,
-        position: results[0].geometry.location
-      });
-    } else {
-      console.log("Fallo geocoder. Status: " + status);
-    }
-  });*/
+  } // hallaCoordenadas
 
-
-
-
-
-
-
-function hallaCoordenadas(lugar, concejo) {
-  var resultado ="";
-  var query = "'"+lugar+","+concejo+"'";
-  console.log('query');
-  var asturias = new google.maps.LatLng(43, -5);
-  var request = {
-    location: asturias,
-    radius: '10',
-    query: query
-  };
-  service = new google.maps.places.PlacesService(map);
-  service.textSearch(request, callback);
-  function callback(results, status) {
-    if (status == google.maps.places.PlacesServiceStatus.OK) {
-      resultado = new google.maps.LatLng(results[0].geometry.location.lat() , results[0].geometry.location.lng());
-      map.setCenter(resultado);
-      map.setZoom(12);
-
-    }
+  mapa = creaMapa();
+  if(!lugar && !concejo){
+    mapa.setCenter(OVIEDO);
+    mapa.setZoom(8);
+  } else {
+      hallaCoordenadas(lugar, concejo, function(coords){
+      mapa.setCenter(coords);
+      mapa.setZoom(13);
+    });
   }
-  //console.log('resultado', resultado);
+// ---------------------------------------------------------------------------
 
-}
-    hallaCoordenadas('cudillero', 'cudillero');
-    //console.log('test', test);
-
-
-  /*
+  /* ---------------------------------------------------------
   // Try HTML5 geolocation
       if (navigator.geolocation) {
         console.log("Device supports Geolocation");
