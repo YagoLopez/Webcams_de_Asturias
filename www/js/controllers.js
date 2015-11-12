@@ -185,16 +185,13 @@ angular.module('webcams_asturias.controllers', [])
       console.log('Error obteniendo datos remotos: ', status);
     });
 
-    $scope.esDivStreetViewVisible = function(){
+    //$scope.checked = false;
+    //$scope.clickme = function(){
+    //  $scope.checked = !$scope.checked;
+    //  console.log('ionicslideboxdelegate.currentIndex()', $ionicSlideBoxDelegate.currentIndex());
+    //  console.log('itemIndex', $scope.itemIndex);
+    //}
 
-    }
-    $scope.checked = false;
-    $scope.clickme = function(){
-      $scope.checked = !$scope.checked;
-      console.log('ionicslideboxdelegate.currentIndex()', $ionicSlideBoxDelegate.currentIndex());
-      console.log('itemIndex', $scope.itemIndex);
-    }
-    // Triggered in the login modal to close it
     $scope.closeModal = function () {
       $scope.modal.hide();
     };
@@ -211,11 +208,6 @@ angular.module('webcams_asturias.controllers', [])
       //$ionicLoading.hide();
       //console.log('$ionicView.afterEnter', viewInfo, state);
     //});
-
-
-
-
-
   })// fin TabsCtrl
 
 .controller('ListadoCtrl', function($scope, $rootScope,
@@ -367,6 +359,26 @@ angular.module('webcams_asturias.controllers', [])
 
 
 }) // fin MapaGlobalCtrl
+
+.controller('PanoramioCtrl', function($scope, $stateParams){
+    var lugar = $stateParams.lugar || 'Oviedo';
+    var concejo = $stateParams.concejo;
+    var categoria = $stateParams.categoria
+    var cadenaBusqueda = {
+      'tag': lugar
+      //,
+      //'rect': {'sw': {'lat': -30, 'lng': 10.5}, 'ne': {'lat': 50.5, 'lng': 30}}
+    };
+    var opciones_panoramio = {'width': 400, 'height': 400};
+    var widget_panoramio = new panoramio.PhotoWidget('divPanoramio', cadenaBusqueda, opciones_panoramio);
+    widget_panoramio.setPosition(0);
+    console.log('widget_panoramio', widget_panoramio);
+
+    $scope.getPhoto = function (){
+      console.log('getPhoto', widget_panoramio.getPhoto());
+    }
+
+  }) // panoramio ctrl
 
 .controller('RepeatCtrl', function ($scope){
     $scope.items = 'abcdefghijklmnopqrstuvwxyz'.split("");

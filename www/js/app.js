@@ -157,6 +157,18 @@ angular.module('webcams_asturias',
       }
     }
   })
+
+  .state('app.panoramio', {
+    url: '/panoramio?lat&lng&lugar&concejo&categoria',
+    cache: false,
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/panoramio.html',
+        controller: 'PanoramioCtrl'
+      }
+    }
+  })
+
 ; // fin de estados
 
   // if none of the above states are matched, use this as the fallback

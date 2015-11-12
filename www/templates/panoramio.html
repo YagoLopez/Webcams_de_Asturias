@@ -1,10 +1,10 @@
-panoramio
-Lugar/items[itemIndex][0]: {{items[itemIndex][0]}}<br>
-Concejo/items[itemIndex][1]: {{items[itemIndex][1]}}<br>
-Intentar cargar esto en la misma pagina de detalle usando ng-show/hide. supuestamente no se crean los elementos en el dom
-hasta que no son mostrados. revisar la ayuda
-<iframe
-  ng-src="http://www.panoramio.com/wapi/template/photo.html?tag={{'llanes'}}&amp;width=200&amp;height=200&amp;bgcolor=white"
-  frameborder="0" width="100%" height="50%" scrolling="no" marginwidth="0" marginheight="0">
-</iframe>
+<ion-view>
+<ion-content>
+  panoramio
 
+  <div id="divPanoramio" style="width:100%;height: 60%"></div>
+  <input type="button" value="get foto" ng-click="getPhoto()">
+
+
+</ion-content>
+</ion-view>
