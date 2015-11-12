@@ -2,6 +2,7 @@
 <!--TODO: insertar imagen de street view-->
 <!--TODO: insertar informacion de wikipedia-->
 <!--TODO: busqueda de google places-->
+<!--TODO: filtrar markers por concejo y categoria (lugar?)-->
 
 <ion-view view-title="Mapa de Cámaras">
   <!--<ion-content header-shrink scroll-event-interval="1">-->
@@ -17,9 +18,35 @@
       .scroll {
         height: 100%;
       }
+      #floating-panel {
+        position: absolute;
+        top: 10px;
+        left: 25%;
+        z-index: 5;
+        background-color: #fff;
+        padding: 5px;
+        border: 1px solid #999;
+        text-align: center;
+        font-family: 'Roboto','sans-serif';
+        line-height: 30px;
+        padding-left: 10px;
+      }
+      #floating-panel {
+        margin-left: -100px;
+}
     </style>
 
+    <div id="floating-panel">
+      <input type="button" value="Street View" ng-click="verStreetView();"/>
+    </div>
     <div id="mapa" data-tap-disabled="true" style="width: 100%; height: 60%"></div>
+    <div id="info" ng-show="toggle">Imágenes de Street View en localizacón aproximada</div>
+
+<!--    <iframe
+      src="http://www.panoramio.com/wapi/template/photo.html?tag=playa de poo&amp;width=200&amp;height=200&amp;bgcolor=white"
+      frameborder="0" width="100%" height="50%" scrolling="no" marginwidth="0" marginheight="0">
+    </iframe>-->
+
 
   </ion-content>
 </ion-view>

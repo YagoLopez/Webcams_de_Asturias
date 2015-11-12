@@ -15,8 +15,8 @@
       <!--TODO: implementar directiva de progress bar-->
       <div class="list">
 
-        <div ng-repeat="cam in items" ng-class="{'chat-item':animarListItems}" class="item-remove-animate">
-        <!--<div collection-repeat="cam in items" ng-class="{}" class="item-remove-animate">-->
+        <!--<div ng-repeat="cam in items" ng-class="{'chat-item':animarListItems}" class="item-remove-animate">-->
+        <div collection-repeat="cam in items" ng-class="{}" class="item-remove-animate">
           <div class="item item-thumbnail-left item-icon-right" ng-click="showModal( $index )">
             <!--<img ng-src="http://api.randomuser.me/portraits/thumb/men/{{$index}}.jpg">-->
             <!--<img src="../img/ionic.png"/>-->

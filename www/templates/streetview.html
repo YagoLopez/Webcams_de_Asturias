@@ -1,0 +1,17 @@
+streetview<br>
+
+<div id="street-view" style="width:100%;height: 300px;"></div>
+
+<script src="https://maps.googleapis.com/maps/api/js?&libraries=places"></script>
+<script>
+  // ---------------------------------------------
+  panorama = new google.maps.StreetViewPanorama(
+    document.getElementById('street-view'),
+    {
+      position: {lat: 37.869260, lng: -122.254811},
+      pov: {heading: 165, pitch: 0},
+      zoom: 1
+    });
+  // ---------------------------------------------
+
+</script>

@@ -83,7 +83,7 @@ angular.module('webcams_asturias.controllers', [])
 
 .controller('TabsCtrl', function($scope, $stateParams, $ionicLoading, $rootScope, $ionicFilterBar,
                                  factoria_datos, DATOS_URL, $filter, $ionicScrollDelegate, $ionicModal,
-                                 $ionicSlideBoxDelegate){
+                                 $ionicSlideBoxDelegate, $sce){
 
     // mostrar loader
     var icono_spinner = "<ion-spinner icon='lines' class='spinner-calm'></ion-spinner><br/>";
@@ -164,6 +164,7 @@ angular.module('webcams_asturias.controllers', [])
         animation: 'scale-in'
       }).then(function(modal) {
         $scope.modal = modal;
+
       });
 
       //TODO: a lo mejor se puede usar solo itemIndex para filtrar la camara y no usar rowid
@@ -171,6 +172,7 @@ angular.module('webcams_asturias.controllers', [])
         // indice en el array de items filtrados: itemIndex = items[indice]
         $rootScope.itemIndex = itemIndex;
         $ionicSlideBoxDelegate.slide(itemIndex);
+        $ionicScrollDelegate.$getByHandle('modalDetalle').scrollTop(true);
         //$ionicScrollDelegate.scrollTop(false);
         //$ionicSlideBoxDelegate.update();
         $scope.modal.show();
@@ -183,7 +185,15 @@ angular.module('webcams_asturias.controllers', [])
       console.log('Error obteniendo datos remotos: ', status);
     });
 
+    $scope.esDivStreetViewVisible = function(){
 
+    }
+    $scope.checked = false;
+    $scope.clickme = function(){
+      $scope.checked = !$scope.checked;
+      console.log('ionicslideboxdelegate.currentIndex()', $ionicSlideBoxDelegate.currentIndex());
+      console.log('itemIndex', $scope.itemIndex);
+    }
     // Triggered in the login modal to close it
     $scope.closeModal = function () {
       $scope.modal.hide();
@@ -201,6 +211,9 @@ angular.module('webcams_asturias.controllers', [])
       //$ionicLoading.hide();
       //console.log('$ionicView.afterEnter', viewInfo, state);
     //});
+
+
+
 
 
   })// fin TabsCtrl
@@ -223,6 +236,7 @@ angular.module('webcams_asturias.controllers', [])
 
   var OVIEDO = {lat: 43.3667, lng: -5.8333}; // centro de mapa por defecto
   var mapa = null;
+  var streetView = null;
   var filtro = '';
   var lugar = $stateParams.lugar || '';
   var concejo = $stateParams.concejo || '';
@@ -259,21 +273,52 @@ angular.module('webcams_asturias.controllers', [])
     placesService.textSearch(request, callback);
     function callback(results, status) {
       if (status == google.maps.places.PlacesServiceStatus.OK) {
-        //resultado = new google.maps.LatLng(results[0].geometry.location.lat() , results[0].geometry.location.lng());
-        console.log('icon', results[0].icon);
         fn(results[0].geometry.location);
       }
     }
   } // hallaCoordenadas
 
+  function creaStreetView(mapa){
+    var panorama = mapa.getStreetView();
+    panorama.setPov(({
+      heading: 0,
+      pitch: 0
+    }));
+    return panorama;
+  }
+
+  $scope.verStreetView = function () {
+      $scope.streetViewVsible = streetView.getVisible();
+      if ($scope.streetViewVsible == false) {
+        streetView.setVisible(true);
+        $scope.streetViewVsible = true;
+      } else {
+        streetView.setVisible(false);
+        $scope.streetViewVsible = false;
+      }
+    }
+
   mapa = creaMapa();
+  streetView = creaStreetView(mapa);
+
   if(!lugar && !concejo){
     mapa.setCenter(OVIEDO);
     mapa.setZoom(8);
+    streetView.setPosition(OVIEDO);
   } else {
       hallaCoordenadas(lugar, concejo, function(coords){
       mapa.setCenter(coords);
       mapa.setZoom(13);
+      // busca coordenadas cercanas donde existan imagenes de street view
+      var streetViewService = new google.maps.StreetViewService();
+      streetViewService.getPanoramaByLocation(coords, 100, function(data, status) {
+        if (status == google.maps.StreetViewStatus.OK) {
+          var nearStreetViewLocation = data.location.latLng;
+          streetView.setPosition(nearStreetViewLocation);
+        } else {
+          console.log('No se ha encontrado panorama Street View')
+        }
+      });
       var marker = new google.maps.Marker({
         position: coords,
         map: mapa,
@@ -309,8 +354,19 @@ angular.module('webcams_asturias.controllers', [])
     };
   */
 
-}) // fin MapaGlobalCtrl
 
+
+    //panorama = new google.maps.StreetViewPanorama(
+    //  document.getElementById('street-view'),
+    //  {
+    //    position: {lat: 37.869260, lng: -122.254811},
+    //    pov: {heading: 165, pitch: 0},
+    //    zoom: 1
+    //  });
+
+
+
+}) // fin MapaGlobalCtrl
 
 .controller('RepeatCtrl', function ($scope){
     $scope.items = 'abcdefghijklmnopqrstuvwxyz'.split("");

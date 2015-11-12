@@ -3,6 +3,7 @@
 <!--TODO: lazy loading de imagenes-->
 <!--TODO: cambiar los iconos bullet-list del texto del detalle-->
 <!--TODO: desactivar botones siguiente anterior al llegar al final del listado-->
+<!--TODO: pasar todos los nombres de dominio a IPs para optimizar tiempos de carga-->
 <ion-modal-view>
   <ion-header-bar>
     <h1 class="title">Detalles</h1>
@@ -10,8 +11,8 @@
       <button class="button button-clear" ng-click="closeModal()">Cerrar</button>
     </div>
   </ion-header-bar>
-  <ion-content>
 
+  <ion-content delegate-handle="modalDetalle">
     <style>
       .card {
         padding-top: 1px;
@@ -53,10 +54,6 @@
               <i class="icon ion-android-locate"></i>
               <b>Concejo: </b>{{ cam[1] }}
             </p>
-              <!--<p>-->
-                <!--<i class="icon ion-android-locate"></i>-->
-                <!--<b>Categoría: </b>{{ cam[3] }}-->
-              <!--</p>-->
 
 <!--
             <md-button class="md-raised md-primary" ng-click="prevSlide()">
@@ -83,86 +80,130 @@
           <div class="item item-divider">
             I'm a Footer in a Card!
           </div>
-
+          <!-------------------------------------------------------------------------------------------------------->
           <div class="item tabs tabs-secondary tabs-icon-left">
             <a class="tab-item" href="#" ng-click="prevSlide()">
               <i class="icon ion-chevron-left"></i>
               Anterior
             </a>
-            <a class="tab-item" href="#">
-              <i class="icon ion-ios-reload" ng-click="reload()"></i>
+            <a class="tab-item" href="#" ng-click="recargar()">
+              <i class="icon ion-ios-reload"></i>
               Recargar
             </a>
-            <a class="tab-item" href="#">
-              <i class="icon ion-chevron-right" ng-click="nextSlide()"></i>
+            <a class="tab-item" href="#" ng-click="nextSlide()">
+              <i class="icon ion-chevron-right"></i>
               Siguiente
             </a>
           </div>
 
 
           <div class="item tabs tabs-secondary tabs-icon-left">
-            <button class="button button-positive icon-left ion-chevron-left" ng-click="prevSlide()"></button>
+            <button class="button button-positive icon-left ion-chevron-left" ng-click="prevSlide()">Anterior</button>
             <button class="button button-positive" ng-click="">Recargar</button>
-            <button class="button button-positive icon-right ion-chevron-right" ng-click="nextSlide()"></button>
+            <button class="button button-positive icon-right ion-chevron-right" ng-click="nextSlide()">Siguiente</button>
           </div>
 
-        </div><!-- card -->
+        </div>
 
 
+<!--
         <div class="card">
           <div class="item item-divider">
+            Encabezamiento
+          </div>
+          <div class="item item-text-wrap">
+            - Ver Mapa<br>
+            - Ver fotos<br>
+            - Información meteorológica<br>
+            - Street View<br>
+            - Información del lugar<br>
+            - Buscar en Google Places<br>
+          </div>
+          <div class="item item-divider">
+            I'm a Footer in a Card!
+          </div>
+        </div>
+-->
+
+        <!-- fin card ------------------------------------------------------------------------------------------------>
+
+
+
+        <!-- Street View --------------------------------------------------------------------------------------------->
+<!--
+        <style>
+          .animate-if {
+            background:white;
+            border:1px solid black;
+            padding:10px;
+          }
+
+          .animate-if.ng-enter, .animate-if.ng-leave {
+            transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
+          }
+
+          .animate-if.ng-enter,
+          .animate-if.ng-leave.ng-leave-active {
+            opacity:0;
+          }
+
+          .animate-if.ng-leave,
+          .animate-if.ng-enter.ng-enter-active {
+            opacity:1;
+          }
+
+        </style>
+        <div>itemIndex: {{itemIndex}}</div>
+        <button ng-click="clickme()">Click me</button><br>
+        <div id="cam[4]" ng-if="checked" class="animate-if">
+          <iframe src="templates/streetview.html" style="border: 0; width:100%; height:300px;"></iframe>
+        </div>
+-->
+        <!-- Fin StreetView ------------------------------------------------------------------------------------------>
+        <div class="list list-inset">
+          <a href="#" class="item item-stable item-icon-right item-icon-right">
+            <i class="icon ion-email"></i>
+            Ver en Mapa
+            <i class="icon ion-email"></i>
+          </a>
+          <div class="item item-stable">
+            Ver en Street View
+          </div>
+          <div class="item item-stable">
+            Buscar en Alrededores
+          </div>
+          <div class="item item-stable">
+            Ver fotos
+          </div>
+          <div class="item item-stable">
             Información Meteorológica
           </div>
-          <div class="item item-text-wrap">
-            Igual conviene poner aquí pestañas que se cargen asíncronamente con la información de abajo para no recargar
-            el slide box con demasiados elementos. Probar a ver si hay pestañas asíncronas en angular material o buscar
-            alguna directiva. También directivas de ionic con pestañas asíncronas, casi mejor primero.<br>También estoy
-            viendo que existe la posiblidad de cargar el mapa en diferido con lazy loading. Probar a ver.
-            - Añadir boton "ver en mapa"
-            - Añadir botón/link "ver en street view
-          </div>
-          <div class="item item-divider">
-            I'm a Footer in a Card!
-          </div>
         </div>
-
-        <div class="card">
-          <div class="item item-divider">
-            Mapa
-          </div>
-          <div class="item item-text-wrap">
-            Decidir si incluir aquí el mapa o hacer un estado nuevo con una página nueva. Creo que va a ser mejor eso
-            así se reutilizaría el mapa para cada lugar y sería más eficiente. No se cargarían un mapa para cada slide
-          </div>
-          <div class="item item-divider">
-            I'm a Footer in a Card!
-          </div>
+        <!-------------------------------------------------------------------------------------------------->
+<!--
+        <div class="list card">
+          <a href="#" class="item item-stable item-icon-left">
+            <i class="icon ion-home"></i>
+            Ver en Mapa
+          </a>
+          <a href="#" class="item item-stable item-icon-left">
+            <i class="icon ion-ios-telephone"></i>
+            Ver en Street View
+          </a>
+          <a href="#" class="item item-stable item-icon-left">
+            <i class="icon ion-wifi"></i>
+            Buscar en Alrededores
+          </a>
+          <a href="#" class="item item-stable item-icon-left">
+            <i class="icon ion-card"></i>
+            Ver Fotos
+          </a>
+          <a href="#" class="item item-stable item-icon-left">
+            <i class="icon ion-card"></i>
+            Información Meteorológica
+          </a>
         </div>
-
-        <div class="card">
-          <div class="item item-divider">
-            Información del Lugar
-          </div>
-          <div class="item item-text-wrap">
-            This is a basic Card with some text.
-          </div>
-          <div class="item item-divider">
-            I'm a Footer in a Card!
-          </div>
-        </div>
-
-        <div class="card">
-          <div class="item item-divider">
-            Información de Google Places o Enlace. Puede que esté bien poner la información de google places en el mismo
-            sitio que el mapa local de la cámara
-          </div>
-          <div class="item item-text-wrap">
-            This is a basic Card with some text.
-          </div>
-          <div class="item item-divider">
-            I'm a Footer in a Card!
-          </div>
-        </div>
+-->
 
 
       </ion-slide>

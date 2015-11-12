@@ -10,7 +10,8 @@
 
 //TODO: probar a hacer el filtrado de datos y la busqueda usando defian.js en lugar de los filtros de angular
 
-angular.module('webcams_asturias', ['ionic', 'webcams_asturias.controllers', 'jett.ionic.filter.bar', 'ngMaterial'/*,'ionicLazyLoad'*/])
+angular.module('webcams_asturias',
+  ['ionic', 'webcams_asturias.controllers', 'jett.ionic.filter.bar', 'ngMaterial'/*,'ionicLazyLoad'*/])
 
 .run(function($ionicPlatform, $ionicLoading, factoria_datos, DATOS_URL, $rootScope) {
   $ionicPlatform.ready(function() {
@@ -50,7 +51,8 @@ angular.module('webcams_asturias', ['ionic', 'webcams_asturias.controllers', 'je
   });
 })
 
-.config(function($stateProvider, $urlRouterProvider) {
+.config(function($stateProvider, $urlRouterProvider, $sceDelegateProvider) {
+
   $stateProvider
 
   .state('app', {
@@ -169,8 +171,8 @@ angular.module('webcams_asturias', ['ionic', 'webcams_asturias.controllers', 'je
       return $http.get( encodeURI(url), {cache: true} );
     }
 
-    var getLocalData = function(){
-      return $http.get('datos.json');
+    var getLocalData = function(path_fichero){
+      return $http.get(path_fichero);
     }
     return {
       getRemoteData: getRemoteData,
@@ -194,6 +196,7 @@ angular.module('webcams_asturias', ['ionic', 'webcams_asturias.controllers', 'je
   }
   return fallbackSrc;
 })
+
 
 /*
 .filter('concejoFltr', function(){
