@@ -15,9 +15,9 @@
       <!--TODO: implementar directiva de progress bar-->
       <div class="list">
 
-        <!--<div ng-repeat="cam in items" ng-class="{'chat-item':animarListItems}" class="item-remove-animate">-->
-        <div collection-repeat="cam in items" ng-class="{}" class="item-remove-animate">
-          <div class="item item-thumbnail-left item-icon-right" ng-click="showModal( $index )">
+        <div ng-repeat="cam in items" ng-class="{'chat-item':animarListItems}" class="item-remove-animate">
+        <!--<div collection-repeat="cam in items" ng-class="{}" class="item-remove-animate">-->
+          <a class="item item-thumbnail-left item-icon-right" href="/#/app/detalle/{{cam[4]}}">
             <!--<img ng-src="http://api.randomuser.me/portraits/thumb/men/{{$index}}.jpg">-->
             <!--<img src="../img/ionic.png"/>-->
             <!--<img  ng-src="{{ cam[2]}}" fallback-src="http://google.com/favicon.ico"/>-->
@@ -35,12 +35,12 @@
               </p>
               <!--<p>Categoría: {{cam[3]}}</p>-->
               <!--<p>indice: {{ $index }}</p>-->
-              <!--<p>ROWID: {{cam[4]}}</p>-->
+              <p>ROWID: {{cam[4]}}</p>
             </div>
             <!--<i class="icon ion-android-exit" style="color: #387ef5;"></i>-->
             <!--<i class="icon ion-log-in" style="color: #387ef5;"></i>-->
             <i class="icon ion-images" style="color: #387ef5;"></i>
-            </div>
+            </a>
         </div>
       </div>
 

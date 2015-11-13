@@ -134,8 +134,8 @@ angular.module('webcams_asturias.controllers', [])
       $rootScope.listacams = data;
       if (camsFiltradasPorUrl.length == 0)
         camsFiltradasPorUrl = data.rows;
-      // Aqui items contiene las cams inicialmente filtradas por parametros de url
-      $rootScope.items = camsFiltradasPorUrl;
+      // items contiene las cams inicialmente filtradas por parametros de url
+      $scope.items = camsFiltradasPorUrl;
 
       // FILTRO 2: filtra las cams segun una cadena de texto que haya introducido el usuario ///////////////////////
       // este filtro se aplica sobre los datos previamente filtrados por url
@@ -145,9 +145,9 @@ angular.module('webcams_asturias.controllers', [])
       $rootScope.showFilterBar = function () {
         $rootScope.animarListItems = false;
         $rootScope.filterBarInstance = $ionicFilterBar.show({
-          items: $rootScope.items,
+          items: $scope.items,
           update: function (filteredItems, filteredText) {
-            $rootScope.items = filteredItems;
+            $scope.items = filteredItems;
             $ionicScrollDelegate.scrollTop(false);
           },
           cancelText: 'Cancelar',
@@ -157,7 +157,6 @@ angular.module('webcams_asturias.controllers', [])
 
       $ionicLoading.hide();
 
-/*
 
       // DIALOGO MODAL ----------------------------------------------------------------------------------------------
       $ionicModal.fromTemplateUrl('templates/detalle.html', {
@@ -180,10 +179,6 @@ angular.module('webcams_asturias.controllers', [])
       }
 
     // FIN DIALOGO MODAL ----------------------------------------------------------------------------------------------
-*/
-
-
-
 
     }).error(function(data, status) {
       $ionicLoading.hide();
@@ -385,13 +380,12 @@ angular.module('webcams_asturias.controllers', [])
 
   }) // panoramio ctrl
 
-.controller('DetalleCtrl', function($scope, $stateParams, $ionicSlideBoxDelegate){
-  $scope.rowid = $stateParams.rowid;
-  console.log('itemIndex en detalle ctrl', $scope.rowid);
+.controller('DetalleCtrl', function($scope){
+
   })
 
 .controller('RepeatCtrl', function ($scope){
-    $rootScope.items = 'abcdefghijklmnopqrstuvwxyz'.split("");
+    $scope.items = 'abcdefghijklmnopqrstuvwxyz'.split("");
   })
 
 .controller('SearchCtrl', function($scope, $ionicModal, $ionicSlideBoxDelegate, $ionicScrollDelegate){

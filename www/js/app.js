@@ -101,15 +101,6 @@ angular.module('webcams_asturias',
   }
   })
 
-  .state('app.detalle', {
-  url: '/detalle/:rowid',
-  views: {
-    'menuContent': {
-      templateUrl: 'templates/detalle.html',
-      controller: 'DetallecamCtrl'
-    }
-  }
-  })
 
   //TODO: utilizar resolve en la definicion de estado para obtener datos remotos en vez de en metodo run(). Probar a ver
   .state('app.tabs', {
@@ -149,7 +140,7 @@ angular.module('webcams_asturias',
 
   .state('app.mapa', {
     url: '/mapa?lugar&concejo&categoria',
-    cache: false,
+    //cache: false,
     views: {
       'menuContent': {
         templateUrl: 'templates/mapa.html',
@@ -159,7 +150,7 @@ angular.module('webcams_asturias',
   })
 
   .state('app.panoramio', {
-    url: '/panoramio?lat&lng&lugar&concejo&categoria',
+    url: '/panoramio?lat&lng&lugar&concejo',
     cache: false,
     views: {
       'menuContent': {
@@ -169,6 +160,15 @@ angular.module('webcams_asturias',
     }
   })
 
+    .state('app.detalle', {
+      url: '/detalle/:rowid',
+      views: {
+        'menuContent': {
+          templateUrl: 'templates/detalle.html',
+          controller: 'DetalleCtrl'
+        }
+      }
+    })
 ; // fin de estados
 
   // if none of the above states are matched, use this as the fallback
