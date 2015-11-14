@@ -172,6 +172,28 @@ angular.module('webcams_asturias',
     }
 })
 
+.service('Panoramio', function(){
+
+    var getPanoramio = function(domElement){
+      var cadenaBusqueda = {
+        'tag': 'Oviedo'
+        //,
+        //'rect': {'sw': {'lat': -30, 'lng': 10.5}, 'ne': {'lat': 50.5, 'lng': 30}}
+      };
+      var opciones_panoramio = {'width': 400, 'height': 400};
+      //var widget_panoramio = new panoramio.PhotoWidget('divPanoramio', cadenaBusqueda, opciones_panoramio);
+      var widget_panoramio = new panoramio.PhotoWidget(domElement, cadenaBusqueda, opciones_panoramio);
+
+      widget_panoramio.setPosition(0);
+      console.log('widget_panoramio', widget_panoramio);
+
+    }
+    return {
+      getPanoramio: getPanoramio
+    }
+  }) // Panoramio
+
+
 .constant('DATOS_URL', {
     API_ENDPOINT: 'https://www.googleapis.com/fusiontables/v2/query',
     FUSION_TABLE_ID: '1gX5maFbqFyRziZiUYlpOBYhcC1v9lGkKqCXvZREF',
@@ -192,7 +214,7 @@ angular.module('webcams_asturias',
 
 .config(['$compileProvider', function ($compileProvider) {
   // disable debug info
-  $compileProvider.debugInfoEnabled(false);
+  $compileProvider.debugInfoEnabled(true);
 }]);
 
 

@@ -145,10 +145,10 @@ angular.module('webcams_asturias.controllers', [])
       //$ionicLoading.hide();
       //console.log('$ionicView.afterEnter', viewInfo, state);
     //});
+
   })// fin TabsCtrl
 
-.controller('ListadoCtrl', function($scope, $rootScope,
-                                    $ionicModal, $ionicSlideBoxDelegate, $ionicScrollDelegate){
+.controller('ListadoCtrl', function($scope, $rootScope, $ionicModal, $ionicSlideBoxDelegate, $ionicScrollDelegate){
 
   }) // fin ListadoCtrl
 
@@ -298,33 +298,53 @@ angular.module('webcams_asturias.controllers', [])
 }) // fin MapaGlobalCtrl
 
 .controller('PanoramioCtrl', function($scope, $stateParams){
-    var lugar = $stateParams.lugar || 'Oviedo';
-    var concejo = $stateParams.concejo;
-    var categoria = $stateParams.categoria
-    var cadenaBusqueda = {
-      'tag': lugar
-      //,
-      //'rect': {'sw': {'lat': -30, 'lng': 10.5}, 'ne': {'lat': 50.5, 'lng': 30}}
-    };
-    var opciones_panoramio = {'width': 400, 'height': 400};
-    var widget_panoramio = new panoramio.PhotoWidget('divPanoramio', cadenaBusqueda, opciones_panoramio);
-    widget_panoramio.setPosition(0);
-    console.log('widget_panoramio', widget_panoramio);
 
-    //TODO: hacer cuadro de dialogo para mostrar foto
-    $scope.getPhoto = function (){
-      console.log('getPhoto', widget_panoramio.getPhoto());
+    $scope.$on('$ionicView.afterEnter', function(){
+      var lugar = $stateParams.lugar || 'Oviedo';
+      var concejo = $stateParams.concejo;
+      var categoria = $stateParams.categoria
+      var cadenaBusqueda = {
+        'tag': lugar
+        //,
+        //'rect': {'sw': {'lat': -30, 'lng': 10.5}, 'ne': {'lat': 50.5, 'lng': 30}}
+      };
+      var opciones_panoramio = {'width': 400, 'height': 400};
+      var widget_panoramio = new panoramio.PhotoWidget('divPanoramio', cadenaBusqueda, opciones_panoramio);
+      widget_panoramio.setPosition(0);
+      console.log('widget_panoramio', widget_panoramio);
+
+      //TODO: hacer cuadro de dialogo para mostrar foto
+      $scope.getPhoto = function (){
+        console.log('getPhoto', widget_panoramio.getPhoto());
+      }
+    });
+}) // panoramio ctrl
+
+.controller('DetalleCtrl', function($scope, $stateParams, $ionicModal, Panoramio){
+
+    $scope.rowid = $stateParams.rowid;
+
+    // DIALOGO MODAL ----------------------------------------------------------------------------------------------
+    $ionicModal.fromTemplateUrl('templates/panoramio.html', {
+      scope: $scope,
+      animation: 'scale-in'
+    }).then(function(modal) {
+      $scope.modal = modal;
+    });
+
+    //TODO: a lo mejor se puede usar solo itemIndex para filtrar la camara y no usar rowid
+    $scope.showModal= function (lugar){
+      console.log('lugar', lugar);
+      // indice en el array de items filtrados: itemIndex = items[indice]
+      //$rootScope.lugar = lugar;
+      $scope.modal.show();
     }
 
-  }) // panoramio ctrl
+    $scope.closeModal = function () {
+      $scope.modal.hide();
+    };
+    // FIN DIALOGO MODAL ----------------------------------------------------------------------------------------------
 
-.controller('DetalleCtrl', function($scope, $stateParams ){
-    //TODO: el problema con el filtro no funcionando despues de varias veces puede ser que al ir al detalle se pasa a un estado nuevo y se pierde el array de items filtrados
-    //TODO: la solucion podria ser que el detalle fuera un estado hijo de listado
-    //TODO: todavia mejor. probar a poner 'items' en rootscope
-    //TODO: el filtro funciona mal solo en la categoria de rios
-    $scope.rowid = $stateParams.rowid;
-    console.log('detalle crtl');
   })
 
 .controller('RepeatCtrl', function ($scope){
