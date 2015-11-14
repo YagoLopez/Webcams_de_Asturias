@@ -9,13 +9,13 @@
 <!--TODO: poner la categoria en el titulo-->
 <!--TODO: probar a usar "track by" en "ng-repeat" para optimizar el filtrado-->
 <!--TODO: implementar directiva de progress bar-->
-<ion-view title="Listado">
+<ion-view view-title="Listado">
   <ion-content>
 
     <div class="list">
 items.length: {{items.length}}
       <!--<div ng-repeat="cam in items" ng-class="{'chat-item':animarListItems}" class="item-remove-animate">-->
-      <div collection-repeat="cam in items track by cam[4]" item-heigth="50%">
+      <div collection-repeat="cam in items track by cam[4]" item-heigth="100px">
         <a class="item item-thumbnail-left item-icon-right" href="#/app/detalle/{{cam[4]}}">
           <!--<img ng-src="http://api.randomuser.me/portraits/thumb/men/{{$index}}.jpg" height="50%">-->
           <img src="../img/ionic.png"/>

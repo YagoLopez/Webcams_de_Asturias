@@ -190,6 +190,12 @@ angular.module('webcams_asturias',
 })
 
 
+.config(['$compileProvider', function ($compileProvider) {
+  // disable debug info
+  $compileProvider.debugInfoEnabled(false);
+}]);
+
+
 /*
 .filter('concejoFltr', function(){
 

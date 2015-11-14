@@ -60,6 +60,7 @@ angular.module('webcams_asturias.controllers', [])
     var template_loader = "Cargando datos...";
     $ionicLoading.show({template:template_loader, noBackdrop:true});
 
+    //TODO: eliminar esta animacion
     $rootScope.animarListItems = true;
     // elimina search bar si la hubiera al mostrar la vista
     if ($rootScope.filterBarInstance)
@@ -84,8 +85,9 @@ angular.module('webcams_asturias.controllers', [])
     var sql_query = 'SELECT Lugar,Concejo,Imagen,Categoria,rowid FROM '+ DATOS_URL.FUSION_TABLE_ID;
     factoria_datos.getRemoteData(sql_query).success(function(data){
 
-      // FILTRO 1: filtra las cams por parametros de la url: concejo y categoria -------------------------------------
-
+      // -------------------------------------------------------------------------------------------------------------
+      // FILTRO 1: filtra las cams por parametros de la url: concejo y categoria
+      // -------------------------------------------------------------------------------------------------------------
       var camsFiltradasPorUrl = $filter('filter')(data.rows, function(cam){
         if ($scope.concejo && $scope.idCategoria) {
           // cam[1] concejo de camara, cam[3] url categoria
@@ -107,10 +109,13 @@ angular.module('webcams_asturias.controllers', [])
 
       console.log('$rootScope.items.length', $rootScope.items.length);
 
-      // FILTRO 2: filtra las cams segun una cadena de texto que haya introducido el usuario -------------------------
+      // -------------------------------------------------------------------------------------------------------------
+      // FILTRO 2: filtra las cams segun una cadena de texto que haya introducido el usuario
+      // -------------------------------------------------------------------------------------------------------------
       // este filtro se aplica sobre los datos previamente filtrados por url
       //TODO: Habría que mejorar la búsqueda para que fuera menos estricta. Por ejemplo, si se introduce "puerto llanes" no se
       //encuentra "Puerto de Llanes"
+
       $rootScope.showFilterBar = function () {
         //TODO: quitar lo de animarlistitems
         $rootScope.animarListItems = false;
