@@ -26,28 +26,6 @@ angular.module('webcams_asturias',
       // org.apache.cordova.statusbar required
       StatusBar.styleDefault();
     }
-
-    // cargar datos remotos durante la fase de inicializacion ------------------------------------------------------
-
-    //// plantilla html para ionic loader
-    ////var template_loader = "<ion-spinner icon='lines' class='spinner-calm'></ion-spinner><br/>Cargando datos...";
-    //var template_loader = "Cargando datos...";
-    //// mostrar loader
-    //$ionicLoading.show({template:template_loader, noBackdrop:true});
-
-/*    // construir sql query: seleccionar el listado completo de camaras
-    var sql_query_string = 'SELECT Lugar,Concejo,Imagen,Categoria,rowid FROM '+ DATOS_URL.FUSION_TABLE_ID;
-
-    // obtener datos remotos
-    factoria_datos.getRemoteData( sql_query_string ).success(function(data){
-      // guarda datos remotos en $rootScope para compartir entre controladores
-      $rootScope.listacams = data;
-      console.log('$rootScope.listacams en metodo run', $rootScope.listacams);
-    }).error(function(data, status){
-        console.log('Error obteniendo datos remotos: ', status);
-    })*/
-    // fin cargar datos remotos durante la fase de inicializacion --------------------------------------------------
-
   });
 })
 
@@ -56,10 +34,10 @@ angular.module('webcams_asturias',
   $stateProvider
 
   .state('app', {
-  url: '/app',
-  abstract: true,
-  templateUrl: 'templates/menu.html',
-  controller: 'AppCtrl'
+    url: '/app',
+    abstract: true,
+    templateUrl: 'templates/menu.html',
+    controller: 'AppCtrl'
   })
 
   .state('app.search', {
@@ -105,6 +83,7 @@ angular.module('webcams_asturias',
   //TODO: utilizar resolve en la definicion de estado para obtener datos remotos en vez de en metodo run(). Probar a ver
   .state('app.tabs', {
     url: '/tabs?categoria&concejo',
+    cache: false,
     views: {
       'menuContent': {
         templateUrl: 'templates/tabs.html',
@@ -151,7 +130,7 @@ angular.module('webcams_asturias',
 
   .state('app.panoramio', {
     url: '/panoramio?lat&lng&lugar&concejo',
-    cache: false,
+    //cache: false,
     views: {
       'menuContent': {
         templateUrl: 'templates/panoramio.html',
@@ -160,15 +139,16 @@ angular.module('webcams_asturias',
     }
   })
 
-    .state('app.detalle', {
-      url: '/detalle/:rowid',
-      views: {
-        'menuContent': {
-          templateUrl: 'templates/detalle.html',
-          controller: 'DetalleCtrl'
-        }
+  .state('app.detalle', {
+    url: '/detalle/:rowid',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/detalle.html',
+        controller:'DetalleCtrl'
       }
-    })
+    }
+  })
+
 ; // fin de estados
 
   // if none of the above states are matched, use this as the fallback

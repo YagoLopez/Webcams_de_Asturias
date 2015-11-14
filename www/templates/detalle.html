@@ -25,181 +25,145 @@
       /*height: 100%;*/
       /*}*/
     </style>
-
+items.length: {{items.length}}
     <div>
-          <div class="list card" ng-repeat="cam in items | filter:(cam[4] = rowid)">
+      <div class="list card" ng-repeat="cam in items | filter:(cam[4] = rowid):true track by cam[4]">
+        <div class="item item-image" style="height:100%; width:100%">
+          <img ng-src="http://api.randomuser.me/portraits/thumb/men/{{$index}}.jpg">
+          <!--<img ng-src="../img/ionic.png">-->
+          <!--<img ng-src="{{cam[2]}}">-->
+          <!--<img  ng-src="{{ cam[2]}}" fallback-src="http://google.com/favicon.ico"/>-->
+          <!--<img ng-src="http://loremflickr.com/500/500?random={{$index+1}}">-->
+        </div>
 
-            <div class="item item-image" style="height:100%; width:100%">
-              <!--<img ng-src="http://api.randomuser.me/portraits/thumb/men/{{$index}}.jpg">-->
-              <!--<img ng-src="../img/ionic.png">-->
-              <!--<img ng-src="{{cam[2]}}">-->
-              <!--<img  ng-src="{{ cam[2]}}" fallback-src="http://google.com/favicon.ico"/>-->
-              <img ng-src="http://loremflickr.com/500/500?random={{$index+1}}">
-            </div>
+        <div class="item item-body">
+          rowid: {{rowid}}<br>
+          cam[4]: {{cam[4]}}<br>
+          <p>
+            <i class="icon ion-android-locate"></i>
+            <b>Lugar: </b>{{ cam[0] }}
+          </p>
+          <p>
+            <i class="icon ion-android-locate"></i>
+            <b>Concejo: </b>{{ cam[1] }}
+          </p>
 
-            <div class="item item-body">
-              <p>
-                <i class="icon ion-android-locate"></i>
-                <b>Lugar: </b>{{ cam[0] }}
-              </p>
-              <p>
-                <i class="icon ion-android-locate"></i>
-                <b>Concejo: </b>{{ cam[1] }}
-              </p>
+          <!--
+                      <md-button class="md-raised md-primary" ng-click="prevSlide()">
+                        <i class="icon ion-chevron-left"></i>
+                        Anterior
+                      </md-button>
 
-              <!--
-                          <md-button class="md-raised md-primary" ng-click="prevSlide()">
-                            <i class="icon ion-chevron-left"></i>
-                            Anterior
-                          </md-button>
+                      <md-button class="md-raised md-primary" ng-click="">
+                        <i class="icon ion-ios-reload"></i>
+                        Recargar
+                      </md-button>
+                      <md-button class="md-raised md-primary" ng-click="nextSlide()">
+                        <i class="icon ion-chevron-right"></i>
+                        Siguiente
+                      </md-button>
+          -->
 
-                          <md-button class="md-raised md-primary" ng-click="">
-                            <i class="icon ion-ios-reload"></i>
-                            Recargar
-                          </md-button>
-                          <md-button class="md-raised md-primary" ng-click="nextSlide()">
-                            <i class="icon ion-chevron-right"></i>
-                            Siguiente
-                          </md-button>
-              -->
+          <div class="item item-text-wrap">
+            This is a basic Card with some text.
+          </div>
 
-              <div class="item item-text-wrap">
-                This is a basic Card with some text.
+        </div>
+
+        <div class="item item-divider">
+          I'm a Footer in a Card!
+        </div>
+        <!-------------------------------------------------------------------------------------------------------->
+        <div class="item tabs tabs-secondary tabs-icon-left">
+          <a class="tab-item" href="#" ng-click="prevSlide()">
+            <i class="icon ion-chevron-left"></i>
+            Anterior
+          </a>
+          <a class="tab-item" href="#" ng-click="recargar()">
+            <i class="icon ion-ios-reload"></i>
+            Recargar
+          </a>
+          <a class="tab-item" href="#" ng-click="nextSlide()">
+            <i class="icon ion-chevron-right"></i>
+            Siguiente
+          </a>
+        </div>
+
+
+        <div class="item tabs tabs-secondary tabs-icon-left">
+          <button class="button button-positive icon-left ion-chevron-left" ng-click="prevSlide()">Anterior</button>
+          <button class="button button-positive" ng-click="">Recargar</button>
+          <button class="button button-positive icon-right ion-chevron-right" ng-click="nextSlide()">Siguiente</button>
+        </div>
+
+      </div>
+
+
+      <!--
+              <div class="card">
+                <div class="item item-divider">
+                  Encabezamiento
+                </div>
+                <div class="item item-text-wrap">
+                  - Ver Mapa<br>
+                  - Ver fotos<br>
+                  - Información meteorológica<br>
+                  - Street View<br>
+                  - Información del lugar<br>
+                  - Buscar en Google Places<br>
+                </div>
+                <div class="item item-divider">
+                  I'm a Footer in a Card!
+                </div>
               </div>
+      -->
 
-            </div>
+      <!-- fin card ------------------------------------------------------------------------------------------------>
 
-            <div class="item item-divider">
-              I'm a Footer in a Card!
-            </div>
-            <!-------------------------------------------------------------------------------------------------------->
-            <div class="item tabs tabs-secondary tabs-icon-left">
-              <a class="tab-item" href="#" ng-click="prevSlide()">
-                <i class="icon ion-chevron-left"></i>
-                Anterior
-              </a>
-              <a class="tab-item" href="#" ng-click="recargar()">
-                <i class="icon ion-ios-reload"></i>
-                Recargar
-              </a>
-              <a class="tab-item" href="#" ng-click="nextSlide()">
-                <i class="icon ion-chevron-right"></i>
-                Siguiente
-              </a>
-            </div>
-
-
-            <div class="item tabs tabs-secondary tabs-icon-left">
-              <button class="button button-positive icon-left ion-chevron-left" ng-click="prevSlide()">Anterior</button>
-              <button class="button button-positive" ng-click="">Recargar</button>
-              <button class="button button-positive icon-right ion-chevron-right" ng-click="nextSlide()">Siguiente</button>
-            </div>
-
-          </div>
-
-
-          <!--
-                  <div class="card">
-                    <div class="item item-divider">
-                      Encabezamiento
-                    </div>
-                    <div class="item item-text-wrap">
-                      - Ver Mapa<br>
-                      - Ver fotos<br>
-                      - Información meteorológica<br>
-                      - Street View<br>
-                      - Información del lugar<br>
-                      - Buscar en Google Places<br>
-                    </div>
-                    <div class="item item-divider">
-                      I'm a Footer in a Card!
-                    </div>
-                  </div>
-          -->
-
-          <!-- fin card ------------------------------------------------------------------------------------------------>
-
-
-
-          <!-- Street View --------------------------------------------------------------------------------------------->
-          <!--
-                  <style>
-                    .animate-if {
-                      background:white;
-                      border:1px solid black;
-                      padding:10px;
-                    }
-
-                    .animate-if.ng-enter, .animate-if.ng-leave {
-                      transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
-                    }
-
-                    .animate-if.ng-enter,
-                    .animate-if.ng-leave.ng-leave-active {
-                      opacity:0;
-                    }
-
-                    .animate-if.ng-leave,
-                    .animate-if.ng-enter.ng-enter-active {
-                      opacity:1;
-                    }
-
-                  </style>
-                  <div>itemIndex: {{itemIndex}}</div>
-                  <button ng-click="clickme()">Click me</button><br>
-                  <div id="cam[4]" ng-if="checked" class="animate-if">
-                    <iframe src="templates/streetview.html" style="border: 0; width:100%; height:300px;"></iframe>
-                  </div>
-          -->
-          <!-- Fin StreetView ------------------------------------------------------------------------------------------>
-          <div class="list list-inset">
-            <a href="/#/app/mapa" class="item item-stable item-icon-right item-icon-right">
-              <i class="icon ion-email"></i>
-              Ver en Mapa
-              <i class="icon ion-email"></i>
-            </a>
-            <div class="item item-stable">
-              Ver en Street View
-            </div>
-            <div class="item item-stable">
-              Buscar en Alrededores (se puede hacer en la misma pagina del mapa)
-            </div>
-            <a href="/#/app/panoramio" ng-click="closeModal()" class="item item-stable">
-              Ver fotos
-            </a>
-            <div class="item item-stable">
-              Información Meteorológica
-            </div>
-          </div>
-          <!-------------------------------------------------------------------------------------------------->
-          <!--
-                  <div class="list card">
-                    <a href="#" class="item item-stable item-icon-left">
-                      <i class="icon ion-home"></i>
-                      Ver en Mapa
-                    </a>
-                    <a href="#" class="item item-stable item-icon-left">
-                      <i class="icon ion-ios-telephone"></i>
-                      Ver en Street View
-                    </a>
-                    <a href="#" class="item item-stable item-icon-left">
-                      <i class="icon ion-wifi"></i>
-                      Buscar en Alrededores
-                    </a>
-                    <a href="#" class="item item-stable item-icon-left">
-                      <i class="icon ion-card"></i>
-                      Ver Fotos
-                    </a>
-                    <a href="#" class="item item-stable item-icon-left">
-                      <i class="icon ion-card"></i>
-                      Información Meteorológica
-                    </a>
-                  </div>
-          -->
-
-
-        <!--</ion-slide>-->
-      <!--</ion-slide-box>-->
+      <div class="list list-inset">
+        <a href="/#/app/mapa" class="item item-stable item-icon-right item-icon-right">
+          <i class="icon ion-email"></i>
+          Ver en Mapa
+          <i class="icon ion-email"></i>
+        </a>
+        <div class="item item-stable">
+          Ver en Street View
+        </div>
+        <div class="item item-stable">
+          Buscar en Alrededores (se puede hacer en la misma pagina del mapa)
+        </div>
+        <a href="/#/app/panoramio" ng-click="closeModal()" class="item item-stable">
+          Ver fotos
+        </a>
+        <div class="item item-stable">
+          Información Meteorológica
+        </div>
+      </div>
+      <!-------------------------------------------------------------------------------------------------->
+      <!--
+              <div class="list card">
+                <a href="#" class="item item-stable item-icon-left">
+                  <i class="icon ion-home"></i>
+                  Ver en Mapa
+                </a>
+                <a href="#" class="item item-stable item-icon-left">
+                  <i class="icon ion-ios-telephone"></i>
+                  Ver en Street View
+                </a>
+                <a href="#" class="item item-stable item-icon-left">
+                  <i class="icon ion-wifi"></i>
+                  Buscar en Alrededores
+                </a>
+                <a href="#" class="item item-stable item-icon-left">
+                  <i class="icon ion-card"></i>
+                  Ver Fotos
+                </a>
+                <a href="#" class="item item-stable item-icon-left">
+                  <i class="icon ion-card"></i>
+                  Información Meteorológica
+                </a>
+              </div>
+      -->
     </div>
 
     <!--

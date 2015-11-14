@@ -1,3 +1,6 @@
+//TODO: hacer cuadro de dialogo para mostrar imagen de cam?
+//TODO: revisar las dependencias que se pasan a los controladores
+
 angular.module('webcams_asturias.controllers', [])
 
 .controller('AppCtrl', function($scope, $ionicModal, $timeout, $rootScope) {
@@ -8,40 +11,6 @@ angular.module('webcams_asturias.controllers', [])
   // listen for the $ionicView.enter event:
   //$scope.$on('$ionicView.enter', function(e) {
   //});
-
-/*
-  // Form data for the login modal
-  $scope.loginData = {};
-
-  // Create the login modal that we will use later
-  $ionicModal.fromTemplateUrl('templates/detalle.html', {
-    scope: $scope
-  }).then(function(modal) {
-    $scope.modal = modal;
-  });
-
-  // Triggered in the login modal to close it
-  $scope.closeLogin = function() {
-    $scope.modal.hide();
-  };
-
-  // Open the login modal
-  $scope.login = function() {
-    $scope.modal.show();
-  };
-
-  // Perform the login action when the user submits the login form
-  $scope.doLogin = function() {
-    console.log('Doing login', $scope.loginData);
-
-    // Simulate a login delay. Remove this and replace with your login
-    // code if using a login system
-    $timeout(function() {
-      $scope.closeLogin();
-    }, 1000);
-  };
-
-*/
 
   })
 
@@ -60,6 +29,7 @@ angular.module('webcams_asturias.controllers', [])
   })
 
 //TODO: no se necesita este controlador
+/*
 .controller('DetallecamCtrl', function($scope, $stateParams, $ionicLoading, DATOS_URL, $filter, $rootScope) {
 
     //TODO: unficar la plantilla loading en una constante
@@ -80,10 +50,10 @@ angular.module('webcams_asturias.controllers', [])
     //console.log('detalle cam', $scope.detallecam);
 
 }) //fin DetallecamCtrl
+*/
 
 .controller('TabsCtrl', function($scope, $stateParams, $ionicLoading, $rootScope, $ionicFilterBar,
-                                 factoria_datos, DATOS_URL, $filter, $ionicScrollDelegate, $ionicModal,
-                                 $ionicSlideBoxDelegate, $sce){
+                                 factoria_datos, DATOS_URL, $filter, $ionicScrollDelegate){
 
     // mostrar loader
     var icono_spinner = "<ion-spinner icon='lines' class='spinner-calm'></ion-spinner><br/>";
@@ -103,52 +73,54 @@ angular.module('webcams_asturias.controllers', [])
     */
 
     // obtiene parametros de url
-    $rootScope.concejo = $stateParams.concejo;
-    $rootScope.categoria = $stateParams.categoria;
+    $scope.concejo = $stateParams.concejo || '';
+    $scope.idCategoria = $stateParams.categoria || '';
+
+    function esSubcadena(idCategoria, urlCategoria) {
+      return (urlCategoria.indexOf('categoria='+idCategoria) > -1);
+    }
 
     //TODO: cachear las imagenes
     var sql_query = 'SELECT Lugar,Concejo,Imagen,Categoria,rowid FROM '+ DATOS_URL.FUSION_TABLE_ID;
     factoria_datos.getRemoteData(sql_query).success(function(data){
 
-      function estaEnCategoria(categoria, idCategoria) {
-        return (categoria.indexOf('categoria='+idCategoria) > -1);
-      }
+      // FILTRO 1: filtra las cams por parametros de la url: concejo y categoria -------------------------------------
 
-      // FILTRO 1: filtra las cams por los parametros de la url: concejo y categoria ////////////////////////////////
       var camsFiltradasPorUrl = $filter('filter')(data.rows, function(cam){
-        var concejoCam = cam[1];
-        var categoriaCam = cam[3];
-        var idCategoriaCam = $rootScope.categoria;
-        //TODO: intentar asignar cadena vacia cuando los parametros son nulos para simplificar el codigo
-        if ($rootScope.concejo && $rootScope.categoria)
-          return ((concejoCam.toLowerCase()== $rootScope.concejo.toLowerCase()) && (estaEnCategoria(categoriaCam, idCategoriaCam)));
-        else {
-          if ($rootScope.concejo)
-            return (concejoCam.toLowerCase() == $rootScope.concejo.toLowerCase());
-          if ($rootScope.categoria)
-            return (estaEnCategoria(categoriaCam, idCategoriaCam));
+        if ($scope.concejo && $scope.idCategoria) {
+          // cam[1] concejo de camara, cam[3] url categoria
+          return (cam[1].toLowerCase() == $scope.concejo.toLowerCase() && esSubcadena($scope.idCategoria, cam[3]));
+        } else {
+          if ($scope.concejo)
+            return cam[1].toLowerCase() == $scope.concejo.toLowerCase();
+          if ($scope.idCategoria)
+            return esSubcadena($scope.idCategoria, cam[3]);
         }
       });
 
       // listacams contiene las cams sin filtrar
-      $rootScope.listacams = data;
+      //$rootScope.listacams = data;
       if (camsFiltradasPorUrl.length == 0)
         camsFiltradasPorUrl = data.rows;
       // Aqui items contiene las cams inicialmente filtradas por parametros de url
       $rootScope.items = camsFiltradasPorUrl;
 
-      // FILTRO 2: filtra las cams segun una cadena de texto que haya introducido el usuario ///////////////////////
+      console.log('$rootScope.items.length', $rootScope.items.length);
+
+      // FILTRO 2: filtra las cams segun una cadena de texto que haya introducido el usuario -------------------------
       // este filtro se aplica sobre los datos previamente filtrados por url
-      //TODO: desactivar la animacion del listado al mostrar search bar y volver a activarla al cerrarla
       //TODO: Habría que mejorar la búsqueda para que fuera menos estricta. Por ejemplo, si se introduce "puerto llanes" no se
       //encuentra "Puerto de Llanes"
       $rootScope.showFilterBar = function () {
+        //TODO: quitar lo de animarlistitems
         $rootScope.animarListItems = false;
         $rootScope.filterBarInstance = $ionicFilterBar.show({
           items: $rootScope.items,
           update: function (filteredItems, filteredText) {
             $rootScope.items = filteredItems;
             $ionicScrollDelegate.scrollTop(false);
+            console.log('filteredText', filteredText);
+            console.log('filteredItems', filteredItems.length);
           },
           cancelText: 'Cancelar',
           cancelOnStateChange: false
@@ -157,55 +129,10 @@ angular.module('webcams_asturias.controllers', [])
 
       $ionicLoading.hide();
 
-/*
-
-      // DIALOGO MODAL ----------------------------------------------------------------------------------------------
-      $ionicModal.fromTemplateUrl('templates/detalle.html', {
-        scope: $scope,
-        animation: 'scale-in'
-      }).then(function(modal) {
-        $scope.modal = modal;
-
-      });
-
-      //TODO: a lo mejor se puede usar solo itemIndex para filtrar la camara y no usar rowid
-      $scope.showModal= function (itemIndex){
-        // indice en el array de items filtrados: itemIndex = items[indice]
-        $rootScope.itemIndex = itemIndex;
-        $ionicSlideBoxDelegate.slide(itemIndex);
-        $ionicScrollDelegate.$getByHandle('modalDetalle').scrollTop(true);
-        //$ionicScrollDelegate.scrollTop(false);
-        //$ionicSlideBoxDelegate.update();
-        $scope.modal.show();
-      }
-
-    // FIN DIALOGO MODAL ----------------------------------------------------------------------------------------------
-*/
-
-
-
-
     }).error(function(data, status) {
       $ionicLoading.hide();
       console.log('Error obteniendo datos remotos: ', status);
     });
-
-    //$scope.checked = false;
-    //$scope.clickme = function(){
-    //  $scope.checked = !$scope.checked;
-    //  console.log('ionicslideboxdelegate.currentIndex()', $ionicSlideBoxDelegate.currentIndex());
-    //  console.log('itemIndex', $scope.itemIndex);
-    //}
-
-    $scope.closeModal = function () {
-      $scope.modal.hide();
-    };
-    $scope.nextSlide = function() {
-      $ionicSlideBoxDelegate.next();
-    }
-    $scope.prevSlide = function() {
-      $ionicSlideBoxDelegate.previous();
-    }
 
     //TODO: arreglar que se muestre y se oculte bien el loader
     // despues de cargar la pagina con los datos remotos ocultar el loader
@@ -379,19 +306,23 @@ angular.module('webcams_asturias.controllers', [])
     widget_panoramio.setPosition(0);
     console.log('widget_panoramio', widget_panoramio);
 
+    //TODO: hacer cuadro de dialogo para mostrar foto
     $scope.getPhoto = function (){
       console.log('getPhoto', widget_panoramio.getPhoto());
     }
 
   }) // panoramio ctrl
 
-.controller('DetalleCtrl', function($scope, $stateParams, $ionicSlideBoxDelegate){
-  $scope.rowid = $stateParams.rowid;
-  console.log('itemIndex en detalle ctrl', $scope.rowid);
+.controller('DetalleCtrl', function($scope, $stateParams ){
+    //TODO: el problema con el filtro no funcionando despues de varias veces puede ser que al ir al detalle se pasa a un estado nuevo y se pierde el array de items filtrados
+    //TODO: la solucion podria ser que el detalle fuera un estado hijo de listado
+    //TODO: todavia mejor. probar a poner 'items' en rootscope
+    //TODO: el filtro funciona mal solo en la categoria de rios
+    $scope.rowid = $stateParams.rowid;
+    console.log('detalle crtl');
   })
 
 .controller('RepeatCtrl', function ($scope){
-    $rootScope.items = 'abcdefghijklmnopqrstuvwxyz'.split("");
   })
 
 .controller('SearchCtrl', function($scope, $ionicModal, $ionicSlideBoxDelegate, $ionicScrollDelegate){
