@@ -123,7 +123,7 @@ angular.module('webcams_asturias.controllers', [])
             console.log('filteredItems', filteredItems.length);
           },
           cancelText: 'Cancelar',
-          cancelOnStateChange: false
+          cancelOnStateChange: true
         });
       };
 
