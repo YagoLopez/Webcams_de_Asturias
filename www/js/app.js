@@ -5,15 +5,10 @@
 // url de las categorias codificada con urlencode. Usar como plantilla
 //http%3A%2F%2Fwebcamsdeasturias.com%2Finterior.php%3Fcategoria%3D1
 
-//TODO: hacer una funcion que se encargue de cargar las imagenes remotas y que avise cuando no se pueden cargar y de
-//intentar cargarlas de nuevo
-
-//TODO: probar a hacer el filtrado de datos y la busqueda usando defian.js en lugar de los filtros de angular
-
 angular.module('webcams_asturias',
   ['ionic', 'webcams_asturias.controllers', 'jett.ionic.filter.bar', 'ngMaterial'/*,'ionicLazyLoad'*/])
 
-.run(function($ionicPlatform, $ionicLoading, factoria_datos, DATOS_URL, $rootScope) {
+.run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
 
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
@@ -29,7 +24,7 @@ angular.module('webcams_asturias',
   });
 })
 
-.config(function($stateProvider, $urlRouterProvider, $sceDelegateProvider) {
+.config(function($stateProvider, $urlRouterProvider) {
 
   $stateProvider
 
@@ -210,7 +205,7 @@ angular.module('webcams_asturias',
         if (status == google.maps.places.PlacesServiceStatus.OK) {
           fn(results[0].geometry.location);
         } else {
-          console.log('No se han podido hallar corrdenadas');
+          console.log('No se han podido hallar coordenadas');
         }
       }
     }// hallaLatLng
@@ -224,13 +219,12 @@ angular.module('webcams_asturias',
       return panorama;
     }
 
-    var creaMapa = function (){
-      var mapaDiv = document.getElementById('mapa');
-      var map = new google.maps.Map(mapaDiv,  {
+    var creaMapa = function (domElement){
+      var mapa = new google.maps.Map(domElement,  {
         mapTypeId: google.maps.MapTypeId.TERRAIN
       });
       layer = new google.maps.FusionTablesLayer({
-        map: map,
+        map: mapa,
         //heatmap: { enabled: false },
         query: {
           select: 'col7',
@@ -242,10 +236,8 @@ angular.module('webcams_asturias',
           templateId: 8
         }
       });
-      return map;
+      return mapa;
     } // creaMapa()
-
-
 
     return {
       OVIEDO: OVIEDO,
@@ -253,7 +245,7 @@ angular.module('webcams_asturias',
       hallaLatLng: hallaLatLng,
       creaStreetView: creaStreetView
     }
-}) // Geocoder
+}) // GMapsService
 
 
 .constant('DATOS_URL', {
