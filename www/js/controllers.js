@@ -146,7 +146,7 @@ angular.module('webcams_asturias.controllers', [])
       //console.log('$ionicView.afterEnter', viewInfo, state);
     //});
 
-  })// fin TabsCtrl
+  })// TabsCtrl
 
 .controller('ListadoCtrl', function($scope, $rootScope, $ionicModal, $ionicSlideBoxDelegate, $ionicScrollDelegate){
 
@@ -248,10 +248,11 @@ angular.module('webcams_asturias.controllers', [])
           console.log('No se ha encontrado panorama Street View')
         }
       });
+        //TODO: crear infowindow para este marker
       var marker = new google.maps.Marker({
         position: coords,
         map: mapa,
-        title: 'Hello World!',
+        title: lugar+', '+concejo,
         //animation: google.maps.Animation.DROP,
         icon: 'https://storage.googleapis.com/support-kms-prod/SNP_2752125_en_v0'
       });
@@ -320,7 +321,7 @@ angular.module('webcams_asturias.controllers', [])
     });
 }) // panoramio ctrl
 
-.controller('DetalleCtrl', function($scope, $stateParams, $ionicModal, Panoramio){
+.controller('DetalleCtrl', function($scope, $stateParams, $ionicModal){
 
     $scope.rowid = $stateParams.rowid;
 
@@ -332,11 +333,8 @@ angular.module('webcams_asturias.controllers', [])
       $scope.modal = modal;
     });
 
-    //TODO: a lo mejor se puede usar solo itemIndex para filtrar la camara y no usar rowid
     $scope.showModal= function (lugar){
       console.log('lugar', lugar);
-      // indice en el array de items filtrados: itemIndex = items[indice]
-      //$rootScope.lugar = lugar;
       $scope.modal.show();
     }
 

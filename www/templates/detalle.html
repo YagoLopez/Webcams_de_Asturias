@@ -25,10 +25,9 @@
       /*height: 100%;*/
       /*}*/
     </style>
-items.length: {{items.length}}<br>
-    itemIndex: {{itemIndex}}<br>
-    <div>
-      <div class="list card" ng-repeat="cam in items | filter:(cam[4] = rowid):true track by cam[4]">
+items.length: {{items.length}}
+    <div ng-repeat="cam in items | filter:(cam[4] = rowid):true track by cam[4]">
+      <div class="list card">
         <div class="item item-image" style="height:100%; width:100%">
           <img ng-src="http://api.randomuser.me/portraits/thumb/men/{{$index}}.jpg">
           <!--<img ng-src="../img/ionic.png">-->
@@ -122,7 +121,7 @@ items.length: {{items.length}}<br>
       <!-- fin card ------------------------------------------------------------------------------------------------>
 
       <div class="list list-inset">
-        <a href="#/app/mapa" class="item item-stable item-icon-right item-icon-right">
+        <a href="#/app/mapa?lugar={{::cam[0]}}&concejo={{::cam[1]}}" class="item item-stable item-icon-left item-icon-right">
           <i class="icon ion-email"></i>
           Ver en Mapa
           <i class="icon ion-email"></i>
@@ -133,7 +132,7 @@ items.length: {{items.length}}<br>
         <div class="item item-stable">
           Buscar en Alrededores (se puede hacer en la misma pagina del mapa)
         </div>
-        <a href="#/app/panoramio" class="item item-stable">
+        <a href="#/app/panoramio?lugar={{cam[0]}}" class="item item-stable">
           Ver fotos
         </a>
         <div class="item item-stable">
