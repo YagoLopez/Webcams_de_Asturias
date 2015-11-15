@@ -17,6 +17,7 @@
       .scroll {
         height: 100%;
       }
+/*
       #floating-panel {
         position: absolute;
         top: 10px;
@@ -33,12 +34,13 @@
       #floating-panel {
         margin-left: -100px;
 }
+*/
     </style>
 
+    <div id="mapa" data-tap-disabled="true" style="width: 100%; height: 60%"></div>
     <div id="floating-panel">
       <input type="button" value="Street View" ng-click="verStreetView();"/>
     </div>
-    <div id="mapa" data-tap-disabled="true" style="width: 100%; height: 60%"></div>
     <div id="info" ng-show="toggle">Imágenes de Street View en localizacón aproximada</div>
 
 

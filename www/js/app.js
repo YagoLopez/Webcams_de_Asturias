@@ -194,6 +194,68 @@ angular.module('webcams_asturias',
   }) // Panoramio
 
 
+.service('GMapsService', function(DATOS_URL){
+
+    var OVIEDO = {lat: 43.3667, lng: -5.8333}; // punto de referencia para geocoder
+
+    var hallaLatLng = function (mapa, lugar, concejo, fn){
+      var request = {
+        location: OVIEDO,
+        radius: '1',
+        query: "'"+lugar+","+concejo+"'"
+      };
+      placesService = new google.maps.places.PlacesService(mapa);
+      placesService.textSearch(request, callback);
+      function callback(results, status) {
+        if (status == google.maps.places.PlacesServiceStatus.OK) {
+          fn(results[0].geometry.location);
+        } else {
+          console.log('No se han podido hallar corrdenadas');
+        }
+      }
+    }// hallaLatLng
+
+    var creaStreetView = function(mapa) {
+      var panorama = mapa.getStreetView();
+      panorama.setPov(({
+        heading: 0,
+        pitch: 0
+      }));
+      return panorama;
+    }
+
+    var creaMapa = function (){
+      var mapaDiv = document.getElementById('mapa');
+      var map = new google.maps.Map(mapaDiv,  {
+        mapTypeId: google.maps.MapTypeId.TERRAIN
+      });
+      layer = new google.maps.FusionTablesLayer({
+        map: map,
+        //heatmap: { enabled: false },
+        query: {
+          select: 'col7',
+          from: DATOS_URL.FUSION_TABLE_ID,
+          where: ''
+        },
+        options: {
+          styleId: 6,
+          templateId: 8
+        }
+      });
+      return map;
+    } // creaMapa()
+
+
+
+    return {
+      OVIEDO: OVIEDO,
+      creaMapa: creaMapa,
+      hallaLatLng: hallaLatLng,
+      creaStreetView: creaStreetView
+    }
+}) // Geocoder
+
+
 .constant('DATOS_URL', {
     API_ENDPOINT: 'https://www.googleapis.com/fusiontables/v2/query',
     FUSION_TABLE_ID: '1gX5maFbqFyRziZiUYlpOBYhcC1v9lGkKqCXvZREF',

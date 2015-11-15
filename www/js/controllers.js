@@ -155,68 +155,73 @@ angular.module('webcams_asturias.controllers', [])
 .controller('MosaicoCtrl', function($scope, $state, $rootScope){
 }) // fin MosaicoCtrl
 
-.controller('MapaCtrl', function($scope, $stateParams){
+.controller('MapaCtrl', function($scope, $stateParams, GMapsService){
 
 /*
   1) crear mapa
   2) si no hay NI lugar NI concejo -> mapa por defecto
      en cualquier otro caso -> crear mapa en funcion de parametros: lugar, concejo (categoria?)
  */
+  $scope.$on('$ionicView.afterEnter', function() {
 
-  var OVIEDO = {lat: 43.3667, lng: -5.8333}; // centro de mapa por defecto
-  var mapa = null;
-  var streetView = null;
-  var filtro = '';
-  var lugar = $stateParams.lugar || '';
-  var concejo = $stateParams.concejo || '';
+    var OVIEDO = GMapsService.OVIEDO;
+    var mapa = null;
+    var streetView = null;
+    var filtro = '';
+    var lugar = $stateParams.lugar || '';
+    var concejo = $stateParams.concejo || '';
 
-  function creaMapa(){
-    var mapaDiv = document.getElementById('mapa');
-    var map = new google.maps.Map(mapaDiv,  {
-      mapTypeId: google.maps.MapTypeId.TERRAIN
-    });
-    layer = new google.maps.FusionTablesLayer({
-      map: map,
-      //heatmap: { enabled: false },
-      query: {
-        select: "col7",
-        from: "1gX5maFbqFyRziZiUYlpOBYhcC1v9lGkKqCXvZREF",
-        where: filtro
-      },
-      options: {
-        styleId: 6,
-        templateId: 8
-      }
-    });
-    return map;
-  } // CrearMapa()
+    /*
+        function creaMapa(){
+          var mapaDiv = document.getElementById('mapa');
+          var map = new google.maps.Map(mapaDiv,  {
+            mapTypeId: google.maps.MapTypeId.TERRAIN
+          });
+          layer = new google.maps.FusionTablesLayer({
+            map: map,
+            //heatmap: { enabled: false },
+            query: {
+              select: "col7",
+              from: "1gX5maFbqFyRziZiUYlpOBYhcC1v9lGkKqCXvZREF",
+              where: filtro
+            },
+            options: {
+              styleId: 6,
+              templateId: 8
+            }
+          });
+          return map;
+        } // CrearMapa()
+    */
 
-  function hallaCoordenadas (pLugar, pConcejo, fn){
-    //var query = "'"+pLugar+","+pConcejo+"'";
-    var request = {
-      location: OVIEDO,
-      radius: '1',
-      query: "'"+pLugar+","+pConcejo+"'"
-    };
-    placesService = new google.maps.places.PlacesService(mapa);
-    placesService.textSearch(request, callback);
-    function callback(results, status) {
-      if (status == google.maps.places.PlacesServiceStatus.OK) {
-        fn(results[0].geometry.location);
-      }
-    }
-  } // hallaCoordenadas
+    /*  function hallaCoordenadas (pLugar, pConcejo, fn){
+     //var query = "'"+pLugar+","+pConcejo+"'";
+     var request = {
+     location: OVIEDO,
+     radius: '1',
+     query: "'"+pLugar+","+pConcejo+"'"
+     };
+     placesService = new google.maps.places.PlacesService(mapa);
+     placesService.textSearch(request, callback);
+     function callback(results, status) {
+     if (status == google.maps.places.PlacesServiceStatus.OK) {
+     fn(results[0].geometry.location);
+     }
+     }
+     } // hallaCoordenadas*/
 
-  function creaStreetView(mapa){
-    var panorama = mapa.getStreetView();
-    panorama.setPov(({
-      heading: 0,
-      pitch: 0
-    }));
-    return panorama;
-  }
+    /*
+     function creaStreetView(mapa){
+     var panorama = mapa.getStreetView();
+     panorama.setPov(({
+     heading: 0,
+     pitch: 0
+     }));
+     return panorama;
+     }
+     */
 
-  $scope.verStreetView = function () {
+    $scope.verStreetView = function () {
       $scope.streetViewVsible = streetView.getVisible();
       if ($scope.streetViewVsible == false) {
         streetView.setVisible(true);
@@ -227,37 +232,73 @@ angular.module('webcams_asturias.controllers', [])
       }
     }
 
-  mapa = creaMapa();
-  streetView = creaStreetView(mapa);
+    //mapa = creaMapa();
+    //streetView = creaStreetView(mapa);
+    mapa = GMapsService.creaMapa();
+    streetView = GMapsService.creaStreetView(mapa);
 
-  if(!lugar && !concejo){
-    mapa.setCenter(OVIEDO);
-    mapa.setZoom(8);
-    streetView.setPosition(OVIEDO);
-  } else {
-      hallaCoordenadas(lugar, concejo, function(coords){
-      mapa.setCenter(coords);
-      mapa.setZoom(13);
-      // busca coordenadas cercanas donde existan imagenes de street view
-      var streetViewService = new google.maps.StreetViewService();
-      streetViewService.getPanoramaByLocation(coords, 100, function(data, status) {
-        if (status == google.maps.StreetViewStatus.OK) {
-          var nearStreetViewLocation = data.location.latLng;
-          streetView.setPosition(nearStreetViewLocation);
-        } else {
-          console.log('No se ha encontrado panorama Street View')
-        }
-      });
+    if(!lugar && !concejo){
+      mapa.setCenter(OVIEDO);
+      mapa.setZoom(8);
+      streetView.setPosition(OVIEDO);
+    } else {
+      /*
+       hallaCoordenadas(lugar, concejo, function(coords){
+       mapa.setCenter(coords);
+       mapa.setZoom(13);
+       // busca coordenadas cercanas donde existan imagenes de street view
+       var streetViewService = new google.maps.StreetViewService();
+       streetViewService.getPanoramaByLocation(coords, 100, function(data, status) {
+       if (status == google.maps.StreetViewStatus.OK) {
+       var nearStreetViewLocation = data.location.latLng;
+       streetView.setPosition(nearStreetViewLocation);
+       } else {
+       console.log('No se ha encontrado panorama Street View')
+       }
+       });
+       //TODO: crear infowindow para este marker
+       var marker = new google.maps.Marker({
+       position: coords,
+       map: mapa,
+       title: lugar+', '+concejo,
+       //animation: google.maps.Animation.DROP,
+       icon: 'https://storage.googleapis.com/support-kms-prod/SNP_2752125_en_v0'
+       });
+       });
+       */
+
+
+      GMapsService.hallaLatLng(mapa, lugar, concejo, function(coords){
+        mapa.setCenter(coords);
+        mapa.setZoom(13);
+        // busca coordenadas cercanas donde existan imagenes de street view
+        var streetViewService = new google.maps.StreetViewService();
+        streetViewService.getPanoramaByLocation(coords, 100, function(data, status) {
+          if (status == google.maps.StreetViewStatus.OK) {
+            var nearStreetViewLocation = data.location.latLng;
+            streetView.setPosition(nearStreetViewLocation);
+          } else {
+            console.log('No se ha encontrado panorama Street View')
+          }
+        });
         //TODO: crear infowindow para este marker
-      var marker = new google.maps.Marker({
-        position: coords,
-        map: mapa,
-        title: lugar+', '+concejo,
-        //animation: google.maps.Animation.DROP,
-        icon: 'https://storage.googleapis.com/support-kms-prod/SNP_2752125_en_v0'
+        var marker = new google.maps.Marker({
+          position: coords,
+          map: mapa,
+          title: lugar+', '+concejo,
+          //animation: google.maps.Animation.DROP,
+          animation: google.maps.Animation.j,
+          icon: 'https://storage.googleapis.com/support-kms-prod/SNP_2752125_en_v0'
+        });
       });
-    });
-  }
+    }// else
+
+
+
+
+
+  }); // $scope.on
+
 // ---------------------------------------------------------------------------
 
   /* ---------------------------------------------------------
