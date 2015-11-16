@@ -278,7 +278,8 @@ angular.module('webcams_asturias.controllers', [])
   $scope.$on('$ionicView.afterEnter', function() {
 
     var div = document.getElementById('street-view');
-    GMapsService.hallaLatLng(new google.maps.Map(div), lugar, concejo, function (coords) {
+    //GMapsService.hallaLatLng(new google.maps.Map(div), lugar, concejo, function (coords) {
+    GMapsService.hallaLatLng(div, lugar, concejo, function (coords) {
       var streetViewService = new google.maps.StreetViewService();
       streetViewService.getPanoramaByLocation(coords, 100, function (data, status) {
         if (status == google.maps.StreetViewStatus.OK) {
