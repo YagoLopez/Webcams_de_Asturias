@@ -218,7 +218,7 @@ angular.module('webcams_asturias',
         if (status == google.maps.places.PlacesServiceStatus.OK) {
           fn(results[0].geometry.location);
         } else {
-          console.log('No se han podido hallar coordenadas');
+          console.log('hallaLatLng(): no se han podido hallar coordenadas');
         }
       }
     }// hallaLatLng

@@ -4,7 +4,7 @@
 <!--TODO: cambiar los iconos bullet-list del texto del detalle-->
 <!--TODO: desactivar botones siguiente anterior al llegar al final del listado-->
 <!--TODO: pasar todos los nombres de dominio a IPs para optimizar tiempos de carga-->
-<ion-view>
+<ion-view view-title="Detalles">
   <ion-content>
     <style>
       .card {
@@ -98,30 +98,9 @@ items.length: {{items.length}}
 
       </div>
 
-
-      <!--
-              <div class="card">
-                <div class="item item-divider">
-                  Encabezamiento
-                </div>
-                <div class="item item-text-wrap">
-                  - Ver Mapa<br>
-                  - Ver fotos<br>
-                  - Información meteorológica<br>
-                  - Street View<br>
-                  - Información del lugar<br>
-                  - Buscar en Google Places<br>
-                </div>
-                <div class="item item-divider">
-                  I'm a Footer in a Card!
-                </div>
-              </div>
-      -->
-
       <!-- fin card ------------------------------------------------------------------------------------------------>
 
-<!--
-      <div class="list list-inset">
+      <div class="list list-inset card">
 
         <a href="#/app/mapa?lugar={{::cam[0]}}&concejo={{::cam[1]}}" class="item item-stable item-icon-left item-icon-right">
           <i class="icon ion-email"></i>
@@ -150,9 +129,9 @@ items.length: {{items.length}}
         </div>
 
       </div>
--->
 
       <!-------------------------------------------------------------------------------------------------->
+<!--
       <div class="list card">
         <a href="#/app/mapa?lugar={{::cam[0]}}&concejo={{::cam[1]}}" class="item item-stable item-icon-left item-icon-right">
           <i class="icon ion-home"></i>
@@ -180,6 +159,7 @@ items.length: {{items.length}}
           <i class="icon ion-arrow-right-b"></i>
         </a>
       </div>
+-->
     </div>
 
     <!--
