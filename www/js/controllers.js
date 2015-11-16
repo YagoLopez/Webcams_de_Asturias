@@ -173,8 +173,7 @@ angular.module('webcams_asturias.controllers', [])
         var streetViewService = new google.maps.StreetViewService();
         streetViewService.getPanoramaByLocation(coords, 100, function(data, status) {
           if (status == google.maps.StreetViewStatus.OK) {
-            var nearStreetViewLocation = data.location.latLng;
-            streetView.setPosition(nearStreetViewLocation);
+            streetView.setPosition(data.location.latLng);
           } else {
             console.log('No se ha encontrado panorama Street View')
           }
@@ -219,15 +218,6 @@ angular.module('webcams_asturias.controllers', [])
     };
   */
 
-
-
-    //panorama = new google.maps.StreetViewPanorama(
-    //  document.getElementById('street-view'),
-    //  {
-    //    position: {lat: 37.869260, lng: -122.254811},
-    //    pov: {heading: 165, pitch: 0},
-    //    zoom: 1
-    //  });
 
 
 
@@ -280,7 +270,35 @@ angular.module('webcams_asturias.controllers', [])
     // FIN DIALOGO MODAL ----------------------------------------------------------------------------------------------
 */
 
-  })
+  })// DetalleCtrl
+
+.controller('StreetViewCtrl', function($scope, GMapsService, $stateParams, $rootScope){
+
+  var lugar = $stateParams.lugar || '';
+  var concejo = $stateParams.concejo || '';
+
+  $scope.$on('$ionicView.afterEnter', function() {
+
+      var div = document.getElementById('street-view');
+      //if (!lugar && !concejo) {
+      //  GMapsService.creaStreetView2(div, GMapsService.OVIEDO);
+      //} else {
+        GMapsService.hallaLatLng(new google.maps.Map(div), lugar, concejo, function (coords) {
+          var streetViewService = new google.maps.StreetViewService();
+          streetViewService.getPanoramaByLocation(coords, 100, function (data, status) {
+            if (status == google.maps.StreetViewStatus.OK) {
+              GMapsService.creaStreetView2(div, data.location.latLng);
+            } else {
+              console.log('No se ha podido encontrar panorama Street View')
+            }
+          })
+        })//hallaLatLng
+      //}// else
+
+    })//$scope.on
+
+})//StreetViewCtrl
+
 
 .controller('RepeatCtrl', function ($scope){
   })

@@ -1,17 +1,20 @@
-streetview<br>
+<ion-view view-title="Street View" cache-view="false">
+  <!--<ion-content header-shrink scroll-event-interval="1">-->
+  <ion-content>
 
-<div id="street-view" style="width:100%;height: 300px;"></div>
+    <style>
+      .scroll {
+        height: 100%;
+      }
+      #mapa{background: transparent url(../img/c.png) no-repeat center center;}
+    </style>
 
-<script src="https://maps.googleapis.com/maps/api/js?&libraries=places"></script>
-<script>
-  // ---------------------------------------------
-  panorama = new google.maps.StreetViewPanorama(
-    document.getElementById('street-view'),
-    {
-      position: {lat: 37.869260, lng: -122.254811},
-      pov: {heading: 165, pitch: 0},
-      zoom: 1
-    });
-  // ---------------------------------------------
+    <div id="street-view" data-tap-disabled="true" style="width: 100%; height: 60%;"></div>
+    <div id="floating-panel">
+      <input type="button" value="Mapa" ng-click=""/>
+    </div>
+    <div style="text-align: center;width: 100%;">Ubicación aproximada (&plusmn; 100 m.)</div>
 
-</script>
+
+  </ion-content>
+</ion-view>

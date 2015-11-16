@@ -121,23 +121,33 @@ items.length: {{items.length}}
       <!-- fin card ------------------------------------------------------------------------------------------------>
 
       <div class="list list-inset">
+
         <a href="#/app/mapa?lugar={{::cam[0]}}&concejo={{::cam[1]}}" class="item item-stable item-icon-left item-icon-right">
           <i class="icon ion-email"></i>
           Ver en Mapa
           <i class="icon ion-email"></i>
         </a>
-        <div class="item item-stable">
+
+        <a href="#/app/streetview?lugar={{::cam[0]}}&concejo={{::cam[1]}}" class="item item-stable item-icon-left item-icon-right">
+          <i class="icon ion-email"></i>
           Ver en Street View
-        </div>
+          <i class="icon ion-email"></i>
+        </a>
+
+        <a href="#/app/panoramio?lugar={{cam[0]}}" class="item item-stable item-icon-left item-icon-right">
+          <i class="icon ion-email"></i>
+          Ver Fotos
+          <i class="icon ion-email"></i>
+        </a>
+
         <div class="item item-stable">
           Buscar en Alrededores (se puede hacer en la misma pagina del mapa)
         </div>
-        <a href="#/app/panoramio?lugar={{cam[0]}}" class="item item-stable">
-          Ver fotos
-        </a>
+
         <div class="item item-stable">
           Información Meteorológica
         </div>
+
       </div>
       <!-------------------------------------------------------------------------------------------------->
       <!--

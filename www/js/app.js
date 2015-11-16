@@ -123,6 +123,17 @@ angular.module('webcams_asturias',
     }
   })
 
+  .state('app.streetview', {
+    url: '/streetview?lugar&concejo',
+    cache: false,
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/streetview.html',
+        controller: 'StreetViewCtrl'
+      }
+    }
+  })
+
   .state('app.panoramio', {
     url: '/panoramio?lat&lng&lugar&concejo',
     //cache: false,
@@ -143,6 +154,7 @@ angular.module('webcams_asturias',
       }
     }
   })
+
 
 ; // fin de estados
 
@@ -219,6 +231,18 @@ angular.module('webcams_asturias',
       return panorama;
     }
 
+    var creaStreetView2 = function(domElement, locationLatLng){
+
+      var mapa = new google.maps.Map(domElement,  {});
+
+      var streetView = new google.maps.StreetViewPanorama( domElement, {
+        pov: {heading: 0, pitch: 0},
+        position: locationLatLng,
+        zoom: 1
+      });
+      return streetView;
+    }
+
     var creaMapa = function (domElement){
       var mapa = new google.maps.Map(domElement,  {
         mapTypeId: google.maps.MapTypeId.TERRAIN
@@ -243,7 +267,8 @@ angular.module('webcams_asturias',
       OVIEDO: OVIEDO,
       creaMapa: creaMapa,
       hallaLatLng: hallaLatLng,
-      creaStreetView: creaStreetView
+      creaStreetView: creaStreetView,
+      creaStreetView2: creaStreetView2
     }
 }) // GMapsService
 
