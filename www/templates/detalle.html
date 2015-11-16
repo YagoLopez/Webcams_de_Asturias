@@ -120,6 +120,7 @@ items.length: {{items.length}}
 
       <!-- fin card ------------------------------------------------------------------------------------------------>
 
+<!--
       <div class="list list-inset">
 
         <a href="#/app/mapa?lugar={{::cam[0]}}&concejo={{::cam[1]}}" class="item item-stable item-icon-left item-icon-right">
@@ -149,31 +150,36 @@ items.length: {{items.length}}
         </div>
 
       </div>
+-->
+
       <!-------------------------------------------------------------------------------------------------->
-      <!--
-              <div class="list card">
-                <a href="#" class="item item-stable item-icon-left">
-                  <i class="icon ion-home"></i>
-                  Ver en Mapa
-                </a>
-                <a href="#" class="item item-stable item-icon-left">
-                  <i class="icon ion-ios-telephone"></i>
-                  Ver en Street View
-                </a>
-                <a href="#" class="item item-stable item-icon-left">
-                  <i class="icon ion-wifi"></i>
-                  Buscar en Alrededores
-                </a>
-                <a href="#" class="item item-stable item-icon-left">
-                  <i class="icon ion-card"></i>
-                  Ver Fotos
-                </a>
-                <a href="#" class="item item-stable item-icon-left">
-                  <i class="icon ion-card"></i>
-                  Información Meteorológica
-                </a>
-              </div>
-      -->
+      <div class="list card">
+        <a href="#/app/mapa?lugar={{::cam[0]}}&concejo={{::cam[1]}}" class="item item-stable item-icon-left item-icon-right">
+          <i class="icon ion-home"></i>
+          Ver en Mapa
+          <i class="icon arrow-right-a"></i>
+        </a>
+        <a href="#/app/streetview?lugar={{::cam[0]}}&concejo={{::cam[1]}}" class="item item-stable item-icon-left item-icon-right">
+          <i class="icon ion-ios-telephone"></i>
+          Ver en Street View
+          <i class="icon arrow-right-b"></i>
+        </a>
+        <a href="#" class="item item-stable item-icon-left item-icon-right">
+          <i class="icon ion-wifi"></i>
+          Buscar en Alrededores
+          <i class="icon arrow-right-c"></i>
+        </a>
+        <a href="#/app/panoramio?lugar={{cam[0]}}" class="item item-stable item-icon-left">
+          <i class="icon ion-card"></i>
+          Ver Fotos
+          <i class="icon ion-arrow-right-a"></i>
+        </a>
+        <a href="#" class="item item-stable item-icon-left">
+          <i class="icon ion-card"></i>
+          Información Meteorológica
+          <i class="icon ion-arrow-right-b"></i>
+        </a>
+      </div>
     </div>
 
     <!--
