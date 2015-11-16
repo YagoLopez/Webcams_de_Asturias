@@ -179,6 +179,7 @@ angular.module('webcams_asturias',
     }
 })
 
+/*
 .service('Panoramio', function(){
 
   var getPanoramio = function(domElement){
@@ -200,22 +201,28 @@ angular.module('webcams_asturias',
   }
 
 }) // Panoramio
+*/
 
 .service('GMapsService', function(DATOS_URL){
 
     // punto de referencia para geocoder y centro de mapa por defecto
     var OVIEDO = {lat: 43.3667, lng: -5.8333};
+    // radio de búsqueda de imagenes de street view en metros a partir una ubicacion
+    var RADIO = 500;
 
     var hallaLatLng = function (domElement, lugar, concejo, fn){
       var request = {
-        location: OVIEDO,
-        radius: '1',
-        query: "'"+lugar+","+concejo+"'"
+        //location: OVIEDO,
+        //radius: '1',
+        query: "'"+lugar+", "+concejo+", Asturias, España'",
+        lenguage: 'es'
       };
       placesService = new google.maps.places.PlacesService(domElement);
+      console.log('placesService', placesService);
       placesService.textSearch(request, callback);
-      function callback(results, status) {
+      function callback(results, status ) {
         if (status == google.maps.places.PlacesServiceStatus.OK) {
+          console.log('results[0]', results[0]);
           fn(results[0].geometry.location);
         } else {
           console.log('hallaLatLng(): no se han podido hallar coordenadas');
@@ -233,6 +240,8 @@ angular.module('webcams_asturias',
 
     var creaMapa = function (domElement){
       var mapa = new google.maps.Map(domElement,  {
+        mapTypeControl: true,
+        mapTypeControlOptions: { style: google.maps.MapTypeControlStyle.DROPDOWN_MENU },
         mapTypeId: google.maps.MapTypeId.TERRAIN
       });
       layer = new google.maps.FusionTablesLayer({
@@ -253,6 +262,7 @@ angular.module('webcams_asturias',
 
     return {
       OVIEDO: OVIEDO,
+      RADIO: RADIO,
       creaMapa: creaMapa,
       hallaLatLng: hallaLatLng,
       creaStreetView: creaStreetView
@@ -278,7 +288,7 @@ angular.module('webcams_asturias',
 
 .config(['$compileProvider', function ($compileProvider) {
   // disable debug info
-  $compileProvider.debugInfoEnabled(true);
+  $compileProvider.debugInfoEnabled( true );
 }]);
 
 

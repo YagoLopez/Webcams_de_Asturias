@@ -169,11 +169,11 @@ angular.module('webcams_asturias.controllers', [])
         mapa.setZoom(13);
         // busca coordenadas cercanas donde existan imagenes de street view
         var streetViewService = new google.maps.StreetViewService();
-        streetViewService.getPanoramaByLocation(coords, 100, function(data, status) {
+        streetViewService.getPanoramaByLocation(coords, GMapsService.RADIO, function(data, status) {
           if (status == google.maps.StreetViewStatus.OK) {
             streetView.setPosition(data.location.latLng);
           } else {
-            console.log('No se ha encontrado panorama Street View')
+            console.log('getPanoramaByLocation(): No se ha encontrado panorama Street View')
           }
         });
         //TODO: crear infowindow para este marker
@@ -221,27 +221,53 @@ angular.module('webcams_asturias.controllers', [])
 
 }) // fin MapaGlobalCtrl
 
-.controller('PanoramioCtrl', function($scope, $stateParams){
+.controller('PanoramioCtrl', function($scope, $stateParams, GMapsService){
+
+    var lugar = $stateParams.lugar;
+    var concejo = $stateParams.concejo;
+    var categoria = $stateParams.categoria
+    var aspecto = {'width': 400, 'height': 400};
+    var zonaBusqueda = null;
+    var divCreditos = null;
 
     $scope.$on('$ionicView.afterEnter', function(){
-      var lugar = $stateParams.lugar || 'Oviedo';
-      var concejo = $stateParams.concejo;
-      var categoria = $stateParams.categoria
-      var cadenaBusqueda = {
-        'tag': lugar
-        //,
-        //'rect': {'sw': {'lat': -30, 'lng': 10.5}, 'ne': {'lat': 50.5, 'lng': 30}}
-      };
-      var opciones_panoramio = {'width': 400, 'height': 400};
-      var widget_panoramio = new panoramio.PhotoWidget('divPanoramio', cadenaBusqueda, opciones_panoramio);
-      widget_panoramio.setPosition(0);
-      console.log('widget_panoramio', widget_panoramio);
+      divCreditos = document.getElementById('divCreditos');
+      GMapsService.hallaLatLng(divCreditos, lugar,  concejo, function(coords){
 
-      //TODO: hacer cuadro de dialogo para mostrar foto
-      $scope.getPhoto = function (){
-        console.log('getPhoto', widget_panoramio.getPhoto());
-      }
-    });
+        var lat = coords.lat();
+        var lng = coords.lng();
+        var OFFSET = 0.003;
+        console.log('lat', lat);
+        console.log('lng', lng);
+
+        // definicion de rectangulo de busqueda en mapa
+        zonaBusqueda = { 'rect': {
+          'sw': {'lat':lat-OFFSET, 'lng':lng-OFFSET},
+          'ne': {'lat': lat+OFFSET, 'lng':lng+OFFSET}
+        }};
+
+        var widgetPanoramio = new panoramio.PhotoWidget('divPanoramio', zonaBusqueda, aspecto);
+        widgetPanoramio.setPosition(0);
+
+        //TODO: hacer cuadro de dialogo para mostrar foto
+        $scope.getPhoto = function (){
+          console.log('widgetPanoramio.getfoto', widgetPanoramio.getPhoto());
+          return widgetPanoramio.getPhoto();
+        }
+
+        //if(widgetPanoramio.kb != null) {
+        //  console.log('hay foto $scope.getPhoto', $scope.getPhoto());
+        //  $scope.hayFotos = true;
+        //} else {
+        //  console.log('no hay foto $scope.getPhoto', $scope.getPhoto());
+        //  $scope.hayFotos = false;
+        //
+        //}
+
+
+      }); // hallaLatLng
+    }); //on
+
 }) // panoramio ctrl
 
 .controller('DetalleCtrl', function($scope, $stateParams, $ionicModal){
@@ -281,11 +307,11 @@ angular.module('webcams_asturias.controllers', [])
     //GMapsService.hallaLatLng(new google.maps.Map(div), lugar, concejo, function (coords) {
     GMapsService.hallaLatLng(div, lugar, concejo, function (coords) {
       var streetViewService = new google.maps.StreetViewService();
-      streetViewService.getPanoramaByLocation(coords, 100, function (data, status) {
+      streetViewService.getPanoramaByLocation(coords, GMapsService.RADIO, function (data, status) {
         if (status == google.maps.StreetViewStatus.OK) {
           GMapsService.creaStreetView(div, data.location.latLng);
         } else {
-          console.log('No se ha podido encontrar panorama Street View')
+          console.log('getPanoramaByLocation(): No se ha encontrado panorama Street View')
         }
       })
       })//hallaLatLng

@@ -48,22 +48,6 @@ items.length: {{items.length}}
             <b>Concejo: </b>{{ ::cam[1] }}
           </p>
 
-          <!--
-                      <md-button class="md-raised md-primary" ng-click="prevSlide()">
-                        <i class="icon ion-chevron-left"></i>
-                        Anterior
-                      </md-button>
-
-                      <md-button class="md-raised md-primary" ng-click="">
-                        <i class="icon ion-ios-reload"></i>
-                        Recargar
-                      </md-button>
-                      <md-button class="md-raised md-primary" ng-click="nextSlide()">
-                        <i class="icon ion-chevron-right"></i>
-                        Siguiente
-                      </md-button>
-          -->
-
           <div class="item item-text-wrap">
             This is a basic Card with some text.
           </div>
@@ -114,58 +98,49 @@ items.length: {{items.length}}
           <i class="icon ion-email"></i>
         </a>
 
-        <a href="#/app/panoramio?lugar={{cam[0]}}" class="item item-stable item-icon-left item-icon-right">
+        <a href="#/app/panoramio?lugar={{::cam[0]}}&concejo={{::cam[1]}}" class="item item-stable item-icon-left item-icon-right">
           <i class="icon ion-email"></i>
-          Ver Fotos
+          Fotos de la zona
           <i class="icon ion-email"></i>
         </a>
 
-        <div class="item item-stable">
+        <a href="" class="item item-stable item-icon-left item-icon-right">
+          <i class="icon ion-email"></i>
           Buscar en Alrededores (se puede hacer en la misma pagina del mapa)
-        </div>
+          <i class="icon ion-email"></i>
+        </a>
 
-        <div class="item item-stable">
-          Información Meteorológica
-        </div>
+        <a href="#/app/panoramio?lugar={{::cam[0]}}&concejo={{::cam[1]}}" class="item item-stable item-icon-left item-icon-right">
+          <i class="icon ion-email"></i>
+          Información meteorológica
+          <i class="icon ion-email"></i>
+        </a>
 
       </div>
 
       <!-------------------------------------------------------------------------------------------------->
-<!--
-      <div class="list card">
-        <a href="#/app/mapa?lugar={{::cam[0]}}&concejo={{::cam[1]}}" class="item item-stable item-icon-left item-icon-right">
-          <i class="icon ion-home"></i>
-          Ver en Mapa
-          <i class="icon arrow-right-a"></i>
-        </a>
-        <a href="#/app/streetview?lugar={{::cam[0]}}&concejo={{::cam[1]}}" class="item item-stable item-icon-left item-icon-right">
-          <i class="icon ion-ios-telephone"></i>
-          Ver en Street View
-          <i class="icon arrow-right-b"></i>
-        </a>
-        <a href="#" class="item item-stable item-icon-left item-icon-right">
-          <i class="icon ion-wifi"></i>
-          Buscar en Alrededores
-          <i class="icon arrow-right-c"></i>
-        </a>
-        <a href="#/app/panoramio?lugar={{cam[0]}}" class="item item-stable item-icon-left">
-          <i class="icon ion-card"></i>
-          Ver Fotos
-          <i class="icon ion-arrow-right-a"></i>
-        </a>
-        <a href="#" class="item item-stable item-icon-left">
-          <i class="icon ion-card"></i>
-          Información Meteorológica
-          <i class="icon ion-arrow-right-b"></i>
-        </a>
-      </div>
--->
     </div>
 
     <!--
         <md-button class="md-fab md-fab-bottom-right" aria-label="Add" ng-click="showAdd($event)">
           <i class="icon ion-chevron-right"></i>
         </md-button>
+    -->
+
+    <!--
+                <md-button class="md-raised md-primary" ng-click="prevSlide()">
+                  <i class="icon ion-chevron-left"></i>
+                  Anterior
+                </md-button>
+
+                <md-button class="md-raised md-primary" ng-click="">
+                  <i class="icon ion-ios-reload"></i>
+                  Recargar
+                </md-button>
+                <md-button class="md-raised md-primary" ng-click="nextSlide()">
+                  <i class="icon ion-chevron-right"></i>
+                  Siguiente
+                </md-button>
     -->
 
   </ion-content>
