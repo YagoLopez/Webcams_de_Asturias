@@ -157,7 +157,7 @@ angular.module('webcams_asturias.controllers', [])
     }
 
     var mapa = GMapsService.creaMapa( document.getElementById('mapa') );
-    var streetView = GMapsService.creaStreetView( mapa );
+    var streetView = mapa.getStreetView({ pov: {heading: 0, pitch: 0} });
 
     if(!lugar && !concejo){
       mapa.setCenter(OVIEDO);
@@ -270,23 +270,23 @@ angular.module('webcams_asturias.controllers', [])
 
   })// DetalleCtrl
 
-.controller('StreetViewCtrl', function($scope, GMapsService, $stateParams, $rootScope){
+.controller('StreetViewCtrl', function($scope, GMapsService, $stateParams){
 
   var lugar = $stateParams.lugar || '';
   var concejo = $stateParams.concejo || '';
 
   $scope.$on('$ionicView.afterEnter', function() {
 
-      var div = document.getElementById('street-view');
-      GMapsService.hallaLatLng(new google.maps.Map(div), lugar, concejo, function (coords) {
-        var streetViewService = new google.maps.StreetViewService();
-        streetViewService.getPanoramaByLocation(coords, 100, function (data, status) {
-          if (status == google.maps.StreetViewStatus.OK) {
-            GMapsService.creaStreetView2(div, data.location.latLng);
-          } else {
-            console.log('No se ha podido encontrar panorama Street View')
-          }
-        })
+    var div = document.getElementById('street-view');
+    GMapsService.hallaLatLng(new google.maps.Map(div), lugar, concejo, function (coords) {
+      var streetViewService = new google.maps.StreetViewService();
+      streetViewService.getPanoramaByLocation(coords, 100, function (data, status) {
+        if (status == google.maps.StreetViewStatus.OK) {
+          GMapsService.creaStreetView(div, data.location.latLng);
+        } else {
+          console.log('No se ha podido encontrar panorama Street View')
+        }
+      })
       })//hallaLatLng
 
     })//$scope.on

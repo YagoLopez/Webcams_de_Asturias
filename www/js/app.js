@@ -206,13 +206,13 @@ angular.module('webcams_asturias',
     // punto de referencia para geocoder y centro de mapa por defecto
     var OVIEDO = {lat: 43.3667, lng: -5.8333};
 
-    var hallaLatLng = function (mapa, lugar, concejo, fn){
+    var hallaLatLng = function (domElement, lugar, concejo, fn){
       var request = {
         location: OVIEDO,
         radius: '1',
         query: "'"+lugar+","+concejo+"'"
       };
-      placesService = new google.maps.places.PlacesService(mapa);
+      placesService = new google.maps.places.PlacesService(domElement);
       placesService.textSearch(request, callback);
       function callback(results, status) {
         if (status == google.maps.places.PlacesServiceStatus.OK) {
@@ -223,25 +223,12 @@ angular.module('webcams_asturias',
       }
     }// hallaLatLng
 
-    var creaStreetView = function(mapa) {
-      var panorama = mapa.getStreetView();
-      panorama.setPov(({
-        heading: 0,
-        pitch: 0
-      }));
-      return panorama;
-    }
-
-    var creaStreetView2 = function(domElement, locationLatLng){
-
-      var mapa = new google.maps.Map(domElement,  {});
-
-      var streetView = new google.maps.StreetViewPanorama( domElement, {
+    var creaStreetView = function(domElement, locationLatLng){
+      return new google.maps.StreetViewPanorama( domElement, {
         pov: {heading: 0, pitch: 0},
         position: locationLatLng,
         zoom: 1
       });
-      return streetView;
     }
 
     var creaMapa = function (domElement){
@@ -268,8 +255,7 @@ angular.module('webcams_asturias',
       OVIEDO: OVIEDO,
       creaMapa: creaMapa,
       hallaLatLng: hallaLatLng,
-      creaStreetView: creaStreetView,
-      creaStreetView2: creaStreetView2
+      creaStreetView: creaStreetView
     }
 }) // GMapsService
 
