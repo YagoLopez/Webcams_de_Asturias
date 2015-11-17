@@ -2,10 +2,40 @@
 <ion-content>
 
   lugar: {{lugar}}
-  <div id="divPanoramio" style="width:80%;height:60%;align-content: center"></div>
-  <div id="divCreditos"></div>
-  <div ng-show="!hayFotos">No se han encontrado fotos de Panoramio en los alrededores de la ubicación de la cámara</div>
-  <input type="button" value="Ampliar imagen" ng-click="showModal()">
+  <style>
+  #container {
+    display: flex; /* establish flex container */
+    flex-direction: column; /* make main-axis vertical */
+    /*justify-content: center; /!* align items vertically, in this case *!/*/
+    align-items: center; /* align items horizontally, in this case */
+  }
+  .box {
+    margin: 5px;
+    text-align: center;
+  }
+  .modal{ /* full screen */
+    top: 0 ;
+    bottom: 0 ;
+    left: 0 ;
+    right: 0 ;
+    width: 100% ;
+  }
+</style>
+
+  <div id="container">
+
+    <div id="divPanoramio" style=""></div>
+    <div id="divCreditos"></div>
+    <div ng-show="!hayFotos" style="text-align: center">
+      No se han encontrado fotos de Panoramio en los alrededores de la ubicación de la cámara
+    </div>
+    <button class="button  button-positive" ng-click="showModal()" style="width:80%;">
+      <i class="icon icon-left ion-arrow-expand">
+        &nbsp;Ampliar Imagen
+      </i>
+    </button>
+
+  </div>
 
 </ion-content>
 </ion-view>

@@ -226,30 +226,27 @@ angular.module('webcams_asturias.controllers', [])
     var lugar = $stateParams.lugar;
     var concejo = $stateParams.concejo;
     var categoria = $stateParams.categoria
-    var css = {'width': 400, 'height': 400};
+    var css = {'width': 200, 'height': 200};
     var rectanguloBusqueda = null;
     var divCreditos = null;
     var widgetPanoramio = null;
 
-    //$scope.$on('$ionicView.afterEnter', function(){
+    divCreditos = document.getElementById('divCreditos');
+    GMapsService.hallaLatLng(divCreditos, lugar,  concejo, function(coords){
 
-      divCreditos = document.getElementById('divCreditos');
-      GMapsService.hallaLatLng(divCreditos, lugar,  concejo, function(coords){
+      var lat = coords.lat();
+      var lng = coords.lng();
+      var OFFSET = 0.001;
 
-        var lat = coords.lat();
-        var lng = coords.lng();
-        var OFFSET = 0.001;
+      rectanguloBusqueda = { 'rect': {
+        'sw': {'lat': lat-OFFSET, 'lng': lng-OFFSET},
+        'ne': {'lat': lat+OFFSET, 'lng': lng+OFFSET}
+      }};
 
-        rectanguloBusqueda = { 'rect': {
-          'sw': {'lat': lat-OFFSET, 'lng': lng-OFFSET},
-          'ne': {'lat': lat+OFFSET, 'lng': lng+OFFSET}
-        }};
+      widgetPanoramio = new panoramio.PhotoWidget('divPanoramio', rectanguloBusqueda, css);
+      widgetPanoramio.setPosition(0);
 
-        widgetPanoramio = new panoramio.PhotoWidget('divPanoramio', rectanguloBusqueda, css);
-        widgetPanoramio.setPosition(0);
-
-      }); // hallaLatLng
-    //}); // after enter
+    }); // hallaLatLng
 
     $scope.getPhoto = function (){
       console.log('widgetPanoramio.getfoto', widgetPanoramio.getPhoto().Ya[0].url);
@@ -266,13 +263,14 @@ angular.module('webcams_asturias.controllers', [])
     //}
 
     // DIALOGO MODAL ----------------------------------------------------------------------------------------------
-    $ionicModal.fromTemplateUrl('templates/img.html', {
+    $ionicModal.fromTemplateUrl('templates/modal-img.html', {
       scope: $scope,
       animation: 'scale-in'
     }).then(function(modal) {
       $scope.modal = modal;
     });
     $scope.showModal= function (){
+      //TODO: comprobar que getPhotos() no es null o dara error
       console.log('widgetpanoramio', widgetPanoramio.getPhoto());
       $scope.urlImg = widgetPanoramio.getPhoto().Ya[0].url;
       $scope.titulo = widgetPanoramio.getPhoto().cd;
@@ -286,32 +284,20 @@ angular.module('webcams_asturias.controllers', [])
     };
     // FIN DIALOGO MODAL ----------------------------------------------------------------------------------------------
 
-
-
-
-
-
-
-
-
-
 }) // panoramio ctrl
 
 .controller('DetalleCtrl', function($scope, $stateParams, $ionicModal){
 
     $scope.rowid = $stateParams.rowid;
 
-/*
     // DIALOGO MODAL ----------------------------------------------------------------------------------------------
-    $ionicModal.fromTemplateUrl('templates/panoramio.html', {
+    $ionicModal.fromTemplateUrl('templates/modal-detalle.html', {
       scope: $scope,
       animation: 'scale-in'
     }).then(function(modal) {
       $scope.modal = modal;
     });
-
-    $scope.showModal= function (lugar){
-      console.log('lugar', lugar);
+    $scope.showModal= function (){
       $scope.modal.show();
     }
 
@@ -319,7 +305,6 @@ angular.module('webcams_asturias.controllers', [])
       $scope.modal.hide();
     };
     // FIN DIALOGO MODAL ----------------------------------------------------------------------------------------------
-*/
 
   })// DetalleCtrl
 

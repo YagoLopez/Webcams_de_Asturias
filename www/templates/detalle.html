@@ -37,8 +37,6 @@ items.length: {{items.length}}
         </div>
 
         <div class="item item-body">
-          <!--rowid: {{rowid}}<br>-->
-          <!--cam[4]: {{cam[4]}}<br>-->
           <p>
             <i class="icon ion-android-locate"></i>
             <b>Lugar: </b>{{ ::cam[0] }}
@@ -48,16 +46,49 @@ items.length: {{items.length}}
             <b>Concejo: </b>{{ ::cam[1] }}
           </p>
 
-          <div class="item item-text-wrap">
-            This is a basic Card with some text.
+        </div>
+
+
+        <div class="item item-text-wrap">
+
+<!--
+            <button class="button button-positive" ng-click="showModal()">
+              <i class="icon icon-left ion-arrow-expand">
+                Ampliar Imagen</i>
+            </button>
+            <button class="button button-positive" ng-click="showModal()">
+              <i class="icon icon-left ion-ios-reload">
+                Recargar&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</i>
+            </button>
+-->
+
+
+          <div class="row" style="/*margin:0px;padding:0px;*/">
+            <div class="col" style="margin:/*0px;padding-top:0;padding-bottom:0;*/">
+              <button class="button button-positive" style="width:100%;" ng-click="showModal()">
+                <i class="icon icon-left ion-arrow-expand"></i>
+                Ampliar Imagen
+              </button>
+            </div>
+            <div class="col" style="/*margin:0px;padding-top:0;padding-bottom:0;*/">
+              <button class="button button-balanced" style="width:100%;" ng-click="">
+                <i class="icon icon-left ion-ios-reload"></i>
+                Recargar
+              </button>
+            </div>
           </div>
 
         </div>
 
+
+<!--
         <div class="item item-divider">
           I'm a Footer in a Card!
         </div>
-        <!-------------------------------------------------------------------------------------------------------->
+-->
+
+
+<!--
         <div class="item tabs tabs-secondary tabs-icon-left">
           <a class="tab-item" href="#" ng-click="prevSlide()">
             <i class="icon ion-chevron-left"></i>
@@ -79,6 +110,8 @@ items.length: {{items.length}}
           <button class="button button-positive" ng-click="">Recargar</button>
           <button class="button button-positive icon-right ion-chevron-right" ng-click="nextSlide()">Siguiente</button>
         </div>
+-->
+
 
       </div>
 
@@ -93,7 +126,7 @@ items.length: {{items.length}}
         </a>
 
         <a href="#/app/streetview?lugar={{::cam[0]}}&concejo={{::cam[1]}}" class="item item-stable item-icon-left item-icon-right">
-          <i class="icon ion-android-compass"></i>
+          <i class="icon ion-ios-navigate"></i>
           Ver en Street View
           <i class="icon ion-ios-arrow-thin-right" style="color: #387ef5;"></i>
         </a>
@@ -118,8 +151,9 @@ items.length: {{items.length}}
 
       </div>
 
-      <!-------------------------------------------------------------------------------------------------->
     </div>
+
+    <!-------------------------------------------------------------------------------------------------->
 
     <!--
         <md-button class="md-fab md-fab-bottom-right" aria-label="Add" ng-click="showAdd($event)">
