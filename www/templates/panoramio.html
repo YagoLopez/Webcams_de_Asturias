@@ -2,10 +2,10 @@
 <ion-content>
 
   lugar: {{lugar}}
-  <div id="divPanoramio" style="width:100%;height: 60%"></div>
-  <div id="divCreditos"><!-- logo google aqui --></div>
+  <div id="divPanoramio" style="width:80%;height:60%;align-content: center"></div>
+  <div id="divCreditos"></div>
   <div ng-show="!hayFotos">No se han encontrado fotos de Panoramio en los alrededores de la ubicación de la cámara</div>
-  <input type="button" value="get foto" ng-click="getPhoto()">
+  <input type="button" value="Ampliar imagen" ng-click="showModal()">
 
 </ion-content>
 </ion-view>

@@ -37,11 +37,11 @@ angular.module('webcams_asturias',
   })
 
   .state('app.search', {
-  url: '/search',
-  views: {
-    'menuContent': {
-      templateUrl: 'templates/search.html',
-      controller: 'SearchCtrl'
+    url: '/search',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/search.html',
+        controller: 'SearchCtrl'
     }
   }
   })

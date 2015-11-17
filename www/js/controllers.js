@@ -176,7 +176,7 @@ angular.module('webcams_asturias.controllers', [])
             console.log('getPanoramaByLocation(): No se ha encontrado panorama Street View')
           }
         });
-        //TODO: crear infowindow para este marker
+/*        //TODO: crear infowindow para este marker
         var marker = new google.maps.Marker({
           position: coords,
           map: mapa,
@@ -184,7 +184,7 @@ angular.module('webcams_asturias.controllers', [])
           //animation: google.maps.Animation.DROP,
           animation: google.maps.Animation.j,
           icon: 'https://storage.googleapis.com/support-kms-prod/SNP_2752125_en_v0'
-        });
+        });*/
       });
     }// else
 
@@ -221,52 +221,79 @@ angular.module('webcams_asturias.controllers', [])
 
 }) // fin MapaGlobalCtrl
 
-.controller('PanoramioCtrl', function($scope, $stateParams, GMapsService){
+.controller('PanoramioCtrl', function($scope, $stateParams, GMapsService, $ionicModal){
 
     var lugar = $stateParams.lugar;
     var concejo = $stateParams.concejo;
     var categoria = $stateParams.categoria
-    var aspecto = {'width': 400, 'height': 400};
-    var zonaBusqueda = null;
+    var css = {'width': 400, 'height': 400};
+    var rectanguloBusqueda = null;
     var divCreditos = null;
+    var widgetPanoramio = null;
 
-    $scope.$on('$ionicView.afterEnter', function(){
+    //$scope.$on('$ionicView.afterEnter', function(){
+
       divCreditos = document.getElementById('divCreditos');
       GMapsService.hallaLatLng(divCreditos, lugar,  concejo, function(coords){
 
         var lat = coords.lat();
         var lng = coords.lng();
         var OFFSET = 0.001;
-        console.log('lat', lat);
-        console.log('lng', lng);
 
-        // definicion de rectangulo de busqueda en mapa
-        zonaBusqueda = { 'rect': {
-          'sw': {'lat':lat-OFFSET, 'lng':lng-OFFSET},
-          'ne': {'lat': lat+OFFSET, 'lng':lng+OFFSET}
+        rectanguloBusqueda = { 'rect': {
+          'sw': {'lat': lat-OFFSET, 'lng': lng-OFFSET},
+          'ne': {'lat': lat+OFFSET, 'lng': lng+OFFSET}
         }};
 
-        var widgetPanoramio = new panoramio.PhotoWidget('divPanoramio', zonaBusqueda, aspecto);
+        widgetPanoramio = new panoramio.PhotoWidget('divPanoramio', rectanguloBusqueda, css);
         widgetPanoramio.setPosition(0);
 
-        //TODO: hacer cuadro de dialogo para mostrar foto
-        $scope.getPhoto = function (){
-          console.log('widgetPanoramio.getfoto', widgetPanoramio.getPhoto());
-          return widgetPanoramio.getPhoto();
-        }
-
-        //if(widgetPanoramio.kb != null) {
-        //  console.log('hay foto $scope.getPhoto', $scope.getPhoto());
-        //  $scope.hayFotos = true;
-        //} else {
-        //  console.log('no hay foto $scope.getPhoto', $scope.getPhoto());
-        //  $scope.hayFotos = false;
-        //
-        //}
-
-
       }); // hallaLatLng
-    }); //on
+    //}); // after enter
+
+    $scope.getPhoto = function (){
+      console.log('widgetPanoramio.getfoto', widgetPanoramio.getPhoto().Ya[0].url);
+      return widgetPanoramio.getPhoto();
+    }
+
+    //if(widgetPanoramio.kb != null) {
+    //  console.log('hay foto $scope.getPhoto', $scope.getPhoto());
+    //  $scope.hayFotos = true;
+    //} else {
+    //  console.log('no hay foto $scope.getPhoto', $scope.getPhoto());
+    //  $scope.hayFotos = false;
+    //
+    //}
+
+    // DIALOGO MODAL ----------------------------------------------------------------------------------------------
+    $ionicModal.fromTemplateUrl('templates/img.html', {
+      scope: $scope,
+      animation: 'scale-in'
+    }).then(function(modal) {
+      $scope.modal = modal;
+    });
+    $scope.showModal= function (){
+      console.log('widgetpanoramio', widgetPanoramio.getPhoto());
+      $scope.urlImg = widgetPanoramio.getPhoto().Ya[0].url;
+      $scope.titulo = widgetPanoramio.getPhoto().cd;
+      $scope.autor = widgetPanoramio.getPhoto().Xc;
+      $scope.urlAutor = widgetPanoramio.getPhoto().Yc;
+      $scope.modal.show();
+    }
+
+    $scope.closeModal = function () {
+      $scope.modal.hide();
+    };
+    // FIN DIALOGO MODAL ----------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
 
 }) // panoramio ctrl
 
@@ -304,7 +331,6 @@ angular.module('webcams_asturias.controllers', [])
   $scope.$on('$ionicView.afterEnter', function() {
 
     var div = document.getElementById('street-view');
-    //GMapsService.hallaLatLng(new google.maps.Map(div), lugar, concejo, function (coords) {
     GMapsService.hallaLatLng(div, lugar, concejo, function (coords) {
       var streetViewService = new google.maps.StreetViewService();
       streetViewService.getPanoramaByLocation(coords, GMapsService.RADIO, function (data, status) {
@@ -314,9 +340,9 @@ angular.module('webcams_asturias.controllers', [])
           console.log('getPanoramaByLocation(): No se ha encontrado panorama Street View')
         }
       })
-      })//hallaLatLng
+    })//hallaLatLng
 
-    })//$scope.on
+  })//$scope.on
 
 })//StreetViewCtrl
 
