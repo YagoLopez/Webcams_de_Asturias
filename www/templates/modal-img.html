@@ -1,4 +1,5 @@
 <ion-modal-view title="Imagen">
+
   <ion-header-bar>
     <h1 class="title">Imagen</h1>
     <div class="buttons">
@@ -10,22 +11,12 @@
   </ion-header-bar>
 
   <ion-content>
-<!--
-    <div class="bar bar-header">
-      <h1 class="title">Imágen</h1>
-      <button class="button button-clear button-calm" ng-click="closeModal()">
-        Cerrar
-        <i class="icon icon-right ion-android-close"></i>
-      </button>
-    </div>
--->
-
-    <img ng-src="{{urlImg}}" width="120%" height="120%"/>
+    <img ng-src="{{urlImg}}" width="160%" height="160%"/>
     <div style="text-align:center;font-size:small">
       <div>{{titulo}}</div>
       <div>Autor: <a href="{{urlAutor}}" target="_blank">{{autor}}</a></div>
-      <!--TODO: poner icon material design en el boton ampliar-->
       <hr/>
     </div>
+
   </ion-content>
 </ion-modal-view>

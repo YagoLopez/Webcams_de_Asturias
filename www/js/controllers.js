@@ -226,7 +226,7 @@ angular.module('webcams_asturias.controllers', [])
     var lugar = $stateParams.lugar;
     var concejo = $stateParams.concejo;
     var categoria = $stateParams.categoria
-    var css = {'width': 200, 'height': 200};
+    //var css = {'width': 200, 'height': 200};
     var rectanguloBusqueda = null;
     var divCreditos = null;
     var widgetPanoramio = null;
@@ -236,14 +236,14 @@ angular.module('webcams_asturias.controllers', [])
 
       var lat = coords.lat();
       var lng = coords.lng();
-      var OFFSET = 0.001;
+      var OFFSET = 0.002;
 
       rectanguloBusqueda = { 'rect': {
         'sw': {'lat': lat-OFFSET, 'lng': lng-OFFSET},
         'ne': {'lat': lat+OFFSET, 'lng': lng+OFFSET}
       }};
 
-      widgetPanoramio = new panoramio.PhotoWidget('divPanoramio', rectanguloBusqueda, css);
+      widgetPanoramio = new panoramio.PhotoWidget('divPanoramio', rectanguloBusqueda, null);
       widgetPanoramio.setPosition(0);
 
     }); // hallaLatLng
@@ -253,15 +253,6 @@ angular.module('webcams_asturias.controllers', [])
       return widgetPanoramio.getPhoto();
     }
 
-    //if(widgetPanoramio.kb != null) {
-    //  console.log('hay foto $scope.getPhoto', $scope.getPhoto());
-    //  $scope.hayFotos = true;
-    //} else {
-    //  console.log('no hay foto $scope.getPhoto', $scope.getPhoto());
-    //  $scope.hayFotos = false;
-    //
-    //}
-
     // DIALOGO MODAL ----------------------------------------------------------------------------------------------
     $ionicModal.fromTemplateUrl('templates/modal-img.html', {
       scope: $scope,
@@ -270,13 +261,14 @@ angular.module('webcams_asturias.controllers', [])
       $scope.modal = modal;
     });
     $scope.showModal= function (){
-      //TODO: comprobar que getPhotos() no es null o dara error
-      console.log('widgetpanoramio', widgetPanoramio.getPhoto());
-      $scope.urlImg = widgetPanoramio.getPhoto().Ya[0].url;
-      $scope.titulo = widgetPanoramio.getPhoto().cd;
-      $scope.autor = widgetPanoramio.getPhoto().Xc;
-      $scope.urlAutor = widgetPanoramio.getPhoto().Yc;
-      $scope.modal.show();
+      if(widgetPanoramio.getPhoto()){
+        $scope.urlImg = widgetPanoramio.getPhoto().Ya[0].url;
+        $scope.titulo = widgetPanoramio.getPhoto().cd;
+        $scope.autor = widgetPanoramio.getPhoto().Xc;
+        $scope.urlAutor = widgetPanoramio.getPhoto().Yc;
+        $scope.modal.show();
+      } else
+        console.log('showModal(): no se han encontrado fotos panoramio')
     }
 
     $scope.closeModal = function () {

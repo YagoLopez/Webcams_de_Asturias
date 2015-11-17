@@ -20,7 +20,7 @@
     right: 0 ;
     width: 100% ;
   }
-</style>
+  </style>
 
   <div id="container">
 
@@ -29,11 +29,21 @@
     <div ng-show="!hayFotos" style="text-align: center">
       No se han encontrado fotos de Panoramio en los alrededores de la ubicación de la cámara
     </div>
+<!--
     <button class="button  button-positive" ng-click="showModal()" style="width:80%;">
       <i class="icon icon-left ion-arrow-expand">
         &nbsp;Ampliar Imagen
       </i>
     </button>
+-->
+
+    <md-button class="md-raised md-primary" ng-click="showModal()" style="width:80%;height:50px">
+      <i class="icon ion-arrow-expand"></i>
+      Ampliar
+    </md-button>
+
+
+
 
   </div>
 

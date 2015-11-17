@@ -37,56 +37,37 @@ items.length: {{items.length}}
         </div>
 
         <div class="item item-body">
-          <p>
-            <i class="icon ion-android-locate"></i>
+          <div>
+            <i class="icon ion-android-checkmark-circle" style="color:#387ef5"></i>
             <b>Lugar: </b>{{ ::cam[0] }}
-          </p>
-          <p>
-            <i class="icon ion-android-locate"></i>
+          </div>
+          <div>
+            <i class="icon ion-android-checkmark-circle" style="color:#387ef5"></i>
             <b>Concejo: </b>{{ ::cam[1] }}
-          </p>
-
-        </div>
-
-
-        <div class="item item-text-wrap">
-
-<!--
-            <button class="button button-positive" ng-click="showModal()">
-              <i class="icon icon-left ion-arrow-expand">
-                Ampliar Imagen</i>
-            </button>
-            <button class="button button-positive" ng-click="showModal()">
-              <i class="icon icon-left ion-ios-reload">
-                Recargar&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</i>
-            </button>
--->
-
-
-          <div class="row" style="/*margin:0px;padding:0px;*/">
-            <div class="col" style="margin:/*0px;padding-top:0;padding-bottom:0;*/">
-              <button class="button button-positive" style="width:100%;" ng-click="showModal()">
-                <i class="icon icon-left ion-arrow-expand"></i>
-                Ampliar Imagen
-              </button>
-            </div>
-            <div class="col" style="/*margin:0px;padding-top:0;padding-bottom:0;*/">
-              <button class="button button-balanced" style="width:100%;" ng-click="">
-                <i class="icon icon-left ion-ios-reload"></i>
-                Recargar
-              </button>
-            </div>
           </div>
 
         </div>
 
+        <!-- botones ------------------------------------------------------------------------------------------------->
+        <div class="item item-text-wrap" style="padding-right: 0px;padding-left: 0px;">
 
-<!--
-        <div class="item item-divider">
-          I'm a Footer in a Card!
+          <div class="row">
+            <div class="col">
+              <md-button class="md-raised md-primary" ng-click="showModal()" style="height: 50px; width:100%">
+                <i class="icon ion-arrow-expand"></i>
+                Ampliar
+              </md-button>
+            </div>
+            <div class="col">
+              <md-button class="md-raised md-primary" ng-click="reload()" style="height: 50px; width:100%">
+                <i class="icon ion-ios-reload"></i>
+                Recargar
+              </md-button>
+            </div>
+          </div>
+
         </div>
--->
-
+        <!-- fin botones --------------------------------------------------------------------------------------------->
 
 <!--
         <div class="item tabs tabs-secondary tabs-icon-left">
