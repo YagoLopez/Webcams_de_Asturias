@@ -1,3 +1,4 @@
+//TODO: cambiar servicios a factorias
 
 // url completa para consultar fusion table. Usar como plantilla
 //var url_api = "https://www.googleapis.com/fusiontables/v2/query?sql=SELECT%20*%20FROM%201gX5maFbqFyRziZiUYlpOBYhcC1v9lGkKqCXvZREF&key=AIzaSyBsdouSTimjrC2xHmbGgOt8VfbLBWc9Gps";
@@ -218,11 +219,10 @@ angular.module('webcams_asturias',
         lenguage: 'es'
       };
       placesService = new google.maps.places.PlacesService(domElement);
-      console.log('placesService', placesService);
       placesService.textSearch(request, callback);
       function callback(results, status ) {
         if (status == google.maps.places.PlacesServiceStatus.OK) {
-          console.log('results[0]', results[0]);
+          //console.log('results[0]', results[0]);
           fn(results[0].geometry.location);
         } else {
           console.log('hallaLatLng(): no se han podido hallar coordenadas');
@@ -286,9 +286,13 @@ angular.module('webcams_asturias',
   return fallbackSrc;
 })
 
-.config(['$compileProvider', function ($compileProvider) {
+  //TODO: unificar bloque de configuracion?
+.config(['$compileProvider', '$ionicConfigProvider', function ($compileProvider, $ionicConfigProvider) {
   // disable debug info
   $compileProvider.debugInfoEnabled( true );
+  // remove back button text completely
+  $ionicConfigProvider.backButton.previousTitleText(false).text(' ');
+
 }]);
 
 

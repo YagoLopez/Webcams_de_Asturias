@@ -236,7 +236,7 @@ angular.module('webcams_asturias.controllers', [])
 
         var lat = coords.lat();
         var lng = coords.lng();
-        var OFFSET = 0.003;
+        var OFFSET = 0.001;
         console.log('lat', lat);
         console.log('lng', lng);
 
