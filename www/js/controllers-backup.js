@@ -3,7 +3,7 @@
 //TODO: hacer una tabla propia para las categorias en fusion tables y hacer join de la tabla de webcams y la de categorias
 //TODO: Hacer tabla para concejos
 
-angular.module('webcams_asturias.controllers', [])
+angular.module('wca.controllers', [])
 
 .controller('AppCtrl', function($scope, $ionicModal, $timeout, $rootScope) {
 

@@ -6,8 +6,8 @@
 // url de las categorias codificada con urlencode. Usar como plantilla
 //http%3A%2F%2Fwebcamsdeasturias.com%2Finterior.php%3Fcategoria%3D1
 
-angular.module('webcams_asturias',
-  ['ionic', 'webcams_asturias.controllers', 'jett.ionic.filter.bar', 'ngMaterial'/*,'ionicLazyLoad'*/])
+angular.module('wca',
+  ['ionic', 'wca.controllers', 'wca.services', 'jett.ionic.filter.bar', 'ngMaterial'/*,'ionicLazyLoad'*/])
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
@@ -25,54 +25,20 @@ angular.module('webcams_asturias',
   });
 })
 
-.config(function($stateProvider, $urlRouterProvider) {
+.config(function($stateProvider, $urlRouterProvider, $compileProvider, $ionicConfigProvider) {
 
-  $stateProvider
+    // disable debug info
+    $compileProvider.debugInfoEnabled( true );
+    // remove back button text completely
+    $ionicConfigProvider.backButton.previousTitleText(false).text(' ');
+
+    $stateProvider
 
   .state('app', {
     url: '/app',
     abstract: true,
     templateUrl: 'templates/menu.html',
     controller: 'AppCtrl'
-  })
-
-  .state('app.search', {
-    url: '/search',
-    views: {
-      'menuContent': {
-        templateUrl: 'templates/search.html',
-        controller: 'SearchCtrl'
-    }
-  }
-  })
-
-  .state('app.browse', {
-  url: '/browse',
-  views: {
-    'menuContent': {
-      templateUrl: 'templates/browse.html'
-    }
-  }
-  })
-
-  .state('app.playlists', {
-  url: '/playlists',
-  views: {
-    'menuContent': {
-      templateUrl: 'templates/playlists.html',
-      controller: 'PlaylistsCtrl'
-    }
-  }
-  })
-
-  .state('app.single', {
-  url: '/playlists/:playlistId',
-  views: {
-    'menuContent': {
-      templateUrl: 'templates/playlist.html',
-      controller: 'PlaylistCtrl'
-    }
-  }
   })
 
   //TODO: utilizar resolve en la definicion de estado para obtener datos remotos en vez de en metodo run(). Probar a ver
@@ -155,123 +121,10 @@ angular.module('webcams_asturias',
     }
   })
 
-
 ; // fin de estados
 
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/app/tabs/listado');
-})
-
-.factory('factoria_datos', function($http, DATOS_URL){
-
-    var getRemoteData = function( sql_query_string ) {
-      var url = DATOS_URL.API_ENDPOINT+ '?sql=' +sql_query_string+ '&key=' +DATOS_URL.API_KEY;
-      console.log("url", encodeURI(url));
-      return $http.get( encodeURI(url), {cache: true} );
-    }
-
-    var getLocalData = function(path_fichero){
-      return $http.get(path_fichero);
-    }
-    return {
-      getRemoteData: getRemoteData,
-      getLocalData: getLocalData
-    }
-})
-
-/*
-.service('Panoramio', function(){
-
-  var getPanoramio = function(domElement){
-    var cadenaBusqueda = {
-      'tag': 'Oviedo'
-      //,
-      //'rect': {'sw': {'lat': -30, 'lng': 10.5}, 'ne': {'lat': 50.5, 'lng': 30}}
-    };
-    var opciones_panoramio = {'width': 400, 'height': 400};
-    //var widget_panoramio = new panoramio.PhotoWidget('divPanoramio', cadenaBusqueda, opciones_panoramio);
-    var widget_panoramio = new panoramio.PhotoWidget(domElement, cadenaBusqueda, opciones_panoramio);
-
-    widget_panoramio.setPosition(0);
-    console.log('widget_panoramio', widget_panoramio);
-
-  }
-  return {
-    getPanoramio: getPanoramio
-  }
-
-}) // Panoramio
-*/
-
-.service('GMapsService', function(DATOS_URL){
-
-    // punto de referencia para geocoder y centro de mapa por defecto
-    var OVIEDO = {lat: 43.3667, lng: -5.8333};
-    // radio de búsqueda de imagenes de street view en metros a partir una ubicacion
-    var RADIO = 500;
-
-    var hallaLatLng = function (domElement, lugar, concejo, fn){
-      var request = {
-        //location: OVIEDO,
-        //radius: '1',
-        query: "'"+lugar+", "+concejo+", Asturias, España'",
-        lenguage: 'es'
-      };
-      placesService = new google.maps.places.PlacesService(domElement);
-      placesService.textSearch(request, callback);
-      function callback(results, status ) {
-        if (status == google.maps.places.PlacesServiceStatus.OK) {
-          //console.log('results[0]', results[0]);
-          fn(results[0].geometry.location);
-        } else {
-          console.log('hallaLatLng(): no se han podido hallar coordenadas');
-        }
-      }
-    }// hallaLatLng
-
-    var creaStreetView = function(domElement, locationLatLng){
-      return new google.maps.StreetViewPanorama( domElement, {
-        pov: {heading: 0, pitch: 0},
-        position: locationLatLng,
-        zoom: 1
-      });
-    }
-
-    var creaMapa = function (domElement){
-      var mapa = new google.maps.Map(domElement,  {
-        mapTypeControl: true,
-        mapTypeControlOptions: { style: google.maps.MapTypeControlStyle.DROPDOWN_MENU },
-        mapTypeId: google.maps.MapTypeId.TERRAIN
-      });
-      layer = new google.maps.FusionTablesLayer({
-        map: mapa,
-        //heatmap: { enabled: false },
-        query: {
-          select: 'col7',
-          from: DATOS_URL.FUSION_TABLE_ID,
-          where: ''
-        },
-        options: {
-          styleId: 6,
-          templateId: 8
-        }
-      });
-      return mapa;
-    } // creaMapa()
-
-    return {
-      OVIEDO: OVIEDO,
-      RADIO: RADIO,
-      creaMapa: creaMapa,
-      hallaLatLng: hallaLatLng,
-      creaStreetView: creaStreetView
-    }
-}) // GMapsService
-
-.constant('DATOS_URL', {
-    API_ENDPOINT: 'https://www.googleapis.com/fusiontables/v2/query',
-    FUSION_TABLE_ID: '1gX5maFbqFyRziZiUYlpOBYhcC1v9lGkKqCXvZREF',
-    API_KEY: 'AIzaSyBsdouSTimjrC2xHmbGgOt8VfbLBWc9Gps'
 })
 
 .directive('fallbackSrc', function () {
@@ -284,16 +137,6 @@ angular.module('webcams_asturias',
   }
   return fallbackSrc;
 })
-
-  //TODO: unificar bloque de configuracion?
-.config(['$compileProvider', '$ionicConfigProvider', function ($compileProvider, $ionicConfigProvider) {
-  // disable debug info
-  $compileProvider.debugInfoEnabled( true );
-  // remove back button text completely
-  $ionicConfigProvider.backButton.previousTitleText(false).text(' ');
-
-}]);
-
 
 
 /*
@@ -325,7 +168,7 @@ return filtro;
 */
 
 // CORS request
-//angular.module('webcams_asturias')
+//angular.module('wca')
 //  .config(function($httpProvider) {
 //    $httpProvider.defaults.useXDomain = true;
 //    delete $httpProvider.defaults.headers.common['X-Requested-With'];
