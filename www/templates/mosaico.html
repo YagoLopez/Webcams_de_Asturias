@@ -1,15 +1,9 @@
 <ion-view title="Mosaico" hide-back-button="true">
   <ion-content>
-
-    items.length: {{items.length}}<br>
-    idCategoria: {{idCategoria}}<br>
-
-    <!--TODO: añadir loader en galería-->
     <!--TODO: arreglar el texto de pie de foto para que se vea con elipsis como en el listado-->
     <div class="grid">
-      <div class="row" ng-repeat="cam in items"
+      <div class="row" ng-repeat="cam in items track by cam[4]"
            ng-if="$index % 3 === 0" force-refresh-images="true" style="padding:0; margin:0px;">
-
 
         <ion-item class="col col-33 animated zoomIn" ng-if="$index < items.length" ng-click="showModal($index)">
           <!--<img ng-src="{{ items[$index][2] }}" width="100%" />-->

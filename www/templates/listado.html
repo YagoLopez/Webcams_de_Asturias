@@ -7,9 +7,6 @@
   <ion-content>
 
     <div class="list">
-items.length: {{items.length}}<br>
-concejo: {{concejo}}<br>
-idCategoria: {{idCategoria}}<br>
       <!--<div ng-repeat="cam in items" ng-class="{'chat-item':animarListItems}" class="item-remove-animate">-->
       <div collection-repeat="cam in items track by cam[4]" item-heigth="100px">
         <a class="item item-thumbnail-left item-icon-right" href="#/app/detalle/{{cam[4]}}">

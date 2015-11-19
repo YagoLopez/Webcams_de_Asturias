@@ -48,7 +48,6 @@ angular.module('webcams_asturias.controllers', [])
     // Guarda parametros url en variables temporales;
     var concejo = $stateParams.concejo || '';
     var idCategoria = $stateParams.idCategoria || '';
-    console.log('idCategoria en tabs ctrl', idCategoria);
 
     function esSubcadena(idCategoria, urlCategoria) {
       return (urlCategoria.indexOf('categoria='+idCategoria) > -1);
@@ -63,30 +62,26 @@ angular.module('webcams_asturias.controllers', [])
       // -------------------------------------------------------------------------------------------------------------
       var camsFiltradasPorUrl = $filter('filter')(data.rows, function(cam){
         if (concejo && idCategoria) {
-          // cam[1] concejo de camara, cam[3] url categoria
+          // cam[1] concejo de camara, cam[3] url categoria, no id de categoria, no confundir
           return (cam[1].toLowerCase() == concejo.toLowerCase() && esSubcadena(idCategoria, cam[3]));
         } else {
           if (concejo)
             return cam[1].toLowerCase() == concejo.toLowerCase();
           if (idCategoria)
             return esSubcadena(idCategoria, cam[3]);
+          if(!concejo && !idCategoria)
+            return data.rows;
         }
       });
 
-      // listacams contiene las cams sin filtrar
-      //$rootScope.listacams = data;
-      if (camsFiltradasPorUrl.length == 0)
-        camsFiltradasPorUrl = data.rows;
+      //if (camsFiltradasPorUrl.length == 0)
+      //  camsFiltradasPorUrl = data.rows;
 
       // Aqui items contiene las cams inicialmente filtradas por parametros de url
       $rootScope.items = camsFiltradasPorUrl;
       // Despues de filtrar guardar parametros en scope. Se hace asi para que el filtrado sea mas rapido
       $scope.concejo = concejo;
       $scope.idCategoria = idCategoria;
-      concejo = null;
-      idCategoria = null;
-
-      console.log('$rootScope.items.length', $rootScope.items.length);
 
       // -------------------------------------------------------------------------------------------------------------
       // FILTRO 2: filtra las cams segun una cadena de texto que haya introducido el usuario
@@ -103,8 +98,6 @@ angular.module('webcams_asturias.controllers', [])
           update: function (filteredItems, filteredText) {
             $rootScope.items = filteredItems;
             $ionicScrollDelegate.scrollTop(false);
-            console.log('filteredText', filteredText);
-            console.log('filteredItems', filteredItems.length);
           },
           cancelText: 'Cancelar',
           cancelOnStateChange: true
@@ -118,20 +111,14 @@ angular.module('webcams_asturias.controllers', [])
       console.log('Error obteniendo datos remotos: ', status);
     });
 
-    //TODO: arreglar que se muestre y se oculte bien el loader
-    // despues de cargar la pagina con los datos remotos ocultar el loader
-    //$scope.$on('$ionicView.afterEnter', function (viewInfo, state) {
-      //$ionicLoading.hide();
-      //console.log('$ionicView.afterEnter', viewInfo, state);
-    //});
-
-  })// TabsCtrl
+})// TabsCtrl
 
 .controller('ListadoCtrl', function($ionicHistory, $scope){
 
   }) // fin ListadoCtrl
 
 .controller('MosaicoCtrl', function($scope, $ionicHistory){
+    //TODO: borrar esto
     //
     //$ionicHistory.nextViewOptions({
     //  historyRoot: true,
@@ -189,16 +176,7 @@ angular.module('webcams_asturias.controllers', [])
             console.log('getPanoramaByLocation(): No se ha encontrado panorama Street View')
           }
         });
-/*        //TODO: crear infowindow para este marker
-        var marker = new google.maps.Marker({
-          position: coords,
-          map: mapa,
-          title: lugar+', '+concejo,
-          //animation: google.maps.Animation.DROP,
-          animation: google.maps.Animation.j,
-          icon: 'https://storage.googleapis.com/support-kms-prod/SNP_2752125_en_v0'
-        });*/
-      });
+      }) // hallalatlng
     }// else
 
   }); // $scope.on
@@ -228,9 +206,6 @@ angular.module('webcams_asturias.controllers', [])
       }
     };
   */
-
-
-
 
 }) // fin MapaGlobalCtrl
 
@@ -262,7 +237,6 @@ angular.module('webcams_asturias.controllers', [])
     }); // hallaLatLng
 
     $scope.getPhoto = function (){
-      console.log('widgetPanoramio.getfoto', widgetPanoramio.getPhoto().Ya[0].url);
       return widgetPanoramio.getPhoto();
     }
 
@@ -295,7 +269,7 @@ angular.module('webcams_asturias.controllers', [])
 
     $scope.rowid = $stateParams.rowid;
 
-    // DIALOGO MODAL ----------------------------------------------------------------------------------------------
+    // DIALOGO MODAL -------------------------------------------------------------------------------------------------
     $ionicModal.fromTemplateUrl('templates/modal-detalle.html', {
       scope: $scope,
       animation: 'scale-in'
@@ -340,7 +314,6 @@ angular.module('webcams_asturias.controllers', [])
 })
 
 .controller('SearchCtrl', function($scope, $ionicModal, $ionicSlideBoxDelegate, $ionicScrollDelegate){
-    console.log('search ctrl');
   $scope.miarray=[1,2,3,4,5,6,7,8,9];
 
  }) // fin SearchCtrl controller
