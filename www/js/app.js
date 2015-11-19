@@ -75,10 +75,9 @@ angular.module('webcams_asturias',
   }
   })
 
-
   //TODO: utilizar resolve en la definicion de estado para obtener datos remotos en vez de en metodo run(). Probar a ver
   .state('app.tabs', {
-    url: '/tabs?categoria&concejo',
+    url: '/tabs?idCategoria&concejo',
     cache: false,
     views: {
       'menuContent': {

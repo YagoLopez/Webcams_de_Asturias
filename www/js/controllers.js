@@ -1,5 +1,7 @@
 //TODO: hacer cuadro de dialogo para mostrar imagen de cam?
 //TODO: revisar las dependencias que se pasan a los controladores
+//TODO: hacer una tabla propia para las categorias en fusion tables y hacer join de la tabla de webcams y la de categorias
+//TODO: Hacer tabla para concejos
 
 angular.module('webcams_asturias.controllers', [])
 
@@ -38,20 +40,15 @@ angular.module('webcams_asturias.controllers', [])
 
     //TODO: eliminar esta animacion
     $rootScope.animarListItems = true;
-    // elimina search bar si la hubiera al mostrar la vista
+
+    // elimina search bar si estuviera activada al mostrar la vista
     if ($rootScope.filterBarInstance)
       $rootScope.filterBarInstance();
 
-
-    /*
-    TODO: hacer una tabla propia para las categorias en fusion tables y hacer join de
-    la tabla de webcams y la de categorias
-    TODO: Hacer tabla para concejos
-    */
-
-    // obtiene parametros de url
-    $scope.concejo = $stateParams.concejo || '';
-    $scope.idCategoria = $stateParams.categoria || '';
+    // Guarda parametros url en variables temporales;
+    var concejo = $stateParams.concejo || '';
+    var idCategoria = $stateParams.idCategoria || '';
+    console.log('idCategoria en tabs ctrl', idCategoria);
 
     function esSubcadena(idCategoria, urlCategoria) {
       return (urlCategoria.indexOf('categoria='+idCategoria) > -1);
@@ -65,14 +62,14 @@ angular.module('webcams_asturias.controllers', [])
       // FILTRO 1: filtra las cams por parametros de la url: concejo y categoria
       // -------------------------------------------------------------------------------------------------------------
       var camsFiltradasPorUrl = $filter('filter')(data.rows, function(cam){
-        if ($scope.concejo && $scope.idCategoria) {
+        if (concejo && idCategoria) {
           // cam[1] concejo de camara, cam[3] url categoria
-          return (cam[1].toLowerCase() == $scope.concejo.toLowerCase() && esSubcadena($scope.idCategoria, cam[3]));
+          return (cam[1].toLowerCase() == concejo.toLowerCase() && esSubcadena(idCategoria, cam[3]));
         } else {
-          if ($scope.concejo)
-            return cam[1].toLowerCase() == $scope.concejo.toLowerCase();
-          if ($scope.idCategoria)
-            return esSubcadena($scope.idCategoria, cam[3]);
+          if (concejo)
+            return cam[1].toLowerCase() == concejo.toLowerCase();
+          if (idCategoria)
+            return esSubcadena(idCategoria, cam[3]);
         }
       });
 
@@ -80,8 +77,14 @@ angular.module('webcams_asturias.controllers', [])
       //$rootScope.listacams = data;
       if (camsFiltradasPorUrl.length == 0)
         camsFiltradasPorUrl = data.rows;
+
       // Aqui items contiene las cams inicialmente filtradas por parametros de url
       $rootScope.items = camsFiltradasPorUrl;
+      // Despues de filtrar guardar parametros en scope. Se hace asi para que el filtrado sea mas rapido
+      $scope.concejo = concejo;
+      $scope.idCategoria = idCategoria;
+      concejo = null;
+      idCategoria = null;
 
       console.log('$rootScope.items.length', $rootScope.items.length);
 
@@ -124,11 +127,21 @@ angular.module('webcams_asturias.controllers', [])
 
   })// TabsCtrl
 
-.controller('ListadoCtrl', function($scope, $rootScope, $ionicModal, $ionicSlideBoxDelegate, $ionicScrollDelegate){
+.controller('ListadoCtrl', function($ionicHistory, $scope){
 
   }) // fin ListadoCtrl
 
-.controller('MosaicoCtrl', function($scope, $state, $rootScope){
+.controller('MosaicoCtrl', function($scope, $ionicHistory){
+    //
+    //$ionicHistory.nextViewOptions({
+    //  historyRoot: true,
+    //  disableBack: true,
+    //  disableAnimate: true
+    //});
+
+    //$ionicHistory.nextViewOptions({
+    //  historyRoot: true
+    //})
 }) // fin MosaicoCtrl
 
 .controller('MapaCtrl', function($scope, $stateParams, GMapsService, $rootScope){
@@ -136,7 +149,7 @@ angular.module('webcams_asturias.controllers', [])
 /*
   1) crear mapa
   2) si no hay NI lugar NI concejo -> mapa por defecto
-     en cualquier otro caso -> crear mapa en funcion de parametros: lugar, concejo (categoria?)
+     en cualquier otro caso -> crear mapa en funcion de parametros: lugar, concejo (idCategoria?)
  */
   $scope.$on('$ionicView.afterEnter', function() {
 
@@ -225,7 +238,7 @@ angular.module('webcams_asturias.controllers', [])
 
     var lugar = $stateParams.lugar;
     var concejo = $stateParams.concejo;
-    var categoria = $stateParams.categoria
+    var idCategoria = $stateParams.idCategoria
     //var css = {'width': 200, 'height': 200};
     var rectanguloBusqueda = null;
     var divCreditos = null;
