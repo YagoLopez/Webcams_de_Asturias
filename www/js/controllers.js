@@ -232,8 +232,67 @@ angular.module('wca.controllers',[])
 
       widgetPanoramio = new panoramio.PhotoWidget('divPanoramio', rectanguloBusqueda, null);
       widgetPanoramio.setPosition(0);
+      widgetPanoramio.enableNextArrow(true);
+
+
+      $scope.nextDisabled = false;
+      $scope.prevDisabled = false;
+      $scope.widget = widgetPanoramio;
+
+
+      var hayFotoSiguiente = function(){
+        console.log('hayFotoSiguiente:', !widgetPanoramio.getAtEnd());
+        return ! widgetPanoramio.getAtEnd();
+      }
+      var hayFotoAnterior = function(){
+        console.log('hayFotoAnterior', !widgetPanoramio.getAtStart());
+        return ! widgetPanoramio.getAtStart();
+      }
+      var desactivarBotonSiguiente = function(){
+        $scope.nextDisabled = true;
+      }
+      var desactivarBotonAnterior= function(){
+        $scope.prevDisabled = true;
+      }
+
+      $scope.nextPhoto = function(){
+        if (hayFotoSiguiente()){
+          console.log('widgetpanoramio.getposition', widgetPanoramio.getPosition()+1);
+          widgetPanoramio.setPosition( widgetPanoramio.getPosition()+1 );
+          console.log('next disabled', $scope.nextDisabled);
+        } else {
+          desactivarBotonSiguiente();
+          console.log('desactivar boton siguiente');
+          console.log('next disabled', $scope.nextDisabled);
+
+        }
+      }
+
+      $scope.prevPhoto = function(){
+        if (hayFotoAnterior()) {
+          console.log('widgetpanoramio.getposition', widgetPanoramio.getPosition()-1);
+          widgetPanoramio.setPosition( widgetPanoramio.getPosition()-1 );
+          console.log('next disabled', $scope.prevDisabled);
+
+        } else  {
+          desactivarBotonAnterior();
+          console.log('desactivar boton anterior');
+          console.log('next disabled', $scope.prevDisabled);
+
+        }
+      }
+
+
+
+
+
+
+
+
 
     }); // hallaLatLng
+
+
 
     //$scope.getPhoto = function (){
     //  return widgetPanoramio.getPhoto();
