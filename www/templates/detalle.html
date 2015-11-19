@@ -37,14 +37,12 @@ items.length: {{items.length}}
         </div>
 
         <div class="item item-body" style="font-size: small;">
-          <div>
             <i class="icon ion-ios-checkmark-outline" style="color:#387ef5;"></i>
-            <b>Lugar: </b>{{ ::cam[0] }}
-          </div>
-          <div>
+            <b>Lugar: </b>{{ ::cam[0] }}<br>
             <i class="icon ion-ios-checkmark-outline" style="color:#387ef5;"></i>
-            <b>Concejo: </b>{{ ::cam[1] }}
-          </div>
+            <b>Concejo: </b>{{ ::cam[1] }}<br>
+            <i class="icon ion-ios-checkmark-outline" style="color:#387ef5;"></i>
+            <b>Categoría: </b>{{ ::cam[3] }}
         </div>
 
         <!-- botones ------------------------------------------------------------------------------------------------->
@@ -87,12 +85,6 @@ items.length: {{items.length}}
         <a href="#/app/panoramio?lugar={{::cam[0]}}&concejo={{::cam[1]}}" class="item item-stable item-icon-left item-icon-right">
           <i class="icon ion-images"></i>
           Fotos de la zona
-          <i class="icon ion-ios-arrow-thin-right" style="color: #387ef5;"></i>
-        </a>
-
-        <a href="" class="item item-stable item-icon-left item-icon-right">
-          <i class="icon ion-email"></i>
-          Buscar en Alrededores (se puede hacer en la misma pagina del mapa)
           <i class="icon ion-ios-arrow-thin-right" style="color: #387ef5;"></i>
         </a>
 

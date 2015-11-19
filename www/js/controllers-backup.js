@@ -3,7 +3,7 @@
 //TODO: hacer una tabla propia para las categorias en fusion tables y hacer join de la tabla de webcams y la de categorias
 //TODO: Hacer tabla para concejos
 
-angular.module('wca.controllers', [])
+angular.module('wca.controllers',[])
 
 .controller('AppCtrl', function($scope, $ionicModal, $timeout, $rootScope) {
 
@@ -31,7 +31,7 @@ angular.module('wca.controllers', [])
   })
 
 .controller('TabsCtrl', function($scope, $stateParams, $ionicLoading, $rootScope, $ionicFilterBar,
-                                 factoria_datos, DATOS_URL, $filter, $ionicScrollDelegate){
+                                 Datasource, DATOS_URL, $filter, $ionicScrollDelegate){
 
     // mostrar loader
     var icono_spinner = "<ion-spinner icon='lines' class='spinner-calm'></ion-spinner><br/>";
@@ -40,14 +40,14 @@ angular.module('wca.controllers', [])
 
     //TODO: eliminar esta animacion
     $rootScope.animarListItems = true;
-    // elimina search bar si la hubiera al mostrar la vista
+
+    // elimina search bar si estuviera activada al mostrar la vista
     if ($rootScope.filterBarInstance)
       $rootScope.filterBarInstance();
 
-    // obtiene parametros de url
-    $scope.concejo = $stateParams.concejo || '';
-    $scope.idCategoria = $stateParams.idCategoria || '';
-    console.log('idCategoria en tabs ctrl', $scope.idCategoria);
+    // Guarda parametros url en variables temporales;
+    var concejo = $stateParams.concejo || '';
+    var idCategoria = $stateParams.idCategoria || '';
 
     function esSubcadena(idCategoria, urlCategoria) {
       return (urlCategoria.indexOf('categoria='+idCategoria) > -1);
@@ -55,31 +55,33 @@ angular.module('wca.controllers', [])
 
     //TODO: cachear las imagenes
     var sql_query = 'SELECT Lugar,Concejo,Imagen,Categoria,rowid FROM '+ DATOS_URL.FUSION_TABLE_ID;
-    factoria_datos.getRemoteData(sql_query).success(function(data){
+    Datasource.getRemoteData(sql_query).success(function(data){
 
       // -------------------------------------------------------------------------------------------------------------
       // FILTRO 1: filtra las cams por parametros de la url: concejo y categoria
       // -------------------------------------------------------------------------------------------------------------
       var camsFiltradasPorUrl = $filter('filter')(data.rows, function(cam){
-        if ($scope.concejo && $scope.idCategoria) {
-          // cam[1] concejo de camara, cam[3] url categoria
-          return (cam[1].toLowerCase() == $scope.concejo.toLowerCase() && esSubcadena($scope.idCategoria, cam[3]));
+        if (concejo && idCategoria) {
+          // cam[1] concejo de camara, cam[3] url categoria, no id de categoria, no confundir
+          return (cam[1].toLowerCase() == concejo.toLowerCase() && esSubcadena(idCategoria, cam[3]));
         } else {
-          if ($scope.concejo)
-            return cam[1].toLowerCase() == $scope.concejo.toLowerCase();
-          if ($scope.idCategoria)
-            return esSubcadena($scope.idCategoria, cam[3]);
+          if (concejo)
+            return cam[1].toLowerCase() == concejo.toLowerCase();
+          if (idCategoria)
+            return esSubcadena(idCategoria, cam[3]);
+          if(!concejo && !idCategoria)
+            return data.rows;
         }
       });
 
-      // listacams contiene las cams sin filtrar
-      //$rootScope.listacams = data;
-      if (camsFiltradasPorUrl.length == 0)
-        camsFiltradasPorUrl = data.rows;
+      //if (camsFiltradasPorUrl.length == 0)
+      //  camsFiltradasPorUrl = data.rows;
+
       // Aqui items contiene las cams inicialmente filtradas por parametros de url
       $rootScope.items = camsFiltradasPorUrl;
-
-      console.log('$rootScope.items.length', $rootScope.items.length);
+      // Despues de filtrar guardar parametros en scope. Se hace asi para que el filtrado sea mas rapido
+      $scope.concejo = concejo;
+      $scope.idCategoria = idCategoria;
 
       // -------------------------------------------------------------------------------------------------------------
       // FILTRO 2: filtra las cams segun una cadena de texto que haya introducido el usuario
@@ -96,8 +98,6 @@ angular.module('wca.controllers', [])
           update: function (filteredItems, filteredText) {
             $rootScope.items = filteredItems;
             $ionicScrollDelegate.scrollTop(false);
-            console.log('filteredText', filteredText);
-            console.log('filteredItems', filteredItems.length);
           },
           cancelText: 'Cancelar',
           cancelOnStateChange: true
@@ -111,20 +111,14 @@ angular.module('wca.controllers', [])
       console.log('Error obteniendo datos remotos: ', status);
     });
 
-    //TODO: arreglar que se muestre y se oculte bien el loader
-    // despues de cargar la pagina con los datos remotos ocultar el loader
-    //$scope.$on('$ionicView.afterEnter', function (viewInfo, state) {
-      //$ionicLoading.hide();
-      //console.log('$ionicView.afterEnter', viewInfo, state);
-    //});
-
-  })// TabsCtrl
+})// TabsCtrl
 
 .controller('ListadoCtrl', function($ionicHistory, $scope){
 
   }) // fin ListadoCtrl
 
 .controller('MosaicoCtrl', function($scope, $ionicHistory){
+    //TODO: borrar esto
     //
     //$ionicHistory.nextViewOptions({
     //  historyRoot: true,
@@ -182,16 +176,7 @@ angular.module('wca.controllers', [])
             console.log('getPanoramaByLocation(): No se ha encontrado panorama Street View')
           }
         });
-/*        //TODO: crear infowindow para este marker
-        var marker = new google.maps.Marker({
-          position: coords,
-          map: mapa,
-          title: lugar+', '+concejo,
-          //animation: google.maps.Animation.DROP,
-          animation: google.maps.Animation.j,
-          icon: 'https://storage.googleapis.com/support-kms-prod/SNP_2752125_en_v0'
-        });*/
-      });
+      }) // hallalatlng
     }// else
 
   }); // $scope.on
@@ -221,9 +206,6 @@ angular.module('wca.controllers', [])
       }
     };
   */
-
-
-
 
 }) // fin MapaGlobalCtrl
 
@@ -255,7 +237,6 @@ angular.module('wca.controllers', [])
     }); // hallaLatLng
 
     $scope.getPhoto = function (){
-      console.log('widgetPanoramio.getfoto', widgetPanoramio.getPhoto().Ya[0].url);
       return widgetPanoramio.getPhoto();
     }
 
@@ -288,7 +269,7 @@ angular.module('wca.controllers', [])
 
     $scope.rowid = $stateParams.rowid;
 
-    // DIALOGO MODAL ----------------------------------------------------------------------------------------------
+    // DIALOGO MODAL -------------------------------------------------------------------------------------------------
     $ionicModal.fromTemplateUrl('templates/modal-detalle.html', {
       scope: $scope,
       animation: 'scale-in'
@@ -333,7 +314,6 @@ angular.module('wca.controllers', [])
 })
 
 .controller('SearchCtrl', function($scope, $ionicModal, $ionicSlideBoxDelegate, $ionicScrollDelegate){
-    console.log('search ctrl');
   $scope.miarray=[1,2,3,4,5,6,7,8,9];
 
  }) // fin SearchCtrl controller

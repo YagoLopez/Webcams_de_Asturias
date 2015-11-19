@@ -1,5 +1,6 @@
 angular.module('wca.services',[])
 
+  //TODO: borrar, no se usa
   .factory('ParamsUrl', function () {
 
     var data = { lugar: '', concejo: '', idCategoria: '' };
@@ -33,7 +34,7 @@ angular.module('wca.services',[])
     };
   }) // ParamsUrl
 
-  .factory('factoria_datos', function($http, DATOS_URL){
+  .factory('Datasource', function($http, DATOS_URL){
 
     var getRemoteData = function( sql_query_string ) {
       var url = DATOS_URL.API_ENDPOINT+ '?sql=' +sql_query_string+ '&key=' +DATOS_URL.API_KEY;
@@ -48,7 +49,7 @@ angular.module('wca.services',[])
       getRemoteData: getRemoteData,
       getLocalData: getLocalData
     }
-  }) // factoria_datos
+  }) // Datasource
 
   .factory('GMapsService', function(DATOS_URL){
 

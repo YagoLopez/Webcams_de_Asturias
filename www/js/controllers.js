@@ -31,7 +31,7 @@ angular.module('wca.controllers',[])
   })
 
 .controller('TabsCtrl', function($scope, $stateParams, $ionicLoading, $rootScope, $ionicFilterBar,
-                                 factoria_datos, DATOS_URL, $filter, $ionicScrollDelegate){
+                                 Datasource, DATOS_URL, $filter, $ionicScrollDelegate){
 
     // mostrar loader
     var icono_spinner = "<ion-spinner icon='lines' class='spinner-calm'></ion-spinner><br/>";
@@ -55,7 +55,7 @@ angular.module('wca.controllers',[])
 
     //TODO: cachear las imagenes
     var sql_query = 'SELECT Lugar,Concejo,Imagen,Categoria,rowid FROM '+ DATOS_URL.FUSION_TABLE_ID;
-    factoria_datos.getRemoteData(sql_query).success(function(data){
+    Datasource.getRemoteData(sql_query).success(function(data){
 
       // -------------------------------------------------------------------------------------------------------------
       // FILTRO 1: filtra las cams por parametros de la url: concejo y categoria
@@ -80,8 +80,8 @@ angular.module('wca.controllers',[])
       // Aqui items contiene las cams inicialmente filtradas por parametros de url
       $rootScope.items = camsFiltradasPorUrl;
       // Despues de filtrar guardar parametros en scope. Se hace asi para que el filtrado sea mas rapido
-      $scope.concejo = concejo;
-      $scope.idCategoria = idCategoria;
+      $rootScope.concejo = concejo;
+      $rootScope.idCategoria = idCategoria;
 
       // -------------------------------------------------------------------------------------------------------------
       // FILTRO 2: filtra las cams segun una cadena de texto que haya introducido el usuario
@@ -133,16 +133,15 @@ angular.module('wca.controllers',[])
 
 .controller('MapaCtrl', function($scope, $stateParams, GMapsService, $rootScope){
 
-/*
-  1) crear mapa
-  2) si no hay NI lugar NI concejo -> mapa por defecto
-     en cualquier otro caso -> crear mapa en funcion de parametros: lugar, concejo (idCategoria?)
- */
-  $scope.$on('$ionicView.afterEnter', function() {
+  // 1) Crear mapa
+  // 2) Si no hay NI lugar NI concejo -> mapa por defecto
+  //    En cualquier otro caso -> crear mapa en funcion de parametros: lugar, concejo (idCategoria?)
+
+    $scope.$on('$ionicView.afterEnter', function() {
 
     var OVIEDO = GMapsService.OVIEDO;
-    var lugar = $stateParams.lugar || '';
-    var concejo = $stateParams.concejo || '';
+    $scope.lugar = $stateParams.lugar || '';
+    $scope.concejo = $stateParams.concejo || '';
     var filtro = '';
 
     $scope.verStreetView = function () {
@@ -159,12 +158,12 @@ angular.module('wca.controllers',[])
     var mapa = GMapsService.creaMapa( document.getElementById('mapa') );
     var streetView = mapa.getStreetView({ pov: {heading: 0, pitch: 0} });
 
-    if(!lugar && !concejo){
+    if(!$scope.lugar && !$scope.concejo){
       mapa.setCenter(OVIEDO);
       mapa.setZoom(8);
       streetView.setPosition(OVIEDO);
     } else {
-      GMapsService.hallaLatLng(mapa, lugar, concejo, function(coords){
+      GMapsService.hallaLatLng(mapa, $scope.lugar, $scope.concejo, function(coords){
         mapa.setCenter(coords);
         mapa.setZoom(13);
         // busca coordenadas cercanas donde existan imagenes de street view
@@ -211,16 +210,16 @@ angular.module('wca.controllers',[])
 
 .controller('PanoramioCtrl', function($scope, $stateParams, GMapsService, $ionicModal){
 
-    var lugar = $stateParams.lugar;
-    var concejo = $stateParams.concejo;
-    var idCategoria = $stateParams.idCategoria
+    $scope.lugar = $stateParams.lugar;
+    $scope.concejo = $stateParams.concejo;
+    //$scope.idCategoria = $stateParams.idCategoria
     //var css = {'width': 200, 'height': 200};
     var rectanguloBusqueda = null;
     var divCreditos = null;
     var widgetPanoramio = null;
 
     divCreditos = document.getElementById('divCreditos');
-    GMapsService.hallaLatLng(divCreditos, lugar,  concejo, function(coords){
+    GMapsService.hallaLatLng(divCreditos, $scope.lugar,  $scope.concejo, function(coords){
 
       var lat = coords.lat();
       var lng = coords.lng();
@@ -236,9 +235,11 @@ angular.module('wca.controllers',[])
 
     }); // hallaLatLng
 
-    $scope.getPhoto = function (){
-      return widgetPanoramio.getPhoto();
-    }
+    //$scope.getPhoto = function (){
+    //  return widgetPanoramio.getPhoto();
+    //}
+
+    //TODO: avisar cuando no hay fotos panoramio
 
     // DIALOGO MODAL ----------------------------------------------------------------------------------------------
     $ionicModal.fromTemplateUrl('templates/modal-img.html', {
@@ -289,13 +290,13 @@ angular.module('wca.controllers',[])
 
 .controller('StreetViewCtrl', function($scope, GMapsService, $stateParams){
 
-  var lugar = $stateParams.lugar || '';
-  var concejo = $stateParams.concejo || '';
+  $scope.lugar = $stateParams.lugar || '';
+  $scope.concejo = $stateParams.concejo || '';
 
   $scope.$on('$ionicView.afterEnter', function() {
 
     var div = document.getElementById('street-view');
-    GMapsService.hallaLatLng(div, lugar, concejo, function (coords) {
+    GMapsService.hallaLatLng(div, $scope.lugar, $scope.concejo, function (coords) {
       var streetViewService = new google.maps.StreetViewService();
       streetViewService.getPanoramaByLocation(coords, GMapsService.RADIO, function (data, status) {
         if (status == google.maps.StreetViewStatus.OK) {

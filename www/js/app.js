@@ -32,6 +32,11 @@ angular.module('wca',
     // remove back button text completely
     $ionicConfigProvider.backButton.previousTitleText(false).text(' ');
 
+    // native scroll by default
+    if (!ionic.Platform.isIOS()) {
+      $ionicConfigProvider.scrolling.jsScrolling(false);
+    }
+
     $stateProvider
 
   .state('app', {
@@ -52,8 +57,8 @@ angular.module('wca',
       }
     }//,
     //resolve: {
-    //  resolvedCams: function ($q, factoria_datos) {
-    //    return factoria_datos;
+    //  resolvedCams: function ($q, Datasource) {
+    //    return Datasource;
     //  }
     //}
   })

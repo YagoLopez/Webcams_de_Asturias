@@ -25,9 +25,12 @@
   <div id="container">
     <div id="divPanoramio" style=""></div>
     <div id="divCreditos"></div>
-    <div ng-show="!hayFotos" style="text-align: center">
-      No se han encontrado fotos de Panoramio en los alrededores de la ubicación de la cámara
-    </div>
+    <div>Lugar: {{::lugar}}</div>
+    <div>Concejo: {{::concejo}}</div>
+
+    <!--<div ng-show="!hayFotos" style="text-align: center">-->
+      <!--No se han encontrado fotos de Panoramio en los alrededores de la ubicación de la cámara-->
+    <!--</div>-->
 
     <md-button class="md-raised md-primary" ng-click="showModal()" style="width:80%;height:50px">
       <i class="icon ion-arrow-expand"></i>
