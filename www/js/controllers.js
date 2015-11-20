@@ -232,71 +232,26 @@ angular.module('wca.controllers',[])
 
       widgetPanoramio = new panoramio.PhotoWidget('divPanoramio', rectanguloBusqueda, null);
       widgetPanoramio.setPosition(0);
-      widgetPanoramio.enableNextArrow(true);
-
 
       $scope.nextDisabled = false;
       $scope.prevDisabled = false;
       $scope.widget = widgetPanoramio;
 
-
       var hayFotoSiguiente = function(){
-        console.log('hayFotoSiguiente:', !widgetPanoramio.getAtEnd());
-        return ! widgetPanoramio.getAtEnd();
+        return !widgetPanoramio.getAtEnd();
       }
       var hayFotoAnterior = function(){
-        console.log('hayFotoAnterior', !widgetPanoramio.getAtStart());
-        return ! widgetPanoramio.getAtStart();
+        return !widgetPanoramio.getAtStart();
       }
-      var desactivarBotonSiguiente = function(){
-        $scope.nextDisabled = true;
-      }
-      var desactivarBotonAnterior= function(){
-        $scope.prevDisabled = true;
-      }
-
       $scope.nextPhoto = function(){
-        if (hayFotoSiguiente()){
-          console.log('widgetpanoramio.getposition', widgetPanoramio.getPosition()+1);
+        if (hayFotoSiguiente())
           widgetPanoramio.setPosition( widgetPanoramio.getPosition()+1 );
-          console.log('next disabled', $scope.nextDisabled);
-        } else {
-          desactivarBotonSiguiente();
-          console.log('desactivar boton siguiente');
-          console.log('next disabled', $scope.nextDisabled);
-
-        }
       }
-
       $scope.prevPhoto = function(){
-        if (hayFotoAnterior()) {
-          console.log('widgetpanoramio.getposition', widgetPanoramio.getPosition()-1);
+        if (hayFotoAnterior())
           widgetPanoramio.setPosition( widgetPanoramio.getPosition()-1 );
-          console.log('next disabled', $scope.prevDisabled);
-
-        } else  {
-          desactivarBotonAnterior();
-          console.log('desactivar boton anterior');
-          console.log('next disabled', $scope.prevDisabled);
-
-        }
       }
-
-
-
-
-
-
-
-
-
     }); // hallaLatLng
-
-
-
-    //$scope.getPhoto = function (){
-    //  return widgetPanoramio.getPhoto();
-    //}
 
     //TODO: avisar cuando no hay fotos panoramio
 
@@ -310,12 +265,12 @@ angular.module('wca.controllers',[])
     $scope.showModal= function (){
       if(widgetPanoramio.getPhoto()){
         $scope.urlImg = widgetPanoramio.getPhoto().Ya[0].url;
-        $scope.titulo = widgetPanoramio.getPhoto().cd;
-        $scope.autor = widgetPanoramio.getPhoto().Xc;
-        $scope.urlAutor = widgetPanoramio.getPhoto().Yc;
+        $scope.titulo = widgetPanoramio.getPhoto().getPhotoTitle();
+        $scope.autor = widgetPanoramio.getPhoto().getOwnerName();
+        $scope.urlAutor = widgetPanoramio.getPhoto().getOwnerUrl();
         $scope.modal.show();
       } else
-        console.log('showModal(): no se han encontrado fotos panoramio')
+        console.log('showModal(): no se han encontrado fotos panoramio');
     }
 
     $scope.closeModal = function () {
