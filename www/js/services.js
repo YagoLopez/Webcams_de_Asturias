@@ -38,7 +38,6 @@ angular.module('wca.services',[])
 
     var getRemoteData = function( sql_query_string ) {
       var url = DATOS_URL.API_ENDPOINT+ '?sql=' +sql_query_string+ '&key=' +DATOS_URL.API_KEY;
-      console.log("url", encodeURI(url));
       return $http.get( encodeURI(url), {cache: true} );
     };
 
@@ -116,6 +115,19 @@ angular.module('wca.services',[])
       creaStreetView: creaStreetView
     }
   }) // GMapsService
+
+  .factory('Clima', function($http){
+
+    var getData = function(lat, lng){
+      return $http.get(
+        'http://api.openweathermap.org/data/2.5/weather?lat='+lat+'&lon='+lng+'' +
+        '&appid=2de143494c0b295cca9337e1e96b00e0&lang=es&units=metric', {cache:true});
+    };
+    return {
+      getData: getData
+    }
+
+  }) // clima service
 
   .constant('DATOS_URL', {
     API_ENDPOINT: 'https://www.googleapis.com/fusiontables/v2/query',

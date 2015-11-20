@@ -6,13 +6,11 @@
     <file url="file://$PROJECT_DIR$/www/css/style.css" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/www/js/app.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/www/js/controllers-backup.js" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/www/js/controllers-backup.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/www/js/controllers.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/www/js/services.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/www/lib/ionic-filter-bar/dist/ionic.filter.bar.css" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/www/lib/ionic-filter-bar/dist/ionic.filter.bar.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/www/templates/detalle.html" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/www/templates/listado-backup.html" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/www/templates/listado-backup.html" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/www/templates/listado.html" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/www/templates/mapa.html" charset="UTF-8" />
@@ -20,14 +18,12 @@
     <file url="file://$PROJECT_DIR$/www/templates/modal-detalle.html" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/www/templates/modal-img.html" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/www/templates/mosaico-backup.html" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/www/templates/mosaico-backup.html" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/www/templates/mosaico.html" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/www/templates/panoramio.html" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/www/templates/playlist.html" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/www/templates/playlists.html" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/www/templates/search.html" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/www/templates/streetview.html" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/www/templates/tabs-backup.html" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/www/templates/tabs-backup.html" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/www/templates/tabs.html" charset="UTF-8" />
   </component>

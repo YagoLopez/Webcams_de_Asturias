@@ -4,7 +4,7 @@
 <!--TODO: cambiar los iconos bullet-list del texto del detalle-->
 <!--TODO: desactivar botones siguiente anterior al llegar al final del listado-->
 <!--TODO: pasar todos los nombres de dominio a IPs para optimizar tiempos de carga-->
-<ion-view view-title="Detalles">
+<ion-view view-title="Detalles" cache-view="false">
   <ion-content>
     <style>
       .card {
@@ -44,6 +44,15 @@ items.length: {{items.length}}
             <i class="icon ion-ios-checkmark-outline" style="color:#387ef5;"></i>
             <b>Categoría: </b>{{ ::cam[3] }}
         </div>
+        <!-- clima --------------------------------------------------------------------------------------------------->
+        descripción: {{descripcion}}<br>
+        temp: {{temp}}<br>
+        presión: {{presion}}<br>
+        humedad: {{humedad}}<br>
+        nubosidad: {{nubosidad}}<br>
+        velocidad del viento: {{velocidadViento}}<br>
+        dirección del viento: {{direccionViento}}<br>
+        <!-- fin clima ----------------------------------------------------------------------------------------------->
 
         <!-- botones ------------------------------------------------------------------------------------------------->
         <div class="item item-text-wrap" style="padding-right:0px;padding-left:0px;">
@@ -98,6 +107,7 @@ items.length: {{items.length}}
 
     </div>
 
+    <div id="void"></div>
     <!-------------------------------------------------------------------------------------------------->
 
     <!--

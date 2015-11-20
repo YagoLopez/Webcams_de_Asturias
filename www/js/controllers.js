@@ -108,7 +108,7 @@ angular.module('wca.controllers',[])
 
     }).error(function(data, status) {
       $ionicLoading.hide();
-      console.log('Error obteniendo datos remotos: ', status);
+      console.log('Error obteniendo datos fusion table: ', status);
     });
 
 })// TabsCtrl
@@ -280,9 +280,43 @@ angular.module('wca.controllers',[])
 
 }) // panoramio ctrl
 
-.controller('DetalleCtrl', function($scope, $stateParams, $ionicModal){
+.controller('DetalleCtrl', function($scope, $stateParams, $ionicModal, GMapsService, Clima, $filter, $rootScope, $ionicPopup){
 
     $scope.rowid = $stateParams.rowid;
+
+    if(!$rootScope.items){
+      console.log('No hay datos de camaras');
+      $ionicPopup.alert({
+        title: 'Aviso',
+        template: 'No hay datos de cámaras. Escoger opción de menú.',
+      });
+      return;
+    };
+
+    var cam = $filter('filter')($rootScope.items, function(cam) {
+      return cam[4] == $scope.rowid;
+    });
+    // CLIMA ---------------------------------------------------------------------------------------------------------
+    var div = document.getElementById('void');
+    GMapsService.hallaLatLng(div, cam[0][0], cam[0][1], function(coords){
+
+      Clima.getData( coords.lat(), coords.lng() ).success(function(climadata){
+        console.log('datos de clima', climadata);
+        $scope.descripcion = climadata.weather[0].description;
+        $scope.temp = climadata.main.temp;
+        $scope.presion = climadata.main.pressure;
+        $scope.humedad = climadata.main.humidity;
+        $scope.nubosidad = climadata.clouds.all;
+        $scope.velocidadViento = climadata.wind.speed;
+        $scope.direccionViento = climadata.wind.deg;
+        //$scope.precipitacion = climadata.rain.3h;
+        $scope.icono = climadata.weather[0].icon;
+      }).error(function(status){
+        console.log('Error obteniendo datos clima: ', status);
+      });
+
+    });// hallalatlng
+    // FIN CLIMA -----------------------------------------------------------------------------------------------------
 
     // DIALOGO MODAL -------------------------------------------------------------------------------------------------
     $ionicModal.fromTemplateUrl('templates/modal-detalle.html', {
@@ -294,7 +328,6 @@ angular.module('wca.controllers',[])
     $scope.showModal= function (){
       $scope.modal.show();
     }
-
     $scope.closeModal = function () {
       $scope.modal.hide();
     };

@@ -1,0 +1,8 @@
+mi key:
+b7514b5aaf43d023c350462fd57a1791
+
+key de los ejemplos:
+2de143494c0b295cca9337e1e96b00e0
+
+url:
+http://api.openweathermap.org/data/2.5/weather?lat=43&lon=-5&appid=2de143494c0b295cca9337e1e96b00e0&lang=es&units=metric
