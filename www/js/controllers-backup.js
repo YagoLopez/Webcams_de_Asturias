@@ -31,7 +31,7 @@ angular.module('wca.controllers',[])
   })
 
 .controller('TabsCtrl', function($scope, $stateParams, $ionicLoading, $rootScope, $ionicFilterBar,
-                                 Datasource, DATOS_URL, $filter, $ionicScrollDelegate){
+                                 SFusionTable, SConst, $filter, $ionicScrollDelegate){
 
     // mostrar loader
     var icono_spinner = "<ion-spinner icon='lines' class='spinner-calm'></ion-spinner><br/>";
@@ -54,8 +54,8 @@ angular.module('wca.controllers',[])
     }
 
     //TODO: cachear las imagenes
-    var sql_query = 'SELECT Lugar,Concejo,Imagen,Categoria,rowid FROM '+ DATOS_URL.FUSION_TABLE_ID;
-    Datasource.getRemoteData(sql_query).success(function(data){
+    var sql_query = 'SELECT Lugar,Concejo,Imagen,Categoria,rowid FROM '+ SConst.FUSION_TABLE_ID;
+    SFusionTable.getRemoteData(sql_query).success(function(data){
 
       // -------------------------------------------------------------------------------------------------------------
       // FILTRO 1: filtra las cams por parametros de la url: concejo y categoria
@@ -131,7 +131,7 @@ angular.module('wca.controllers',[])
     //})
 }) // fin MosaicoCtrl
 
-.controller('MapaCtrl', function($scope, $stateParams, GMapsService, $rootScope){
+.controller('MapaCtrl', function($scope, $stateParams, SGmap, $rootScope){
 
 /*
   1) crear mapa
@@ -140,7 +140,7 @@ angular.module('wca.controllers',[])
  */
   $scope.$on('$ionicView.afterEnter', function() {
 
-    var OVIEDO = GMapsService.OVIEDO;
+    var OVIEDO = SGmap.OVIEDO;
     var lugar = $stateParams.lugar || '';
     var concejo = $stateParams.concejo || '';
     var filtro = '';
@@ -156,7 +156,7 @@ angular.module('wca.controllers',[])
       }
     }
 
-    var mapa = GMapsService.creaMapa( document.getElementById('mapa') );
+    var mapa = SGmap.creaMapa( document.getElementById('mapa') );
     var streetView = mapa.getStreetView({ pov: {heading: 0, pitch: 0} });
 
     if(!lugar && !concejo){
@@ -164,12 +164,12 @@ angular.module('wca.controllers',[])
       mapa.setZoom(8);
       streetView.setPosition(OVIEDO);
     } else {
-      GMapsService.hallaLatLng(mapa, lugar, concejo, function(coords){
+      SGmap.hallaLatLng(mapa, lugar, concejo, function(coords){
         mapa.setCenter(coords);
         mapa.setZoom(13);
         // busca coordenadas cercanas donde existan imagenes de street view
         var streetViewService = new google.maps.StreetViewService();
-        streetViewService.getPanoramaByLocation(coords, GMapsService.RADIO, function(data, status) {
+        streetViewService.getPanoramaByLocation(coords, SGmap.RADIO, function(data, status) {
           if (status == google.maps.StreetViewStatus.OK) {
             streetView.setPosition(data.location.latLng);
           } else {
@@ -209,7 +209,7 @@ angular.module('wca.controllers',[])
 
 }) // fin MapaGlobalCtrl
 
-.controller('PanoramioCtrl', function($scope, $stateParams, GMapsService, $ionicModal){
+.controller('PanoramioCtrl', function($scope, $stateParams, SGmap, $ionicModal){
 
     var lugar = $stateParams.lugar;
     var concejo = $stateParams.concejo;
@@ -220,7 +220,7 @@ angular.module('wca.controllers',[])
     var widgetPanoramio = null;
 
     divCreditos = document.getElementById('divCreditos');
-    GMapsService.hallaLatLng(divCreditos, lugar,  concejo, function(coords){
+    SGmap.hallaLatLng(divCreditos, lugar,  concejo, function(coords){
 
       var lat = coords.lat();
       var lng = coords.lng();
@@ -287,7 +287,7 @@ angular.module('wca.controllers',[])
 
   })// DetalleCtrl
 
-.controller('StreetViewCtrl', function($scope, GMapsService, $stateParams){
+.controller('StreetViewCtrl', function($scope, SGmap, $stateParams){
 
   var lugar = $stateParams.lugar || '';
   var concejo = $stateParams.concejo || '';
@@ -295,11 +295,11 @@ angular.module('wca.controllers',[])
   $scope.$on('$ionicView.afterEnter', function() {
 
     var div = document.getElementById('street-view');
-    GMapsService.hallaLatLng(div, lugar, concejo, function (coords) {
+    SGmap.hallaLatLng(div, lugar, concejo, function (coords) {
       var streetViewService = new google.maps.StreetViewService();
-      streetViewService.getPanoramaByLocation(coords, GMapsService.RADIO, function (data, status) {
+      streetViewService.getPanoramaByLocation(coords, SGmap.RADIO, function (data, status) {
         if (status == google.maps.StreetViewStatus.OK) {
-          GMapsService.creaStreetView(div, data.location.latLng);
+          SGmap.creaStreetView(div, data.location.latLng);
         } else {
           console.log('getPanoramaByLocation(): No se ha encontrado panorama Street View')
         }

@@ -31,7 +31,7 @@ angular.module('wca.controllers',[])
   })
 
 .controller('TabsCtrl', function($scope, $stateParams, $ionicLoading, $rootScope, $ionicFilterBar,
-                                 Datasource, DATOS_URL, $filter, $ionicScrollDelegate){
+                                 SFusionTable, SConst, $filter, $ionicScrollDelegate){
 
     // mostrar loader
     var icono_spinner = "<ion-spinner icon='lines' class='spinner-calm'></ion-spinner><br/>";
@@ -54,8 +54,8 @@ angular.module('wca.controllers',[])
     }
 
     //TODO: cachear las imagenes
-    var sql_query = 'SELECT Lugar,Concejo,Imagen,Categoria,rowid FROM '+ DATOS_URL.FUSION_TABLE_ID;
-    Datasource.getRemoteData(sql_query).success(function(data){
+    var sqlQuery = 'SELECT Lugar,Concejo,Imagen,Categoria,rowid FROM '+ SConst.FUSION_TABLE_ID;
+    SFusionTable.getRemoteData(sqlQuery).success(function(data){
 
       // -------------------------------------------------------------------------------------------------------------
       // FILTRO 1: filtra las cams por parametros de la url: concejo y categoria
@@ -131,46 +131,37 @@ angular.module('wca.controllers',[])
     //})
 }) // fin MosaicoCtrl
 
-.controller('MapaCtrl', function($scope, $stateParams, GMapsService, $rootScope){
-
-  // 1) Crear mapa
-  // 2) Si no hay NI lugar NI concejo -> mapa por defecto
-  //    En cualquier otro caso -> crear mapa en funcion de parametros: lugar, concejo (idCategoria?)
+.controller('MapaCtrl', function($scope, $stateParams, SGmap, $rootScope){
 
   $scope.$on('$ionicView.afterEnter', function() {
 
     $scope.lugar = $stateParams.lugar || '';
     $scope.concejo = $stateParams.concejo || '';
-    var OVIEDO = GMapsService.OVIEDO;
+    var OVIEDO = SGmap.OVIEDO;
     var filtro = '';
 
-    var mapa = GMapsService.creaMapa( document.getElementById('mapa') );
+    var mapa = SGmap.creaMapa( document.getElementById('mapa') );
 /*
     if(!$scope.lugar && !$scope.concejo){
       mapa.setCenter(OVIEDO);
       mapa.setZoom(8);
     } else {
-      GMapsService.hallaLatLng(mapa, $scope.lugar, $scope.concejo, function(coords){
+      SGmap.hallaLatLng(mapa, $scope.lugar, $scope.concejo, function(coords){
         mapa.setCenter(coords);
         mapa.setZoom(13);
       }) // hallalatlng
     }// else
 */
 
-
-
     if(!$rootScope.lat || !$rootScope.lng){
       mapa.setCenter(OVIEDO);
       mapa.setZoom(8);
     } else {
-      //GMapsService.hallaLatLng(mapa, $scope.lugar, $scope.concejo, function(coords){
+      //SGmap.hallaLatLng(mapa, $scope.lugar, $scope.concejo, function(coords){
         mapa.setCenter( {lat: $rootScope.lat, lng: $rootScope.lng} );
         mapa.setZoom(13);
       //}) // hallalatlng
     }// else
-
-
-
 
   }); // $scope.on
 
@@ -202,7 +193,7 @@ angular.module('wca.controllers',[])
 
 }) // fin MapaGlobalCtrl
 
-.controller('PanoramioCtrl', function($scope, $stateParams, GMapsService, $ionicModal){
+.controller('PanoramioCtrl', function($scope, $stateParams, SGmap, $ionicModal){
 
     $scope.lugar = $stateParams.lugar;
     $scope.concejo = $stateParams.concejo;
@@ -213,7 +204,7 @@ angular.module('wca.controllers',[])
     var widgetPanoramio = null;
 
     divCreditos = document.getElementById('divCreditos');
-    GMapsService.hallaLatLng(divCreditos, $scope.lugar,  $scope.concejo, function(coords){
+    SGmap.hallaLatLng(divCreditos, $scope.lugar,  $scope.concejo, function(coords){
 
       var lat = coords.lat();
       var lng = coords.lng();
@@ -223,7 +214,6 @@ angular.module('wca.controllers',[])
         'sw': {'lat': lat-OFFSET, 'lng': lng-OFFSET},
         'ne': {'lat': lat+OFFSET, 'lng': lng+OFFSET}
       }};
-
       widgetPanoramio = new panoramio.PhotoWidget('divPanoramio', rectanguloBusqueda, null);
       widgetPanoramio.setPosition(0);
 
@@ -266,7 +256,6 @@ angular.module('wca.controllers',[])
       } else
         console.log('showModal(): no se han encontrado fotos panoramio');
     }
-
     $scope.closeModal = function () {
       $scope.modal.hide();
     };
@@ -274,7 +263,7 @@ angular.module('wca.controllers',[])
 
 }) // panoramio ctrl
 
-.controller('DetalleCtrl', function($scope, $stateParams, $ionicModal, GMapsService, Clima, $filter, $rootScope, Popup){
+.controller('DetalleCtrl', function($scope, $stateParams, $ionicModal, SGmap, SClima, $filter, $rootScope, SPopup){
 
     $scope.rowid = $stateParams.rowid;
 
@@ -283,7 +272,7 @@ angular.module('wca.controllers',[])
       //  title: 'Aviso',
       //  template: 'No hay datos de cámaras. Escoger opción de menú.',
       //});
-      Popup.show('Aviso', 'No hay datos de cámara/s. Escoger otra opción de menú');
+      SPopup.show('Aviso', 'No hay datos de cámara/s. Escoger otra opción de menú');
       return;
     };
 
@@ -292,12 +281,12 @@ angular.module('wca.controllers',[])
     });
     // CLIMA ---------------------------------------------------------------------------------------------------------
     var div = document.getElementById('void');
-    GMapsService.hallaLatLng(div, cam[0][0], cam[0][1], function(coords){
+    SGmap.hallaLatLng(div, cam[0][0], cam[0][1], function(coords){
 
       $rootScope.lat = coords.lat();
       $rootScope.lng = coords.lng();
 
-      Clima.getData( $rootScope.lat, $rootScope.lng ).success(function(climadata){
+      SClima.getData( $rootScope.lat, $rootScope.lng ).success(function(climadata){
         console.log('datos de clima', climadata);
         $scope.descripcion = climadata.weather[0].description;
         $scope.temp = climadata.main.temp;
@@ -310,7 +299,7 @@ angular.module('wca.controllers',[])
         $scope.icono = climadata.weather[0].icon;
       }).error(function(status){
         //console.error('Error obteniendo datos clima: ', status);
-        Popup.show('Error', 'Clima.getData(): '+status)
+        SPopup.show('Error', 'SClima.getData(): '+status)
       });
 
     });// hallalatlng
@@ -333,7 +322,7 @@ angular.module('wca.controllers',[])
 
   })// DetalleCtrl
 
-.controller('StreetViewCtrl', function($scope, GMapsService, $stateParams){
+.controller('StreetViewCtrl', function($scope, SGmap, $stateParams){
 
   $scope.lugar = $stateParams.lugar || '';
   $scope.concejo = $stateParams.concejo || '';
@@ -341,11 +330,11 @@ angular.module('wca.controllers',[])
   $scope.$on('$ionicView.afterEnter', function() {
 
     var div = document.getElementById('street-view');
-    GMapsService.hallaLatLng(div, $scope.lugar, $scope.concejo, function (coords) {
+    SGmap.hallaLatLng(div, $scope.lugar, $scope.concejo, function (coords) {
       var streetViewService = new google.maps.StreetViewService();
-      streetViewService.getPanoramaByLocation(coords, GMapsService.RADIO, function (data, status) {
+      streetViewService.getPanoramaByLocation(coords, SGmap.RADIO, function (data, status) {
         if (status == google.maps.StreetViewStatus.OK) {
-          GMapsService.creaStreetView(div, data.location.latLng);
+          SGmap.creaStreetView(div, data.location.latLng);
         } else {
           console.log('getPanoramaByLocation(): No se ha encontrado panorama Street View')
         }

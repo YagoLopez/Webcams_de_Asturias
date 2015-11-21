@@ -34,10 +34,10 @@ angular.module('wca.services',[])
     };
   }) // ParamsUrl
 
-  .factory('Datasource', function($http, DATOS_URL){
+  .factory('SFusionTable', function($http, SConst){
 
     var getRemoteData = function( sql_query_string ) {
-      var url = DATOS_URL.API_ENDPOINT+ '?sql=' +sql_query_string+ '&key=' +DATOS_URL.API_KEY;
+      var url = SConst.API_ENDPOINT+ '?sql=' +sql_query_string+ '&key=' +SConst.API_KEY;
       return $http.get( encodeURI(url), {cache: true} );
     };
 
@@ -48,9 +48,10 @@ angular.module('wca.services',[])
       getRemoteData: getRemoteData,
       getLocalData: getLocalData
     }
-  }) // Datasource
+  }) // SFusionTable
 
-  .factory('GMapsService', function(DATOS_URL, Popup){
+  .factory('SGmap', function(SConst, SPopup){
+
 
     // punto de referencia para geocoder y centro de mapa por defecto
     var OVIEDO = {lat: 43.3667, lng: -5.8333};
@@ -72,11 +73,11 @@ angular.module('wca.services',[])
           //console.log('results[0]', results[0]);
           fn(results[0].geometry.location);
         } else {
-          Popup.show('Error', 'No se han podido hallar coordenadas->hallaLatLng(): '+status);
-          console.error('GMapsService.hallaLatLng(): no se han podido hallar coordenadas');
+          SPopup.show('Error', 'No se han podido hallar coordenadas->hallaLatLng(): '+status);
+          console.error('SGmap.hallaLatLng(): no se han podido hallar coordenadas');
         }
       }
-    }// hallaLatLng
+    };// hallaLatLng
 
     var creaStreetView = function(domElement, locationLatLng){
       return new google.maps.StreetViewPanorama( domElement, {
@@ -84,7 +85,7 @@ angular.module('wca.services',[])
         position: locationLatLng,
         zoom: 1
       });
-    }
+    };
 
     var creaMapa = function (domElement){
       var mapa = new google.maps.Map(domElement,  {
@@ -97,7 +98,7 @@ angular.module('wca.services',[])
         //heatmap: { enabled: false },
         query: {
           select: 'col7',
-          from: DATOS_URL.FUSION_TABLE_ID,
+          from: SConst.FUSION_TABLE_ID,
           where: ''
         },
         options: {
@@ -106,7 +107,7 @@ angular.module('wca.services',[])
         }
       });
       return mapa;
-    } // creaMapa()
+    }; // creaMapa()
 
     return {
       OVIEDO: OVIEDO,
@@ -115,22 +116,22 @@ angular.module('wca.services',[])
       hallaLatLng: hallaLatLng,
       creaStreetView: creaStreetView
     }
-  }) // GMapsService
+  }) // SGmap
 
-  .factory('Clima', function($http){
+  .factory('SClima', function($http){
 
     var getData = function(lat, lng){
       return $http.get(
-        'http://api.openweathermap.org/data/2.5/weather?lat='+lat+'&lon='+lng+'' +
-        '&appid=2de143494c0b295cca9337e1e96b00e0&lang=es&units=metric', {cache:true});
+        'http://api.openweathermap.org/data/2.5/weather?lat='+lat+'&lon='+lng+
+        '&appid=b7514b5aaf43d023c350462fd57a1791&lang=es&units=metric', {cache:true});
     };
     return {
       getData: getData
     }
 
-  }) // clima service
+  }) // SClima service
 
-  .factory('Popup', function($ionicPopup){
+  .factory('SPopup', function($ionicPopup){
     var show = function(titulo, msg) {
       $ionicPopup.alert({
         title: titulo,
@@ -140,7 +141,7 @@ angular.module('wca.services',[])
     return { show: show };
   }) // popup
 
-  .constant('DATOS_URL', {
+  .constant('SConst', {
     API_ENDPOINT: 'https://www.googleapis.com/fusiontables/v2/query',
     FUSION_TABLE_ID: '1gX5maFbqFyRziZiUYlpOBYhcC1v9lGkKqCXvZREF',
     API_KEY: 'AIzaSyBsdouSTimjrC2xHmbGgOt8VfbLBWc9Gps'

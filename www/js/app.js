@@ -28,10 +28,9 @@ angular.module('wca',
 .config(function($stateProvider, $urlRouterProvider, $compileProvider, $ionicConfigProvider) {
 
     // disable debug info
-    $compileProvider.debugInfoEnabled( true );
+    $compileProvider.debugInfoEnabled(true);
     // remove back button text completely
     $ionicConfigProvider.backButton.previousTitleText(false).text(' ');
-
     // native scroll by default
     if (!ionic.Platform.isIOS()) {
       $ionicConfigProvider.scrolling.jsScrolling(false);
@@ -57,8 +56,8 @@ angular.module('wca',
       }
     }//,
     //resolve: {
-    //  resolvedCams: function ($q, Datasource) {
-    //    return Datasource;
+    //  resolvedCams: function ($q, SFusionTable) {
+    //    return SFusionTable;
     //  }
     //}
   })
@@ -85,7 +84,6 @@ angular.module('wca',
 
   .state('app.mapa', {
     url: '/mapa?lugar&concejo&categoria',
-    //cache: false,
     views: {
       'menuContent': {
         templateUrl: 'templates/mapa.html',
@@ -107,7 +105,6 @@ angular.module('wca',
 
   .state('app.panoramio', {
     url: '/panoramio?lat&lng&lugar&concejo',
-    //cache: false,
     views: {
       'menuContent': {
         templateUrl: 'templates/panoramio.html',
@@ -118,7 +115,6 @@ angular.module('wca',
 
   .state('app.detalle', {
     url: '/detalle/:rowid',
-    cache:true,
     views: {
       'menuContent': {
         templateUrl: 'templates/detalle.html',
