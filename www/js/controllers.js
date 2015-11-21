@@ -2,6 +2,7 @@
 //TODO: revisar las dependencias que se pasan a los controladores
 //TODO: hacer una tabla propia para las categorias en fusion tables y hacer join de la tabla de webcams y la de categorias
 //TODO: Hacer tabla para concejos
+//TODO: Morphing icono backwards
 
 angular.module('wca.controllers',[])
 
@@ -31,7 +32,7 @@ angular.module('wca.controllers',[])
   })
 
 .controller('TabsCtrl', function($scope, $stateParams, $ionicLoading, $rootScope, $ionicFilterBar,
-                                 SFusionTable, SConst, $filter, $ionicScrollDelegate){
+                                 SFusionTable, $filter, $ionicScrollDelegate){
 
     // mostrar loader
     var icono_spinner = "<ion-spinner icon='lines' class='spinner-calm'></ion-spinner><br/>";
@@ -54,7 +55,7 @@ angular.module('wca.controllers',[])
     }
 
     //TODO: cachear las imagenes
-    var sqlQuery = 'SELECT Lugar,Concejo,Imagen,Categoria,rowid FROM '+ SConst.FUSION_TABLE_ID;
+    var sqlQuery = 'SELECT Lugar,Concejo,Imagen,Categoria,rowid FROM '+ SFusionTable.TABLE_ID;
     SFusionTable.getRemoteData(sqlQuery).success(function(data){
 
       // -------------------------------------------------------------------------------------------------------------
@@ -332,7 +333,7 @@ angular.module('wca.controllers',[])
     var div = document.getElementById('street-view');
     SGmap.hallaLatLng(div, $scope.lugar, $scope.concejo, function (coords) {
       var streetViewService = new google.maps.StreetViewService();
-      streetViewService.getPanoramaByLocation(coords, SGmap.RADIO, function (data, status) {
+      streetViewService.getPanoramaByLocation(coords, SGmap.RADIO_BUSQUEDA, function (data, status) {
         if (status == google.maps.StreetViewStatus.OK) {
           SGmap.creaStreetView(div, data.location.latLng);
         } else {

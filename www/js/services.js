@@ -1,62 +1,33 @@
 angular.module('wca.services',[])
 
-  //TODO: borrar, no se usa
-  .factory('ParamsUrl', function () {
+  .factory('SFusionTable', function($http){
 
-    var data = { lugar: '', concejo: '', idCategoria: '' };
-
-    var getLugar=  function () {
-      return data.lugar;
-    };
-    var setLugar= function (lugar) {
-      data.lugar= lugar;
-    };
-    var getConcejo=  function () {
-      return data.concejo;
-    };
-    var setConcejo= function (concejo) {
-      data.concejo= concejo;
-    };
-    var getIdCategoria=  function () {
-      return data.idCategoria;
-    };
-    var setIdCategoria= function (idCategoria) {
-      data.idCategoria= idCategoria;
-    };
-
-    return {
-      getLugar: getLugar,
-      setLugar: setLugar,
-      getConcejo: getConcejo,
-      setConcejo: setConcejo,
-      getIdCategoria: getIdCategoria,
-      setIdCategoria: setIdCategoria
-    };
-  }) // ParamsUrl
-
-  .factory('SFusionTable', function($http, SConst){
+    var API_ENDPOINT = 'https://www.googleapis.com/fusiontables/v2/query';
+    var API_KEY = 'AIzaSyBsdouSTimjrC2xHmbGgOt8VfbLBWc9Gps';
+    var TABLE_ID = '1gX5maFbqFyRziZiUYlpOBYhcC1v9lGkKqCXvZREF';
 
     var getRemoteData = function( sql_query_string ) {
-      var url = SConst.API_ENDPOINT+ '?sql=' +sql_query_string+ '&key=' +SConst.API_KEY;
+      var url = API_ENDPOINT+ '?sql=' +sql_query_string+ '&key=' +API_KEY;
       return $http.get( encodeURI(url), {cache: true} );
     };
 
     var getLocalData = function(path_fichero){
       return $http.get(path_fichero);
     };
+
     return {
+      API_ENDPOINT: API_ENDPOINT,
+      API_KEY: API_KEY,
+      TABLE_ID: TABLE_ID,
       getRemoteData: getRemoteData,
       getLocalData: getLocalData
     }
   }) // SFusionTable
 
-  .factory('SGmap', function(SConst, SPopup){
+  .factory('SGmap', function(SFusionTable, SPopup){
 
-
-    // punto de referencia para geocoder y centro de mapa por defecto
-    var OVIEDO = {lat: 43.3667, lng: -5.8333};
-    // radio de búsqueda de imagenes de street view en metros a partir una ubicacion
-    var RADIO = 500;
+    var OVIEDO = {lat: 43.3667, lng: -5.8333}; // punto de referencia para geocoder y centro de mapa por defecto
+    var RADIO_BUSQUEDA = 500; // radio de búsqueda de imagenes de street view en metros a partir una ubicacion
 
     var hallaLatLng = function (domElement, lugar, concejo, fn){
       var request = {
@@ -98,7 +69,7 @@ angular.module('wca.services',[])
         //heatmap: { enabled: false },
         query: {
           select: 'col7',
-          from: SConst.FUSION_TABLE_ID,
+          from: SFusionTable.TABLE_ID,
           where: ''
         },
         options: {
@@ -111,7 +82,7 @@ angular.module('wca.services',[])
 
     return {
       OVIEDO: OVIEDO,
-      RADIO: RADIO,
+      RADIO_BUSQUEDA: RADIO_BUSQUEDA,
       creaMapa: creaMapa,
       hallaLatLng: hallaLatLng,
       creaStreetView: creaStreetView
@@ -137,38 +108,9 @@ angular.module('wca.services',[])
         title: titulo,
         template: msg
       });
-    }
+    };
     return { show: show };
   }) // popup
 
-  .constant('SConst', {
-    API_ENDPOINT: 'https://www.googleapis.com/fusiontables/v2/query',
-    FUSION_TABLE_ID: '1gX5maFbqFyRziZiUYlpOBYhcC1v9lGkKqCXvZREF',
-    API_KEY: 'AIzaSyBsdouSTimjrC2xHmbGgOt8VfbLBWc9Gps'
-  })
-
-  /*
-   .service('Panoramio', function(){
-
-   var getPanoramio = function(domElement){
-   var cadenaBusqueda = {
-   'tag': 'Oviedo'
-   //,
-   //'rect': {'sw': {'lat': -30, 'lng': 10.5}, 'ne': {'lat': 50.5, 'lng': 30}}
-   };
-   var opciones_panoramio = {'width': 400, 'height': 400};
-   //var widget_panoramio = new panoramio.PhotoWidget('divPanoramio', cadenaBusqueda, opciones_panoramio);
-   var widget_panoramio = new panoramio.PhotoWidget(domElement, cadenaBusqueda, opciones_panoramio);
-
-   widget_panoramio.setPosition(0);
-   console.log('widget_panoramio', widget_panoramio);
-
-   }
-   return {
-   getPanoramio: getPanoramio
-   }
-
-   }) // Panoramio
-   */
 
 ; // FIN

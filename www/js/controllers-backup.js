@@ -31,7 +31,7 @@ angular.module('wca.controllers',[])
   })
 
 .controller('TabsCtrl', function($scope, $stateParams, $ionicLoading, $rootScope, $ionicFilterBar,
-                                 SFusionTable, SConst, $filter, $ionicScrollDelegate){
+                                 SFusionTable, $filter, $ionicScrollDelegate){
 
     // mostrar loader
     var icono_spinner = "<ion-spinner icon='lines' class='spinner-calm'></ion-spinner><br/>";
@@ -54,7 +54,7 @@ angular.module('wca.controllers',[])
     }
 
     //TODO: cachear las imagenes
-    var sql_query = 'SELECT Lugar,Concejo,Imagen,Categoria,rowid FROM '+ SConst.FUSION_TABLE_ID;
+    var sql_query = 'SELECT Lugar,Concejo,Imagen,Categoria,rowid FROM '+ SFusionTable.TABLE_ID;
     SFusionTable.getRemoteData(sql_query).success(function(data){
 
       // -------------------------------------------------------------------------------------------------------------
@@ -169,7 +169,7 @@ angular.module('wca.controllers',[])
         mapa.setZoom(13);
         // busca coordenadas cercanas donde existan imagenes de street view
         var streetViewService = new google.maps.StreetViewService();
-        streetViewService.getPanoramaByLocation(coords, SGmap.RADIO, function(data, status) {
+        streetViewService.getPanoramaByLocation(coords, SGmap.RADIO_BUSQUEDA, function(data, status) {
           if (status == google.maps.StreetViewStatus.OK) {
             streetView.setPosition(data.location.latLng);
           } else {
@@ -297,7 +297,7 @@ angular.module('wca.controllers',[])
     var div = document.getElementById('street-view');
     SGmap.hallaLatLng(div, lugar, concejo, function (coords) {
       var streetViewService = new google.maps.StreetViewService();
-      streetViewService.getPanoramaByLocation(coords, SGmap.RADIO, function (data, status) {
+      streetViewService.getPanoramaByLocation(coords, SGmap.RADIO_BUSQUEDA, function (data, status) {
         if (status == google.maps.StreetViewStatus.OK) {
           SGmap.creaStreetView(div, data.location.latLng);
         } else {
