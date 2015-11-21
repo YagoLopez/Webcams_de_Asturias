@@ -38,10 +38,7 @@ angular.module('wca.controllers',[])
     var template_loader = "Cargando datos...";
     $ionicLoading.show({template:template_loader, noBackdrop:true});
 
-    //TODO: eliminar esta animacion
-    $rootScope.animarListItems = true;
-
-    // elimina search bar si estuviera activada al mostrar la vista
+    // elimina search bar si estuviera activada al mostrar la vista inicialmente
     if ($rootScope.filterBarInstance)
       $rootScope.filterBarInstance();
 
@@ -91,8 +88,6 @@ angular.module('wca.controllers',[])
       //encuentra "Puerto de Llanes"
 
       $rootScope.showFilterBar = function () {
-        //TODO: quitar lo de animarlistitems
-        $rootScope.animarListItems = false;
         $rootScope.filterBarInstance = $ionicFilterBar.show({
           items: $rootScope.items,
           update: function (filteredItems, filteredText) {
