@@ -50,7 +50,7 @@ angular.module('wca.services',[])
     }
   }) // Datasource
 
-  .factory('GMapsService', function(DATOS_URL){
+  .factory('GMapsService', function(DATOS_URL, Popup){
 
     // punto de referencia para geocoder y centro de mapa por defecto
     var OVIEDO = {lat: 43.3667, lng: -5.8333};
@@ -72,7 +72,8 @@ angular.module('wca.services',[])
           //console.log('results[0]', results[0]);
           fn(results[0].geometry.location);
         } else {
-          console.log('hallaLatLng(): no se han podido hallar coordenadas');
+          Popup.show('Error', 'No se han podido hallar coordenadas->hallaLatLng(): '+status);
+          console.error('GMapsService.hallaLatLng(): no se han podido hallar coordenadas');
         }
       }
     }// hallaLatLng
@@ -128,6 +129,16 @@ angular.module('wca.services',[])
     }
 
   }) // clima service
+
+  .factory('Popup', function($ionicPopup){
+    var show = function(titulo, msg) {
+      $ionicPopup.alert({
+        title: titulo,
+        template: msg
+      });
+    }
+    return { show: show };
+  }) // popup
 
   .constant('DATOS_URL', {
     API_ENDPOINT: 'https://www.googleapis.com/fusiontables/v2/query',

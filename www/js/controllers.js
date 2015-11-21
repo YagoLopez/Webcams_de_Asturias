@@ -137,46 +137,40 @@ angular.module('wca.controllers',[])
   // 2) Si no hay NI lugar NI concejo -> mapa por defecto
   //    En cualquier otro caso -> crear mapa en funcion de parametros: lugar, concejo (idCategoria?)
 
-    $scope.$on('$ionicView.afterEnter', function() {
+  $scope.$on('$ionicView.afterEnter', function() {
 
-    var OVIEDO = GMapsService.OVIEDO;
     $scope.lugar = $stateParams.lugar || '';
     $scope.concejo = $stateParams.concejo || '';
+    var OVIEDO = GMapsService.OVIEDO;
     var filtro = '';
 
-    $scope.verStreetView = function () {
-      $scope.streetViewVsible = streetView.getVisible();
-      if ($scope.streetViewVsible == false) {
-        streetView.setVisible(true);
-        $scope.streetViewVsible = true;
-      } else {
-        streetView.setVisible(false);
-        $scope.streetViewVsible = false;
-      }
-    }
-
     var mapa = GMapsService.creaMapa( document.getElementById('mapa') );
-    var streetView = mapa.getStreetView({ pov: {heading: 0, pitch: 0} });
-
+/*
     if(!$scope.lugar && !$scope.concejo){
       mapa.setCenter(OVIEDO);
       mapa.setZoom(8);
-      streetView.setPosition(OVIEDO);
     } else {
       GMapsService.hallaLatLng(mapa, $scope.lugar, $scope.concejo, function(coords){
         mapa.setCenter(coords);
         mapa.setZoom(13);
-        // busca coordenadas cercanas donde existan imagenes de street view
-        var streetViewService = new google.maps.StreetViewService();
-        streetViewService.getPanoramaByLocation(coords, GMapsService.RADIO, function(data, status) {
-          if (status == google.maps.StreetViewStatus.OK) {
-            streetView.setPosition(data.location.latLng);
-          } else {
-            console.log('getPanoramaByLocation(): No se ha encontrado panorama Street View')
-          }
-        });
       }) // hallalatlng
     }// else
+*/
+
+
+
+    if(!$rootScope.lat || !$rootScope.lng){
+      mapa.setCenter(OVIEDO);
+      mapa.setZoom(8);
+    } else {
+      //GMapsService.hallaLatLng(mapa, $scope.lugar, $scope.concejo, function(coords){
+        mapa.setCenter( {lat: $rootScope.lat, lng: $rootScope.lng} );
+        mapa.setZoom(13);
+      //}) // hallalatlng
+    }// else
+
+
+
 
   }); // $scope.on
 
@@ -280,16 +274,16 @@ angular.module('wca.controllers',[])
 
 }) // panoramio ctrl
 
-.controller('DetalleCtrl', function($scope, $stateParams, $ionicModal, GMapsService, Clima, $filter, $rootScope, $ionicPopup){
+.controller('DetalleCtrl', function($scope, $stateParams, $ionicModal, GMapsService, Clima, $filter, $rootScope, Popup){
 
     $scope.rowid = $stateParams.rowid;
 
-    if(!$rootScope.items){
-      console.log('No hay datos de camaras');
-      $ionicPopup.alert({
-        title: 'Aviso',
-        template: 'No hay datos de cámaras. Escoger opción de menú.',
-      });
+    if(!$rootScope.items || !$scope.rowid){
+      //$ionicPopup.alert({
+      //  title: 'Aviso',
+      //  template: 'No hay datos de cámaras. Escoger opción de menú.',
+      //});
+      Popup.show('Aviso', 'No hay datos de cámara/s. Escoger otra opción de menú');
       return;
     };
 
@@ -300,7 +294,10 @@ angular.module('wca.controllers',[])
     var div = document.getElementById('void');
     GMapsService.hallaLatLng(div, cam[0][0], cam[0][1], function(coords){
 
-      Clima.getData( coords.lat(), coords.lng() ).success(function(climadata){
+      $rootScope.lat = coords.lat();
+      $rootScope.lng = coords.lng();
+
+      Clima.getData( $rootScope.lat, $rootScope.lng ).success(function(climadata){
         console.log('datos de clima', climadata);
         $scope.descripcion = climadata.weather[0].description;
         $scope.temp = climadata.main.temp;
@@ -312,7 +309,8 @@ angular.module('wca.controllers',[])
         //$scope.precipitacion = climadata.rain.3h;
         $scope.icono = climadata.weather[0].icon;
       }).error(function(status){
-        console.log('Error obteniendo datos clima: ', status);
+        //console.error('Error obteniendo datos clima: ', status);
+        Popup.show('Error', 'Clima.getData(): '+status)
       });
 
     });// hallalatlng
