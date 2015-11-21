@@ -25,7 +25,7 @@
       /*height: 100%;*/
       /*}*/
     </style>
-items.length: {{items.length}}
+items.length: {{::items.length}}
     <div ng-repeat="cam in items | filter:(cam[4] = rowid):true track by cam[4]">
       <div class="list card">
         <div class="item item-image" style="height:100%; width:100%">
@@ -38,20 +38,20 @@ items.length: {{items.length}}
 
         <div class="item item-body" style="font-size: small;">
             <i class="icon ion-ios-checkmark-outline" style="color:#387ef5;"></i>
-            <b>Lugar: </b>{{ cam[0] }}<br>
+            <b>Lugar: </b>{{ ::cam[0] }}<br>
             <i class="icon ion-ios-checkmark-outline" style="color:#387ef5;"></i>
-            <b>Concejo: </b>{{ cam[1] }}<br>
+            <b>Concejo: </b>{{ ::cam[1] }}<br>
             <i class="icon ion-ios-checkmark-outline" style="color:#387ef5;"></i>
-            <b>Categoría: </b>{{ cam[3] }}
+            <b>Categoría: </b>{{ ::cam[3] }}
         </div>
         <!-- clima --------------------------------------------------------------------------------------------------->
-        descripción: {{descripcion}}<br>
-        temp: {{temp}}<br>
-        presión: {{presion}}<br>
-        humedad: {{humedad}}<br>
-        nubosidad: {{nubosidad}}<br>
-        velocidad del viento: {{velocidadViento}}<br>
-        dirección del viento: {{direccionViento}}<br>
+        descripción: {{::descripcion}}<br>
+        temp: {{::temp}}<br>
+        presión: {{::presion}}<br>
+        humedad: {{::humedad}}<br>
+        nubosidad: {{::nubosidad}}<br>
+        velocidad del viento: {{::velocidadViento}}<br>
+        dirección del viento: {{::direccionViento}}<br>
         <!-- fin clima ----------------------------------------------------------------------------------------------->
 
         <!-- botones ------------------------------------------------------------------------------------------------->
@@ -79,25 +79,25 @@ items.length: {{items.length}}
 
       <div class="list list-inset card">
 
-        <a href="#/app/mapa?lugar={{cam[0]}}&concejo={{cam[1]}}" class="item item-stable item-icon-left item-icon-right">
+        <a href="#/app/mapa?lugar={{::cam[0]}}&concejo={{::cam[1]}}" class="item item-stable item-icon-left item-icon-right">
           <i class="icon ion-android-pin"></i>
           Ver en Mapa
           <i class="icon ion-ios-arrow-thin-right" style="color: #387ef5;"></i>
         </a>
 
-        <a href="#/app/streetview?lugar={{cam[0]}}&concejo={{cam[1]}}" class="item item-stable item-icon-left item-icon-right">
+        <a href="#/app/streetview?lugar={{::cam[0]}}&concejo={{::cam[1]}}" class="item item-stable item-icon-left item-icon-right">
           <i class="icon ion-ios-navigate"></i>
           Ver en Street View
           <i class="icon ion-ios-arrow-thin-right" style="color: #387ef5;"></i>
         </a>
 
-        <a href="#/app/panoramio?lugar={{cam[0]}}&concejo={{cam[1]}}" class="item item-stable item-icon-left item-icon-right">
+        <a href="#/app/panoramio?lugar={{::cam[0]}}&concejo={{::cam[1]}}" class="item item-stable item-icon-left item-icon-right">
           <i class="icon ion-images"></i>
           Fotos de la zona
           <i class="icon ion-ios-arrow-thin-right" style="color: #387ef5;"></i>
         </a>
 
-        <a href="#/app/panoramio?lugar={{cam[0]}}&concejo={{cam[1]}}" class="item item-stable item-icon-left item-icon-right">
+        <a href="#/app/panoramio?lugar={{::cam[0]}}&concejo={{::cam[1]}}" class="item item-stable item-icon-left item-icon-right">
           <i class="icon ion-email"></i>
           Información meteorológica
           <i class="icon ion-ios-arrow-thin-right" style="color: #387ef5;"></i>
