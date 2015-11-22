@@ -3,7 +3,7 @@
 <!--TODO: busqueda de google places-->
 <!--TODO: filtrar markers por concejo y categoria (lugar?)-->
 
-<ion-view view-title="Mapa" cache-view="false">
+<ion-view view-title="global" cache-view="false">
   <!--<ion-content header-shrink scroll-event-interval="1">-->
   <ion-content>
 
@@ -13,15 +13,10 @@
       }
       #mapa{background: transparent url(../img/c.png) no-repeat center center;}
     </style>
-lat: {{$root.lat}}<br>
-lng: {{$root.lng}}<br>
 
-    <div id="mapa" data-tap-disabled="true" style="width: 100%; height: 60%"></div>
-    <p>Lugar: {{lugar}}</p>
-    <p>Concejo: {{concejo}}</p>
-    <p>idCategoria: {{idCategoria}}</p>
+    <div id="mapaglobal" data-tap-disabled="true" style="width: 100%; height: 60%;"></div>
 
-
+    mapaglobal. poner aqui filtros por concejos (buscar con google places?)
   </ion-content>
 </ion-view>
 

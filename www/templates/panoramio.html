@@ -28,7 +28,7 @@
 
       <div id="divPanoramio"></div>
       <div id="divCreditos"></div>
-      <div>Zona: {{::lugar}}, {{::concejo}}</div>
+      <div>Zona: {{lugar}}, {{concejo}}</div>
       <!--<div ng-show="!hayFotos" style="text-align: center">-->
       <!--No se han encontrado fotos de Panoramio en los alrededores de la ubicación de la cámara-->
       <!--</div>-->
@@ -37,13 +37,13 @@
     <!--<section layout="row" layout-sm="column" layout-align="center center" layout-wrap style="width:100%">-->
     <div layout="row" layout-align="space-around center" style="padding:6%">
       <md-button class="md-raised md-primary" ng-click="prevPhoto()"
-                 style="width:40%;height:40px" ng-disabled="widget.getAtStart()">
+                 style="width:40%;height:40px" ng-disabled="fotos.getAtStart()">
         <i class="icon ion-arrow-left-a"></i>
         Anterior
       </md-button>
 
       <md-button class="md-raised md-primary" ng-click="nextPhoto()"
-                 style="width:40%;height:40px" ng-disabled="widget.getAtEnd()">
+                 style="width:40%;height:40px" ng-disabled="fotos.getAtEnd()">
         <i class="icon ion-arrow-right-a"></i>
         Siguiente
       </md-button>

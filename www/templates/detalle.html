@@ -25,7 +25,6 @@
       /*height: 100%;*/
       /*}*/
     </style>
-items.length: {{::items.length}}
     <div ng-repeat="cam in items | filter:(cam[4] = rowid):true track by cam[4]">
       <div class="list card">
         <div class="item item-image" style="height:100%; width:100%">
@@ -45,13 +44,14 @@ items.length: {{::items.length}}
             <b>Categoría: </b>{{ ::cam[3] }}
         </div>
         <!-- clima --------------------------------------------------------------------------------------------------->
-        descripción: {{::descripcion}}<br>
-        temp: {{::temp}}<br>
-        presión: {{::presion}}<br>
-        humedad: {{::humedad}}<br>
-        nubosidad: {{::nubosidad}}<br>
-        velocidad del viento: {{::velocidadViento}}<br>
-        dirección del viento: {{::direccionViento}}<br>
+        <img ng-src="{{::iconoUrl}}"/><br>
+        Descripción: {{::descripcion}}<br>
+        Temperatura: {{::temp}} ºC<br>
+        Presión atmosférica: {{::presion}} HPa<br>
+        Humedad relativa: {{::humedad}} %<br>
+        Nubosidad: {{::nubosidad}} %<br>
+        Velocidad del viento: {{::velocidadViento}} m/s<br>
+        Dirección del viento: {{::direccionViento}}º<br>
         <!-- fin clima ----------------------------------------------------------------------------------------------->
 
         <!-- botones ------------------------------------------------------------------------------------------------->
@@ -80,6 +80,7 @@ items.length: {{::items.length}}
       <div class="list list-inset card">
 
         <a href="#/app/mapa?lugar={{::cam[0]}}&concejo={{::cam[1]}}" class="item item-stable item-icon-left item-icon-right">
+        <!--<a href="#/app/mapa" class="item item-stable item-icon-left item-icon-right">-->
           <i class="icon ion-android-pin"></i>
           Ver en Mapa
           <i class="icon ion-ios-arrow-thin-right" style="color: #387ef5;"></i>

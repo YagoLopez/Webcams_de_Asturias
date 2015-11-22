@@ -80,12 +80,18 @@ angular.module('wca.services',[])
       return mapa;
     }; // creaMapa()
 
+    var posicionarMapa = function (mapa, centro, zoomLevel){
+      mapa.setCenter(centro);
+      mapa.setZoom(zoomLevel);
+    }
+
     return {
       OVIEDO: OVIEDO,
       RADIO_BUSQUEDA: RADIO_BUSQUEDA,
       creaMapa: creaMapa,
       hallaLatLng: hallaLatLng,
-      creaStreetView: creaStreetView
+      creaStreetView: creaStreetView,
+      posicionarMapa: posicionarMapa
     }
   }) // SGmap
 

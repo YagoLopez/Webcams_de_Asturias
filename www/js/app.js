@@ -66,8 +66,8 @@ angular.module('wca',
   url: '/listado',
   views: {
     'tab-listado': {
-    templateUrl: 'templates/listado.html',
-    controller:'ListadoCtrl'
+    templateUrl: 'templates/listado.html'
+    //controller:'ListadoCtrl'
     }
   }
   })
@@ -76,18 +76,30 @@ angular.module('wca',
   url: '/mosaico',
   views: {
   'tab-mosaico': {
-    templateUrl: 'templates/mosaico.html',
-    controller: 'MosaicoCtrl'
+    templateUrl: 'templates/mosaico.html'
+    //controller: 'MosaicoCtrl'
     }
   }
   })
 
   .state('app.mapa', {
-    url: '/mapa?lugar&concejo&categoria',
+    url: '/mapa?lugar&concejo',
+    cache: false,
     views: {
       'menuContent': {
         templateUrl: 'templates/mapa.html',
         controller: 'MapaCtrl'
+      }
+    }
+  })
+
+  .state('app.mapaglobal', {
+    url: '/mapaglobal',
+    cache: false,
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/mapa-global.html',
+        controller: 'MapaGlobalCtrl'
       }
     }
   })
@@ -104,7 +116,7 @@ angular.module('wca',
   })
 
   .state('app.panoramio', {
-    url: '/panoramio?lat&lng&lugar&concejo',
+    url: '/panoramio?lugar&concejo',
     views: {
       'menuContent': {
         templateUrl: 'templates/panoramio.html',
