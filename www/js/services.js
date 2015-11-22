@@ -24,9 +24,9 @@ angular.module('wca.services',[])
     }
   }) // SFusionTable
 
-  .factory('SGmap', function(SFusionTable, SPopup){
+  .factory('SMapa', function(SFusionTable, SPopup){
 
-    var OVIEDO = {lat: 43.3667, lng: -5.8333}; // punto de referencia para geocoder y centro de mapa por defecto
+    var OVIEDO = {lat: 43.3667, lng: -5.8333}; // centro de mapa vista global
     var RADIO_BUSQUEDA = 500; // radio de búsqueda de imagenes de street view en metros a partir una ubicacion
 
     var hallaLatLng = function (domElement, lugar, concejo, fn){
@@ -45,7 +45,7 @@ angular.module('wca.services',[])
           fn(results[0].geometry.location);
         } else {
           SPopup.show('Error', 'No se han podido hallar coordenadas->hallaLatLng(): '+status);
-          console.error('SGmap.hallaLatLng(): no se han podido hallar coordenadas');
+          console.error('SMapa.hallaLatLng(): no se han podido hallar coordenadas');
         }
       }
     };// hallaLatLng
@@ -80,20 +80,14 @@ angular.module('wca.services',[])
       return mapa;
     }; // creaMapa()
 
-    var posicionarMapa = function (mapa, centro, zoomLevel){
-      mapa.setCenter(centro);
-      mapa.setZoom(zoomLevel);
-    }
-
     return {
       OVIEDO: OVIEDO,
       RADIO_BUSQUEDA: RADIO_BUSQUEDA,
       creaMapa: creaMapa,
       hallaLatLng: hallaLatLng,
-      creaStreetView: creaStreetView,
-      posicionarMapa: posicionarMapa
+      creaStreetView: creaStreetView
     }
-  }) // SGmap
+  }) // SMapa
 
   .factory('SClima', function($http){
 

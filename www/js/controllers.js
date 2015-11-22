@@ -33,7 +33,6 @@ angular.module('wca.controllers',[])
     if ($rootScope.filterBarInstance)
       $rootScope.filterBarInstance();
 
-
     function esSubcadena(idCategoria, urlCategoria) {
       return (urlCategoria.indexOf('categoria='+idCategoria) > -1);
     }
@@ -94,16 +93,16 @@ angular.module('wca.controllers',[])
 
 })// TabsCtrl
 
-.controller('MapaCtrl', function($scope, $stateParams, SGmap, $rootScope){
+.controller('MapaCtrl', function($scope, $stateParams, SMapa, $rootScope){
 
   $scope.$on('$ionicView.afterEnter', function() {
 
-    var mapa = SGmap.creaMapa( document.getElementById('mapa') );
+    var mapa = SMapa.creaMapa( document.getElementById('mapa') );
     $scope.lugar = $stateParams.lugar;
     $scope.concejo = $stateParams.concejo;
 
     if(!$rootScope.lat || !$rootScope.lng){
-      mapa.setCenter(SGmap.OVIEDO);
+      mapa.setCenter(SMapa.OVIEDO);
       mapa.setZoom(8);
     } else {
         mapa.setCenter( {lat: $rootScope.lat, lng: $rootScope.lng} );
@@ -140,17 +139,15 @@ angular.module('wca.controllers',[])
 
 }) // fin MapaGlobalCtrl
 
-.controller('MapaGlobalCtrl', function($scope, $rootScope, SGmap){
+.controller('MapaGlobalCtrl', function($scope, $rootScope, SMapa){
     $rootScope.lat = null;
     $rootScope.lng = null;
-
-    var mapa = SGmap.creaMapa(document.getElementById('mapaglobal'));
-    mapa.setCenter(SGmap.OVIEDO);
+    var mapa = SMapa.creaMapa(document.getElementById('mapaglobal'));
+    mapa.setCenter(SMapa.OVIEDO);
     mapa.setZoom(8);
-
 }) //mapaglobalctrl
 
-.controller('PanoramioCtrl', function($scope, $stateParams, SGmap, $ionicModal, $rootScope){
+.controller('PanoramioCtrl', function($scope, $stateParams, SMapa, $ionicModal, $rootScope){
 
     var lat = $rootScope.lat;
     var lng = $rootScope.lng;
@@ -207,7 +204,7 @@ angular.module('wca.controllers',[])
 
 }) // panoramio ctrl
 
-.controller('DetalleCtrl', function($scope, $stateParams, $ionicModal, SGmap, SClima, $filter, $rootScope, SPopup){
+.controller('DetalleCtrl', function($scope, $stateParams, $ionicModal, SMapa, SClima, $filter, $rootScope, SPopup){
 
     $scope.rowid = $stateParams.rowid;
 
@@ -221,7 +218,7 @@ angular.module('wca.controllers',[])
     });
     // CLIMA ---------------------------------------------------------------------------------------------------------
     var div = document.getElementById('void');
-    SGmap.hallaLatLng(div, cam[0][0], cam[0][1], function(coords){
+    SMapa.hallaLatLng(div, cam[0][0], cam[0][1], function(coords){
 
       //TODO: no usar rootscope. Crear un servicio para almacenar lat, lng, lugar, concejo y compartir entre controllers
       $rootScope.lat = coords.lat();
@@ -266,7 +263,7 @@ angular.module('wca.controllers',[])
 
   })// DetalleCtrl
 
-.controller('StreetViewCtrl', function($scope, SGmap, $stateParams, $rootScope, SPopup){
+.controller('StreetViewCtrl', function($scope, SMapa, $stateParams, $rootScope, SPopup){
 
   $scope.lugar = $stateParams.lugar || '';
   $scope.concejo = $stateParams.concejo || '';
@@ -280,12 +277,12 @@ angular.module('wca.controllers',[])
   $scope.$on('$ionicView.afterEnter', function() {
 
     var div = document.getElementById('street-view');
-    //SGmap.hallaLatLng(div, $scope.lugar, $scope.concejo, function (coords) {
+    //SMapa.hallaLatLng(div, $scope.lugar, $scope.concejo, function (coords) {
       var streetViewService = new google.maps.StreetViewService();
-      streetViewService.getPanoramaByLocation(coords, SGmap.RADIO_BUSQUEDA, function (data, status) {
+      streetViewService.getPanoramaByLocation(coords, SMapa.RADIO_BUSQUEDA, function (data, status) {
         if (status == google.maps.StreetViewStatus.OK) {
-          SGmap.creaStreetView(div, data.location.latLng);
-          //SGmap.creaStreetView( div, {lat:$rootScope.lat, lng:$rootScope.lng} );
+          SMapa.creaStreetView(div, data.location.latLng);
+          //SMapa.creaStreetView( div, {lat:$rootScope.lat, lng:$rootScope.lng} );
         } else {
           SPopup.show('Error', 'No se ha encontrado StreetView->getPanoramaByLocation(): '+status);
         }
