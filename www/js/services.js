@@ -112,5 +112,36 @@ angular.module('wca.services',[])
     return { show: show };
   }) // popup
 
+  .factory('SWikipedia', function($http){
+
+    var info = function(termino){
+      return $http.jsonp('https://es.wikipedia.org/w/api.php?'+
+        'action=query&prop=extracts|info&exintro&titles='+termino+
+        '&format=json&explaintext&redirects&inprop=url&indexpageids&callback=JSON_CALLBACK', {cache: true});
+    };
+
+    var infoRelacionada = function(termino){
+      return $http.get('https://es.wikipedia.org/w/api.php?'+
+        'action=query&list=search&srsearch='+termino+'&utf8=&format=json', {cache: true});
+    };
+
+    var infoLatLng = function(lat, lng){
+      return $http.get('http://api.geonames.org/findNearbyWikipedia?'+
+        'lat='+lat+'&lng='+lng+'&username=yagolopez', {cache: true});
+    };
+
+    var infoAmpliada = function (termino){
+      return $http.get('https://es.wikipedia.org/w/api.php?format=json&action=query&prop=revisions&titles='+termino+
+        '&rvprop=content&rvsection=0&rvparse');
+    };
+
+    return {
+      info: info,
+      infoRelacionada: infoRelacionada,
+      infoLatLng: infoLatLng,
+      infoAmpliada: infoAmpliada
+    };
+  })//SWikipedia
+
 
 ; // FIN

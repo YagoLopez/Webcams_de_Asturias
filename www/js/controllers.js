@@ -204,7 +204,8 @@ angular.module('wca.controllers',[])
 
 }) // panoramio ctrl
 
-.controller('DetalleCtrl', function($scope, $stateParams, $ionicModal, SMapa, SClima, $filter, $rootScope, SPopup){
+.controller('DetalleCtrl', function($scope, $stateParams, $ionicModal, SMapa, SClima, $filter, $rootScope,
+                                    SPopup, SWikipedia){
 
     $scope.rowid = $stateParams.rowid;
 
@@ -216,9 +217,11 @@ angular.module('wca.controllers',[])
     var cam = $filter('filter')($rootScope.items, function(cam) {
       return cam[4] == $scope.rowid;
     });
+    var lugar = cam[0][0];
+    var concejo = cam[0][1];
     // CLIMA ---------------------------------------------------------------------------------------------------------
     var div = document.getElementById('void');
-    SMapa.hallaLatLng(div, cam[0][0], cam[0][1], function(coords){
+    SMapa.hallaLatLng(div, lugar, concejo, function(coords){
 
       //TODO: no usar rootscope. Crear un servicio para almacenar lat, lng, lugar, concejo y compartir entre controllers
       $rootScope.lat = coords.lat();
@@ -242,9 +245,24 @@ angular.module('wca.controllers',[])
         //console.error('Error obteniendo datos clima: ', status);
         SPopup.show('Error', 'SClima.getData(): '+status)
       });
-
     });// hallalatlng
     // FIN CLIMA -----------------------------------------------------------------------------------------------------
+
+    // WIKIPEDIA -----------------------------------------------------------------------------------------------------
+    SWikipedia.info( concejo ).success(function(data){
+
+      //TODO: comprobar si existe info del concejo
+      var pageid = data.query.pageids[0];
+      //console.log('info concejo', data);
+      //console.log('pageid', pageid);
+      //$scope.extract = $filter('filter')([data.query.pages], {$ : concejo})[0];
+      $scope.infoConcejo = data.query.pages[pageid].extract;
+      console.log('extract', $scope.infoConcejo);
+
+    }).error(function(status){
+      console.warn(status);
+    });
+    // FIN WIKIPEDIA -------------------------------------------------------------------------------------------------
 
     // DIALOGO MODAL -------------------------------------------------------------------------------------------------
     $ionicModal.fromTemplateUrl('templates/modal-detalle.html', {

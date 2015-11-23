@@ -127,6 +127,7 @@ angular.module('wca',
 
   .state('app.detalle', {
     url: '/detalle/:rowid',
+    cache: false,
     views: {
       'menuContent': {
         templateUrl: 'templates/detalle.html',

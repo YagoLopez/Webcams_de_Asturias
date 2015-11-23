@@ -40,6 +40,7 @@
             <b>Lugar: </b>{{ ::cam[0] }}<br>
             <i class="icon ion-ios-checkmark-outline" style="color:#387ef5;"></i>
             <b>Concejo: </b>{{ ::cam[1] }}<br>
+            <textarea style="width:100%">{{ ::$scope.infoConcejo }}</textarea>
             <i class="icon ion-ios-checkmark-outline" style="color:#387ef5;"></i>
             <b>Categoría: </b>{{ ::cam[3] }}
         </div>
@@ -111,27 +112,18 @@
     <div id="void"></div>
     <!-------------------------------------------------------------------------------------------------->
 
+
+
+    <div>{{infoConcejo}}</div>
+
+
+
     <!--
         <md-button class="md-fab md-fab-bottom-right" aria-label="Add" ng-click="showAdd($event)">
           <i class="icon ion-chevron-right"></i>
         </md-button>
     -->
 
-    <!--
-                <md-button class="md-raised md-primary" ng-click="prevSlide()">
-                  <i class="icon ion-chevron-left"></i>
-                  Anterior
-                </md-button>
-
-                <md-button class="md-raised md-primary" ng-click="">
-                  <i class="icon ion-ios-reload"></i>
-                  Recargar
-                </md-button>
-                <md-button class="md-raised md-primary" ng-click="nextSlide()">
-                  <i class="icon ion-chevron-right"></i>
-                  Siguiente
-                </md-button>
-    -->
 
   </ion-content>
 </ion-view>
