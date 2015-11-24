@@ -220,6 +220,7 @@ angular.module('wca.controllers',[])
     $scope.lugar = cam[0][0];
     $scope.concejo = cam[0][1];
     $scope.imagen = cam[0][2];
+    $scope.categoria = cam[0][3];
     // CLIMA ---------------------------------------------------------------------------------------------------------
     var div = document.getElementById('void');
     SMapa.hallaLatLng(div, $scope.lugar, $scope.concejo, function(coords){
