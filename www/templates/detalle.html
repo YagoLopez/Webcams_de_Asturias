@@ -63,6 +63,7 @@
 
     <!-- Tabs -------------------------------------------------------------------------------------------------------->
     <div class="card">
+
       <div class="item item-divider tabs tabs-icon-left">
         <a class="tab-item" ng-click="page='first'">
           <i class="icon ion-home"></i>
@@ -73,7 +74,9 @@
           Info. Concejo
         </a>
       </div>
+
       <div ng-init="page='first'"></div>
+
       <div class="item" ng-show="page === 'first'">
         <div class="animated fadeIn">
           <img ng-src="{{::iconoUrl}}"/><br>
@@ -94,6 +97,7 @@
       </div>
     </div>
     <!-- Fin Tabs ---------------------------------------------------------------------------------------------------->
+
 
     <!-- Menu inferior --------------------------------------------------------------------------------------------->
     <div class="list list-inset card">
