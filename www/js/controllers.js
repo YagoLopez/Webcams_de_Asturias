@@ -274,14 +274,6 @@ angular.module('wca.controllers',[])
       $scope.modal.hide();
     };
     // FIN DIALOGO MODAL ----------------------------------------------------------------------------------------------
-    $scope.nextSlide = function() {
-      $ionicSlideBoxDelegate.next();
-      $scope.active = true;
-    }
-    $scope.prevSlide = function() {
-      $ionicSlideBoxDelegate.previous();
-
-    }
 })// DetalleCtrl
 
 .controller('StreetViewCtrl', function($scope, SMapa, $stateParams, $rootScope, SPopup){

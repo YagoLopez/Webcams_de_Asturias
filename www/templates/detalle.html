@@ -1,8 +1,5 @@
-<!--TODO: poner un boton para refrescar la pagina-->
 <!--TODO: poner advertencia: si no ser carga la imagen probar a recargar la pagina-->
 <!--TODO: lazy loading de imagenes-->
-<!--TODO: cambiar los iconos bullet-list del texto del detalle-->
-<!--TODO: desactivar botones siguiente anterior al llegar al final del listado-->
 <!--TODO: pasar todos los nombres de dominio a IPs para optimizar tiempos de carga-->
 <ion-view view-title="Detalles">
   <ion-content>
@@ -22,126 +19,63 @@
         width: 100% ;
       }
     </style>
-    <!--<div ng-repeat="cam in items | filter:(cam[4] = rowid):true track by cam[4]">-->
-      <!-- Card ------------------------------------------------------------------------------------------------------>
-      <div class="list card">
-        <div class="item item-image" style="height:100%; width:100%">
-          <img ng-src="http://api.randomuser.me/portraits/thumb/men/1.jpg">
-          <!--<img ng-src="../img/ionic.png">-->
-          <!--<img ng-src="{{imagen}}">-->
-          <!--<img  ng-src="{{ imagen}}" fallback-src="http://google.com/favicon.ico"/>-->
-          <!--<img ng-src="http://loremflickr.com/500/500?random={{$index+1}}">-->
-        </div>
 
-        <div class="item item-body" style="font-size: small;">
-            <i class="icon ion-ios-checkmark-outline" style="color:#387ef5;"></i>
-            <b>Lugar: </b>{{ ::lugar }}<br>
-            <i class="icon ion-ios-checkmark-outline" style="color:#387ef5;"></i>
-            <b>Concejo: </b>{{ ::concejo }}<br>
-            <!--<i class="icon ion-ios-checkmark-outline" style="color:#387ef5;"></i>-->
-            <!--<b>Categoría: </b>{{ ::cam[3] }}-->
-        </div>
-<!--
-        <div class="item" style="padding:0;">
-          &lt;!&ndash;<label class="item item-input">&ndash;&gt;
-          <label>
-            <textarea style="font-size:small; width:100%; height:10em;">
-              {{ ::infoConcejo }}
-            </textarea>
-          </label>
-        </div>
--->
+    <!-- Card ------------------------------------------------------------------------------------------------------>
+    <div class="list card">
+      <div class="item item-image" style="height:100%; width:100%">
+        <img ng-src="http://api.randomuser.me/portraits/thumb/men/1.jpg">
+        <!--<img ng-src="../img/ionic.png">-->
+        <!--<img ng-src="{{imagen}}">-->
+        <!--<img  ng-src="{{ imagen}}" fallback-src="http://google.com/favicon.ico"/>-->
+        <!--<img ng-src="http://loremflickr.com/500/500?random={{$index+1}}">-->
+      </div>
 
-        <!-- clima --------------------------------------------------------------------------------------------------->
-<!--
-        <img ng-src="{{::iconoUrl}}"/><br>
-        Descripción: {{::descripcion}}<br>
-        Temperatura: {{::temp}} ºC<br>
-        Presión atmosférica: {{::presion}} HPa<br>
-        Humedad relativa: {{::humedad}} %<br>
-        Nubosidad: {{::nubosidad}} %<br>
-        Velocidad del viento: {{::velocidadViento}} m/s<br>
-        Dirección del viento: {{::direccionViento}}º<br>
--->
-        <!-- fin clima ----------------------------------------------------------------------------------------------->
+      <div class="item item-body" style="font-size: small;">
+          <i class="icon ion-ios-checkmark-outline" style="color:#387ef5;"></i>
+          <b>Lugar: </b>{{ ::lugar }}<br>
+          <i class="icon ion-ios-checkmark-outline" style="color:#387ef5;"></i>
+          <b>Concejo: </b>{{ ::concejo }}<br>
+          <i class="icon ion-ios-checkmark-outline" style="color:#387ef5;"></i>
+          <b>Categoría: </b>{{ ::categoria }}
+      </div>
 
-        <!-- botones ------------------------------------------------------------------------------------------------->
-        <div class="item item-text-wrap" style="padding-right:0;padding-left:0;">
-          <div class="row">
-            <div class="col">
-              <md-button class="md-raised md-primary" ng-click="showModal()" style="height: 40px; width:100%">
-                <i class="icon ion-arrow-expand"></i>
-                Ampliar
-              </md-button>
-            </div>
-            <div class="col">
-              <md-button class="md-raised md-primary" ng-click="reload()" style="height: 40px; width:100%">
-                <i class="icon ion-ios-reload"></i>
-                Recargar
-              </md-button>
-            </div>
+      <!-- botones ------------------------------------------------------------------------------------------------->
+      <div class="item item-text-wrap" style="padding-right:0;padding-left:0;">
+        <div class="row">
+          <div class="col">
+            <md-button class="md-raised md-primary" ng-click="showModal()" style="height: 40px; width:100%">
+              <i class="icon ion-arrow-expand"></i>
+              Ampliar
+            </md-button>
+          </div>
+          <div class="col">
+            <md-button class="md-raised md-primary" ng-click="reload()" style="height: 40px; width:100%">
+              <i class="icon ion-ios-reload"></i>
+              Recargar
+            </md-button>
           </div>
         </div>
-        <!-- fin botones --------------------------------------------------------------------------------------------->
-
       </div>
-      <!-- Fin Card -------------------------------------------------------------------------------------------------->
+      <!-- fin botones --------------------------------------------------------------------------------------------->
 
-      <!-- Menu inferior --------------------------------------------------------------------------------------------->
-<!--
-      <div class="list list-inset card">
+    </div>
+    <!-- Fin Card -------------------------------------------------------------------------------------------------->
 
-        <a href="#/app/mapa?lugar={{::lugar}}&concejo={{::concejo}}" class="item item-stable item-icon-left item-icon-right">
-        &lt;!&ndash;<a href="#/app/mapa" class="item item-stable item-icon-left item-icon-right">&ndash;&gt;
-          <i class="icon ion-android-pin"></i>
-          Ver en Mapa
-          <i class="icon ion-ios-arrow-thin-right" style="color: #387ef5;"></i>
-        </a>
-
-        <a href="#/app/streetview?lugar={{::lugar}}&concejo={{::concejo}}" class="item item-stable item-icon-left item-icon-right">
-          <i class="icon ion-ios-navigate"></i>
-          Ver en Street View
-          <i class="icon ion-ios-arrow-thin-right" style="color: #387ef5;"></i>
-        </a>
-
-        <a href="#/app/panoramio?lugar={{::lugar}}&concejo={{::concejo}}" class="item item-stable item-icon-left item-icon-right">
-          <i class="icon ion-images"></i>
-          Fotos de la zona
-          <i class="icon ion-ios-arrow-thin-right" style="color: #387ef5;"></i>
-        </a>
-
-        <a href="#/app/panoramio?lugar={{::lugar}}&concejo={{::concejo}}" class="item item-stable item-icon-left item-icon-right">
-          <i class="icon ion-email"></i>
-          Información meteorológica
-          <i class="icon ion-ios-arrow-thin-right" style="color: #387ef5;"></i>
-        </a>
-
-      </div>
--->
-      <!-- fin Menu Inferior ----------------------------------------------------------------------------------------->
-
-    <!--</div> &lt;!&ndash; fin ng-repeat &ndash;&gt;-->
-
-    <div id="void"></div>
-
-    <!-- SlideBox ---------------------------------------------------------------------------------------------------->
+    <!-- Tabs -------------------------------------------------------------------------------------------------------->
     <div class="card">
-
-      <!--TODO: cambiar iconos-->
       <div class="item item-divider tabs tabs-icon-left">
-        <a class="tab-item active" ng-click="prevSlide()">
+        <a class="tab-item" ng-click="page='first'">
           <i class="icon ion-home"></i>
           Meteorología
         </a>
-        <a class="tab-item tabs-color-calm" ng-click="nextSlide()">
+        <a class="tab-item tabs-color-calm" ng-click="page='second'">
           <i class="icon ion-star"></i>
           Info. Concejo
         </a>
       </div>
-
-      <ion-slide-box on-slide-changed="slideChanged(index)" show-pager="false">
-        <ion-slide>
-          <div class="item">
+      <div ng-init="page='first'"></div>
+      <div class="item" ng-show="page === 'first'">
+        <div class="animated fadeIn">
           <img ng-src="{{::iconoUrl}}"/><br>
           Descripción: {{::descripcion}}<br>
           Temperatura: {{::temp}} ºC<br>
@@ -150,23 +84,48 @@
           Nubosidad: {{::nubosidad}} %<br>
           Velocidad del viento: {{::velocidadViento}} m/s<br>
           Dirección del viento: {{::direccionViento}}º<br>
-          </div>
-        </ion-slide>
-        <ion-slide>
-          <ion-scroll>
-            <div class="item-body" class="width:100px;overflow:visible;text-overflow:initial;white-space:normal;" ng-class="{active:active}">
-            {{ ::infoConcejo }}
-            </div>
-          </ion-scroll>
-        </ion-slide>
-      </ion-slide-box>
+        </div>
+      </div>
+      <div class="item-body" style="/*width:100px;overflow:visible;text-overflow:initial;white-space:normal;*/"
+           ng-class="{active:active}" ng-show="page === 'second'">
+        <div class="animated fadeIn">
+        {{ ::infoConcejo }}
+        </div>
+      </div>
+    </div>
+    <!-- Fin Tabs ---------------------------------------------------------------------------------------------------->
+
+    <!-- Menu inferior --------------------------------------------------------------------------------------------->
+    <div class="list list-inset card">
+
+      <a href="#/app/mapa?lugar={{::lugar}}&concejo={{::concejo}}" class="item item-stable item-icon-left item-icon-right">
+        <i class="icon ion-android-pin"></i>
+        Ver en Mapa
+        <i class="icon ion-ios-arrow-thin-right" style="color: #387ef5;"></i>
+      </a>
+
+      <a href="#/app/streetview?lugar={{::lugar}}&concejo={{::concejo}}" class="item item-stable item-icon-left item-icon-right">
+        <i class="icon ion-ios-navigate"></i>
+        Ver en Street View
+        <i class="icon ion-ios-arrow-thin-right" style="color: #387ef5;"></i>
+      </a>
+
+      <a href="#/app/panoramio?lugar={{::lugar}}&concejo={{::concejo}}" class="item item-stable item-icon-left item-icon-right">
+        <i class="icon ion-images"></i>
+        Fotos de la zona
+        <i class="icon ion-ios-arrow-thin-right" style="color: #387ef5;"></i>
+      </a>
 
     </div>
-    <!-- Fin SlideBox ------------------------------------------------------------------------------------------------>
+    <!-- fin Menu Inferior ----------------------------------------------------------------------------------------->
 
+    <div id="void"></div>
+
+<!--
         <md-button class="md-fab md-fab-bottom-right" aria-label="Add" ng-click="showAdd($event)">
           <i class="icon ion-chevron-right"></i>
         </md-button>
+-->
 
 
   </ion-content>
