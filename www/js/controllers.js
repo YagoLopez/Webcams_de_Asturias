@@ -205,7 +205,7 @@ angular.module('wca.controllers',[])
 }) // panoramio ctrl
 
 .controller('DetalleCtrl', function($scope, $stateParams, $ionicModal, SMapa, SClima, $filter, $rootScope,
-                                    SPopup, SWikipedia){
+                                    SPopup, SWikipedia, $ionicSlideBoxDelegate){
 
     $scope.rowid = $stateParams.rowid;
 
@@ -217,11 +217,12 @@ angular.module('wca.controllers',[])
     var cam = $filter('filter')($rootScope.items, function(cam) {
       return cam[4] == $scope.rowid;
     });
-    var lugar = cam[0][0];
-    var concejo = cam[0][1];
+    $scope.lugar = cam[0][0];
+    $scope.concejo = cam[0][1];
+    $scope.imagen = cam[0][2];
     // CLIMA ---------------------------------------------------------------------------------------------------------
     var div = document.getElementById('void');
-    SMapa.hallaLatLng(div, lugar, concejo, function(coords){
+    SMapa.hallaLatLng(div, $scope.lugar, $scope.concejo, function(coords){
 
       //TODO: no usar rootscope. Crear un servicio para almacenar lat, lng, lugar, concejo y compartir entre controllers
       $rootScope.lat = coords.lat();
@@ -242,23 +243,18 @@ angular.module('wca.controllers',[])
         $scope.iconoUrl = 'http://openweathermap.org/img/w/'+climadata.weather[0].icon+'.png' ;
 
       }).error(function(status){
-        //console.error('Error obteniendo datos clima: ', status);
         SPopup.show('Error', 'SClima.getData(): '+status)
       });
     });// hallalatlng
     // FIN CLIMA -----------------------------------------------------------------------------------------------------
 
     // WIKIPEDIA -----------------------------------------------------------------------------------------------------
-    SWikipedia.info( concejo ).success(function(data){
-
-      //TODO: comprobar si existe info del concejo
+    SWikipedia.info($scope.concejo).success(function(data){
       var pageid = data.query.pageids[0];
-      //console.log('info concejo', data);
-      //console.log('pageid', pageid);
-      //$scope.extract = $filter('filter')([data.query.pages], {$ : concejo})[0];
-      $scope.infoConcejo = data.query.pages[pageid].extract;
-      console.log('extract', $scope.infoConcejo);
-
+      if(pageid) {
+        $scope.infoConcejo = data.query.pages[pageid].extract;
+        //console.log('extract', $scope.infoConcejo);
+      }
     }).error(function(status){
       console.warn(status);
     });
@@ -278,8 +274,15 @@ angular.module('wca.controllers',[])
       $scope.modal.hide();
     };
     // FIN DIALOGO MODAL ----------------------------------------------------------------------------------------------
+    $scope.nextSlide = function() {
+      $ionicSlideBoxDelegate.next();
+      $scope.active = true;
+    }
+    $scope.prevSlide = function() {
+      $ionicSlideBoxDelegate.previous();
 
-  })// DetalleCtrl
+    }
+})// DetalleCtrl
 
 .controller('StreetViewCtrl', function($scope, SMapa, $stateParams, $rootScope, SPopup){
 

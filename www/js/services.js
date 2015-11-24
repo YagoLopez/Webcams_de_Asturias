@@ -125,9 +125,16 @@ angular.module('wca.services',[])
         'action=query&list=search&srsearch='+termino+'&utf8=&format=json', {cache: true});
     };
 
-    var infoLatLng = function(lat, lng){
+    // respuesta formato xml
+    var infoLatLngGeonames = function(lat, lng){
       return $http.get('http://api.geonames.org/findNearbyWikipedia?'+
-        'lat='+lat+'&lng='+lng+'&username=yagolopez', {cache: true});
+        'lat='+lat+'&lng='+lng+'&username=yagolopez&lang=es', {cache: true});
+    };
+
+    var infoLatLngWikipedia = function(lat, lng, radioBusqueda){
+      var url = 'https://es.wikipedia.org/w/api.php?action=query&list=geosearch&gsradius='+radioBusqueda+
+        '&gscoord='+lat+'|'+lng+'&format=json&callback=JSON_CALLBACK';
+      return $http.jsonp(url, {cache: true});
     };
 
     var infoAmpliada = function (termino){
@@ -135,11 +142,18 @@ angular.module('wca.services',[])
         '&rvprop=content&rvsection=0&rvparse');
     };
 
+    // bueno para lugares concretos con descripción breve
+    var openSearch = function(termino){
+      return $http.jsonp('https://es.wikipedia.org/w/api.php?action=opensearch&'+
+        'search='+termino+'&callback=JSON_CALLBACK', {cache: true});
+    }
+
     return {
       info: info,
       infoRelacionada: infoRelacionada,
-      infoLatLng: infoLatLng,
-      infoAmpliada: infoAmpliada
+      infoLatLngGeonames: infoLatLngGeonames,
+      infoAmpliada: infoAmpliada,
+      infoLatLngWikipedia: infoLatLngWikipedia
     };
   })//SWikipedia
 
