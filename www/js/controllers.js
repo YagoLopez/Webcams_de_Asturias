@@ -205,7 +205,7 @@ angular.module('wca.controllers',[])
 }) // panoramio ctrl
 
 .controller('DetalleCtrl', function($scope, $stateParams, $ionicModal, SMapa, SClima, $filter, $rootScope,
-                                    SPopup, SWikipedia, $ionicSlideBoxDelegate){
+                                    SPopup, SWikipedia, $ionicSlideBoxDelegate, $ionicPopover){
 
     $scope.rowid = $stateParams.rowid;
 
@@ -230,7 +230,7 @@ angular.module('wca.controllers',[])
       $rootScope.lng = coords.lng();
 
       SClima.getData( $rootScope.lat, $rootScope.lng ).success(function(climadata){
-        //console.log('datos de clima', climadata);
+        console.log('datos de clima', climadata);
         $scope.descripcion = climadata.weather[0].description;
         $scope.temp = climadata.main.temp;
         $scope.presion = climadata.main.pressure;
@@ -239,7 +239,7 @@ angular.module('wca.controllers',[])
         $scope.velocidadViento = climadata.wind.speed;
         $scope.direccionViento = climadata.wind.deg;
         //volumen precipitaciones ultimas 3 horas
-        //$scope.precipitacion = climadata.rain.3h;
+        //$scope.precipitacion = climadata.rain['3h'];
         //url icono: http://openweathermap.org/img/w/10n.png
         $scope.iconoUrl = 'http://openweathermap.org/img/w/'+climadata.weather[0].icon+'.png' ;
 
@@ -275,6 +275,32 @@ angular.module('wca.controllers',[])
       $scope.modal.hide();
     };
     // FIN DIALOGO MODAL ----------------------------------------------------------------------------------------------
+
+    //document.body.classList.add('platform-' + p);
+
+    $scope.activarModal = function(){
+      $scope.modalActivo = true;
+    }
+
+    $ionicPopover.fromTemplateUrl('templates/popover.html', {
+      scope: $scope,
+    }).then(function(popover) {
+      $scope.popover = popover;
+    });
+
+
+/*
+    // .fromTemplate() method
+    var template = '<ion-popover-view><ion-header-bar> <h1 class="title">My Popover Title</h1> </ion-header-bar> <ion-content> Hello! </ion-content></ion-popover-view>';
+
+    $scope.popover = $ionicPopover.fromTemplate(template, {
+      scope: $scope
+    });
+    $scope.openPopover = function($event) {
+      $scope.popover.show($event);
+    };
+*/
+
 })// DetalleCtrl
 
 .controller('StreetViewCtrl', function($scope, SMapa, $stateParams, $rootScope, SPopup){
@@ -307,26 +333,5 @@ angular.module('wca.controllers',[])
 
 })//StreetViewCtrl
 
-
-
-  /*
-   .controller('ListadoCtrl', function($ionicHistory, $scope){
-
-   }) // fin ListadoCtrl
-
-   .controller('MosaicoCtrl', function($scope, $ionicHistory){
-   //TODO: borrar esto
-   //
-   //$ionicHistory.nextViewOptions({
-   //  historyRoot: true,
-   //  disableBack: true,
-   //  disableAnimate: true
-   //});
-
-   //$ionicHistory.nextViewOptions({
-   //  historyRoot: true
-   //})
-   }) // fin MosaicoCtrl
-   */
 
 ; // FIN
