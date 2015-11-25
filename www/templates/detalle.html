@@ -23,6 +23,13 @@
       .tabs-color-positive .tab-item.activated {
         border-bottom: 1px solid;
       }
+      .md-button.md-fab.md-fab-bottom-right{
+        /*top: 22%;*/
+        /*right: 5%;*/
+
+        top:75%;
+        right:3%;
+      }
     </style>
 
     <!-- Card ------------------------------------------------------------------------------------------------------>
@@ -34,7 +41,6 @@
         <!--<img  ng-src="{{ imagen}}" fallback-src="http://google.com/favicon.ico"/>-->
         <!--<img ng-src="http://loremflickr.com/500/500?random={{$index+1}}">-->
       </div>
-
       <div class="item item-body" style="font-size: small;">
           <i class="icon ion-ios-checkmark-outline" style="color:#387ef5;"></i>
           <b>Lugar: </b>{{ ::lugar }}<br>
@@ -43,7 +49,6 @@
           <i class="icon ion-ios-checkmark-outline" style="color:#387ef5;"></i>
           <b>Categoría: </b>{{ ::categoria }}
       </div>
-
       <!-- botones ------------------------------------------------------------------------------------------------->
       <div class="item item-text-wrap" style="padding-right:0;padding-left:0;">
         <div class="row">
@@ -83,11 +88,15 @@
       <div ng-init="page='first'"></div>
 
       <div class="item" ng-show="page === 'first'">
-        <div class="animated fadeIn">
-          <div style="padding-left: 11%;padding-right: 20%;">
-              <img ng-src="{{::iconoUrl}}"/>
-            <div style="float:right; padding-top:5%">Estado actual: {{::descripcion}}</div>
-          </div>
+        <div class="animated fadeIn" style="font-size:smaller">
+          <table>
+            <tr>
+              <td><img ng-src="{{::iconoUrl}}"/></td>
+              <td style="padding-left:15px;vertical-align: middle;padding-bottom:10px;">
+                Estado actual: {{::descripcion}}
+              </td>
+            </tr>
+          </table>
           &#187; Temperatura: {{::temp}} ºC<br>
           &#187; Presión atmosférica: {{::presion}} HPa<br>
           &#187; Humedad relativa: {{::humedad}} %<br>
@@ -105,175 +114,25 @@
     </div>
     <!-- Fin Tabs ---------------------------------------------------------------------------------------------------->
 
-    <!-- Menu inferior --------------------------------------------------------------------------------------------->
-    <div class="list list-inset card">
+    <!-- FAB button -------------------------------------------------------------------------------------------------->
+    <md-button style="background-color: cornflowerblue;left: 75%;bottom: 10px;"
+               class="md-fab md-primary" aria-label="Menu" ng-click="popover.show($event)"
+               style="/*position: absolute; bottom: 10%; right: 5%;*/">
+      <i class="ion-plus-round"></i>
+    </md-button>
+    <!-- FAB button -------------------------------------------------------------------------------------------------->
 
-      <a href="#/app/mapa?lugar={{::lugar}}&concejo={{::concejo}}" class="item item-stable item-icon-left item-icon-right">
-        <i class="icon ion-android-pin"></i>
-        Ver en Mapa
-        <i class="icon ion-ios-arrow-thin-right" style="color: #387ef5;"></i>
-      </a>
-
-      <a href="#/app/streetview?lugar={{::lugar}}&concejo={{::concejo}}" class="item item-stable item-icon-left item-icon-right">
-        <i class="icon ion-ios-navigate"></i>
-        Ver en Street View
-        <i class="icon ion-ios-arrow-thin-right" style="color: #387ef5;"></i>
-      </a>
-
-      <a href="#/app/panoramio?lugar={{::lugar}}&concejo={{::concejo}}" class="item item-stable item-icon-left item-icon-right">
-        <i class="icon ion-images"></i>
-        Fotos de la zona
-        <i class="icon ion-ios-arrow-thin-right" style="color: #387ef5;"></i>
-      </a>
-
-    </div>
-    <!-- fin Menu Inferior ----------------------------------------------------------------------------------------->
 
     <div id="void"></div>
 
-<!--
-        <md-button class="md-fab md-fab-bottom-right" aria-label="Add" ng-click="showAdd($event)">
-          <i class="icon ion-chevron-right"></i>
-        </md-button>
--->
+
+
+
 
 
 
   </ion-content>
-  <!-- FAB button ------------------------------------------------------------------------------------------------->
-  <!--  <style>
-    @import url(http://fonts.googleapis.com/css?family=Roboto:400,300);
 
-        body {
-        background: #e3e3e3;
-        display: -webkit-box;
-        display: -webkit-flex;
-        display: -ms-flexbox;
-        display: flex;
-        min-height: 100vh;
-        font-family: roboto;
-        font-weight: 400;
-        line-height: 1.5;
-      }
 
-      .mobile-screen {
-        width: 412px;
-        height: 642px;
-        background-color: #fafafa;
-        margin: auto;
-        position: relative;
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-        overflow: hidden;
-      }
-
-      header {
-        height: 200px;
-        background-color: #3F51B5;
-        display: -webkit-box;
-        display: -webkit-flex;
-        display: -ms-flexbox;
-        display: flex;
-        -webkit-box-align: end;
-        -webkit-align-items: flex-end;
-        -ms-flex-align: end;
-        align-items: flex-end;
-        padding: 30px;
-        border-top: 30px solid #303F9F;
-      }
-      header h1 {
-        margin: 0;
-        font-weight: 300;
-        font-size: 24px;
-        color: white;
-      }
-
-      .main-content {
-        padding: 30px;
-      }
-
-    .fab {
-      width: 48px;
-      height: 48px;
-      background: #FF4081;
-      border-radius: 50%;
-      text-align: center;
-      /*font-weight: 700;*/
-      font-size: 36px;
-      color: white;
-      position: absolute;
-      right: 20px;
-      bottom: 20px;
-      cursor: pointer;
-      font-weight: 100;
-      line-height: 1.3;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-    }
-
-    .modalFab {
-      position: absolute;
-      right: 20px;
-      background: white;
-      bottom: 20px;
-      border-radius: 5px;
-      padding: 20px 0;
-      opacity: 0.5;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-      -webkit-transition: .25s ease-out;
-      transition: .25s ease-out;
-      -webkit-transform: translateY(30px);
-      -ms-transform: translateY(30px);
-      transform: translateY(30px);
-      -webkit-clip-path: circle(0% at 87% 87%);
-      clip-path: circle(0 at 87% 87%);
-    }
-    .modalFab.slow {
-      -webkit-transition: 3s ease-out;
-      transition: 3s ease-out;
-    }
-    .modalFab.active {
-      opacity: 1;
-      -webkit-transform: translateY(0);
-      -ms-transform: translateY(0);
-      transform: translateY(0);
-      -webkit-clip-path: circle(200% at 87% 87%);
-      clip-path: circle(200% at 87% 87%);
-    }
-    .modalFab ul {
-      list-style: none;
-      margin: 0;
-      padding: 0;
-    }
-    .modalFab ul li {
-      padding: 10px 25px;
-      cursor: pointer;
-      -webkit-transition: .3s ease;
-      transition: .3s ease;
-    }
-    .modalFab ul li:hover {
-      background: rgba(0, 0, 0, 0.1);
-    }
-
-  </style>
-  <div class="fab">+</div>
-  &lt;!&ndash;
-    <md-button class="md-fab md-fab-bottom-right md-primary" aria-label="Menu">
-      <i class="ion-plus-round"></i>
-    </md-button>
-&ndash;&gt;
-  <div class="modalFab" ng-click="activarModal()" ng-class="{active:modalActivo == true}">
-    <ul>
-      <li>First menu item</li>
-      <li>Second menu item</li>
-      <li>Third menu item</li>
-      <li>Fourth menu item</li>
-      <li>Fifth menu item</li>
-      <li>Sixth menu item</li>
-    </ul>
-  </div>-->
-  <!-- FAB button ------------------------------------------------------------------------------------------------->
-
-  <md-button class="md-fab md-fab-bottom-right md-primary" aria-label="Menu" ng-click="popover.show($event)">
-    <i class="ion-plus-round"></i>
-  </md-button>
 
 </ion-view>

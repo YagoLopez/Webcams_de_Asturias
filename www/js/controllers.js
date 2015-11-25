@@ -209,6 +209,12 @@ angular.module('wca.controllers',[])
 
     $scope.rowid = $stateParams.rowid;
 
+    //TODO: revisar esto
+    // elimina search bar si estuviera activada al mostrar la vista
+    if ($rootScope.filterBarInstance)
+      $rootScope.filterBarInstance();
+
+
     if(!$rootScope.items || !$scope.rowid){
       SPopup.show('Aviso', 'No hay datos de cámara/s. Escoger otra opción de menú');
       return;
@@ -276,30 +282,11 @@ angular.module('wca.controllers',[])
     };
     // FIN DIALOGO MODAL ----------------------------------------------------------------------------------------------
 
-    //document.body.classList.add('platform-' + p);
-
-    $scope.activarModal = function(){
-      $scope.modalActivo = true;
-    }
-
     $ionicPopover.fromTemplateUrl('templates/popover.html', {
       scope: $scope,
     }).then(function(popover) {
       $scope.popover = popover;
     });
-
-
-/*
-    // .fromTemplate() method
-    var template = '<ion-popover-view><ion-header-bar> <h1 class="title">My Popover Title</h1> </ion-header-bar> <ion-content> Hello! </ion-content></ion-popover-view>';
-
-    $scope.popover = $ionicPopover.fromTemplate(template, {
-      scope: $scope
-    });
-    $scope.openPopover = function($event) {
-      $scope.popover.show($event);
-    };
-*/
 
 })// DetalleCtrl
 
