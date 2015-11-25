@@ -236,7 +236,7 @@ angular.module('wca.controllers',[])
       $rootScope.lng = coords.lng();
 
       SClima.getData( $rootScope.lat, $rootScope.lng ).success(function(climadata){
-        console.log('datos de clima', climadata);
+        //console.log('datos de clima', climadata);
         $scope.descripcion = climadata.weather[0].description;
         $scope.temp = climadata.main.temp;
         $scope.presion = climadata.main.pressure;

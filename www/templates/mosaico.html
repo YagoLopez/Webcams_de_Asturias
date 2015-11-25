@@ -1,4 +1,17 @@
 <ion-view title="Mosaico" hide-back-button="true">
+
+  <ion-nav-bar class="bar-calm" style="height: 0px">
+    <ion-nav-back-button class="button-icon ion-android-arrow-back"></ion-nav-back-button>
+    <ion-nav-buttons side="left">
+      <button class="button button-icon button-clear ion-navicon" menu-toggle="left">
+      </button>
+    </ion-nav-buttons>
+    <ion-nav-buttons side="secondary">
+      <button class="button button-icon icon ion-ios-search-strong" ng-click="showFilterBar()">
+      </button>
+    </ion-nav-buttons>
+  </ion-nav-bar>
+
   <ion-content>
     <!--TODO: arreglar el texto de pie de foto para que se vea con elipsis como en el listado-->
     <div class="grid">
