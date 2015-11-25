@@ -4,26 +4,22 @@
       .popover{
         width: 60%;
         height:25%;
-        background-color: lightgrey;
       }
       .smal{font-size: small;}
     </style>
     <div class="list" ng-click="popover.hide()">
 
-      <a href="#/app/mapa?lugar={{::lugar}}&concejo={{::concejo}}"
-         class="item item-stable item-icon-left smal">
+      <a href="#/app/mapa?lugar={{::lugar}}&concejo={{::concejo}}" class="item item-icon-left smal">
         <i class="icon ion-android-pin"></i>
         Ver en Mapa
       </a>
 
-      <a href="#/app/streetview?lugar={{::lugar}}&concejo={{::concejo}}"
-         class="item item-stable item-icon-left smal">
+      <a href="#/app/streetview?lugar={{::lugar}}&concejo={{::concejo}}" class="item item-icon-left smal">
         <i class="icon ion-ios-navigate"></i>
         Ver en Street View
       </a>
 
-      <a href="#/app/panoramio?lugar={{::lugar}}&concejo={{::concejo}}"
-         class="item item-stable item-icon-left smal">
+      <a href="#/app/panoramio?lugar={{::lugar}}&concejo={{::concejo}}" class="item item-icon-left smal">
         <i class="icon ion-images"></i>
         Fotos de la zona
       </a>
