@@ -30,7 +30,6 @@ angular.module('wca.controllers',[])
 
     //TODO: revisar esto
     $rootScope.mostrarLupa = true;
-    console.log('mostrarLupa', $rootScope.mostrarLupa);
     // elimina search bar si estuviera activada al mostrar la vista
     //if ($rootScope.filterBarInstance)
     //  $rootScope.filterBarInstance();
@@ -229,15 +228,6 @@ angular.module('wca.controllers',[])
 
     $scope.rowid = $stateParams.rowid;
     $rootScope.mostrarLupa = false;
-    console.log('mostrarLupa', $rootScope.mostrarLupa);
-
-
-
-    //TODO: revisar esto
-    // elimina search bar si estuviera activada al mostrar la vista
-    //if ($rootScope.filterBarInstance)
-    //  $rootScope.filterBarInstance();
-
 
     if(!$rootScope.items || !$scope.rowid){
       SPopup.show('Aviso', 'No hay datos de cámara/s. Escoger otra opción de menú');
