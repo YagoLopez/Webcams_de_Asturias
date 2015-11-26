@@ -18,7 +18,7 @@ angular.module('wca.controllers',[])
   })
 
 .controller('TabsCtrl', function($scope, $stateParams, $ionicLoading, $rootScope, $ionicFilterBar,
-                                 SFusionTable, $filter, $ionicScrollDelegate, SPopup){
+                                 SFusionTable, $filter, $ionicScrollDelegate, SPopup, $ionicNavBarDelegate){
 
     // mostrar loader
     var icono_spinner = "<ion-spinner icon='lines' class='spinner-calm'></ion-spinner><br/>";
@@ -29,13 +29,16 @@ angular.module('wca.controllers',[])
     var idCategoria = $stateParams.idCategoria || '';
 
     //TODO: revisar esto
+    $rootScope.mostrarLupa = true;
+    console.log('mostrarLupa', $rootScope.mostrarLupa);
     // elimina search bar si estuviera activada al mostrar la vista
     //if ($rootScope.filterBarInstance)
     //  $rootScope.filterBarInstance();
     //console.log('rootScope.filterBarInstance', $rootScope.filterBarInstance);
 
     // inicializa filter bar
-    $rootScope.filterBarInstance = null;
+    //$rootScope.filterBarInstance = null;
+
 
     function esSubcadena(idCategoria, urlCategoria) {
       return (urlCategoria.indexOf('categoria='+idCategoria) > -1);
@@ -108,7 +111,9 @@ angular.module('wca.controllers',[])
 
 .controller('MapaCtrl', function($scope, $stateParams, SMapa, $rootScope){
 
-  $scope.$on('$ionicView.afterEnter', function() {
+    $rootScope.mostrarLupa = false;
+
+    $scope.$on('$ionicView.afterEnter', function() {
 
     var mapa = SMapa.creaMapa( document.getElementById('mapa') );
     $scope.lugar = $stateParams.lugar;
@@ -155,6 +160,7 @@ angular.module('wca.controllers',[])
 .controller('MapaGlobalCtrl', function($scope, $rootScope, SMapa){
     $rootScope.lat = null;
     $rootScope.lng = null;
+    $rootScope.mostrarLupa = false;
     var mapa = SMapa.creaMapa(document.getElementById('mapaglobal'));
     mapa.setCenter(SMapa.OVIEDO);
     mapa.setZoom(8);
@@ -179,6 +185,7 @@ angular.module('wca.controllers',[])
     var FotosPanoramio = new panoramio.PhotoWidget('divPanoramio', rectanguloBusqueda, null);
     FotosPanoramio.setPosition(0);
 
+    $rootScope.mostrarLupa = false;
     $scope.lugar = $stateParams.lugar;
     $scope.concejo = $stateParams.concejo;
     $scope.fotos = FotosPanoramio;
@@ -221,11 +228,15 @@ angular.module('wca.controllers',[])
                                     SPopup, SWikipedia, $ionicSlideBoxDelegate, $ionicPopover){
 
     $scope.rowid = $stateParams.rowid;
+    $rootScope.mostrarLupa = false;
+    console.log('mostrarLupa', $rootScope.mostrarLupa);
+
+
 
     //TODO: revisar esto
     // elimina search bar si estuviera activada al mostrar la vista
-    if ($rootScope.filterBarInstance)
-      $rootScope.filterBarInstance();
+    //if ($rootScope.filterBarInstance)
+    //  $rootScope.filterBarInstance();
 
 
     if(!$rootScope.items || !$scope.rowid){
@@ -307,6 +318,8 @@ angular.module('wca.controllers',[])
 
   $scope.lugar = $stateParams.lugar || '';
   $scope.concejo = $stateParams.concejo || '';
+  $rootScope.mostrarLupa = false;
+
   var coords = {lat: $rootScope.lat, lng: $rootScope.lng};
 
   if(!coords.lat || !coords.lng) {

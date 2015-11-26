@@ -2,9 +2,7 @@
 <ion-side-menus enable-menu-with-back-views="true">
 
   <!-- Side Menu Content -------------------------------------------------------------------------------------------->
-  <!--<ion-side-menu-content drag-content="false">-->
-  <ion-side-menu-content>
-
+  <ion-side-menu-content drag-content="false">
     <ion-nav-bar class="bar-calm" style="height:0;">
       <ion-nav-back-button class="button-icon ion-android-arrow-back">
       </ion-nav-back-button>
@@ -13,7 +11,7 @@
         </button>
       </ion-nav-buttons>
       <ion-nav-buttons side="secondary">
-        <button class="button button-icon icon ion-ios-search-strong" ng-click="showFilterBar()">
+        <button id="lupa" ng-show="mostrarLupa" class="button button-icon icon ion-ios-search-strong" ng-click="showFilterBar()">
         </button>
       </ion-nav-buttons>
       </ion-nav-bar>
