@@ -25,7 +25,7 @@ angular.module('wca',
   });
 })
 
-.config(function($stateProvider, $urlRouterProvider, $compileProvider, $ionicConfigProvider) {
+.config(function($stateProvider, $urlRouterProvider, $compileProvider, $ionicConfigProvider, $ionicFilterBarConfigProvider) {
 
     // disable debug info
     $compileProvider.debugInfoEnabled(true);
@@ -35,6 +35,7 @@ angular.module('wca',
     if (!ionic.Platform.isIOS()) {
       $ionicConfigProvider.scrolling.jsScrolling(false);
     }
+    $ionicFilterBarConfigProvider.placeholder('Buscar');
 
     $stateProvider
 

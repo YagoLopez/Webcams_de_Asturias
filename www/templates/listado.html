@@ -5,14 +5,32 @@
 <!--TODO: implementar directiva de progress bar-->
 <ion-view view-title="Listado">
 
-  <ion-nav-buttons side="secondary">
-    <button class="button button-icon icon ion-ios-search-strong" ng-click="showFilterBar()">
-    </button>
-  </ion-nav-buttons>
+<!--
+  <ion-nav-bar class="bar-calm" style="height: 0;">
+    <ion-nav-back-button class="button-icon ion-android-arrow-back">
+    </ion-nav-back-button>
+    <ion-nav-buttons side="left">
+      <button class="button button-icon button-clear ion-navicon" menu-toggle="left">
+      </button>
+    </ion-nav-buttons>
+-->
+
+<!--
+          <ion-nav-buttons side="secondary">
+            <button class="button button-icon icon ion-ios-search-strong" ng-click="showFilterBar()">
+            </button>
+          </ion-nav-buttons>
+-->
+
+
+
+  <!--</ion-nav-bar>-->
+
 
   <ion-content>
     <div class="list">
-      <div collection-repeat="cam in items track by cam[4]" collection-item-heigth="100px">
+      <div collection-repeat="cam in items track by cam[4]" item-heigth="100px">
+      <!--<div ng-repeat="cam in items track by cam[4]">-->
         <a class="item item-thumbnail-left item-icon-right" href="#/app/detalle/{{cam[4]}}">
           <!--<img ng-src="http://api.randomuser.me/portraits/thumb/men/{{$index}}.jpg" height="50%">-->
           <img src="../img/ionic.png"/>

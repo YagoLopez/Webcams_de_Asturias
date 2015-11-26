@@ -30,8 +30,12 @@ angular.module('wca.controllers',[])
 
     //TODO: revisar esto
     // elimina search bar si estuviera activada al mostrar la vista
-    if ($rootScope.filterBarInstance)
-      $rootScope.filterBarInstance();
+    //if ($rootScope.filterBarInstance)
+    //  $rootScope.filterBarInstance();
+    //console.log('rootScope.filterBarInstance', $rootScope.filterBarInstance);
+
+    // inicializa filter bar
+    $rootScope.filterBarInstance = null;
 
     function esSubcadena(idCategoria, urlCategoria) {
       return (urlCategoria.indexOf('categoria='+idCategoria) > -1);
@@ -79,8 +83,17 @@ angular.module('wca.controllers',[])
             $ionicScrollDelegate.scrollTop(false);
           },
           cancelText: 'Cancelar',
+          //done: function(){
+          //  $ionicSideMenuDelegate.canDragContent(false);
+          //  console.log('no se puede abrir el menu');
+          //
+          //},
+          //cancel: function(){
+            // destruye fileter bar
+            //$rootScope.filterBarInstance();
+            //console.log('filter bar destroyed');
+          //},
           cancelOnStateChange: true
-          //TODO: cambiar texto placeholder
         });
       };
 
