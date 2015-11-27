@@ -58,7 +58,7 @@ angular.module('wca.services',[])
       });
     };
 
-    var creaMapa = function (domElement){
+    var creaMapa = function (domElement, filtro){
       var mapa = new google.maps.Map(domElement,  {
         mapTypeControl: true,
         mapTypeControlOptions: { style: google.maps.MapTypeControlStyle.DROPDOWN_MENU },
@@ -70,7 +70,7 @@ angular.module('wca.services',[])
         query: {
           select: 'col7',
           from: SFusionTable.TABLE_ID,
-          where: ''
+          where: filtro
         },
         options: {
           styleId: 6,

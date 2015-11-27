@@ -156,13 +156,68 @@ angular.module('wca.controllers',[])
 
 }) // fin MapaGlobalCtrl
 
-.controller('MapaGlobalCtrl', function($scope, $rootScope, SMapa){
+.controller('MapaGlobalCtrl', function($scope, $rootScope, SMapa, SFusionTable, SPopup){
     $rootScope.lat = null;
     $rootScope.lng = null;
     $rootScope.mostrarLupa = false;
-    var mapa = SMapa.creaMapa(document.getElementById('mapaglobal'));
+    var layer = null;
+
+
+    // https://www.googleapis.com/fusiontables/v2/query?sql=
+    // SELECT Concejo FROM 1gX5maFbqFyRziZiUYlpOBYhcC1v9lGkKqCXvZREF GROUP BY Concejo
+    // &key=AIzaSyBsdouSTimjrC2xHmbGgOt8VfbLBWc9Gps
+    // 64 concejos?
+
+
+    var sqlQueryString = 'SELECT Concejo FROM '+SFusionTable.TABLE_ID+' GROUP BY Concejo';
+    SFusionTable.getRemoteData(sqlQueryString).success(function(data){
+      //console.log('data', data);
+      $scope.concejos = data.rows;
+    }).error(function(stauts){
+      SPopup.show('Error', 'Fallo cargando lista concejos: '+status);
+    });
+
+
+    $scope.concejoEscogido = function(concejo){
+
+      console.log('concejo antes:', escape(concejo));
+      concejo = concejo.replace(/(\r\n|\n|\r)/gm,'').trim();
+      //concejo = concejo.trim();
+      //concejo = concejo.replace(/(^\s+|\s+$)/g,'');
+      console.log('concejo despues:', concejo);
+
+      //var filtro = 'Concejo=\'' + $scope.concejo + '\''; // el concejo tiene que ir entre comillas
+      //console.log('filtro', filtro);
+
+      //mapa.overlayMapTypes.setAt( 0, null);
+      layer = new google.maps.FusionTablesLayer({
+        //map: mapa,
+        query: {
+          select: 'col7',
+          from: SFusionTable.TABLE_ID,
+          where: 'Concejo=\''+concejo+'\''
+        },
+        options: {
+          styleId: 6,
+          templateId: 8
+        }
+      }); // layer
+
+      layer.setMap(mapa);
+      //console.log('layer', layer);
+
+
+    }; // concejo escogido
+
+    var mapa = new google.maps.Map(document.getElementById('mapaglobal'),  {
+      mapTypeControl: true,
+      mapTypeControlOptions: { style: google.maps.MapTypeControlStyle.DROPDOWN_MENU },
+      mapTypeId: google.maps.MapTypeId.TERRAIN
+    });
     mapa.setCenter(SMapa.OVIEDO);
     mapa.setZoom(8);
+console.log('mapa', mapa);
+
 }) //mapaglobalctrl
 
 .controller('PanoramioCtrl', function($scope, $stateParams, SMapa, $ionicModal, $rootScope){
