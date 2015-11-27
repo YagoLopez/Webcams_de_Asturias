@@ -27,7 +27,7 @@ angular.module('wca.services',[])
   .factory('SMapa', function(SFusionTable, SPopup){
 
     var OVIEDO = {lat: 43.3667, lng: -5.8333}; // centro de mapa vista global
-    var RADIO_BUSQUEDA = 500; // radio de búsqueda de imagenes de street view en metros a partir una ubicacion
+    var RADIO_BUSQUEDA = 500; // radio de búsqueda de panorama StreetView en metros a partir latLng
 
     var hallaLatLng = function (domElement, lugar, concejo, fn){
       var request = {
@@ -58,6 +58,15 @@ angular.module('wca.services',[])
       });
     };
 
+    var crear = function (domElement){
+      var mapa = new google.maps.Map(domElement,  {
+        mapTypeControl: true,
+        mapTypeControlOptions: { style: google.maps.MapTypeControlStyle.DROPDOWN_MENU },
+        mapTypeId: google.maps.MapTypeId.TERRAIN
+      });
+      return mapa;
+    }; // crear()
+
     var creaMapa = function (domElement, filtro){
       var mapa = new google.maps.Map(domElement,  {
         mapTypeControl: true,
@@ -80,12 +89,25 @@ angular.module('wca.services',[])
       return mapa;
     }; // creaMapa()
 
+    var creaFusionTableLayer = function(filtroMarkers){
+      var query = { select: 'col7', from: SFusionTable.TABLE_ID, where: filtroMarkers };
+      var options = { styleId: 6, templateId: 8 };
+      var layer = new google.maps.FusionTablesLayer({
+        //heatmap: { enabled: false },
+        query: query,
+        options: options
+      });
+      return layer;
+    }; // creaFusionTableLayer()
+
     return {
       OVIEDO: OVIEDO,
       RADIO_BUSQUEDA: RADIO_BUSQUEDA,
       creaMapa: creaMapa,
       hallaLatLng: hallaLatLng,
-      creaStreetView: creaStreetView
+      creaStreetView: creaStreetView,
+      crear: crear,
+      creaFusionTableLayer: creaFusionTableLayer
     }
   }) // SMapa
 
