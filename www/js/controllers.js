@@ -38,7 +38,6 @@ angular.module('wca.controllers',[])
     // inicializa filter bar
     //$rootScope.filterBarInstance = null;
 
-
     function esSubcadena(idCategoria, urlCategoria) {
       return (urlCategoria.indexOf('categoria='+idCategoria) > -1);
     }
