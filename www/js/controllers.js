@@ -158,7 +158,7 @@ angular.module('wca.controllers',[])
     var mapa = null;
     var zoomLevel = 7;
     $rootScope.mostrarLupa = false;
-    $scope.choice = null;
+    $scope.checked = null;
 
     var sqlQueryConcejos = 'SELECT Concejo FROM '+SFusionTable.TABLE_ID+' GROUP BY Concejo';
     SFusionTable.getRemoteData(sqlQueryConcejos).success(function(data){
@@ -176,8 +176,8 @@ angular.module('wca.controllers',[])
 
     $scope.concejoEscogido = function(concejo){
 
-      $scope.choice = 'a';
-      console.log('choice', $scope.choice);
+      $scope.checked = 'con';
+      console.log('checked', $scope.checked);
 
       // elimina retornos de carro y espacios en blanco al principio y al final
       concejo = concejo.replace(/(\r\n|\n|\r)/gm,'').trim();
@@ -195,8 +195,8 @@ angular.module('wca.controllers',[])
 
     $scope.categoriaEscogida = function(categoria){
 
-      $scope.choice = 'b';
-      console.log('choice', $scope.choice);
+      $scope.checked = 'cat';
+      console.log('checked', $scope.checked);
 
 
       categoria = categoria.replace(/(\r\n|\n|\r)/gm,'').trim();
