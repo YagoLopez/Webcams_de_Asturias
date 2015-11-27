@@ -103,20 +103,19 @@ angular.module('wca.controllers',[])
 
     }).error(function(data, status) {
       $ionicLoading.hide();
-      SPopup.show('Error', 'Fallo obteniendo datos de cámaras->SFusionTable.getRemoteData(): '+status)
+      SPopup.show('Error', 'Fallo obteniendo datos de cámaras<br>SFusionTable.getRemoteData(): '+status)
     });
 
 })// TabsCtrl
 
 .controller('MapaCtrl', function($scope, $stateParams, SMapa, $rootScope){
 
-    $rootScope.mostrarLupa = false;
-
-    $scope.$on('$ionicView.afterEnter', function() {
-
-    var mapa = SMapa.creaMapa( document.getElementById('mapa') );
+  $rootScope.mostrarLupa = false;
+  //$scope.$on('$ionicView.afterEnter', function() {
     $scope.lugar = $stateParams.lugar;
     $scope.concejo = $stateParams.concejo;
+    var mapa = SMapa.crear(document.getElementById('mapa'));
+    var layer = SMapa.creaFusionTableLayer().setMap(mapa);
 
     if(!$rootScope.lat || !$rootScope.lng){
       mapa.setCenter(SMapa.OVIEDO);
@@ -125,11 +124,9 @@ angular.module('wca.controllers',[])
         mapa.setCenter( {lat: $rootScope.lat, lng: $rootScope.lng} );
         mapa.setZoom(13);
     }// else
+  //}); // $scope.on
 
-  }); // $scope.on
-
-// ---------------------------------------------------------------------------
-
+  // Geolocalizacion --------------------------------------------------------------------------------------------------
   /* ---------------------------------------------------------
   // Try HTML5 geolocation
       if (navigator.geolocation) {
@@ -153,25 +150,24 @@ angular.module('wca.controllers',[])
       }
     };
   */
+  // Fin Geolocalizacion ----------------------------------------------------------------------------------------------
 
 }) // fin MapaGlobalCtrl
 
 .controller('MapaGlobalCtrl', function($scope, $rootScope, SMapa, SFusionTable, SPopup){
     var layer = null;
     var mapa = null;
-    var sqlQueryConcejos = null;
-    var sqlQueryCategorias = null;
     var zoomLevel = 7;
     $rootScope.mostrarLupa = false;
 
-    sqlQueryConcejos = 'SELECT Concejo FROM '+SFusionTable.TABLE_ID+' GROUP BY Concejo';
+    var sqlQueryConcejos = 'SELECT Concejo FROM '+SFusionTable.TABLE_ID+' GROUP BY Concejo';
     SFusionTable.getRemoteData(sqlQueryConcejos).success(function(data){
       $scope.concejos = data.rows;
     }).error(function(status){
       SPopup.show('Error', 'Fallo cargando lista concejos: '+status);
     });
 
-    sqlQueryCategorias = 'SELECT Categoria FROM '+SFusionTable.TABLE_ID+' GROUP BY Categoria';
+    var sqlQueryCategorias = 'SELECT Categoria FROM '+SFusionTable.TABLE_ID+' GROUP BY Categoria';
     SFusionTable.getRemoteData(sqlQueryCategorias).success(function(data){
       $scope.categorias = data.rows;
     }).error(function(status){
@@ -209,7 +205,7 @@ angular.module('wca.controllers',[])
 
     }; // concejo escogido
 
-    mapa = SMapa.crear(document.getElementById('mapa'));
+    mapa = SMapa.crear(document.getElementById('mapaglobal'));
     mapa.setCenter(SMapa.OVIEDO);
     mapa.setZoom(zoomLevel+1);
 
@@ -367,8 +363,7 @@ angular.module('wca.controllers',[])
     return;
   }
 
-  $scope.$on('$ionicView.afterEnter', function() {
-
+  //$scope.$on('$ionicView.afterEnter', function() {
     var div = document.getElementById('street-view');
     //SMapa.hallaLatLng(div, $scope.lugar, $scope.concejo, function (coords) {
       var streetViewService = new google.maps.StreetViewService();
@@ -377,12 +372,12 @@ angular.module('wca.controllers',[])
           SMapa.creaStreetView(div, data.location.latLng);
           //SMapa.creaStreetView( div, {lat:$rootScope.lat, lng:$rootScope.lng} );
         } else {
-          SPopup.show('Error', 'No se ha encontrado StreetView->getPanoramaByLocation(): '+status);
+          SPopup.show('Aviso', 'Panorama StreetView no disponible en esta ubicación<br>' +
+            'getPanoramaByLocation(): '+status);
         }
       })
     //})//hallaLatLng
-
-  })//$scope.on
+  //})//$scope.on
 
 })//StreetViewCtrl
 

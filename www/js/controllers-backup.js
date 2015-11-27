@@ -18,7 +18,7 @@ angular.module('wca.controllers',[])
   })
 
 .controller('TabsCtrl', function($scope, $stateParams, $ionicLoading, $rootScope, $ionicFilterBar,
-                                 SFusionTable, $filter, $ionicScrollDelegate, SPopup){
+                                 SFusionTable, $filter, $ionicScrollDelegate, SPopup, $ionicNavBarDelegate){
 
     // mostrar loader
     var icono_spinner = "<ion-spinner icon='lines' class='spinner-calm'></ion-spinner><br/>";
@@ -29,9 +29,15 @@ angular.module('wca.controllers',[])
     var idCategoria = $stateParams.idCategoria || '';
 
     //TODO: revisar esto
+    $rootScope.mostrarLupa = true;
     // elimina search bar si estuviera activada al mostrar la vista
-    if ($rootScope.filterBarInstance)
-      $rootScope.filterBarInstance();
+    //if ($rootScope.filterBarInstance)
+    //  $rootScope.filterBarInstance();
+    //console.log('rootScope.filterBarInstance', $rootScope.filterBarInstance);
+
+    // inicializa filter bar
+    //$rootScope.filterBarInstance = null;
+
 
     function esSubcadena(idCategoria, urlCategoria) {
       return (urlCategoria.indexOf('categoria='+idCategoria) > -1);
@@ -79,8 +85,17 @@ angular.module('wca.controllers',[])
             $ionicScrollDelegate.scrollTop(false);
           },
           cancelText: 'Cancelar',
+          //done: function(){
+          //  $ionicSideMenuDelegate.canDragContent(false);
+          //  console.log('no se puede abrir el menu');
+          //
+          //},
+          //cancel: function(){
+            // destruye fileter bar
+            //$rootScope.filterBarInstance();
+            //console.log('filter bar destroyed');
+          //},
           cancelOnStateChange: true
-          //TODO: cambiar texto placeholder
         });
       };
 
@@ -95,11 +110,15 @@ angular.module('wca.controllers',[])
 
 .controller('MapaCtrl', function($scope, $stateParams, SMapa, $rootScope){
 
+  $rootScope.mostrarLupa = false;
+
   $scope.$on('$ionicView.afterEnter', function() {
 
-    var mapa = SMapa.creaMapa( document.getElementById('mapa') );
     $scope.lugar = $stateParams.lugar;
     $scope.concejo = $stateParams.concejo;
+    //var mapa = SMapa.creaMapa( document.getElementById('mapa') );
+    var mapa = SMapa.crear(document.getElementById('mapa'));
+    var layer = SMapa.creaFusionTableLayer().setMap(mapa);
 
     if(!$rootScope.lat || !$rootScope.lng){
       mapa.setCenter(SMapa.OVIEDO);
@@ -111,8 +130,7 @@ angular.module('wca.controllers',[])
 
   }); // $scope.on
 
-// ---------------------------------------------------------------------------
-
+  // Geolocalizacion --------------------------------------------------------------------------------------------------
   /* ---------------------------------------------------------
   // Try HTML5 geolocation
       if (navigator.geolocation) {
@@ -136,15 +154,67 @@ angular.module('wca.controllers',[])
       }
     };
   */
+  // Fin Geolocalizacion ----------------------------------------------------------------------------------------------
 
 }) // fin MapaGlobalCtrl
 
-.controller('MapaGlobalCtrl', function($scope, $rootScope, SMapa){
-    $rootScope.lat = null;
-    $rootScope.lng = null;
-    var mapa = SMapa.creaMapa(document.getElementById('mapaglobal'));
+.controller('MapaGlobalCtrl', function($scope, $rootScope, SMapa, SFusionTable, SPopup){
+    var layer = null;
+    var mapa = null;
+    var sqlQueryConcejos = null;
+    var sqlQueryCategorias = null;
+    var zoomLevel = 7;
+    $rootScope.mostrarLupa = false;
+
+    sqlQueryConcejos = 'SELECT Concejo FROM '+SFusionTable.TABLE_ID+' GROUP BY Concejo';
+    SFusionTable.getRemoteData(sqlQueryConcejos).success(function(data){
+      $scope.concejos = data.rows;
+    }).error(function(status){
+      SPopup.show('Error', 'Fallo cargando lista concejos: '+status);
+    });
+
+    sqlQueryCategorias = 'SELECT Categoria FROM '+SFusionTable.TABLE_ID+' GROUP BY Categoria';
+    SFusionTable.getRemoteData(sqlQueryCategorias).success(function(data){
+      $scope.categorias = data.rows;
+    }).error(function(status){
+      SPopup.show('Error', 'Fallo cargando lista categorias: '+status);
+    });
+
+    $scope.concejoEscogido = function(concejo){
+
+      // elimina retornos de carro y espacios en blanco al principio y al final
+      concejo = concejo.replace(/(\r\n|\n|\r)/gm,'').trim();
+
+      var filtro = 'Concejo=\'' + concejo + '\''; // el concejo tiene que ir entre comillas
+
+      if(layer)
+        layer.setMap(null);
+      layer = SMapa.creaFusionTableLayer(filtro);
+      layer.setMap(mapa);
+      mapa.setCenter(SMapa.OVIEDO);
+      mapa.setZoom(zoomLevel);
+
+    }; // concejo escogido
+
+    $scope.categoriaEscogida = function(categoria){
+
+      categoria = categoria.replace(/(\r\n|\n|\r)/gm,'').trim();
+
+      var filtro = 'Categoria=\'' + categoria + '\'';
+
+      if(layer)
+        layer.setMap(null);
+      layer = SMapa.creaFusionTableLayer(filtro);
+      layer.setMap(mapa);
+      mapa.setCenter(SMapa.OVIEDO);
+      mapa.setZoom(zoomLevel);
+
+    }; // concejo escogido
+
+    mapa = SMapa.crear(document.getElementById('mapaglobal'));
     mapa.setCenter(SMapa.OVIEDO);
-    mapa.setZoom(8);
+    mapa.setZoom(zoomLevel+1);
+
 }) //mapaglobalctrl
 
 .controller('PanoramioCtrl', function($scope, $stateParams, SMapa, $ionicModal, $rootScope){
@@ -166,6 +236,7 @@ angular.module('wca.controllers',[])
     var FotosPanoramio = new panoramio.PhotoWidget('divPanoramio', rectanguloBusqueda, null);
     FotosPanoramio.setPosition(0);
 
+    $rootScope.mostrarLupa = false;
     $scope.lugar = $stateParams.lugar;
     $scope.concejo = $stateParams.concejo;
     $scope.fotos = FotosPanoramio;
@@ -205,9 +276,10 @@ angular.module('wca.controllers',[])
 }) // panoramio ctrl
 
 .controller('DetalleCtrl', function($scope, $stateParams, $ionicModal, SMapa, SClima, $filter, $rootScope,
-                                    SPopup, SWikipedia){
+                                    SPopup, SWikipedia, $ionicSlideBoxDelegate, $ionicPopover){
 
     $scope.rowid = $stateParams.rowid;
+    $rootScope.mostrarLupa = false;
 
     if(!$rootScope.items || !$scope.rowid){
       SPopup.show('Aviso', 'No hay datos de cámara/s. Escoger otra opción de menú');
@@ -217,11 +289,13 @@ angular.module('wca.controllers',[])
     var cam = $filter('filter')($rootScope.items, function(cam) {
       return cam[4] == $scope.rowid;
     });
-    var lugar = cam[0][0];
-    var concejo = cam[0][1];
+    $scope.lugar = cam[0][0];
+    $scope.concejo = cam[0][1];
+    $scope.imagen = cam[0][2];
+    $scope.categoria = cam[0][3];
     // CLIMA ---------------------------------------------------------------------------------------------------------
     var div = document.getElementById('void');
-    SMapa.hallaLatLng(div, lugar, concejo, function(coords){
+    SMapa.hallaLatLng(div, $scope.lugar, $scope.concejo, function(coords){
 
       //TODO: no usar rootscope. Crear un servicio para almacenar lat, lng, lugar, concejo y compartir entre controllers
       $rootScope.lat = coords.lat();
@@ -237,28 +311,23 @@ angular.module('wca.controllers',[])
         $scope.velocidadViento = climadata.wind.speed;
         $scope.direccionViento = climadata.wind.deg;
         //volumen precipitaciones ultimas 3 horas
-        //$scope.precipitacion = climadata.rain.3h;
+        //$scope.precipitacion = climadata.rain['3h'];
         //url icono: http://openweathermap.org/img/w/10n.png
         $scope.iconoUrl = 'http://openweathermap.org/img/w/'+climadata.weather[0].icon+'.png' ;
 
       }).error(function(status){
-        //console.error('Error obteniendo datos clima: ', status);
         SPopup.show('Error', 'SClima.getData(): '+status)
       });
     });// hallalatlng
     // FIN CLIMA -----------------------------------------------------------------------------------------------------
 
     // WIKIPEDIA -----------------------------------------------------------------------------------------------------
-    SWikipedia.info( concejo ).success(function(data){
-
-      //TODO: comprobar si existe info del concejo
+    SWikipedia.info($scope.concejo).success(function(data){
       var pageid = data.query.pageids[0];
-      //console.log('info concejo', data);
-      //console.log('pageid', pageid);
-      //$scope.extract = $filter('filter')([data.query.pages], {$ : concejo})[0];
-      $scope.infoConcejo = data.query.pages[pageid].extract;
-      console.log('extract', $scope.infoConcejo);
-
+      if(pageid) {
+        $scope.infoConcejo = data.query.pages[pageid].extract;
+        //console.log('extract', $scope.infoConcejo);
+      }
     }).error(function(status){
       console.warn(status);
     });
@@ -279,12 +348,20 @@ angular.module('wca.controllers',[])
     };
     // FIN DIALOGO MODAL ----------------------------------------------------------------------------------------------
 
-  })// DetalleCtrl
+    $ionicPopover.fromTemplateUrl('templates/popover.html', {
+      scope: $scope,
+    }).then(function(popover) {
+      $scope.popover = popover;
+    });
+
+})// DetalleCtrl
 
 .controller('StreetViewCtrl', function($scope, SMapa, $stateParams, $rootScope, SPopup){
 
   $scope.lugar = $stateParams.lugar || '';
   $scope.concejo = $stateParams.concejo || '';
+  $rootScope.mostrarLupa = false;
+
   var coords = {lat: $rootScope.lat, lng: $rootScope.lng};
 
   if(!coords.lat || !coords.lng) {
@@ -292,8 +369,7 @@ angular.module('wca.controllers',[])
     return;
   }
 
-  $scope.$on('$ionicView.afterEnter', function() {
-
+  //$scope.$on('$ionicView.afterEnter', function() {
     var div = document.getElementById('street-view');
     //SMapa.hallaLatLng(div, $scope.lugar, $scope.concejo, function (coords) {
       var streetViewService = new google.maps.StreetViewService();
@@ -302,35 +378,14 @@ angular.module('wca.controllers',[])
           SMapa.creaStreetView(div, data.location.latLng);
           //SMapa.creaStreetView( div, {lat:$rootScope.lat, lng:$rootScope.lng} );
         } else {
-          SPopup.show('Error', 'No se ha encontrado StreetView->getPanoramaByLocation(): '+status);
+          SPopup.show('Aviso', 'Panorama StreetView no disponible en esta ubicación<br>' +
+            'getPanoramaByLocation(): '+status);
         }
       })
     //})//hallaLatLng
-
-  })//$scope.on
+  //})//$scope.on
 
 })//StreetViewCtrl
 
-
-
-  /*
-   .controller('ListadoCtrl', function($ionicHistory, $scope){
-
-   }) // fin ListadoCtrl
-
-   .controller('MosaicoCtrl', function($scope, $ionicHistory){
-   //TODO: borrar esto
-   //
-   //$ionicHistory.nextViewOptions({
-   //  historyRoot: true,
-   //  disableBack: true,
-   //  disableAnimate: true
-   //});
-
-   //$ionicHistory.nextViewOptions({
-   //  historyRoot: true
-   //})
-   }) // fin MosaicoCtrl
-   */
 
 ; // FIN
