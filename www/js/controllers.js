@@ -157,25 +157,21 @@ angular.module('wca.controllers',[])
 }) // fin MapaGlobalCtrl
 
 .controller('MapaGlobalCtrl', function($scope, $rootScope, SMapa, SFusionTable, SPopup){
-    $rootScope.lat = null;
-    $rootScope.lng = null;
-    $rootScope.mostrarLupa = false;
     var layer = null;
+    var mapa = null;
+    var sqlQueryConcejos = null;
+    var sqlQueryCategorias = null;
     var zoomLevel = 7;
+    $rootScope.mostrarLupa = false;
 
-    // https://www.googleapis.com/fusiontables/v2/query?sql=
-    // SELECT Concejo FROM 1gX5maFbqFyRziZiUYlpOBYhcC1v9lGkKqCXvZREF GROUP BY Concejo
-    // &key=AIzaSyBsdouSTimjrC2xHmbGgOt8VfbLBWc9Gps
-    // 64 concejos?
-
-    var sqlQueryConcejos = 'SELECT Concejo FROM '+SFusionTable.TABLE_ID+' GROUP BY Concejo';
+    sqlQueryConcejos = 'SELECT Concejo FROM '+SFusionTable.TABLE_ID+' GROUP BY Concejo';
     SFusionTable.getRemoteData(sqlQueryConcejos).success(function(data){
       $scope.concejos = data.rows;
     }).error(function(status){
       SPopup.show('Error', 'Fallo cargando lista concejos: '+status);
     });
 
-    var sqlQueryCategorias = 'SELECT Categoria FROM '+SFusionTable.TABLE_ID+' GROUP BY Categoria';
+    sqlQueryCategorias = 'SELECT Categoria FROM '+SFusionTable.TABLE_ID+' GROUP BY Categoria';
     SFusionTable.getRemoteData(sqlQueryCategorias).success(function(data){
       $scope.categorias = data.rows;
     }).error(function(status){
@@ -213,7 +209,7 @@ angular.module('wca.controllers',[])
 
     }; // concejo escogido
 
-    var mapa = SMapa.crear(document.getElementById('mapa'));
+    mapa = SMapa.crear(document.getElementById('mapa'));
     mapa.setCenter(SMapa.OVIEDO);
     mapa.setZoom(zoomLevel+1);
 
