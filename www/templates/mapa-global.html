@@ -29,7 +29,7 @@
 
     <div class="list item-input-inset">
       <label class="item item-input item-select" style="width:100%">
-        Concejo:
+        <ion-radio ng-model="choice" ng-value="'a'">Concejo:</ion-radio>
         <select style="color: #387ef5" ng-model="concejo" ng-change="concejoEscogido(concejo);">
           <option ng-repeat="concejo in concejos">
             {{ ::concejo[0] }}
@@ -40,13 +40,14 @@
 
     <div class="list item-input-inset">
       <label class="item item-input item-select" style="width:100%">
-        Categoría
+        <ion-radio ng-model="choice" ng-value="'b'">Categoría:</ion-radio>
         <select style="color: #387ef5" ng-model="categoria" ng-change="categoriaEscogida(categoria);">
           <option ng-repeat="categoria in categorias">
             {{ ::categoria[0] }}
           </option>
         </select>
       </label>
+
     </div>
 
 
