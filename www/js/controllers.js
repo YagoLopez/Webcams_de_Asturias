@@ -182,8 +182,6 @@ angular.module('wca.controllers',[])
       SPopup.show('Error', 'Fallo cargando lista categorias: '+status);
     });
 
-
-
     $scope.concejoEscogido = function(concejo){
 
       // elimina retornos de carro y espacios en blanco al principio y al final
@@ -193,18 +191,7 @@ angular.module('wca.controllers',[])
 
       if(layer)
         layer.setMap(null);
-      layer = new google.maps.FusionTablesLayer({
-        query: {
-          select: 'col7',
-          from: SFusionTable.TABLE_ID,
-          where: filtro
-        },
-        options: {
-          styleId: 6,
-          templateId: 8
-        }
-      }); // layer
-
+      layer = SMapa.creaFusionTableLayer(filtro);
       layer.setMap(mapa);
       mapa.setCenter(SMapa.OVIEDO);
       mapa.setZoom(zoomLevel);
@@ -219,31 +206,14 @@ angular.module('wca.controllers',[])
 
       if(layer)
         layer.setMap(null);
-      layer = new google.maps.FusionTablesLayer({
-        query: {
-          select: 'col7',
-          from: SFusionTable.TABLE_ID,
-          where: filtro
-        },
-        options: {
-          styleId: 6,
-          templateId: 8
-        }
-      }); // layer
-
+      layer = SMapa.creaFusionTableLayer(filtro);
       layer.setMap(mapa);
       mapa.setCenter(SMapa.OVIEDO);
       mapa.setZoom(zoomLevel);
 
     }; // concejo escogido
 
-
-    var mapa = new google.maps.Map(document.getElementById('mapaglobal'),  {
-      mapTypeControl: true,
-      mapTypeControlOptions: { style: google.maps.MapTypeControlStyle.DROPDOWN_MENU },
-      mapTypeId: google.maps.MapTypeId.TERRAIN
-    });
-    //var mapa = SMapa.creaMapa(document.getElementById('mapaglobal'));
+    var mapa = SMapa.crear(document.getElementById('mapa'));
     mapa.setCenter(SMapa.OVIEDO);
     mapa.setZoom(zoomLevel+1);
 
