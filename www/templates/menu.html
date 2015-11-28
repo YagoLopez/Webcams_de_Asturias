@@ -40,6 +40,9 @@
         <ion-item menu-close href="#/app/tabs/listado?idCategoria=7">
           Playas
         </ion-item>
+        <ion-item menu-close href="#/app/tabs/listado?idCategoria=1">
+          Poblaciones
+        </ion-item>
         <ion-item menu-close href="#/app/tabs/listado?idCategoria=2">
           Puertos
         </ion-item>
@@ -52,24 +55,21 @@
         <ion-item menu-close href="#/app/tabs/listado">
           Listado Completo
         </ion-item>
-        <ion-item menu-close ng-click="login()">
-          Búsqueda Avanzada
-        </ion-item>
-        <ion-item menu-close href="#/app/search">
-          Search
-        </ion-item>
-        <ion-item menu-close href="#/app/browse">
-          Browse
-        </ion-item>
-        <ion-item menu-close href="#/app/playlists">
-          Playlists
-        </ion-item>
         <ion-item menu-close href="#/app/mapaglobal">
           Mapa Global
         </ion-item>
-
+        <ion-item href="#">
+          <div ng-click="toggleSubmenu()">Meteorología</div>
+          <ion-list href="#" ng-show="verSubmenu">
+            <ion-item menu-close href="#">
+              item 1
+            </ion-item>
+            <ion-item menu-close href="#">
+              item 2
+            </ion-item>
+          </ion-list>
+        </ion-item>
       </ion-list>
-
     </ion-content>
 
   </ion-side-menu>

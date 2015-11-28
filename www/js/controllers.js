@@ -6,8 +6,14 @@
 
 angular.module('wca.controllers',[])
 
-.controller('AppCtrl', function($scope, $ionicModal, $timeout, $rootScope) {
+.controller('AppCtrl', function($scope) {
 
+    $scope.verSubmenu = false;
+    $scope.toggleSubmenu = function(){
+      $scope.verSubmenu = !$scope.verSubmenu;
+      console.log('verSubmenu', $scope.verSubmenu);
+
+    };
   // With the new view caching in Ionic, Controllers are only called
   // when they are recreated or on app start, instead of every page change.
   // To listen for when this page is active (for example, to refresh data),
@@ -21,9 +27,9 @@ angular.module('wca.controllers',[])
                                  SFusionTable, $filter, $ionicScrollDelegate, SPopup, $ionicNavBarDelegate){
 
     // mostrar loader
-    var icono_spinner = "<ion-spinner icon='lines' class='spinner-calm'></ion-spinner><br/>";
-    var template_loader = "Cargando datos...";
-    $ionicLoading.show({template:template_loader, noBackdrop:true});
+    //var icono_spinner = "<ion-spinner icon='lines' class='spinner-calm'></ion-spinner><br/>";
+    var templateLoader = "Cargando datos...";
+    $ionicLoading.show({template:templateLoader, noBackdrop:true});
     // Guarda parametros url en variables temporales;
     var concejo = $stateParams.concejo || '';
     var idCategoria = $stateParams.idCategoria || '';
@@ -177,13 +183,9 @@ angular.module('wca.controllers',[])
     $scope.concejoEscogido = function(concejo){
 
       $scope.checked = 'con';
-      console.log('checked', $scope.checked);
-
       // elimina retornos de carro y espacios en blanco al principio y al final
       concejo = concejo.replace(/(\r\n|\n|\r)/gm,'').trim();
-
       var filtro = 'Concejo=\'' + concejo + '\''; // el concejo tiene que ir entre comillas
-
       if(layer)
         layer.setMap(null);
       layer = SMapa.creaFusionTableLayer(filtro);
@@ -196,13 +198,8 @@ angular.module('wca.controllers',[])
     $scope.categoriaEscogida = function(categoria){
 
       $scope.checked = 'cat';
-      console.log('checked', $scope.checked);
-
-
       categoria = categoria.replace(/(\r\n|\n|\r)/gm,'').trim();
-
       var filtro = 'Categoria=\'' + categoria + '\'';
-
       if(layer)
         layer.setMap(null);
       layer = SMapa.creaFusionTableLayer(filtro);

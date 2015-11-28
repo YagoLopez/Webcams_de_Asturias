@@ -21,9 +21,9 @@ angular.module('wca.controllers',[])
                                  SFusionTable, $filter, $ionicScrollDelegate, SPopup, $ionicNavBarDelegate){
 
     // mostrar loader
-    var icono_spinner = "<ion-spinner icon='lines' class='spinner-calm'></ion-spinner><br/>";
-    var template_loader = "Cargando datos...";
-    $ionicLoading.show({template:template_loader, noBackdrop:true});
+    //var icono_spinner = "<ion-spinner icon='lines' class='spinner-calm'></ion-spinner><br/>";
+    var templateLoader = "Cargando datos...";
+    $ionicLoading.show({template:templateLoader, noBackdrop:true});
     // Guarda parametros url en variables temporales;
     var concejo = $stateParams.concejo || '';
     var idCategoria = $stateParams.idCategoria || '';
@@ -37,7 +37,6 @@ angular.module('wca.controllers',[])
 
     // inicializa filter bar
     //$rootScope.filterBarInstance = null;
-
 
     function esSubcadena(idCategoria, urlCategoria) {
       return (urlCategoria.indexOf('categoria='+idCategoria) > -1);
@@ -103,7 +102,7 @@ angular.module('wca.controllers',[])
 
     }).error(function(data, status) {
       $ionicLoading.hide();
-      SPopup.show('Error', 'Fallo obteniendo datos de cámaras->SFusionTable.getRemoteData(): '+status)
+      SPopup.show('Error', 'Fallo obteniendo datos de cámaras<br>SFusionTable.getRemoteData(): '+status)
     });
 
 })// TabsCtrl
@@ -111,12 +110,9 @@ angular.module('wca.controllers',[])
 .controller('MapaCtrl', function($scope, $stateParams, SMapa, $rootScope){
 
   $rootScope.mostrarLupa = false;
-
-  $scope.$on('$ionicView.afterEnter', function() {
-
+  //$scope.$on('$ionicView.afterEnter', function() {
     $scope.lugar = $stateParams.lugar;
     $scope.concejo = $stateParams.concejo;
-    //var mapa = SMapa.creaMapa( document.getElementById('mapa') );
     var mapa = SMapa.crear(document.getElementById('mapa'));
     var layer = SMapa.creaFusionTableLayer().setMap(mapa);
 
@@ -127,8 +123,7 @@ angular.module('wca.controllers',[])
         mapa.setCenter( {lat: $rootScope.lat, lng: $rootScope.lng} );
         mapa.setZoom(13);
     }// else
-
-  }); // $scope.on
+  //}); // $scope.on
 
   // Geolocalizacion --------------------------------------------------------------------------------------------------
   /* ---------------------------------------------------------
@@ -161,19 +156,18 @@ angular.module('wca.controllers',[])
 .controller('MapaGlobalCtrl', function($scope, $rootScope, SMapa, SFusionTable, SPopup){
     var layer = null;
     var mapa = null;
-    var sqlQueryConcejos = null;
-    var sqlQueryCategorias = null;
     var zoomLevel = 7;
     $rootScope.mostrarLupa = false;
+    $scope.checked = null;
 
-    sqlQueryConcejos = 'SELECT Concejo FROM '+SFusionTable.TABLE_ID+' GROUP BY Concejo';
+    var sqlQueryConcejos = 'SELECT Concejo FROM '+SFusionTable.TABLE_ID+' GROUP BY Concejo';
     SFusionTable.getRemoteData(sqlQueryConcejos).success(function(data){
       $scope.concejos = data.rows;
     }).error(function(status){
       SPopup.show('Error', 'Fallo cargando lista concejos: '+status);
     });
 
-    sqlQueryCategorias = 'SELECT Categoria FROM '+SFusionTable.TABLE_ID+' GROUP BY Categoria';
+    var sqlQueryCategorias = 'SELECT Categoria FROM '+SFusionTable.TABLE_ID+' GROUP BY Categoria';
     SFusionTable.getRemoteData(sqlQueryCategorias).success(function(data){
       $scope.categorias = data.rows;
     }).error(function(status){
@@ -182,11 +176,10 @@ angular.module('wca.controllers',[])
 
     $scope.concejoEscogido = function(concejo){
 
+      $scope.checked = 'con';
       // elimina retornos de carro y espacios en blanco al principio y al final
       concejo = concejo.replace(/(\r\n|\n|\r)/gm,'').trim();
-
       var filtro = 'Concejo=\'' + concejo + '\''; // el concejo tiene que ir entre comillas
-
       if(layer)
         layer.setMap(null);
       layer = SMapa.creaFusionTableLayer(filtro);
@@ -198,10 +191,9 @@ angular.module('wca.controllers',[])
 
     $scope.categoriaEscogida = function(categoria){
 
+      $scope.checked = 'cat';
       categoria = categoria.replace(/(\r\n|\n|\r)/gm,'').trim();
-
       var filtro = 'Categoria=\'' + categoria + '\'';
-
       if(layer)
         layer.setMap(null);
       layer = SMapa.creaFusionTableLayer(filtro);
@@ -209,7 +201,7 @@ angular.module('wca.controllers',[])
       mapa.setCenter(SMapa.OVIEDO);
       mapa.setZoom(zoomLevel);
 
-    }; // concejo escogido
+    }; // categoria escogida
 
     mapa = SMapa.crear(document.getElementById('mapaglobal'));
     mapa.setCenter(SMapa.OVIEDO);
