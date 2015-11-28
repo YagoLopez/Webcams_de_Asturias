@@ -59,8 +59,8 @@
           Mapa Global
         </ion-item>
         <ion-item style="padding:0;">
-          <div style="width:100%;padding:16px 0px 16px 16px;" ng-click="toggleSubmenu()">Meteorología</div>
-          <ion-list href="#" ng-show="verSubmenu">
+          <div style="width:100%;padding:16px 0px 16px 16px;" ng-click="verSubmenu=!verSubmenu">Meteorología</div>
+          <ion-list ng-show="verSubmenu">
             <ion-item menu-close href="#" style="padding-left:16px;">
               item 1
             </ion-item>

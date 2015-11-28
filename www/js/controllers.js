@@ -8,18 +8,12 @@ angular.module('wca.controllers',[])
 
 .controller('AppCtrl', function($scope) {
 
-    $scope.verSubmenu = false;
-    $scope.toggleSubmenu = function(){
-      $scope.verSubmenu = !$scope.verSubmenu;
-      console.log('verSubmenu', $scope.verSubmenu);
-
-    };
-  // With the new view caching in Ionic, Controllers are only called
-  // when they are recreated or on app start, instead of every page change.
-  // To listen for when this page is active (for example, to refresh data),
-  // listen for the $ionicView.enter event:
-  //$scope.$on('$ionicView.enter', function(e) {
-  //});
+  //// With the new view caching in Ionic, Controllers are only called
+  //// when they are recreated or on app start, instead of every page change.
+  //// To listen for when this page is active (for example, to refresh data),
+  //// listen for the $ionicView.enter event:
+  ////$scope.$on('$ionicView.enter', function(e) {
+  ////});
 
   })
 
@@ -116,7 +110,7 @@ angular.module('wca.controllers',[])
 .controller('MapaCtrl', function($scope, $stateParams, SMapa, $rootScope){
 
   $rootScope.mostrarLupa = false;
-  //$scope.$on('$ionicView.afterEnter', function() {
+  $scope.$on('$ionicView.afterEnter', function() {
     $scope.lugar = $stateParams.lugar;
     $scope.concejo = $stateParams.concejo;
     var mapa = SMapa.crear(document.getElementById('mapa'));
@@ -129,7 +123,7 @@ angular.module('wca.controllers',[])
         mapa.setCenter( {lat: $rootScope.lat, lng: $rootScope.lng} );
         mapa.setZoom(13);
     }// else
-  //}); // $scope.on
+  }); // $scope.on
 
   // Geolocalizacion --------------------------------------------------------------------------------------------------
   /* ---------------------------------------------------------
@@ -367,7 +361,7 @@ angular.module('wca.controllers',[])
     return;
   }
 
-  //$scope.$on('$ionicView.afterEnter', function() {
+  $scope.$on('$ionicView.afterEnter', function() {
     var div = document.getElementById('street-view');
     //SMapa.hallaLatLng(div, $scope.lugar, $scope.concejo, function (coords) {
       var streetViewService = new google.maps.StreetViewService();
@@ -381,7 +375,7 @@ angular.module('wca.controllers',[])
         }
       })
     //})//hallaLatLng
-  //})//$scope.on
+  })//$scope.on
 
 })//StreetViewCtrl
 
