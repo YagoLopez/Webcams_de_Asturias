@@ -7,8 +7,8 @@ angular.module('wca.services',[])
     var TABLE_ID = '1gX5maFbqFyRziZiUYlpOBYhcC1v9lGkKqCXvZREF';
 
     var getRemoteData = function( sql_query_string ) {
-      var url = API_ENDPOINT+ '?sql=' +sql_query_string+ '&key=' +API_KEY;
-      return $http.get( encodeURI(url), {cache: true} );
+      var url = API_ENDPOINT+ '?sql=' +sql_query_string+ '&key=' +API_KEY+'&callback=JSON_CALLBACK';
+      return $http.jsonp( encodeURI(url), {cache: true} );
     };
 
     var getLocalData = function(path_fichero){
@@ -171,7 +171,7 @@ angular.module('wca.services',[])
     var openSearch = function(termino){
       return $http.jsonp('https://es.wikipedia.org/w/api.php?action=opensearch&'+
         'search='+termino+'&callback=JSON_CALLBACK', {cache: true});
-    }
+    };
 
     return {
       info: info,

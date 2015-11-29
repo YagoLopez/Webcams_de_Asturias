@@ -28,11 +28,13 @@
 -->
 
 
- <!--   <h1>Example with controls and no auto-play</h1>
+    <h1>Example with controls and no auto-play</h1>
     <img id="example1"
-         src="./example_gifs/rub_test_preview.jpg" rel:animated_src="./example_gifs/rub_test.gif" rel:auto_play="0"
+         src="../lib/libgif-js/example_gifs/rub_test_preview.jpg"
+         rel:animated_src="../lib/libgif-js/example_gifs/rub_test.gif" rel:auto_play="0"
          width="467" height="375" />
     <br>
+<!--
     <script type="text/javascript">
       var sup1 = new SuperGif({ gif: document.getElementById('example1') } );
       sup1.load();
@@ -42,7 +44,14 @@
     <a href="javascript:;" onmousedown="sup1.move_to(0); return false;">Restart</a> |
     <a href="javascript:;" onmousedown="sup1.move_relative(1); return false;">Step forward</a> |
     <a href="javascript:;" onmousedown="sup1.move_relative(-1); return false;">Step back</a>
+-->
 
+    <a href="#" ng-click="pause()">Pause</a> |
+    <a href="#" ng-click="play()">Play</a> |
+<!--
+    <a href="javascript:;" onmousedown="sup1.move_to(0); return false;">Restart</a> |
+    <a href="javascript:;" onmousedown="sup1.move_relative(1); return false;">Step forward</a> |
+    <a href="javascript:;" onmousedown="sup1.move_relative(-1); return false;">Step back</a>
 -->
 
 
