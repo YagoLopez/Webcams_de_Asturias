@@ -380,4 +380,43 @@ angular.module('wca.controllers',[])
 })//StreetViewCtrl
 
 
+.controller('SatSpCtrl', function($scope, SMeteo, $http){
+
+/*
+  //var urlGif = 'http://neige.meteociel.fr/satellite/anim_ir_color.gif';
+  var urlGifCors = 'http://localhost:8100/gif/anim_ir_color.gif';
+  var urlGifCors2 = 'http://cors.io/?u=http://neige.meteociel.fr/satellite/anim_ir_color.gif';
+
+
+/!*
+  $http.get(urlGifCors2, {responseType: 'arraybuffer'}).then(function(result){
+    var gif = new GIF(result.data);
+    //return the frame data as the promise result
+    console.log('gif', gif);
+    var frames = gif.decompressFrames(true);
+    console.log('frames', frames);
+    //return gif.decompressFrames(true);
+    var canvas = document.createElement('canvas');
+    canvas.width = 768;
+    canvas.height = 768;
+    var ctx = canvas.getContext('2d');
+    var palette = ctx.getImageData(0, 0, 768, 768); //x,y,w,h
+    var arrayPixels = frames[1].patch;
+    palette.data.set(arrayPixels);
+    ctx.putImageData(palette, 0, 0);
+    var ctx2 = document.getElementById('canvas2').getContext('2d');
+    //var ctx2= canvas2.getContext('2d');
+    ctx2.drawImage(canvas, 1, 1);
+  });
+*!/
+
+
+    //Gifffer();
+*/
+
+
+
+
+  }); // SatSpCtrl
+
 ; // FIN

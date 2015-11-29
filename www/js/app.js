@@ -137,7 +137,27 @@ angular.module('wca',
     }
   })
 
-; // fin de estados
+   .state('app.sat-sp', {
+        url: '/sat-sp',
+        views: {
+          'menuContent': {
+            templateUrl: 'templates/sat-sp.html',
+            controller: 'SatSpCtrl'
+          }
+        }
+      })
+
+    .state('app.meteoimg', {
+      url: '/meteoimg',
+      views: {
+        'menuContent': {
+          templateUrl: 'templates/meteo-img.html',
+          controller: 'MeteoImgCtrl'
+        }
+      }
+    })
+
+    ; // fin de estados
 
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/app/tabs/listado');
@@ -155,7 +175,8 @@ angular.module('wca',
 })
 
 
-
+//TODO: revisar si esta directiva se usa o se puede borrar
+/*
   .directive('fabMenu', function($timeout, $ionicGesture) {
 
     var options = {
@@ -323,6 +344,7 @@ angular.module('wca',
       }
     }
   })
+*/
 
 
 
@@ -356,9 +378,8 @@ return filtro;
 })
 */
 
-// CORS request
-//angular.module('wca')
-//  .config(function($httpProvider) {
+ //CORS request
+//angular.module('wca').config(function($httpProvider) {
 //    $httpProvider.defaults.useXDomain = true;
 //    delete $httpProvider.defaults.headers.common['X-Requested-With'];
 //  });
