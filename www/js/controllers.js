@@ -386,43 +386,30 @@ angular.module('wca.controllers',[])
   var urlGifCors = 'http://localhost:8100/gif/anim_ir_color.gif';
   var urlGifCors2 = 'http://cors.io/?u=http://neige.meteociel.fr/satellite/anim_ir_color.gif';
 
+  //Gifffer();
 
-/*
-  $http.get(urlGifCors2, {responseType: 'arraybuffer'}).then(function(result){
-    var gif = new GIF(result.data);
-    //return the frame data as the promise result
-    console.log('gif', gif);
-    var frames = gif.decompressFrames(true);
-    console.log('frames', frames);
-    //return gif.decompressFrames(true);
-    var canvas = document.createElement('canvas');
-    canvas.width = 768;
-    canvas.height = 768;
-    var ctx = canvas.getContext('2d');
-    var palette = ctx.getImageData(0, 0, 768, 768); //x,y,w,h
-    var arrayPixels = frames[1].patch;
-    palette.data.set(arrayPixels);
-    ctx.putImageData(palette, 0, 0);
-    var ctx2 = document.getElementById('canvas2').getContext('2d');
-    //var ctx2= canvas2.getContext('2d');
-    ctx2.drawImage(canvas, 1, 1);
-  });
-*/
+  var gifAnimado = new SuperGif({ gif: document.getElementById('gif'), speed: 2000 } );
+  gifAnimado.load();
+  console.log('gifAnimado', gifAnimado);
 
-
-    //Gifffer();
-
-
-    var sup1 = new SuperGif({ gif: document.getElementById('example1') } );
-    sup1.load();
-    console.log('sup1', sup1);
-
-    $scope.play = function(){
-      sup1.play();
-    }
-    $scope.pause= function(){
-      sup1.pause();
-    }
+  $scope.play = function(){
+    gifAnimado.play();
+  }
+  $scope.pause= function(){
+    gifAnimado.pause();
+  }
+  $scope.restart= function(){
+    gifAnimado.pause();
+    gifAnimado.move_to(0);
+  }
+  $scope.forward= function(){
+    gifAnimado.pause();
+    gifAnimado.move_relative(1);
+  }
+  $scope.backward= function(){
+    gifAnimado.pause();
+    gifAnimado.move_relative(-1);
+  }
 
 
 }); // SatSpCtrl

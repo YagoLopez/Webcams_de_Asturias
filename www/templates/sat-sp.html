@@ -1,4 +1,4 @@
-<ion-view view-title="Imágenes Satélite">
+<ion-view view-title="Imágenes Satélite" xmlns:rel="http://www.w3.org/1999/xhtml">
   <div class="bar bar-subheader bar-stable">
     <h2 class="title">Región: España</h2>
   </div>
@@ -11,14 +11,6 @@
       </ion-item>
     </ion-list>
 
-<!--
-    <canvas id="canvas"></canvas>
-    <canvas id="canvas2" style="width:300px; height: 300px;"></canvas>
-    <img data-gifffer="http://neige.meteociel.fr/satellite/anim_ir_color.gif" style="width:100%;height: 70%;"/>
--->
-
-
-
 
 
 <!--
@@ -29,30 +21,15 @@
 
 
     <h1>Example with controls and no auto-play</h1>
-    <img id="example1"
-         src="../lib/libgif-js/example_gifs/rub_test_preview.jpg"
+    <img id="gif" src="../lib/libgif-js/example_gifs/rub_test_preview.jpg"
          rel:animated_src="../lib/libgif-js/example_gifs/rub_test.gif" rel:auto_play="0"
          width="467" height="375" />
     <br>
-<!--
-    <script type="text/javascript">
-      var sup1 = new SuperGif({ gif: document.getElementById('example1') } );
-      sup1.load();
-    </script>
-    <a href="javascript:;" onmousedown="sup1.pause(); return false;">Pause</a> |
-    <a href="javascript:;" onmousedown="sup1.play(); return false;">Play</a> |
-    <a href="javascript:;" onmousedown="sup1.move_to(0); return false;">Restart</a> |
-    <a href="javascript:;" onmousedown="sup1.move_relative(1); return false;">Step forward</a> |
-    <a href="javascript:;" onmousedown="sup1.move_relative(-1); return false;">Step back</a>
--->
-
-    <a href="#" ng-click="pause()">Pause</a> |
-    <a href="#" ng-click="play()">Play</a> |
-<!--
-    <a href="javascript:;" onmousedown="sup1.move_to(0); return false;">Restart</a> |
-    <a href="javascript:;" onmousedown="sup1.move_relative(1); return false;">Step forward</a> |
-    <a href="javascript:;" onmousedown="sup1.move_relative(-1); return false;">Step back</a>
--->
+    <a href="#" ng-click="play()">Reproducir</a> |
+    <a href="#" ng-click="pause()">Detener</a> |
+    <a href="#" ng-click="restart()">Inicio</a> |
+    <a href="#" ng-click="forward()">Adelante1 </a> |
+    <a href="#" ng-click="backward()">Atrás1</a>
 
 
   </ion-content>

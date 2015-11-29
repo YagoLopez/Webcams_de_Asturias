@@ -62,8 +62,6 @@
 			http://humpy77.deviantart.com/journal/Frame-Delay-Times-for-Animated-GIFs-214150546
 
 */
-
-
 (function (root, factory) {
     if (typeof define === 'function' && define.amd) {
         define([], factory);
@@ -422,7 +420,6 @@
     };
 
     var SuperGif = function ( opts ) {
-      console.log('opts', opts);
         var options = {
             //viewport position
             vp_l: 0,
@@ -431,14 +428,10 @@
             vp_h: null,
             //canvas sizes
             c_w: null,
-            c_h: null,
-            speed: 100
+            c_h: null
         };
-      console.log('options antes', options);
-
-      for (var i in opts ) { options[i] = opts[i] }
+        for (var i in opts ) { options[i] = opts[i] }
         if (options.vp_w && options.vp_h) options.is_vp = true;
-      console.log('options despues', options);
 
         var stream;
         var hdr;
@@ -447,6 +440,7 @@
         var loading = false;
 
         var transparency = null;
+        var delay = null;
         var disposalMethod = null;
         var disposalRestoreFromIdx = 0;
         var lastDisposalMethod = null;
@@ -455,7 +449,6 @@
 
         var playing = true;
         var forward = true;
-        var delay = null;
 
         var ctx_scaled = false;
 
@@ -463,11 +456,6 @@
         var frameOffsets = []; // elements have .x and .y properties
 
         var gif = options.gif;
-        if (gif.getAttribute('rel:speed')) {
-          options.speed = gif.getAttribute('rel:speed');
-          console.log('asignacion de options.speed', options.speed);
-        }
-
         if (typeof options.auto_play == 'undefined')
             options.auto_play = (!gif.getAttribute('rel:auto_play') || gif.getAttribute('rel:auto_play') == '1');
 
@@ -724,40 +712,28 @@
 
             var step = (function () {
                 var stepping = false;
-                //var delay = options.speed;
-                //console.log('delay desde step', delay);
+
                 var doStep = function () {
                     stepping = playing;
                     if (!stepping) return;
 
                     stepFrame(1);
-                    //var delay = frames[i].delay * 10;
-
-                    //TODO: modificaciones mias
-                    //var delay = 1000;
-                    var delay = options.speed;
-                    //console.log('options desde funcion doStep', options.speed);
-
+                    var delay = frames[i].delay * 10;
                     if (!delay) delay = 100; // FIXME: Should this even default at all? What should it be?
 
                     var nextFrameNo = getNextFrameNo();
                     if (nextFrameNo === 0) {
                         delay += loopDelay;
-                      console.log('delay modificado?', delay);
-
-                      setTimeout(completeLoop, delay - 1);
+                        setTimeout(completeLoop, delay - 1);
                     }
 
-                    if ((overrideLoopMode !== false || nextFrameNo !== 0 || iterationCount < 0)) {
-                      setTimeout(doStep, delay)
-                    };
+                    if ((overrideLoopMode !== false || nextFrameNo !== 0 || iterationCount < 0))
+                        setTimeout(doStep, delay);
 
                 };
 
                 return function () {
-                    if (!stepping) {
-                      setTimeout(doStep, 0);
-                    }
+                    if (!stepping) setTimeout(doStep, 0);
                 };
             }());
 
@@ -957,7 +933,7 @@
                 h.open('GET', src, true);
                 h.send();
             },
-            load: function (speed, callback) {
+            load: function (callback) {
                 this.load_url(gif.getAttribute('rel:animated_src') || gif.src,callback);
             },
             load_raw: function(arr, callback) {
