@@ -380,20 +380,40 @@ angular.module('wca.controllers',[])
 })//StreetViewCtrl
 
 
-.controller('SatSpCtrl', function($scope, $http){
+.controller('SatSpCtrl', function($scope, $http, $window){
 
+    //TODO: añadir loader
   //var urlGif = 'http://neige.meteociel.fr/satellite/anim_ir_color.gif';
   var urlGifCors = 'http://localhost:8100/gif/anim_ir_color.gif';
   var urlGifCors2 = 'http://cors.io/?u=http://neige.meteociel.fr/satellite/anim_ir_color.gif';
 
   //Gifffer();
 
-  var gifAnimado = new SuperGif({ gif: document.getElementById('gif'), speed: 2000 } );
+
+
+
+
+  $scope.calculateDimensions = function(gesture) {
+    $scope.dev_width = $window.innerWidth;
+    $scope.dev_height = $window.innerHeight;
+  }
+
+  angular.element($window).bind('resize', function(){
+    $scope.$apply(function() {
+      $scope.calculateDimensions();
+    })
+  });
+
+  $scope.calculateDimensions();
+
+  var gifAnimado = new SuperGif({
+    gif: document.getElementById('gif'), loop_mode:0, draw_while_loading:1, max_width:$scope.dev_width
+  });
   gifAnimado.load();
-  console.log('gifAnimado', gifAnimado);
 
   $scope.play = function(){
     gifAnimado.play();
+    console.log('play...');
   }
   $scope.pause= function(){
     gifAnimado.pause();
@@ -410,7 +430,29 @@ angular.module('wca.controllers',[])
     gifAnimado.pause();
     gifAnimado.move_relative(-1);
   }
+  $scope.end= function(){
+  }
 
+
+
+
+
+
+
+/*
+  //var xgif2 = document.querySelectorAll('x-gif');
+  //console.log('xgif.attributes', xgif.attributes);
+  var xgif = document.getElementById('xgif');
+  console.log('x-gif', xgif);
+
+  $scope.play = function(){
+    xgif.removeAttribute('stopped');
+  };
+
+  $scope.pause = function(){
+    xgif.setAttribute('stopped','');
+  };
+*/
 
 }); // SatSpCtrl
 

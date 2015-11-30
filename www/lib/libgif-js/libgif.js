@@ -742,7 +742,7 @@
 
                     var nextFrameNo = getNextFrameNo();
                     if (nextFrameNo === 0) {
-                        delay += loopDelay;
+                        //delay += loopDelay;
                       console.log('delay modificado?', delay);
 
                       setTimeout(completeLoop, delay - 1);

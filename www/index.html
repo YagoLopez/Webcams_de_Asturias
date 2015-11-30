@@ -98,10 +98,25 @@
   <!--<script type="text/javascript" src="lib/giffer/lib/gifffer.js"></script>-->
   <!-- Fin Giffer ----------------------------------------------------------------------------------------------->
 
-  <!-- Giflib --------------------------------------------------------------------------------------------------->
+  <!-- Giflib -------------------------------------------------------------------------------------------------------->
   <script type="text/javascript" src="lib/libgif-js/libgif.js"></script>
   <!-- fin Giflibr --------------------------------------------------------------------------------------------------->
 
+  <!-- X-gif --------------------------------------------------------------------------------------------------------->
+  <!--<script type="text/javascript" src="lib/x-gif/dist/x-gif.js"></script>-->
+  <!--<link rel="stylesheet" href="lib/x-gif/dist/x-gif.css">-->
+  <script>
+    if ('registerElement' in document
+      && 'createShadowRoot' in HTMLElement.prototype
+      && 'import' in document.createElement('link')
+      && 'content' in document.createElement('template')) {
+      // We're using a browser with native WC support!
+    } else {
+      document.write('<script src="https:\/\/cdnjs.cloudflare.com/ajax/libs/polymer/0.3.4/platform.js"><\/script>')
+    }
+  </script>
+  <link rel="import" href="lib/x-gif/dist/x-gif.html">
+  <!-- Fin X-gif ----------------------------------------------------------------------------------------------------->
 
 </head>
 
