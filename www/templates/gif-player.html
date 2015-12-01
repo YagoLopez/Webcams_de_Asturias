@@ -1,4 +1,4 @@
-<ion-view>
+<ion-view xmlns:rel="http://www.w3.org/1999/xhtml">
   <ion-content>
     <style>
       .video-container {
@@ -17,27 +17,29 @@
       }*/
 
     </style>
-    <div class="card">
-      <ion-item>
+    <!--<div class="card">-->
+      <!--<ion-item>-->
         <div class="video-container">
           <!--<iframe src="templates/player-frame.html" frameborder="0" width="560" height="315"></iframe>-->
           <h1>Example with controls and no auto-play</h1>
           <div style="/*width:200px;height: 200px;*/">
             <img id="gif" src="http://neige.meteociel.fr/satellite/anim_vis_sp.gif"
-                 rel:auto_play="0" rel:speed="500" width="100%" height="70%"/>
+                 rel:auto_play="0" rel:speed="500" width="100%" height="70%" ng-click="clickImg()"/>
             <br>
-            <br>
-            <br>
-            <br>
-            <button ng-click="play()">Reproducir</button>
-            <button ng-click="pause()">Detener</button>
-            <button ng-click="backward()">Atrás 1</button>
-            <button ng-click="forward()">Avanza 1</button>
+            <button ng-click="playPause()">Reproducir/Detener</button>
+            <button ng-click="backward()">-1</button>
+            <button ng-click="forward()">+1</button>
             <button ng-click="restart()">Inicio</button>
             <button ng-click="end()">Final</button>
+            <div class="list">
+              <label class="item item-input">
+                <input type="text">
+              </label>
+            </div>
           </div>
         </div>
-      </ion-item>
-    </div>
+    <br>{{posicion}}
+      <!--</ion-item>-->
+    <!--</div>-->
   </ion-content>
 </ion-view>

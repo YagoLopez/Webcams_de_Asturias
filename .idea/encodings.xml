@@ -17,12 +17,12 @@
     <file url="file://$PROJECT_DIR$/www/templates/detalle-backup.html" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/www/templates/detalle.html" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/www/templates/fab-menu.html" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/www/templates/gif-player.html" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/www/templates/listado-backup.html" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/www/templates/listado.html" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/www/templates/mapa-global.html" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/www/templates/mapa.html" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/www/templates/menu.html" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/www/templates/meteo-player.html" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/www/templates/modal-detalle.html" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/www/templates/modal-img.html" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/www/templates/mosaico-backup.html" charset="UTF-8" />

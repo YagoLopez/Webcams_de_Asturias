@@ -412,7 +412,8 @@ angular.module('wca.controllers',[])
 
 }) // SatSpCtrl
 
-.controller('MeteoPlayerCtrl', function($scope, $window){
+.controller('GifPlayerCtrl', function($scope, $window, $interval){
+
 
     $scope.calculateDimensions = function(gesture) {
       $scope.dev_width = $window.innerWidth;
@@ -434,13 +435,40 @@ angular.module('wca.controllers',[])
       max_width: $scope.dev_width
     });
     gifAnimado.load();
+    console.log('gifAnimado', gifAnimado);
+
+    var isGifPlaying = false;
+    //$scope.playPause = function(){
+    //  if (isGifPlaying) {
+    //    isGifPlaying = false;
+    //    gifAnimado.pause();
+    //  } else {
+    //    isGifPlaying = true;
+    //    gifAnimado.play();
+    //  }
+    //};
+    $scope.posicion = 0;
+    var timer = null;
+
+    $scope.playPause = function(){
+      if (isGifPlaying) {
+        $scope.pause();
+      } else {
+        $scope.play();
+      }
+    };
 
     $scope.play = function(){
+      isGifPlaying = true;
       gifAnimado.play();
-      console.log('play...');
-    }
+      getPosicion();
+      console.log('playing...');
+    };
     $scope.pause= function(){
+      isGifPlaying = false;
       gifAnimado.pause();
+      $scope.killtimer();
+      console.log('pause');
     }
     $scope.restart= function(){
       gifAnimado.pause();
@@ -455,14 +483,36 @@ angular.module('wca.controllers',[])
       gifAnimado.move_relative(-1);
     }
     $scope.end= function(){
+      isGifPlaying = false;
+      gifAnimado.pause();
+      gifAnimado.move_to(gifAnimado.get_length());
+      console.log('ir a final. longitud animacion:', gifAnimado.get_length());
     }
 
+    var canvas = gifAnimado.get_canvas();
+    console.log('canvas', canvas);
+    //canvas.onChange();
+
+    $scope.clickImg = function (){
+      console.log('img clicked');
+    };
+
+    var getPosicion = function(){
+      timer = $interval( function(){
+        $scope.posicion = gifAnimado.get_current_frame();
+        console.log('posicion', gifAnimado.get_current_frame());
+      }, 100); // fin interval
+    };// getposicion
+
+    $scope.killtimer=function(){
+      if(angular.isDefined(timer))
+      {
+        $interval.cancel(timer);
+        timer=undefined;
+      }
+    };
 // WHAMMY -----------------------------------------------------------------------------------------------------------------
 
-    //var canvas = gifAnimado.get_canvas();
-    //console.log('canvas', canvas);
-    //var encoder = new Whammy.Video(15);
-    //encoder.add(canvas);
 
   }) // meteo player ctrl
 

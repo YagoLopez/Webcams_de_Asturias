@@ -147,12 +147,12 @@ angular.module('wca',
         }
       })
 
-    .state('app.meteo-player', {
-      url: '/meteo-player',
+    .state('app.gif-player', {
+      url: '/gif-player',
       views: {
         'menuContent': {
-          templateUrl: 'templates/meteo-player.html',
-          controller: 'MeteoPlayerCtrl'
+          templateUrl: 'templates/gif-player.html',
+          controller: 'GifPlayerCtrl'
         }
       }
     })
@@ -173,8 +173,6 @@ angular.module('wca',
   }
   return fallbackSrc;
 })
-
-
 
 
 
