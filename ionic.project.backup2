@@ -1,0 +1,10 @@
+{
+  "name": "Webcams_Asturias",
+  "app_id": "980f8c3d",
+    "proxies": [
+      {
+        "path": "/gif",
+        "proxyUrl": "http://neige.meteociel.fr/satellite"
+      }
+    ]
+}

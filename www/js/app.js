@@ -137,7 +137,27 @@ angular.module('wca',
     }
   })
 
-; // fin de estados
+   .state('app.sat-sp', {
+        url: '/sat-sp',
+        views: {
+          'menuContent': {
+            templateUrl: 'templates/sat-sp.html',
+            controller: 'SatSpCtrl'
+          }
+        }
+      })
+
+    .state('app.gif-player', {
+      url: '/gif-player',
+      views: {
+        'menuContent': {
+          templateUrl: 'templates/gif-player.html',
+          controller: 'GifPlayerCtrl'
+        }
+      }
+    })
+
+    ; // fin de estados
 
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/app/tabs/listado');
@@ -153,178 +173,6 @@ angular.module('wca',
   }
   return fallbackSrc;
 })
-
-
-
-  .directive('fabMenu', function($timeout, $ionicGesture) {
-
-    var options = {
-        baseAngle: 270,
-        rotationAngle: 30,
-        distance: 112,
-        animateInOut: 'all', // can be slide, rotate, all
-      },
-      buttons = [],
-      buttonContainers = [],
-      buttonsContainer = null,
-      lastDragTime = 0,
-      currentX = 0,
-      currentY = 0,
-      previousSpeed     = 15,
-
-      init = function() {
-
-        buttons = document.getElementsByClassName('fab-menu-button-item');
-        buttonContainers = document.querySelectorAll('.fab-menu-items > li');
-        buttonsContainer = document.getElementsByClassName('fab-menu-items');
-
-        for (var i = 0; i < buttonContainers.length; i++) {
-
-          var button = buttonContainers.item(i);
-          var angle = (options.baseAngle + (options.rotationAngle * i));
-          button.style.transform = "rotate(" + options.baseAngle + "deg) translate(0px) rotate(-" + options.baseAngle + "deg) scale(0)";
-          button.style.WebkitTransform = "rotate(" + options.baseAngle + "deg) translate(0px) rotate(-" + options.baseAngle + "deg) scale(0)";
-          button.setAttribute('angle', '' + angle);
-        }
-      },
-
-      animateButtonsIn = function() {
-        for (var i = 0; i < buttonContainers.length; i++) {
-
-          var button = buttonContainers.item(i);
-          var angle = button.getAttribute('angle');
-          button.style.transform = "rotate(" + angle + "deg) translate(" + options.distance + "px) rotate(-" + angle + "deg) scale(1)";
-          button.style.WebkitTransform = "rotate(" + angle + "deg) translate(" + options.distance + "px) rotate(-" + angle + "deg) scale(1)";
-        }
-      },
-      animateButtonsOut = function() {
-        for (var i = 0; i < buttonContainers.length; i++) {
-
-          var button = buttonContainers.item(i);
-          var angle = (options.baseAngle + (options.rotationAngle * i));
-          button.setAttribute('angle', '' + angle);
-          button.style.transform = "rotate(" + options.baseAngle + "deg) translate(0px) rotate(-" + options.baseAngle + "deg) scale(0)";
-          button.style.WebkitTransform = "rotate(" + options.baseAngle + "deg) translate(0px) rotate(-" + options.baseAngle + "deg) scale(0)";
-        }
-      },
-
-      rotateButtons = function(direction, speed) {
-
-        // still looking for a better solution to handle the rotation speed
-        // the direction will be used to define the angle calculation
-
-        // max speed value is 25 // can change this :)
-        // used previousSpeed to reduce the speed diff on each tick
-        speed = (speed > 15) ? 15 : speed;
-        speed = (speed + previousSpeed) / 2;
-        previousSpeed = speed;
-
-        var moveAngle = (direction * speed);
-
-        // if first item is on top right or last item on bottom left, move no more
-        if ((parseInt(buttonContainers.item(0).getAttribute('angle')) + moveAngle >= 285 && direction > 0) ||
-          (parseInt(buttonContainers.item(buttonContainers.length - 1).getAttribute('angle')) + moveAngle <= 345 && direction < 0)
-        ) {
-          return;
-        }
-
-        for (var i = 0; i < buttonContainers.length; i++) {
-
-          var button = buttonContainers.item(i),
-            angle = parseInt(button.getAttribute('angle'));
-
-          angle = angle + moveAngle;
-
-          button.setAttribute('angle', '' + angle);
-
-          button.style.transform = "rotate(" + angle + "deg) translate(" + options.distance + "px) rotate(-" + angle + "deg) scale(1)";
-          button.style.WebkitTransform = "rotate(" + angle + "deg) translate(" + options.distance + "px) rotate(-" + angle + "deg) scale(1)";
-        }
-      },
-
-      endRotateButtons = function() {
-
-        for (var i = 0; i < buttonContainers.length; i++) {
-
-          var button = buttonContainers.item(i),
-            angle = parseInt(button.getAttribute('angle')),
-            diff = angle % options.rotationAngle;
-          // Round the angle to realign the elements after rotation ends
-          angle = diff > options.rotationAngle / 2 ? angle + options.rotationAngle - diff : angle - diff;
-
-          button.setAttribute('angle', '' + angle);
-
-          button.style.transform = "rotate(" + angle + "deg) translate(" + options.distance + "px) rotate(-" + angle + "deg) scale(1)";
-          button.style.WebkitTransform = "rotate(" + angle + "deg) translate(" + options.distance + "px) rotate(-" + angle + "deg) scale(1)";
-        }
-      };
-
-    return {
-      templateUrl: "templates/fab-menu.html",
-      link: function(scope) {
-        console.info("fab-menu :: link");
-
-        init();
-
-        scope.fabMenu = {
-          active: false
-        };
-
-        var menuItems = angular.element(buttonsContainer);
-
-        $ionicGesture.on('touch', function(event) {
-
-          console.log('drag starts', event);
-          lastDragTime = 0;
-          currentX = event.gesture.deltaX;
-          currentY = event.gesture.deltaY;
-          previousSpeed = 0;
-
-        }, menuItems)
-
-        $ionicGesture.on('release', function(event) {
-          console.log('drag ends');
-          endRotateButtons();
-        }, menuItems);
-
-        $ionicGesture.on('drag', function(event) {
-
-          if (event.gesture.timeStamp - lastDragTime > 100) {
-
-            var direction = 1,
-              deltaX = event.gesture.deltaX - currentX,
-              deltaY = event.gesture.deltaY - currentY,
-              delta = Math.sqrt((deltaX * deltaX) + (deltaY * deltaY));
-
-            if ((deltaX <= 0 && deltaY <= 0) || (deltaX <= 0 && Math.abs(deltaX) > Math.abs(deltaY))) {
-              direction = -1;
-            } else if ((deltaX >= 0 && deltaY >= 0) || (deltaY <= 0 && Math.abs(deltaX) < Math.abs(deltaY))) {
-              direction = 1;
-            }
-
-            rotateButtons(direction, delta);
-
-            lastDragTime = event.gesture.timeStamp;
-            currentX = event.gesture.deltaX;
-            currentY = event.gesture.deltaY;
-          }
-        }, menuItems);
-
-        scope.fabMenuToggle = function() {
-
-          if (scope.fabMenu.active) { // Close Menu
-            animateButtonsOut();
-          } else { // Open Menu
-            animateButtonsIn();
-          }
-          scope.fabMenu.active = !scope.fabMenu.active;
-        }
-
-      }
-    }
-  })
-
-
 
 
 
@@ -356,9 +204,8 @@ return filtro;
 })
 */
 
-// CORS request
-//angular.module('wca')
-//  .config(function($httpProvider) {
+ //CORS request
+//angular.module('wca').config(function($httpProvider) {
 //    $httpProvider.defaults.useXDomain = true;
 //    delete $httpProvider.defaults.headers.common['X-Requested-With'];
 //  });

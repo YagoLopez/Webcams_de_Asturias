@@ -4,5 +4,9 @@
   "devDependencies": {
     "ionic": "driftyco/ionic-bower#1.1.0"
   },
-  "dependencies": {}
+  "dependencies": {
+    "pixel": "~0.0.4",
+    "libgif-js": "*",
+    "x-gif": "~0.1.1"
+  }
 }

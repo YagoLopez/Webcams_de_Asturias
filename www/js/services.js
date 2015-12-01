@@ -182,5 +182,28 @@ angular.module('wca.services',[])
     };
   })//SWikipedia
 
+/*
+.factory('SMeteo', function(){
+    var data = {
+      SatEspana: {
+        id:1, data: {name: 'EumetSat', img: 'http://neige.meteociel.fr/satellite/anim_vis_sp.gif', desc:'', nombFuente:'Animación. Espectro visible', urlFuente:''},
+        id:2, data: {name: 'nombre2', img: 'http://37.59.123.0/sat/anim-msg-sp-vis.gif', desc:'', nombFuente:'Animación. Espectro visible', urlFuente:''},
+        id:3, data: {name: 'Sat24_1', img: 'http://sat24.mobi/Image/satvis/europa/sp',  desc:'Animación. Espectro visible', nombFuente:'', urlFuente:''},
+        id:4, data: {name: 'Sat24_2', img: 'http://sat24.mobi/Image/satir/europa/sp',  desc:'Animación. Espectro infrarrojo', nombFuente:'', urlFuente:''},
+        id:5, data: {name: 'Sat24_3', img: 'http://www.sat24.com/image.ashx?country=sp&type=loop&sat=vis',  desc:'Estática más reciente. Visible en HD', nombFuente:'', urlFuente:''},
+      },
+      'SatEuropa': {},
+      'Mapas': {}
+    }; // data
+    var getSatEspana = function(){
+      return data.SatEspana;
+    };
+    return {
+      getSatEspana: getSatEspana
+    };
+
+}) // SMeteo
+*/
+
 
 ; // FIN

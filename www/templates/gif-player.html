@@ -1,0 +1,45 @@
+<ion-view xmlns:rel="http://www.w3.org/1999/xhtml">
+  <ion-content>
+    <style>
+      .video-container {
+        /*position: relative;*/
+        padding-bottom: 56.25%;
+        /*padding-top: 30px; */
+        /*height: 30em;*/
+        overflow: hidden;
+      }
+/*      .video-container iframe, .video-container object, .video-container embed {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+      }*/
+
+    </style>
+    <!--<div class="card">-->
+      <!--<ion-item>-->
+        <div class="video-container">
+          <!--<iframe src="templates/player-frame.html" frameborder="0" width="560" height="315"></iframe>-->
+          <h1>Example with controls and no auto-play</h1>
+          <div style="/*width:200px;height: 200px;*/">
+            <img id="gif" src="http://neige.meteociel.fr/satellite/anim_vis_sp.gif"
+                 rel:auto_play="0" rel:speed="500" width="100%" height="70%" ng-click="clickImg()"/>
+            <br>
+            <button ng-click="playPause()">Reproducir/Detener</button>
+            <button ng-click="backward()">-1</button>
+            <button ng-click="forward()">+1</button>
+            <button ng-click="restart()">Inicio</button>
+            <button ng-click="end()">Final</button>
+            <div class="list">
+              <label class="item item-input">
+                <input type="text">
+              </label>
+            </div>
+          </div>
+        </div>
+    <br>{{posicion}}
+      <!--</ion-item>-->
+    <!--</div>-->
+  </ion-content>
+</ion-view>

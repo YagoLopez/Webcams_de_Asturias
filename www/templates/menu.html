@@ -11,7 +11,7 @@
         </button>
       </ion-nav-buttons>
       <ion-nav-buttons side="secondary">
-        <button id="lupa" ng-if="mostrarLupa" class="button button-icon icon ion-ios-search-strong"
+        <button ng-if="mostrarLupa" class="button button-icon icon ion-ios-search-strong"
                 ng-click="showFilterBar()">
         </button>
       </ion-nav-buttons>
@@ -59,15 +59,20 @@
           Mapa Global
         </ion-item>
         <ion-item style="padding:0;">
-          <div style="width:100%;padding:16px 0px 16px 16px;" ng-click="verSubmenu=!verSubmenu">Meteorología</div>
-          <ion-list ng-show="verSubmenu">
-            <ion-item menu-close href="#" style="padding-left:16px;">
-              item 1
+          <div style="width:100%;padding:16px 0px 16px 16px;cursor: pointer;" ng-click="verSubmenu=!verSubmenu">
+            Meteorología
+          </div>
+          <div ng-show="verSubmenu">
+            <ion-item menu-close href="#/app/sat-sp" style="padding-left:16px;font-size:small">
+              Sat. España
             </ion-item>
-            <ion-item menu-close href="#" style="padding-left:16px;">
-              item 2
+            <ion-item menu-close href="#" style="padding-left:16px;font-size:small">
+              Sat. Europa
             </ion-item>
-          </ion-list>
+            <ion-item menu-close href="#" style="padding-left:16px;font-size:small">
+              Mapas
+            </ion-item>
+          </div>
         </ion-item>
       </ion-list>
     </ion-content>
