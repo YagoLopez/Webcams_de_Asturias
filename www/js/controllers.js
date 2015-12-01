@@ -387,73 +387,76 @@ angular.module('wca.controllers',[])
   var urlGifCors = 'http://localhost:8100/gif/anim_ir_color.gif';
   var urlGifCors2 = 'http://cors.io/?u=http://neige.meteociel.fr/satellite/anim_ir_color.gif';
 
+
+// -----------------------------------------------------------------------------------------------------------------
   //Gifffer();
-
-
-
-
-
-  $scope.calculateDimensions = function(gesture) {
-    $scope.dev_width = $window.innerWidth;
-    $scope.dev_height = $window.innerHeight;
-  }
-
-  angular.element($window).bind('resize', function(){
-    $scope.$apply(function() {
-      $scope.calculateDimensions();
-    })
-  });
-
-  $scope.calculateDimensions();
-
-  var gifAnimado = new SuperGif({
-    gif: document.getElementById('gif'), loop_mode:0, draw_while_loading:1, max_width:$scope.dev_width
-  });
-  gifAnimado.load();
-
-  $scope.play = function(){
-    gifAnimado.play();
-    console.log('play...');
-  }
-  $scope.pause= function(){
-    gifAnimado.pause();
-  }
-  $scope.restart= function(){
-    gifAnimado.pause();
-    gifAnimado.move_to(0);
-  }
-  $scope.forward= function(){
-    gifAnimado.pause();
-    gifAnimado.move_relative(1);
-  }
-  $scope.backward= function(){
-    gifAnimado.pause();
-    gifAnimado.move_relative(-1);
-  }
-  $scope.end= function(){
-  }
-
-
-
-
-
-
-
+// -----------------------------------------------------------------------------------------------------------------
 /*
-  //var xgif2 = document.querySelectorAll('x-gif');
-  //console.log('xgif.attributes', xgif.attributes);
-  var xgif = document.getElementById('xgif');
-  console.log('x-gif', xgif);
+  var xgif2 = document.querySelectorAll('x-gif');
+  console.log('xgif2', xgif2);
+  //var xgif = document.getElementById('xgif');
+  //console.log('x-gif', xgif);
 
   $scope.play = function(){
-    xgif.removeAttribute('stopped');
+    xgif2[0].removeAttribute('stopped');
   };
 
   $scope.pause = function(){
-    xgif.setAttribute('stopped','');
+    xgif2[0].setAttribute('stopped','');
   };
 */
+// -----------------------------------------------------------------------------------------------------------------
 
-}); // SatSpCtrl
+// -----------------------------------------------------------------------------------------------------------------
+
+
+}) // SatSpCtrl
+
+.controller('MeteoPlayerCtrl', function($scope, $window){
+
+    $scope.calculateDimensions = function(gesture) {
+      $scope.dev_width = $window.innerWidth;
+      $scope.dev_height = $window.innerHeight;
+    }
+
+    angular.element($window).bind('resize', function(){
+      $scope.$apply(function() {
+        $scope.calculateDimensions();
+      })
+    });
+
+    $scope.calculateDimensions();
+
+    var gifAnimado = new SuperGif({
+      gif: document.getElementById('gif'),
+      loop_mode:0,
+      draw_while_loading: 1,
+      max_width: $scope.dev_width
+    });
+    gifAnimado.load();
+
+    $scope.play = function(){
+      gifAnimado.play();
+      console.log('play...');
+    }
+    $scope.pause= function(){
+      gifAnimado.pause();
+    }
+    $scope.restart= function(){
+      gifAnimado.pause();
+      gifAnimado.move_to(0);
+    }
+    $scope.forward= function(){
+      gifAnimado.pause();
+      gifAnimado.move_relative(1);
+    }
+    $scope.backward= function(){
+      gifAnimado.pause();
+      gifAnimado.move_relative(-1);
+    }
+    $scope.end= function(){
+    }
+
+}) // meteo player ctrl
 
 ; // FIN

@@ -147,12 +147,12 @@ angular.module('wca',
         }
       })
 
-    .state('app.meteoimg', {
-      url: '/meteoimg',
+    .state('app.meteo-player', {
+      url: '/meteo-player',
       views: {
         'menuContent': {
-          templateUrl: 'templates/meteo-img.html',
-          controller: 'MeteoImgCtrl'
+          templateUrl: 'templates/meteo-player.html',
+          controller: 'MeteoPlayerCtrl'
         }
       }
     })
