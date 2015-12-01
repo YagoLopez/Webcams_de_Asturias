@@ -457,6 +457,13 @@ angular.module('wca.controllers',[])
     $scope.end= function(){
     }
 
-}) // meteo player ctrl
+// WHAMMY -----------------------------------------------------------------------------------------------------------------
+
+    //var canvas = gifAnimado.get_canvas();
+    //console.log('canvas', canvas);
+    //var encoder = new Whammy.Video(15);
+    //encoder.add(canvas);
+
+  }) // meteo player ctrl
 
 ; // FIN

@@ -28,8 +28,6 @@
     <file url="file://$PROJECT_DIR$/www/templates/mosaico-backup.html" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/www/templates/mosaico.html" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/www/templates/panoramio.html" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/www/templates/player-frame.html" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/www/templates/player.html" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/www/templates/popover.html" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/www/templates/sat-sp.html" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/www/templates/streetview.html" charset="UTF-8" />
