@@ -492,6 +492,7 @@ angular.module('wca.controllers',[])
       killTimer();
       gifAnimado.pause();
       gifAnimado.move_relative(1);
+      $scope.totalFrames = gifAnimado.get_length();
       $scope.sliderValue = gifAnimado.get_current_frame();
       console.log('current frame', gifAnimado.get_current_frame());
       console.log('slider value', $scope.sliderValue);
@@ -546,11 +547,13 @@ angular.module('wca.controllers',[])
     $scope.irPosicion = function(posicion){
       $scope.totalFrames = gifAnimado.get_length();
       $scope.sliderValue = posicion;
+      //gifAnimado.move_to($scope.sliderValue);
       gifAnimado.move_to(posicion);
+
       //console.log('length', gifAnimado.get_length());
-      console.log('sliderValue: ', $scope.sliderValue);
+      console.log('slider value: ', $scope.sliderValue);
       console.log('parametro posicion', posicion);
-      console.log('getCurrentFrames', gifAnimado.get_current_frame());
+      console.log('current frame', gifAnimado.get_current_frame());
     };//irposicion
 
 // WHAMMY -----------------------------------------------------------------------------------------------------------------
