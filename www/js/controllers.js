@@ -434,6 +434,7 @@ angular.module('wca.controllers',[])
       draw_while_loading: 1,
       max_width: $scope.dev_width
     });
+
     gifAnimado.load(function(){
       $scope.totalFrames = gifAnimado.get_length();
       $scope.currentFrame = gifAnimado.get_current_frame();
@@ -443,19 +444,20 @@ angular.module('wca.controllers',[])
       console.log('currentFrame', $scope.currentFrame);
     });
 
-
     var isGifPlaying = false;
     var timer = null;
     var rangeSlider = document.getElementById('levelRange');
 
+/*
     $scope.$watch('totalFrames',
       function(newValue, oldValue) {
-        //console.log('watching newValue: ', newValue);
-        //console.log('watching oldValue: ', oldValue);
-        //console.log('watching $scope.totalFrames: ', $scope.totalFrames);
-        //console.log('watching gifAnimado.get_length(): ', gifAnimado.get_length());
+        console.log('watching newValue: ', newValue);
+        console.log('watching oldValue: ', oldValue);
+        console.log('watching $scope.totalFrames: ', $scope.totalFrames);
+        console.log('watching gifAnimado.get_length(): ', gifAnimado.get_length());
       }
     );
+*/
 
     $scope.playPause = function(){
       if (isGifPlaying) {
@@ -464,13 +466,11 @@ angular.module('wca.controllers',[])
         $scope.play();
       }
     };
-
     $scope.play = function(){
       killTimer;
       isGifPlaying = true;
       gifAnimado.play();
       sondearPosicion();
-      console.log('playing');
       console.log('current frame', gifAnimado.get_current_frame());
     };
     $scope.pause= function(){
@@ -517,31 +517,21 @@ angular.module('wca.controllers',[])
       console.log('current frame', gifAnimado.get_current_frame());
     }
 
+    //$scope.clickImg = function (){
+    //  killTimer();
+    //  console.log('img clicked');
+    //  $scope.playPause();
+    //};
     //var canvas = gifAnimado.get_canvas();
     //console.log('canvas', canvas);
     //canvas.onChange();
 
-    $scope.clickImg = function (){
-      killTimer();
-      console.log('img clicked');
-      $scope.playPause();
-    };
-
     var sondearPosicion = function(){
       timer = $interval( function(){
-        //var posicionActual = gifAnimado.get_current_frame();
-        //$scope.currentFrame = posicionActual;
-
-
-
         rangeSlider.value = gifAnimado.get_current_frame();
         $scope.currentFrame = gifAnimado.get_current_frame();
-
-
-
-
         console.log('current frame', $scope.currentFrame);
-      }, 100); // fin interval
+      }, 500); // fin interval
     };// getposicion
 
     var killTimer = function(){
@@ -554,10 +544,10 @@ angular.module('wca.controllers',[])
       }
     };// killtimer
 
-    $scope.irPosicion = function(valor){
-      gifAnimado.move_to(valor);
+    $scope.irPosicion = function(posicion){
+      gifAnimado.move_to(posicion);
       console.log('currentFrame', $scope.currentFrame);
-      console.log('valor', valor);
+      console.log('valor', posicion);
     };//irposicion
 
 // WHAMMY -----------------------------------------------------------------------------------------------------------------

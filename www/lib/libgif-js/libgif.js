@@ -928,6 +928,11 @@
             pause: player.pause,
             move_relative: player.move_relative,
             move_to: player.move_to,
+            // TODO: MODIFICAIONES MIAS
+            options: options,
+            frames: frames,
+            player: player,
+            // TODO: FIN MODIFICACIONES MIAS
 
             // getters for instance vars
             get_playing      : function() { return player.playing },
