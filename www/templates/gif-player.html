@@ -35,6 +35,7 @@
         </div>
         <!-- fin botones ----------------------------------------------------------------------------------------->
         <!-- range slider ---------------------------------------------------------------------------------------->
+<!--
         <div class="range">
           <label>
             <input type="range" min="0" max="{{totalFrames-1}}" value="{{sliderValue}}" ng-model="sliderValue"
@@ -43,7 +44,15 @@
           <br>Fotograma: {{sliderValue}}
           <br>Total: {{totalFrames}}
         </div>
+-->
         <!-- fin range slider ------------------------------------------------------------------------------------>
+        <div class="range">
+          <input id="levelRange" type="range" min="0" max="{{gifAnimado.get_length()}}"
+                 value="{{currentFrame}}" ng-model="currentFrame"
+                 ng-change="irPosicion(currentFrame)"/>
+          {{gifAnimado.get_current_frame()}}<br>
+          $scope.currentFrame: {{$scope.currentFrame}}
+        </div>
       </div>
     </div>
   </ion-content>

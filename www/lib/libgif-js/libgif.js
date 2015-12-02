@@ -957,7 +957,7 @@
                 h.open('GET', src, true);
                 h.send();
             },
-            load: function (speed, callback) {
+            load: function (callback) {
                 this.load_url(gif.getAttribute('rel:animated_src') || gif.src,callback);
             },
             load_raw: function(arr, callback) {
