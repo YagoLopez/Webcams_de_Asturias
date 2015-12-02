@@ -531,7 +531,7 @@ angular.module('wca.controllers',[])
         rangeSlider.value = gifAnimado.get_current_frame();
         $scope.currentFrame = gifAnimado.get_current_frame();
         console.log('current frame', $scope.currentFrame);
-      }, 500); // fin interval
+      }, 50); // fin interval
     };// getposicion
 
     var killTimer = function(){

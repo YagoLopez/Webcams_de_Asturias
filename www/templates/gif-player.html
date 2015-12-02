@@ -18,11 +18,14 @@
         <!-- fin imagen ------------------------------------------------------------------------------------------>
         <!-- range slider ---------------------------------------------------------------------------------------->
         <div class="range range-positive">
-          <i class="icon ion-ios-play-outline"></i>
+          <i class="icon ion-ios-play-outline" ng-click="playPause()" style="cursor: pointer;"></i>
           <input id="levelRange" type="range" min="0" max="{{ gifAnimado.get_length()-1 }}"
                  value="{{ currentFrame }}" ng-model="currentFrame" ng-change="irPosicion(currentFrame)"
                   style="border-top:0;border-bottom:0;"/>
-          <i class="icon ion-ios-skipbackward-outline"></i>
+          <i class="icon ion-ios-skipbackward-outline" ng-click="end()" style="cursor: pointer;"></i>
+          <i class="icon ion-ios-skipbackward-outline" ng-click="end()" style="cursor: pointer;"></i>
+          <i class="icon ion-ios-skipbackward-outline" ng-click="end()" style="cursor: pointer;"></i>
+
         </div>
         <!-- fin range slider ------------------------------------------------------------------------------------>
         <!-- botones --------------------------------------------------------------------------------------------->
