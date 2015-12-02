@@ -529,8 +529,17 @@ angular.module('wca.controllers',[])
 
     var sondearPosicion = function(){
       timer = $interval( function(){
-        var posicionActual = gifAnimado.get_current_frame();
-        $scope.currentFrame = posicionActual;
+        //var posicionActual = gifAnimado.get_current_frame();
+        //$scope.currentFrame = posicionActual;
+
+
+
+        rangeSlider.value = gifAnimado.get_current_frame();
+        $scope.currentFrame = gifAnimado.get_current_frame();
+
+
+
+
         console.log('current frame', $scope.currentFrame);
       }, 100); // fin interval
     };// getposicion

@@ -35,23 +35,21 @@
         </div>
         <!-- fin botones ----------------------------------------------------------------------------------------->
         <!-- range slider ---------------------------------------------------------------------------------------->
-<!--
-        <div class="range">
+<!--        <div class="range">
           <label>
-            <input type="range" min="0" max="{{totalFrames-1}}" value="{{sliderValue}}" ng-model="sliderValue"
-                   ng-change="irPosicion(sliderValue);">
+            <input id="levelRange" type="range" min="0" max="{{gifAnimado.get_length()-1}}"
+                   value="{{currentFrame}}" ng-model="currentFrame"
+                   ng-change="irPosicion(currentFrame);">
           </label>
-          <br>Fotograma: {{sliderValue}}
-          <br>Total: {{totalFrames}}
-        </div>
--->
+          <br>Fotograma: {{gifAnimado.get_current_frame()}} de {{gifAnimado.get_length()}}
+        </div>-->
         <!-- fin range slider ------------------------------------------------------------------------------------>
         <div class="range">
+          <label>
           <input id="levelRange" type="range" min="0" max="{{gifAnimado.get_length()-1}}"
-                 value="{{currentFrame}}" ng-model="currentFrame"
-                 ng-change="irPosicion(currentFrame)"/>
-          {{gifAnimado.get_current_frame()}}<br>
-          $scope.currentFrame: {{$scope.currentFrame}}
+                 value="{{currentFrame}}" ng-model="currentFrame" ng-change="irPosicion(currentFrame)"/>
+            Fotograma: {{gifAnimado.get_current_frame()}} de {{gifAnimado.get_length()}}
+          </label>
         </div>
       </div>
     </div>
