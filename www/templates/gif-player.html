@@ -37,8 +37,8 @@
         <!-- range slider ---------------------------------------------------------------------------------------->
         <div class="range">
           <label>
-            <input type="range" min="0" max="{{totalFrames-1}}" ng-model="sliderValue"
-                   ng-change="irPosicion(sliderValue)">
+            <input type="range" min="0" max="{{totalFrames-1}}" value="{{sliderValue}}" ng-model="sliderValue"
+                   ng-change="irPosicion(sliderValue);">
           </label>
           <br>Fotograma: {{sliderValue}}
           <br>Total: {{totalFrames}}
