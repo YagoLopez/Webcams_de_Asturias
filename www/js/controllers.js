@@ -414,7 +414,7 @@ angular.module('wca.controllers',[])
 
 .controller('GifPlayerCtrl', function($scope, $window, $interval){
 
-
+    //TODO: usar el evento afterview.enter
     $scope.calculateDimensions = function(gesture) {
       $scope.dev_width = $window.innerWidth;
       $scope.dev_height = $window.innerHeight;
@@ -437,20 +437,24 @@ angular.module('wca.controllers',[])
     gifAnimado.load();
     console.log('gifAnimado', gifAnimado);
 
+
+    $scope.totalFrames = gifAnimado.get_length();
     var isGifPlaying = false;
-    //$scope.playPause = function(){
-    //  if (isGifPlaying) {
-    //    isGifPlaying = false;
-    //    gifAnimado.pause();
-    //  } else {
-    //    isGifPlaying = true;
-    //    gifAnimado.play();
-    //  }
-    //};
-    $scope.posicion = 0;
     var timer = null;
+    $scope.sliderValue = 0;
+
+    $scope.$watch('totalFrames',
+      function(newValue, oldValue) {
+        console.log('newValue: ', newValue);
+        console.log('oldValue: ', oldValue);
+        console.log('$scope.totalFrames: ', $scope.totalFrames);
+        console.log('gifAnimado.get_length(): ', gifAnimado.get_length());
+      }
+    );
 
     $scope.playPause = function(){
+      console.log('length', gifAnimado.get_length());
+      $scope.totalFrames = gifAnimado.get_length();
       if (isGifPlaying) {
         $scope.pause();
       } else {
@@ -459,58 +463,83 @@ angular.module('wca.controllers',[])
     };
 
     $scope.play = function(){
+      killTimer;
       isGifPlaying = true;
       gifAnimado.play();
       getPosicion();
       console.log('playing...');
     };
     $scope.pause= function(){
+      killTimer();
       isGifPlaying = false;
       gifAnimado.pause();
-      $scope.killtimer();
       console.log('pause');
     }
     $scope.restart= function(){
+      killTimer();
       gifAnimado.pause();
       gifAnimado.move_to(0);
+      $scope.sliderValue = 0;
+      console.log('ir al principio. sliderValue: ', $scope.sliderValue);
     }
     $scope.forward= function(){
+      killTimer();
       gifAnimado.pause();
       gifAnimado.move_relative(1);
+      $scope.sliderValue = gifAnimado.get_current_frame();
     }
     $scope.backward= function(){
+      killTimer();
       gifAnimado.pause();
       gifAnimado.move_relative(-1);
+      $scope.sliderValue = gifAnimado.get_current_frame();
     }
     $scope.end= function(){
+      killTimer();
       isGifPlaying = false;
+      var posicionFinal = gifAnimado.get_length();
       gifAnimado.pause();
-      gifAnimado.move_to(gifAnimado.get_length());
-      console.log('ir a final. longitud animacion:', gifAnimado.get_length());
+      gifAnimado.move_to(posicionFinal - 1);
+      $scope.sliderValue = posicionFinal - 1;
+      console.log('ir a final. longitud animacion:', gifAnimado.get_length()-1);
     }
 
-    var canvas = gifAnimado.get_canvas();
-    console.log('canvas', canvas);
+    //var canvas = gifAnimado.get_canvas();
+    //console.log('canvas', canvas);
     //canvas.onChange();
 
     $scope.clickImg = function (){
+      killTimer();
       console.log('img clicked');
+      $scope.playPause();
     };
 
     var getPosicion = function(){
       timer = $interval( function(){
-        $scope.posicion = gifAnimado.get_current_frame();
-        console.log('posicion', gifAnimado.get_current_frame());
+        var posicionActual = gifAnimado.get_current_frame();
+        $scope.sliderValue = posicionActual;
+        console.log('posicion actual', posicionActual);
       }, 100); // fin interval
     };// getposicion
 
-    $scope.killtimer=function(){
+    var killTimer = function(){
       if(angular.isDefined(timer))
       {
         $interval.cancel(timer);
-        timer=undefined;
+        timer = undefined;
+        console.log('timer cancelado');
       }
-    };
+    };// killtimer
+
+    $scope.irPosicion = function(posicion){
+      $scope.totalFrames = gifAnimado.get_length();
+      $scope.sliderValue = posicion;
+      gifAnimado.move_to(posicion);
+      console.log('length', gifAnimado.get_length());
+      console.log('sliderValue: ', $scope.sliderValue);
+      console.log('parametro posicion', posicion);
+    };//ir
+
 // WHAMMY -----------------------------------------------------------------------------------------------------------------
 
 
