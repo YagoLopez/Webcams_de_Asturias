@@ -47,7 +47,7 @@
 -->
         <!-- fin range slider ------------------------------------------------------------------------------------>
         <div class="range">
-          <input id="levelRange" type="range" min="0" max="{{gifAnimado.get_length()}}"
+          <input id="levelRange" type="range" min="0" max="{{gifAnimado.get_length()-1}}"
                  value="{{currentFrame}}" ng-model="currentFrame"
                  ng-change="irPosicion(currentFrame)"/>
           {{gifAnimado.get_current_frame()}}<br>

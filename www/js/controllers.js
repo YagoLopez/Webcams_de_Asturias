@@ -446,6 +446,7 @@ angular.module('wca.controllers',[])
 
     var isGifPlaying = false;
     var timer = null;
+    var rangeSlider = document.getElementById('levelRange');
 
     $scope.$watch('totalFrames',
       function(newValue, oldValue) {
@@ -484,8 +485,8 @@ angular.module('wca.controllers',[])
       isGifPlaying = false;
       gifAnimado.pause();
       gifAnimado.move_to(0);
+      rangeSlider.value = 0;
       $scope.currentFrame = gifAnimado.get_current_frame();
-      console.log('current frame', gifAnimado.get_current_frame());
       console.log('$scope.currentFrame', $scope.currentFrame);
     }
     $scope.forward= function(){
@@ -493,9 +494,8 @@ angular.module('wca.controllers',[])
       isGifPlaying = false;
       gifAnimado.pause();
       gifAnimado.move_relative(1);
+      rangeSlider.value = gifAnimado.get_current_frame();
       $scope.currentFrame = gifAnimado.get_current_frame();
-      document.getElementById('levelRange').value = gifAnimado.get_current_frame();
-      console.log('levelRange value', document.getElementById('levelRange').value);
       console.log('current frame', gifAnimado.get_current_frame());
     }
     $scope.backward= function(){
@@ -503,6 +503,8 @@ angular.module('wca.controllers',[])
       isGifPlaying = false;
       gifAnimado.pause();
       gifAnimado.move_relative(-1);
+      rangeSlider.value = gifAnimado.get_current_frame();
+      $scope.currentFrame = gifAnimado.get_current_frame();
       console.log('current frame', gifAnimado.get_current_frame());
     }
     $scope.end= function(){
@@ -510,6 +512,8 @@ angular.module('wca.controllers',[])
       var posicionFinal = gifAnimado.get_length();
       gifAnimado.pause();
       gifAnimado.move_to(posicionFinal - 1);
+      rangeSlider.value = gifAnimado.get_current_frame();
+      $scope.currentFrame = gifAnimado.get_current_frame();
       console.log('current frame', gifAnimado.get_current_frame());
     }
 
@@ -543,10 +547,8 @@ angular.module('wca.controllers',[])
 
     $scope.irPosicion = function(valor){
       gifAnimado.move_to(valor);
-
       console.log('currentFrame', $scope.currentFrame);
       console.log('valor', valor);
-
     };//irposicion
 
 // WHAMMY -----------------------------------------------------------------------------------------------------------------
