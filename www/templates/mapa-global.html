@@ -29,7 +29,8 @@
 
     <div class="list item-input-inset">
       <label class="item item-input item-select" style="width:100%">
-        <ion-radio ng-model="checked" ng-value="'con'">Concejo:</ion-radio>
+        <i class="icon ion-checkmark" ng-show="checked==='con'"></i>
+        Concejo:
         <select style="color: #387ef5" ng-model="concejo" ng-change="concejoEscogido(concejo);">
           <option ng-repeat="concejo in concejos">
             {{ ::concejo[0] }}
@@ -40,14 +41,19 @@
 
     <div class="list item-input-inset">
       <label class="item item-input item-select" style="width:100%">
-        <ion-radio ng-model="checked" ng-value="'cat'">Categoría:</ion-radio>
+        <i class="icon ion-checkmark" ng-show="checked==='cat'"></i>
+        Categoría:
         <select style="color: #387ef5" ng-model="categoria" ng-change="categoriaEscogida(categoria);">
           <option ng-repeat="categoria in categorias">
             {{ ::categoria[0] }}
           </option>
         </select>
       </label>
+    </div>
 
+    <div>
+      <ion-radio ng-model="checked" ng-value="'con'">Concejo:</ion-radio>
+      <ion-radio ng-model="checked" ng-value="'cat'">Categoría:</ion-radio>
     </div>
 
 
