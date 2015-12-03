@@ -379,7 +379,6 @@ angular.module('wca.controllers',[])
 
 })//StreetViewCtrl
 
-
 .controller('SatSpCtrl', function($scope, $http, $window){
 
     //TODO: añadir loader
@@ -430,34 +429,29 @@ angular.module('wca.controllers',[])
 
     var gifAnimado = new SuperGif({
       gif: document.getElementById('gif'),
-      loop_mode:0,
-      draw_while_loading: 1,
-      max_width: $scope.dev_width
+      loop_mode: 0,
+      draw_while_loading: 1
+      //max_width: $scope.dev_width
     });
 
+    // carga gif remoto
     gifAnimado.load(function(){
       $scope.totalFrames = gifAnimado.get_length();
       $scope.currentFrame = gifAnimado.get_current_frame();
       $scope.gifAnimado = gifAnimado;
+      //var canvas = gifAnimado.get_canvas();
       $scope.$apply();
+      //console.log('canvas width', canvas.width);
       console.log('gifAnimado', gifAnimado);
       console.log('currentFrame', $scope.currentFrame);
     });
 
+    // inicializaciones
+    $scope.currentFrame = 0;
     var isGifPlaying = false;
     var timer = null;
     var rangeSlider = document.getElementById('levelRange');
 
-/*
-    $scope.$watch('totalFrames',
-      function(newValue, oldValue) {
-        console.log('watching newValue: ', newValue);
-        console.log('watching oldValue: ', oldValue);
-        console.log('watching $scope.totalFrames: ', $scope.totalFrames);
-        console.log('watching gifAnimado.get_length(): ', gifAnimado.get_length());
-      }
-    );
-*/
 
     $scope.playPause = function(){
       if (isGifPlaying) {
@@ -530,7 +524,7 @@ angular.module('wca.controllers',[])
       timer = $interval( function(){
         rangeSlider.value = gifAnimado.get_current_frame();
         $scope.currentFrame = gifAnimado.get_current_frame();
-        console.log('current frame', $scope.currentFrame);
+        //console.log('current frame', $scope.currentFrame);
       }, 50); // fin interval
     };// getposicion
 

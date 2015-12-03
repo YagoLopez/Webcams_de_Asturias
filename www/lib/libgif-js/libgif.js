@@ -432,7 +432,7 @@
             //canvas sizes
             c_w: null,
             c_h: null,
-            speed: 100
+            fps: 100
         };
       console.log('options antes', options);
 
@@ -463,9 +463,9 @@
         var frameOffsets = []; // elements have .x and .y properties
 
         var gif = options.gif;
-        if (gif.getAttribute('rel:speed')) {
-          options.speed = gif.getAttribute('rel:speed');
-          console.log('asignacion de options.speed', options.speed);
+        if (gif.getAttribute('rel:fps')) {
+          options.fps = gif.getAttribute('rel:fps');
+          console.log('asignacion de options.fps', options.fps);
         }
 
         if (typeof options.auto_play == 'undefined')
@@ -724,7 +724,7 @@
 
             var step = (function () {
                 var stepping = false;
-                //var delay = options.speed;
+                //var delay = options.fps;
                 //console.log('delay desde step', delay);
                 var doStep = function () {
                     stepping = playing;
@@ -735,8 +735,8 @@
 
                     //TODO: modificaciones mias
                     //var delay = 1000;
-                    var delay = options.speed;
-                    //console.log('options desde funcion doStep', options.speed);
+                    var delay = options.fps;
+                    //console.log('options desde funcion doStep', options.fps);
 
                     if (!delay) delay = 100; // FIXME: Should this even default at all? What should it be?
 
