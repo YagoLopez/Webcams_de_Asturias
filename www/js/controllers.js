@@ -519,19 +519,13 @@ angular.module('wca.controllers',[])
       $scope.zoomIn = function(){
         //gifAnimado.get_canvas().className='zoomIn';
         console.log('canvas', gifAnimado.get_canvas());
-
         // TODO: en vez de asignar width y height, asignar una clase nueva con "className" a ion-scroll
         var gifContainer = document.getElementById('gifContainer');
-        console.log('gifContainer antes', gifContainer);
         gifContainer.className = 'gifZoomed';
+        //gifContainer.className = 'animated';
+        //gifContainer.className = 'zoomIn';
         //gifScroll.style.width='800px';
-
-        console.log('gifContainer despues', gifContainer);
-
       };// zoomIn
-
-
-
 
 
 
