@@ -429,16 +429,6 @@ angular.module('wca.controllers',[])
 
     $scope.$on('$ionicView.afterEnter', function(){
 
-
-
-      // inicializacion zoom
-      $scope.config = {}; // use defaults
-      $scope.model = {}; // always pass empty object
-
-
-
-
-
       var gifAnimado = new SuperGif({
         gif: document.getElementById('gif'),
         loop_mode: 0,
@@ -457,12 +447,12 @@ angular.module('wca.controllers',[])
         console.log('gifAnimado', gifAnimado);
         console.log('currentFrame', $scope.currentFrame);
       });
+
       // inicializaciones
       $scope.currentFrame = 0;
       var isGifPlaying = false;
       var timer = null;
       var rangeSlider = document.getElementById('levelRange');
-
 
       $scope.playPause = function(){
         if (isGifPlaying) {
@@ -521,10 +511,32 @@ angular.module('wca.controllers',[])
         $scope.currentFrame = gifAnimado.get_current_frame();
         console.log('current frame', gifAnimado.get_current_frame());
       }
+
+
+
+
+
       $scope.zoomIn = function(){
-        gifAnimado.get_canvas().className='zoomIn';
+        //gifAnimado.get_canvas().className='zoomIn';
         console.log('canvas', gifAnimado.get_canvas());
-      };
+
+        // TODO: en vez de asignar width y height, asignar una clase nueva con "className" a ion-scroll
+        var gifContainer = document.getElementById('gifContainer');
+        console.log('gifContainer antes', gifContainer);
+        gifContainer.className = 'gifZoomed';
+        //gifScroll.style.width='800px';
+
+        console.log('gifContainer despues', gifContainer);
+
+      };// zoomIn
+
+
+
+
+
+
+
+
 
       var sondearPosicion = function(){
         timer = $interval( function(){

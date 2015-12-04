@@ -3,32 +3,41 @@
     <style>
       div.jsgif > canvas{
         width:100%;
+        /*height:100%;*/
       }
       .zoomIn
       {
         -webkit-transition-duration: 500ms;
         /*-webkit-transform: scale(1.5);*/
-
-
         /* Firefox */
-        -moz-transform: scale(1.5);
+        -moz-transform: scale(2);
         /* WebKit - Chrome and Safari */
-        -webkit-transform: scale(1.5);
+        -webkit-transform: scale(2);
         /* Internet Explorer 9 */
-        -ms-transform: scale(1.5);
+        -ms-transform: scale(2);
         /* Opera */
-        -o-transform: scale(1.5);
+        -o-transform: scale(2);
         /* general syntax (IE10, probably others soon) */
-        transform: scale(1.5);
+        transform: scale(2);
       }
       div.jsgif{
-        overflow:scroll;
+        /*overflow:scroll;*/
+      }
+
+      .gifZoomed {
+        width: 300%;
+        height: 300%;
       }
     </style>
-      <div>
+      <!--<div style="width:100%;height: 200px;">-->
         <!-- imagen ---------------------------------------------------------------------------------------------->
-        <img id="gif" src="http://sat24.mobi/Image/satir/europa/sp"
-             rel:auto_play="0" rel:fps="1000" width="100%" height="50%" ng-click="playPause()"/>
+        <!--TODO: al hacer zoom modificar la altura y la anchura de ion-scroll-->
+        <ion-scroll id="gifScroll" zooming="true" direction="xy" style="width:100%;height:60%">
+          <div id="gifContainer">
+          <img id="gif" src="http://sat24.mobi/Image/satir/europa/sp"
+               rel:auto_play="0" rel:fps="500" ng-click="playPause()"/>
+          </div>
+        </ion-scroll>
         <!-- fin imagen ------------------------------------------------------------------------------------------>
         <!-- range slider ---------------------------------------------------------------------------------------->
         <label class="range range-positive" style="padding: 0 3%;">
@@ -57,13 +66,10 @@
         <!-- fin botones ----------------------------------------------------------------------------------------->
         <!-- Leyenda --------------------------------------------------------------------------------------------->
         <div style="width:100%">
-          <i class="icon ion-ios-skipforward-outline" ng-click="end()" style="cursor: pointer;"></i>
-          <i class="icon ion-ios-search" ng-click="end()" style="cursor: pointer;"></i>
-          <i class="icon ion-ios-skipbackward-outline" ng-click="end()" style="cursor: pointer;"></i>
           Fotograma: {{ gifAnimado.get_current_frame()+1 }} de {{ gifAnimado.get_length() }}
         </div>
         <!-- fin leyenda ----------------------------------------------------------------------------------------->
 
-      </div>
+      <!--</div>-->
   </ion-content>
 </ion-view>
