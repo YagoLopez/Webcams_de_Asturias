@@ -379,5 +379,199 @@ angular.module('wca.controllers',[])
 
 })//StreetViewCtrl
 
+.controller('SatSpCtrl', function($scope, $http, $window){
+
+    //TODO: añadir loader
+  //var urlGif = 'http://neige.meteociel.fr/satellite/anim_ir_color.gif';
+  var urlGifCors = 'http://localhost:8100/gif/anim_ir_color.gif';
+  var urlGifCors2 = 'http://cors.io/?u=http://neige.meteociel.fr/satellite/anim_ir_color.gif';
+
+
+// -----------------------------------------------------------------------------------------------------------------
+  //Gifffer();
+// -----------------------------------------------------------------------------------------------------------------
+/*
+  var xgif2 = document.querySelectorAll('x-gif');
+  console.log('xgif2', xgif2);
+  //var xgif = document.getElementById('xgif');
+  //console.log('x-gif', xgif);
+
+  $scope.play = function(){
+    xgif2[0].removeAttribute('stopped');
+  };
+
+  $scope.pause = function(){
+    xgif2[0].setAttribute('stopped','');
+  };
+*/
+// -----------------------------------------------------------------------------------------------------------------
+
+// -----------------------------------------------------------------------------------------------------------------
+
+
+}) // SatSpCtrl
+
+.controller('GifPlayerCtrl', function($scope, $window, $interval){
+
+    $scope.calculateDimensions = function(gesture) {
+      $scope.dev_width = $window.innerWidth;
+      $scope.dev_height = $window.innerHeight;
+    }
+
+    angular.element($window).bind('resize', function(){
+      $scope.$apply(function() {
+        $scope.calculateDimensions();
+      })
+    });
+
+    $scope.calculateDimensions();
+
+
+    $scope.$on('$ionicView.afterEnter', function(){
+
+      var gifAnimado = new SuperGif({
+        gif: document.getElementById('gif'),
+        loop_mode: 0,
+        draw_while_loading: 1
+        //max_width: $scope.dev_width
+      });
+
+      // carga gif remoto
+      gifAnimado.load(function(){
+        $scope.totalFrames = gifAnimado.get_length();
+        $scope.currentFrame = gifAnimado.get_current_frame();
+        $scope.gifAnimado = gifAnimado;
+        //var canvas = gifAnimado.get_canvas();
+        $scope.$apply();
+        //console.log('canvas width', canvas.width);
+        console.log('gifAnimado', gifAnimado);
+        console.log('currentFrame', $scope.currentFrame);
+      });
+
+      // inicializaciones
+      $scope.currentFrame = 0;
+      var isGifPlaying = false;
+      var timer = null;
+      var rangeSlider = document.getElementById('levelRange');
+
+      $scope.playPause = function(){
+        if (isGifPlaying) {
+          $scope.pause();
+        } else {
+          $scope.play();
+        }
+      };
+      $scope.play = function(){
+        killTimer;
+        isGifPlaying = true;
+        gifAnimado.play();
+        sondearPosicion();
+        console.log('current frame', gifAnimado.get_current_frame());
+      };
+      $scope.pause= function(){
+        killTimer();
+        isGifPlaying = false;
+        gifAnimado.pause();
+        console.log('pause');
+        console.log('current frame', gifAnimado.get_current_frame());
+      }
+      $scope.restart= function(){
+        killTimer();
+        isGifPlaying = false;
+        gifAnimado.pause();
+        gifAnimado.move_to(0);
+        rangeSlider.value = 0;
+        $scope.currentFrame = gifAnimado.get_current_frame();
+        console.log('$scope.currentFrame', $scope.currentFrame);
+      }
+      $scope.forward= function(){
+        killTimer();
+        isGifPlaying = false;
+        gifAnimado.pause();
+        gifAnimado.move_relative(1);
+        rangeSlider.value = gifAnimado.get_current_frame();
+        $scope.currentFrame = gifAnimado.get_current_frame();
+        console.log('current frame', gifAnimado.get_current_frame());
+      }
+      $scope.backward= function(){
+        killTimer();
+        isGifPlaying = false;
+        gifAnimado.pause();
+        gifAnimado.move_relative(-1);
+        rangeSlider.value = gifAnimado.get_current_frame();
+        $scope.currentFrame = gifAnimado.get_current_frame();
+        console.log('current frame', gifAnimado.get_current_frame());
+      }
+      $scope.end= function(){
+        killTimer();
+        var posicionFinal = gifAnimado.get_length();
+        gifAnimado.pause();
+        gifAnimado.move_to(posicionFinal - 1);
+        rangeSlider.value = gifAnimado.get_current_frame();
+        $scope.currentFrame = gifAnimado.get_current_frame();
+        console.log('current frame', gifAnimado.get_current_frame());
+      }
+
+
+
+
+/*
+      $scope.zoomIn = function(){
+        var gifContainer = document.getElementById('gifContainer');
+        gifContainer.className = 'gifZoomed';
+        //gifContainer.className = 'animated';
+        //gifContainer.className = 'zoomIn';
+        //gifScroll.style.width='800px';
+      };// zoomIn
+*/
+
+      $scope.zoomIn = function(){
+        var canvas = gifAnimado.get_canvas();
+        //gifAnimado.get_canvas().className='zoomIn';
+        console.log('canvas width', canvas.style.width);
+        console.log('canvas width', canvas.style.width);
+
+        var gifContainer = document.getElementById('gifContainer');
+        gifContainer.className = 'gifZoomed';
+        //gifContainer.className = 'animated';
+        //gifContainer.className = 'zoomIn';
+        //gifScroll.style.width='800px';
+      };// zoomIn
+
+
+
+
+
+
+      var sondearPosicion = function(){
+        timer = $interval( function(){
+          rangeSlider.value = gifAnimado.get_current_frame();
+          $scope.currentFrame = gifAnimado.get_current_frame();
+          //console.log('current frame', $scope.currentFrame);
+        }, 50); // fin interval
+      };// getposicion
+
+      var killTimer = function(){
+        if(angular.isDefined(timer))
+        {
+          $interval.cancel(timer);
+          timer = undefined;
+          isGifPlaying = false;
+          console.log('timer cancelado');
+        }
+      };// killtimer
+
+      $scope.irPosicion = function(posicion){
+        gifAnimado.move_to(posicion);
+        console.log('currentFrame', $scope.currentFrame);
+        console.log('valor', posicion);
+      };//irposicion
+
+    }); // scope.on
+
+// WHAMMY -----------------------------------------------------------------------------------------------------------------
+
+
+  }) // meteo player ctrl
 
 ; // FIN

@@ -5,7 +5,7 @@
 //http%3A%2F%2Fwebcamsdeasturias.com%2Finterior.php%3Fcategoria%3D1
 
 angular.module('wca',
-  ['ionic', 'wca.controllers', 'wca.services', 'jett.ionic.filter.bar', 'ngMaterial'/*'ionicLazyLoad'*/])
+  ['ionic', 'wca.controllers', 'wca.services', 'jett.ionic.filter.bar', 'ngMaterial', 'open-vts'/*'ionicLazyLoad'*/])
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {

@@ -29,6 +29,11 @@
       .gifZoomed {
         width: 150%;
         height: 150%;
+
+/*
+        transform: scale(2);
+        transform-origin: 0 0;
+*/
       }
     </style>
       <!--<div style="width:100%;height: 200px;">-->
@@ -36,8 +41,8 @@
         <!--TODO: arreglar la altura de ion-scroll-->
         <ion-scroll id="gifScroll" zooming="true" direction="xy" style="width:100%;height:60%;">
           <div id="gifContainer">
-          <img id="gif" rel:animated_src="http://neige.meteociel.fr/satellite/anim_ir_color.gif"
-               rel:auto_play="0" rel:fps="500" ng-click="playPause()"/>
+              <img id="gif" rel:animated_src="http://sat24.mobi/Image/satir/europa/sp"
+                   rel:auto_play="0" rel:fps="500" ng-click="playPause()"/>
           </div>
         </ion-scroll>
         <!-- fin imagen ------------------------------------------------------------------------------------------>
@@ -57,12 +62,13 @@
         <!-- fin range slider ------------------------------------------------------------------------------------>
         <!-- botones --------------------------------------------------------------------------------------------->
         <div>
-        <button ng-click="playPause()">Reproducir/Detener</button>
-        <button ng-click="backward()">-1</button>
-        <button ng-click="forward()">+1</button>
-        <button ng-click="restart()">Inicio</button>
-        <button ng-click="end()">Final</button>
-        <button ng-click="zoomIn()">ZoomIn</button>
+          <button ng-click="playPause()">Reproducir/Detener</button>
+          <button ng-click="backward()">-1</button>
+          <button ng-click="forward()">+1</button>
+          <button ng-click="restart()">Inicio</button>
+          <button ng-click="end()">Final</button>
+          <button ng-click="zoomIn()">ZoomIn</button>
+
         </div>
         <!-- fin botones ----------------------------------------------------------------------------------------->
         <!-- Leyenda --------------------------------------------------------------------------------------------->
@@ -70,7 +76,21 @@
           Fotograma: {{ gifAnimado.get_current_frame()+1 }} de {{ gifAnimado.get_length() }}
         </div>
         <!-- fin leyenda ----------------------------------------------------------------------------------------->
+        <!-- ng-zoom ----------------------------------------------------------------------------------------->
+        <hr>
+<!--
+        <div ovts-zoom-controls='{ target: "#gifScroll", minWidth: 80, minHeight: 100, maxWidth: 700, maxHeight: 2000 }'>
+          <button ng-click='zoom.in()' ng-class='{ disabled: zoom.isMaxedIn() }'>Zoom In</button>
+          <button ng-click='zoom.out()' ng-class='{ disabled: zoom.isMaxedOut() }'> Zoom out</button>
+        </div>
+-->
+        <hr>
+        <!-- fin ng-zoom ----------------------------------------------------------------------------------------->
 
-      <!--</div>-->
+
+
+
+
+    <!--</div>-->
   </ion-content>
 </ion-view>
