@@ -7,26 +7,28 @@
       }
       .zoomIn
       {
+/*
         -webkit-transition-duration: 500ms;
-        /*-webkit-transform: scale(1.5);*/
-        /* Firefox */
+        /!*-webkit-transform: scale(1.5);*!/
+        /!* Firefox *!/
         -moz-transform: scale(2);
-        /* WebKit - Chrome and Safari */
+        /!* WebKit - Chrome and Safari *!/
         -webkit-transform: scale(2);
-        /* Internet Explorer 9 */
+        /!* Internet Explorer 9 *!/
         -ms-transform: scale(2);
-        /* Opera */
+        /!* Opera *!/
         -o-transform: scale(2);
-        /* general syntax (IE10, probably others soon) */
+        /!* general syntax (IE10, probably others soon) *!/
         transform: scale(2);
+*/
       }
       div.jsgif{
         /*overflow:scroll;*/
       }
 
       .gifZoomed {
-        width: 200%;
-        height: 200%;
+        width: 150%;
+        height: 150%;
       }
     </style>
       <!--<div style="width:100%;height: 200px;">-->
@@ -34,17 +36,16 @@
         <!--TODO: arreglar la altura de ion-scroll-->
         <ion-scroll id="gifScroll" zooming="true" direction="xy" style="width:100%;height:60%;">
           <div id="gifContainer">
-          <img id="gif" src="http://neige.meteociel.fr/satellite/anim_ir_color.gif"
+          <img id="gif" rel:animated_src="http://neige.meteociel.fr/satellite/anim_ir_color.gif"
                rel:auto_play="0" rel:fps="500" ng-click="playPause()"/>
           </div>
         </ion-scroll>
         <!-- fin imagen ------------------------------------------------------------------------------------------>
         <!-- range slider ---------------------------------------------------------------------------------------->
-        <label class="range range-positive" style="padding: 0 3%;">
+        <label class="range range-assertive" style="padding: 0 3%;">
           <input id="levelRange" type="range" min="0" max="{{ gifAnimado.get_length()-1 }}"
                  value="{{ currentFrame }}" ng-model="currentFrame" ng-change="irPosicion(currentFrame)"
                   style="margin:0"/>
-
         </label>
         <div style="width:100%;height:50px;display:block;font-size:40px;">
           <i class="icon ion-ios-play-outline" ng-click="playPause()" style="cursor: pointer;"></i>

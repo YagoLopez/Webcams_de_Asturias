@@ -569,8 +569,8 @@
                 ctx.fillRect(mid, top, width - mid, height);
 
                 //ctx.fillStyle = 'teal';
-                //ctx.fillStyle = 'rgba(255,0,22,.8)';
-                ctx.fillStyle = 'rgba(95,158,160,0.4)';
+                ctx.fillStyle = 'rgba(255,0,22,.8)';
+                //ctx.fillStyle = 'rgba(95,158,160,0.4)';
                 ctx.fillRect(0, top, mid, height);
             }
         };
