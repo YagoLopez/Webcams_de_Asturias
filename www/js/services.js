@@ -206,4 +206,15 @@ angular.module('wca.services',[])
 */
 
 
+
+.factory('$exceptionHandler', function($injector) {
+  return function(exception, cause) {
+    var SPopup = $injector.get('SPopup');
+    SPopup.show('Error', 'Detalles: '+exception.message);
+    console.error(exception);
+  };
+})
+
+
+
 ; // FIN

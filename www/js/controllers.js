@@ -3,6 +3,7 @@
 //TODO: hacer una tabla propia para las categorias en fusion tables y hacer join de la tabla de webcams y la de categorias
 //TODO: Hacer tabla para concejos
 //TODO: Morphing icono backwards
+//TODO: recordar que el codigo que se encuentra en el evento on.afterviewEnter se ejecuta siempre. Probar a quitar la cache de las vistas que usan este icono a ver que pasa
 
 angular.module('wca.controllers',[])
 
@@ -379,12 +380,10 @@ angular.module('wca.controllers',[])
 
 })//StreetViewCtrl
 
-.controller('SatSpCtrl', function($scope, $http, $window){
-}) // SatSpCtrl
-
 .controller('GifPlayerCtrl', function($scope, $window, $interval, $exceptionHandler){
 
     //TODO: añadir loader
+    //TODO: crear servicio
     //var urlGif = 'http://neige.meteociel.fr/satellite/anim_ir_color.gif';
     //var urlGifCors = 'http://localhost:8100/gif/anim_ir_color.gif';
     //var urlGifCors2 = 'http://cors.io/?u=http://neige.meteociel.fr/satellite/anim_ir_color.gif';
@@ -539,5 +538,13 @@ angular.module('wca.controllers',[])
 
 
   }) // meteo player ctrl
+
+.controller('SatSpCtrl', function($scope, $http, $window){
+}) // SatSpCtrl
+
+.controller('MeteoCtrl', function($scope){
+
+}) // SatSpCtrl
+
 
 ; // FIN

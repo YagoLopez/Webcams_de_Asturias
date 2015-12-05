@@ -4,8 +4,8 @@
 // url de las categorias codificada con urlencode. Usar como plantilla
 //http%3A%2F%2Fwebcamsdeasturias.com%2Finterior.php%3Fcategoria%3D1
 
-angular.module('wca',
-  ['ionic', 'wca.controllers', 'wca.services', 'jett.ionic.filter.bar', 'ngMaterial', /*'ionicLazyLoad'*/])
+angular.module('wca', ['ionic', 'wca.controllers', 'wca.services',
+  'jett.ionic.filter.bar', 'ngMaterial', 'vAccordion'/*'ionicLazyLoad'*/])
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
@@ -36,14 +36,14 @@ angular.module('wca',
     $ionicFilterBarConfigProvider.placeholder('Buscar');
 
     $stateProvider
-
+// -------------------------------------------------------------------------------------------------------------------
   .state('app', {
     url: '/app',
     abstract: true,
     templateUrl: 'templates/menu.html',
     controller: 'AppCtrl'
   })
-
+// -------------------------------------------------------------------------------------------------------------------
   //TODO: utilizar resolve en la definicion de estado para obtener datos remotos en vez de en metodo run(). Probar a ver
   .state('app.tabs', {
     url: '/tabs?idCategoria&concejo',
@@ -60,7 +60,7 @@ angular.module('wca',
     //  }
     //}
   })
-
+// -------------------------------------------------------------------------------------------------------------------
   .state('app.tabs.listado', {
   url: '/listado',
   views: {
@@ -70,7 +70,7 @@ angular.module('wca',
     }
   }
   })
-
+// -------------------------------------------------------------------------------------------------------------------
   .state('app.tabs.mosaico', {
   url: '/mosaico',
   views: {
@@ -80,7 +80,7 @@ angular.module('wca',
     }
   }
   })
-
+// -------------------------------------------------------------------------------------------------------------------
   .state('app.mapa', {
     url: '/mapa?lugar&concejo',
     cache: false,
@@ -91,7 +91,7 @@ angular.module('wca',
       }
     }
   })
-
+// -------------------------------------------------------------------------------------------------------------------
   .state('app.mapaglobal', {
     url: '/mapaglobal',
     cache: false,
@@ -102,7 +102,7 @@ angular.module('wca',
       }
     }
   })
-
+// -------------------------------------------------------------------------------------------------------------------
   .state('app.streetview', {
     url: '/streetview?lugar&concejo',
     cache: false,
@@ -113,7 +113,7 @@ angular.module('wca',
       }
     }
   })
-
+// -------------------------------------------------------------------------------------------------------------------
   .state('app.panoramio', {
     url: '/panoramio?lugar&concejo',
     views: {
@@ -123,7 +123,7 @@ angular.module('wca',
       }
     }
   })
-
+// -------------------------------------------------------------------------------------------------------------------
   .state('app.detalle', {
     url: '/detalle/:rowid',
     cache: false,
@@ -134,31 +134,45 @@ angular.module('wca',
       }
     }
   })
-
-   .state('app.sat-sp', {
-        url: '/sat-sp',
-        views: {
-          'menuContent': {
-            templateUrl: 'templates/sat-sp.html',
-            controller: 'SatSpCtrl'
-          }
-        }
-      })
-
-    .state('app.gif-player', {
-      url: '/gif-player',
+// -------------------------------------------------------------------------------------------------------------------
+  .state('app.sat-sp', {
+      url: '/sat-sp',
       views: {
         'menuContent': {
-          templateUrl: 'templates/gif-player.html',
-          controller: 'GifPlayerCtrl'
+          templateUrl: 'templates/sat-sp.html',
+          controller: 'SatSpCtrl'
         }
       }
     })
+// -------------------------------------------------------------------------------------------------------------------
+  .state('app.gif-player', {
+    url: '/gif-player',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/gif-player.html',
+        controller: 'GifPlayerCtrl'
+      }
+    }
+  })
+// -------------------------------------------------------------------------------------------------------------------
+  .state('app.meteo', {
+    url: '/meteo',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/meteo.html',
+        controller: 'MeteoCtrl'
+      }
+    }
+  })
+// -------------------------------------------------------------------------------------------------------------------
 
-    ; // fin de estados
+; // fin de estados
 
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/app/tabs/listado');
+
+// -------------------------------------------------------------------------------------------------------------------
+
 })
 
 .directive('fallbackSrc', function () {
