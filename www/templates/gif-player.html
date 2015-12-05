@@ -1,5 +1,9 @@
-<!--TODO: para que funcione bien del todo hay que obligar a que pan-zoom se inicialice con zoom=0. Ahora parece que lo hace-->
-<!--con zoom=1 y eso recorta la imagen inicialmente-->
+<!--
+TODO: a lo mejor hay una forma de cargar una imagen remota sin que de problemas cors usando javascript
+En vez de descargar la imagen usando xhr, descargarla como una imagen normal con el tag imz y el atributo src y después
+obtener los datos binarios por javascript de la cache
+-->
+<!--TODO: probar a usar la directiva awesome-slider en lugar del range slider de ionic-->
 <ion-view view-title="Animación" xmlns:rel="http://www.w3.org/1999/xhtml">
   <ion-content>
     <style>
@@ -50,10 +54,8 @@
         <!--TODO: arreglar la altura de ion-scroll-->
         <!--<ion-scroll id="gifScroll" zooming="true" direction="xy" style="width:100%;height:25em;">-->
           <!--<div id="gifContainer" data-tap-disabled>-->
-              <!--<div id="target">-->
               <img id="gif" rel:animated_src="http://sat24.mobi/Image/satir/europa/sp"
                    rel:auto_play="0" rel:fps="500" ng-click="playPause()"/>
-              <!--</div>-->
           <!--</div>-->
         <!--</ion-scroll>-->
         <!-- fin imagen ------------------------------------------------------------------------------------------>
@@ -95,14 +97,6 @@
           Fotograma: {{ gifAnimado.get_current_frame()+1 }} de {{ gifAnimado.get_length() }}
         </div>
         <!-- fin leyenda ----------------------------------------------------------------------------------------->
-        <!-- ng-zoom ----------------------------------------------------------------------------------------->
-        <!--
-        <div ovts-zoom-controls='{ target: "#gifContainer", minWidth: 80, minHeight: 100, maxWidth: 700, maxHeight: 2000 }'>
-          <button ng-click='zoom.in()' ng-class='{ disabled: zoom.isMaxedIn() }'>Zoom In</button>
-          <button ng-click='zoom.out()' ng-class='{ disabled: zoom.isMaxedOut() }'> Zoom out</button>
-        </div>
-        -->
-        <!-- fin ng-zoom ----------------------------------------------------------------------------------------->
 
   </ion-content>
 </ion-view>
