@@ -173,7 +173,6 @@ angular.module('wca',
 })
 
 
-
 /*
 .filter('concejoFltr', function(){
 

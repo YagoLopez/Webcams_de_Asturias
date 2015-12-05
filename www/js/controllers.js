@@ -382,7 +382,7 @@ angular.module('wca.controllers',[])
 .controller('SatSpCtrl', function($scope, $http, $window){
 }) // SatSpCtrl
 
-.controller('GifPlayerCtrl', function($scope, $window, $interval){
+.controller('GifPlayerCtrl', function($scope, $window, $interval, $exceptionHandler){
 
     //TODO: añadir loader
     //var urlGif = 'http://neige.meteociel.fr/satellite/anim_ir_color.gif';
@@ -417,14 +417,6 @@ angular.module('wca.controllers',[])
         $scope.totalFrames = gifAnimado.get_length();
         $scope.currentFrame = gifAnimado.get_current_frame();
         $scope.gifAnimado = gifAnimado;
-        // ng-zoom -------------------------------------
-        //var canvas = gifAnimado.get_canvas();
-        //$scope.canvasWidth = canvas.width;
-        //$scope.canvasHeight = canvas.height;
-        //console.log('canvas', canvas);
-        //console.log('canvas width', $scope.canvasWidth);
-        //console.log('canvas height', canvas.canvasHeight);
-        // ng-zoom -------------------------------------
         $scope.$apply();
         //console.log('canvas width', canvas.width);
         console.log('gifAnimado', gifAnimado);

@@ -576,6 +576,7 @@
         };
 
         var doLoadError = function (originOfError) {
+            alert('Error: no se han podido cargar imagenes remotas');
             var drawError = function () {
                 ctx.fillStyle = 'black';
                 ctx.fillRect(0, 0, options.c_w ? options.c_w : hdr.width, options.c_h ? options.c_h : hdr.height);
