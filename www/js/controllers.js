@@ -382,25 +382,24 @@ angular.module('wca.controllers',[])
 .controller('SatSpCtrl', function($scope, $http, $window){
 }) // SatSpCtrl
 
-.controller('GifPlayerCtrl', function($scope, $window, $interval){
+.controller('GifPlayerCtrl', function($scope, $window, $interval, $exceptionHandler){
 
     //TODO: añadir loader
     //var urlGif = 'http://neige.meteociel.fr/satellite/anim_ir_color.gif';
     //var urlGifCors = 'http://localhost:8100/gif/anim_ir_color.gif';
     //var urlGifCors2 = 'http://cors.io/?u=http://neige.meteociel.fr/satellite/anim_ir_color.gif';
-
-    $scope.calculateDimensions = function(gesture) {
-      $scope.dev_width = $window.innerWidth;
-      $scope.dev_height = $window.innerHeight;
-    }
-
-    angular.element($window).bind('resize', function(){
-      $scope.$apply(function() {
-        $scope.calculateDimensions();
-      })
-    });
-
-    $scope.calculateDimensions();
+    //$scope.calculateDimensions = function(gesture) {
+    //  $scope.dev_width = $window.innerWidth;
+    //  $scope.dev_height = $window.innerHeight;
+    //}
+    //
+    //angular.element($window).bind('resize', function(){
+    //  $scope.$apply(function() {
+    //    $scope.calculateDimensions();
+    //  })
+    //});
+    //
+    //$scope.calculateDimensions();
 
 
     $scope.$on('$ionicView.afterEnter', function(){
@@ -417,14 +416,6 @@ angular.module('wca.controllers',[])
         $scope.totalFrames = gifAnimado.get_length();
         $scope.currentFrame = gifAnimado.get_current_frame();
         $scope.gifAnimado = gifAnimado;
-        // ng-zoom -------------------------------------
-        //var canvas = gifAnimado.get_canvas();
-        //$scope.canvasWidth = canvas.width;
-        //$scope.canvasHeight = canvas.height;
-        //console.log('canvas', canvas);
-        //console.log('canvas width', $scope.canvasWidth);
-        //console.log('canvas height', canvas.canvasHeight);
-        // ng-zoom -------------------------------------
         $scope.$apply();
         //console.log('canvas width', canvas.width);
         console.log('gifAnimado', gifAnimado);
@@ -436,6 +427,29 @@ angular.module('wca.controllers',[])
       var isGifPlaying = false;
       var timer = null;
       var rangeSlider = document.getElementById('levelRange');
+
+      // zoom --------------------------------------------------------------------------------------------------------
+      $scope.zoomIn = function(){
+        //var gifContainer = document.getElementById('gifContainer');
+        //gifContainer.className = 'gifZoomed';
+      };// zoomIn
+      $scope.zoomOut = function(){
+        //var gifContainer = document.getElementById('gifContainer');
+        //gifContainer.className = 'gifUnzoomed';
+      };// zoomOut
+      // zoom --------------------------------------------------------------------------------------------------------
+      // pan-zoom ---------------------------------------------------------------------------------------------------
+      $('.jsgif > canvas').panzoom({
+        $zoomIn: $('.zoom-in'),
+        $zoomOut: $('.zoom-out'),
+        $zoomRange: $('.zoom-range'),
+        $reset: $('.reset'),
+        contain: 'invert',
+        minScale: 1,
+        //startTransform: 'scale(0.5)'
+      }).panzoom('zoom');
+      $('.jsgif > canvas').panzoom('zoom', 1.0, { silent: true });
+      // pan-zoom ---------------------------------------------------------------------------------------------------
 
       $scope.playPause = function(){
         if (isGifPlaying) {
@@ -494,43 +508,6 @@ angular.module('wca.controllers',[])
         $scope.currentFrame = gifAnimado.get_current_frame();
         console.log('current frame', gifAnimado.get_current_frame());
       }
-
-      // zoom --------------------------------------------------------------------------------------------------------
-      $scope.zoomIn = function(){
-        //var gifContainer = document.getElementById('gifContainer');
-        //gifContainer.className = 'gifZoomed';
-
-
-      };// zoomIn
-      $scope.zoomOut = function(){
-        var gifContainer = document.getElementById('gifContainer');
-        gifContainer.className = 'gifUnzoomed';
-      };// zoomOut
-      // zoom --------------------------------------------------------------------------------------------------------
-
-
-
-
-      // zoom drag ---------------------------------------------------------------------------------------------------
-      //$(function() {
-      //  $( ".gifContainer" ).draggable();
-      //});
-      $(".jsgif").panzoom({
-        $zoomIn: $(".zoom-in"),
-        $zoomOut: $(".zoom-out"),
-        $zoomRange: $(".zoom-range"),
-        $reset: $(".reset"),
-        contain: "invert",
-        minScale: 1
-      }).panzoom("zoom");
-      // zoom drag ---------------------------------------------------------------------------------------------------
-
-
-
-
-
-
-
 
       var sondearPosicion = function(){
         timer = $interval( function(){
