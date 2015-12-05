@@ -380,38 +380,14 @@ angular.module('wca.controllers',[])
 })//StreetViewCtrl
 
 .controller('SatSpCtrl', function($scope, $http, $window){
-
-    //TODO: añadir loader
-  //var urlGif = 'http://neige.meteociel.fr/satellite/anim_ir_color.gif';
-  var urlGifCors = 'http://localhost:8100/gif/anim_ir_color.gif';
-  var urlGifCors2 = 'http://cors.io/?u=http://neige.meteociel.fr/satellite/anim_ir_color.gif';
-
-
-// -----------------------------------------------------------------------------------------------------------------
-  //Gifffer();
-// -----------------------------------------------------------------------------------------------------------------
-/*
-  var xgif2 = document.querySelectorAll('x-gif');
-  console.log('xgif2', xgif2);
-  //var xgif = document.getElementById('xgif');
-  //console.log('x-gif', xgif);
-
-  $scope.play = function(){
-    xgif2[0].removeAttribute('stopped');
-  };
-
-  $scope.pause = function(){
-    xgif2[0].setAttribute('stopped','');
-  };
-*/
-// -----------------------------------------------------------------------------------------------------------------
-
-// -----------------------------------------------------------------------------------------------------------------
-
-
 }) // SatSpCtrl
 
 .controller('GifPlayerCtrl', function($scope, $window, $interval){
+
+    //TODO: añadir loader
+    //var urlGif = 'http://neige.meteociel.fr/satellite/anim_ir_color.gif';
+    //var urlGifCors = 'http://localhost:8100/gif/anim_ir_color.gif';
+    //var urlGifCors2 = 'http://cors.io/?u=http://neige.meteociel.fr/satellite/anim_ir_color.gif';
 
     $scope.calculateDimensions = function(gesture) {
       $scope.dev_width = $window.innerWidth;
@@ -441,25 +417,14 @@ angular.module('wca.controllers',[])
         $scope.totalFrames = gifAnimado.get_length();
         $scope.currentFrame = gifAnimado.get_current_frame();
         $scope.gifAnimado = gifAnimado;
-
-
-
-
         // ng-zoom -------------------------------------
-        var canvas = gifAnimado.get_canvas();
-        $scope.canvasWidth = canvas.width;
-        $scope.canvasHeight = canvas.height;
-        console.log('canvas', canvas);
-        console.log('canvas width', $scope.canvasWidth);
-        console.log('canvas height', canvas.canvasHeight);
+        //var canvas = gifAnimado.get_canvas();
+        //$scope.canvasWidth = canvas.width;
+        //$scope.canvasHeight = canvas.height;
+        //console.log('canvas', canvas);
+        //console.log('canvas width', $scope.canvasWidth);
+        //console.log('canvas height', canvas.canvasHeight);
         // ng-zoom -------------------------------------
-
-
-
-
-
-
-
         $scope.$apply();
         //console.log('canvas width', canvas.width);
         console.log('gifAnimado', gifAnimado);
@@ -532,16 +497,40 @@ angular.module('wca.controllers',[])
 
       // zoom --------------------------------------------------------------------------------------------------------
       $scope.zoomIn = function(){
-        var gifContainer = document.getElementById('gifContainer');
-        gifContainer.className = 'gifZoomed';
+        //var gifContainer = document.getElementById('gifContainer');
+        //gifContainer.className = 'gifZoomed';
+
+
       };// zoomIn
-/*
       $scope.zoomOut = function(){
         var gifContainer = document.getElementById('gifContainer');
-        gifContainer.className = 'gifZoomed';
+        gifContainer.className = 'gifUnzoomed';
       };// zoomOut
-*/
       // zoom --------------------------------------------------------------------------------------------------------
+
+
+
+
+      // zoom drag ---------------------------------------------------------------------------------------------------
+      //$(function() {
+      //  $( ".gifContainer" ).draggable();
+      //});
+      $(".jsgif").panzoom({
+        $zoomIn: $(".zoom-in"),
+        $zoomOut: $(".zoom-out"),
+        $zoomRange: $(".zoom-range"),
+        $reset: $(".reset"),
+        contain: "invert",
+        minScale: 1
+      }).panzoom("zoom");
+      // zoom drag ---------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
 
       var sondearPosicion = function(){
         timer = $interval( function(){
