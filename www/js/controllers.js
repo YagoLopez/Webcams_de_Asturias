@@ -499,23 +499,17 @@ angular.module('wca.controllers',[])
       $scope.zoomIn = function(){
         //var gifContainer = document.getElementById('gifContainer');
         //gifContainer.className = 'gifZoomed';
-
-
       };// zoomIn
       $scope.zoomOut = function(){
-        var gifContainer = document.getElementById('gifContainer');
-        gifContainer.className = 'gifUnzoomed';
+        //var gifContainer = document.getElementById('gifContainer');
+        //gifContainer.className = 'gifUnzoomed';
       };// zoomOut
       // zoom --------------------------------------------------------------------------------------------------------
-
-
-
-
       // zoom drag ---------------------------------------------------------------------------------------------------
       //$(function() {
       //  $( ".gifContainer" ).draggable();
       //});
-      $(".jsgif").panzoom({
+      $(".jsgif > canvas").panzoom({
         $zoomIn: $(".zoom-in"),
         $zoomOut: $(".zoom-out"),
         $zoomRange: $(".zoom-range"),
