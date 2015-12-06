@@ -542,8 +542,15 @@ angular.module('wca.controllers',[])
 .controller('SatSpCtrl', function($scope, $http, $window){
 }) // SatSpCtrl
 
-.controller('MeteoCtrl', function($scope){
-
+.controller('MeteoCtrl', function($scope, SFusionTable, $http, SPopup){
+  var queryString = 'SELECT * FROM '+SFusionTable.TABLE_METEO_ID;
+  SFusionTable.getRemoteData(queryString)
+    .success(function(data){
+      console.log(data);
+    })
+    .error(function(status){
+      SPopup.show('Error', 'No se han podido cargar datos remotos. MeteoCtrl()');
+    });
 }) // SatSpCtrl
 
 
