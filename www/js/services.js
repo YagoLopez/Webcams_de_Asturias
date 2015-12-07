@@ -185,10 +185,13 @@ angular.module('wca.services',[])
     };
   })//SWikipedia
 
-.factory('ModeloMeteo', function($filter){
+.factory('ModeloMeteo', function($filter, SFusionTable){
+
+    var queryString = 'SELECT * FROM '+SFusionTable.TABLE_METEO_ID;
 
     function ModeloMeteo(data){
       this.data = data;
+      //this.data2 = SFusionTable.getRemoteData(queryString).success;
     };
 
     ModeloMeteo.prototype.getItemsByCategoriaId = function(idCategoria) {
@@ -203,9 +206,48 @@ angular.module('wca.services',[])
       }, true);
     }//getItemsByCategoriaName
 
+    ModeloMeteo.prototype.getItemMeteo = function(id){
+      var itemsFiltrados = $filter('filter')(this.data, function(item){
+      console.log('item', item[0] == id)
+      }, true)
+    };//getItemMeteo
+
     return ModeloMeteo;
 
 })//ModeloMeteo
+
+.factory('ModeloMeteo2', function($filter){
+
+  var service = {};
+
+  var meteoData = null;
+
+  service.getData = function(){
+    return meteoData;
+  };
+
+  service.setData = function(data){
+    meteoData = data;
+  };
+
+  service.getItemsByCategoriaId = function(idCategoria) {
+    return $filter('filter')(meteoData, function (item) {
+      return (item[7] == idCategoria);
+    }, true);
+  };//getItemsByCategoriaId
+
+
+  service.getItemById = function(idItem) {
+    return $filter('filter')(meteoData, function (item) {
+      return (item[0] == idItem);
+    }, true);
+  };//getItemsByCategoriaId
+
+
+
+  return service;
+
+})//ModeloMeteo2
 
 .factory('SLoader', function($ionicLoading){
     var icono_spinner = "<ion-spinner icon='lines' class='spinner-calm'></ion-spinner><br/>";

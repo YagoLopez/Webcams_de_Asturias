@@ -380,37 +380,41 @@ angular.module('wca.controllers',[])
 
 })//StreetViewCtrl
 
-.controller('GifPlayerCtrl', function($scope, $window, $interval, $exceptionHandler){
+.controller('GifPlayerCtrl', function($scope, $window, $interval, $stateParams, ModeloMeteo2){
 
-    //TODO: añadir loader
-    //TODO: crear servicio
-    //var urlGif = 'http://neige.meteociel.fr/satellite/anim_ir_color.gif';
-    //var urlGifCors = 'http://localhost:8100/gif/anim_ir_color.gif';
-    //var urlGifCors2 = 'http://cors.io/?u=http://neige.meteociel.fr/satellite/anim_ir_color.gif';
-    //$scope.calculateDimensions = function(gesture) {
-    //  $scope.dev_width = $window.innerWidth;
-    //  $scope.dev_height = $window.innerHeight;
-    //}
-    //
-    //angular.element($window).bind('resize', function(){
-    //  $scope.$apply(function() {
-    //    $scope.calculateDimensions();
-    //  })
-    //});
-    //
-    //$scope.calculateDimensions();
+  //TODO: añadir loader
+  //TODO: crear servicio
 
+  //$scope.calculateDimensions = function(gesture) {
+  //  $scope.dev_width = $window.innerWidth;
+  //  $scope.dev_height = $window.innerHeight;
+  //  console.log('dev_width', $scope.dev_width);
+  //  console.log('dev_height', $scope.dev_height);
+  //}
+  //
+  //angular.element($window).bind('resize', function(){
+  //  $scope.$apply(function() {
+  //    $scope.calculateDimensions();
+  //  })
+  //});
+  //
+  //$scope.calculateDimensions();
+
+    // Obtiene itemMeteo ----------------------------------------------------------------------------------------------
+    $scope.itemMeteo = ModeloMeteo2.getItemById($stateParams.id_img_meteo);
+    console.log('itemMeteo', $scope.itemMeteo);
+    // ----------------------------------------------------------------------------------------------------------------
 
     $scope.$on('$ionicView.afterEnter', function(){
 
+    // Constructor de gif en base a parametros
       var gifAnimado = new SuperGif({
         gif: document.getElementById('gif'),
         loop_mode: 0,
         draw_while_loading: 1
         //max_width: $scope.dev_width
       });
-
-      // carga gif remoto
+      // Carga un gif animado remoto y lo descompone en fotogramas para procesarlo
       gifAnimado.load(function(){
         $scope.totalFrames = gifAnimado.get_length();
         $scope.currentFrame = gifAnimado.get_current_frame();
@@ -420,13 +424,11 @@ angular.module('wca.controllers',[])
         console.log('gifAnimado', gifAnimado);
         console.log('currentFrame', $scope.currentFrame);
       });
-
       // inicializaciones
       $scope.currentFrame = 0;
       var isGifPlaying = false;
       var timer = null;
       var rangeSlider = document.getElementById('levelRange');
-
       // zoom --------------------------------------------------------------------------------------------------------
       $scope.zoomIn = function(){
         //var gifContainer = document.getElementById('gifContainer');
@@ -448,8 +450,8 @@ angular.module('wca.controllers',[])
         //startTransform: 'scale(0.5)'
       }).panzoom('zoom');
       $('.jsgif > canvas').panzoom('zoom', 1.0, { silent: true });
-      // pan-zoom ---------------------------------------------------------------------------------------------------
-
+      // pan-zoom -----------------------------------------------------------------------------------------------------
+      // player controls ----------------------------------------------------------------------------------------------
       $scope.playPause = function(){
         if (isGifPlaying) {
           $scope.pause();
@@ -507,7 +509,6 @@ angular.module('wca.controllers',[])
         $scope.currentFrame = gifAnimado.get_current_frame();
         console.log('current frame', gifAnimado.get_current_frame());
       }
-
       var sondearPosicion = function(){
         timer = $interval( function(){
           rangeSlider.value = gifAnimado.get_current_frame();
@@ -515,7 +516,6 @@ angular.module('wca.controllers',[])
           //console.log('current frame', $scope.currentFrame);
         }, 50); // fin interval
       };// getposicion
-
       var killTimer = function(){
         if(angular.isDefined(timer))
         {
@@ -525,19 +525,16 @@ angular.module('wca.controllers',[])
           console.log('timer cancelado');
         }
       };// killtimer
-
       $scope.irPosicion = function(posicion){
         gifAnimado.move_to(posicion);
         console.log('currentFrame', $scope.currentFrame);
         console.log('valor', posicion);
       };//irposicion
+     // player controls ----------------------------------------------------------------------------------------------
 
     }); // scope.on
 
-// WHAMMY -----------------------------------------------------------------------------------------------------------------
-
-
-  }) // meteo player ctrl
+}) // gif player ctrl
 
 .controller('SatSpCtrl', function($scope, $http, $window){
 }) // SatSpCtrl
@@ -570,9 +567,37 @@ angular.module('wca.controllers',[])
       showError();
     });//error
 
-
-
 }) // MeteoCtrl
 
+
+.controller('MeteoCtrl2', function($scope, $rootScope, SFusionTable, SPopup, ModeloMeteo2, SLoader){
+
+  $rootScope.mostrarLupa = false;
+  var showError = function(status){
+    SPopup.show(
+      'Error', ' MeteoCtrl: Compruebe conexión de red. Estado: '+status );
+  };
+  var queryString = 'SELECT * FROM '+SFusionTable.TABLE_METEO_ID;
+
+  SLoader.show();
+
+  SFusionTable.getRemoteData(queryString).success(
+    function(data){
+      if(!data.rows){
+        SLoader.hide();
+        showError('No data');
+        return;
+      }
+      ModeloMeteo2.setData(data.rows);
+      $scope.getItemsByCategoriaId = function(idCategoria){
+        return ModeloMeteo2.getItemsByCategoriaId(idCategoria);
+      }
+      SLoader.hide();
+    }//success
+  ).error(function(status){
+    SLoader.hide();
+  });//error
+
+})//MeteoCtrl2
 
 ; // FIN

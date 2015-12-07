@@ -160,7 +160,7 @@ angular.module('wca', ['ionic', 'wca.controllers', 'wca.services',
     views: {
       'menuContent': {
         templateUrl: 'templates/meteo.html',
-        controller: 'MeteoCtrl'
+        controller: 'MeteoCtrl2'
       }
     }
   })
