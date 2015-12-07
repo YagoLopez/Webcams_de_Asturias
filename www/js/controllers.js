@@ -542,12 +542,10 @@ angular.module('wca.controllers',[])
 
 .controller('MeteoCtrl', function($scope, $rootScope, SFusionTable, $http, SPopup, ModeloMeteo2, SLoader){
 
-  var showError = function(){
-  var queryString = 'SELECT * FROM '+ModeloMeteo2.TABLE_METEO_ID;
   $rootScope.mostrarLupa = false;
-
-  SPopup.show(
-    'Error', ' MeteoCtrl: NO DATA. Compruebe conexión de red' );
+  var queryString = 'SELECT * FROM '+ModeloMeteo2.TABLE_METEO_ID;
+  var showError = function(){
+    SPopup.show('Error', ' MeteoCtrl: NO DATA. Compruebe conexión de red' );
   };
 
   SLoader.show();
