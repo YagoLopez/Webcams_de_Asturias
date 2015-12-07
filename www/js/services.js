@@ -9,7 +9,7 @@ angular.module('wca.services',[])
 
     var getRemoteData = function( sql_query_string ) {
       var url = API_ENDPOINT+ '?sql=' +sql_query_string+ '&key=' +API_KEY+'&callback=JSON_CALLBACK';
-      console.log('url', url);
+      //console.log('url', url);
       return $http.jsonp( encodeURI(url), {cache: true} );
     };
 
@@ -140,7 +140,7 @@ angular.module('wca.services',[])
     return { show: show };
   }) // popup
 
-  .factory('SWikipedia', function($http){
+.factory('SWikipedia', function($http){
 
     var info = function(termino){
       return $http.jsonp('https://es.wikipedia.org/w/api.php?'+
@@ -185,30 +185,42 @@ angular.module('wca.services',[])
     };
   })//SWikipedia
 
-/*
-.factory('SMeteo', function(){
-    var data = {
-      SatEspana: {
-        id:1, data: {name: 'EumetSat', img: 'http://neige.meteociel.fr/satellite/anim_vis_sp.gif', desc:'', nombFuente:'Animación. Espectro visible', urlFuente:''},
-        id:2, data: {name: 'nombre2', img: 'http://37.59.123.0/sat/anim-msg-sp-vis.gif', desc:'', nombFuente:'Animación. Espectro visible', urlFuente:''},
-        id:3, data: {name: 'Sat24_1', img: 'http://sat24.mobi/Image/satvis/europa/sp',  desc:'Animación. Espectro visible', nombFuente:'', urlFuente:''},
-        id:4, data: {name: 'Sat24_2', img: 'http://sat24.mobi/Image/satir/europa/sp',  desc:'Animación. Espectro infrarrojo', nombFuente:'', urlFuente:''},
-        id:5, data: {name: 'Sat24_3', img: 'http://www.sat24.com/image.ashx?country=sp&type=loop&sat=vis',  desc:'Estática más reciente. Visible en HD', nombFuente:'', urlFuente:''},
-      },
-      'SatEuropa': {},
-      'Mapas': {}
-    }; // data
-    var getSatEspana = function(){
-      return data.SatEspana;
+.factory('ModeloMeteo', function($filter){
+
+    function ModeloMeteo(data){
+      this.data = data;
+    };
+
+    ModeloMeteo.prototype.getItemsByCategoriaId = function(idCategoria) {
+      return $filter('filter')(this.data, function (item) {
+        return (item[7] == idCategoria);
+      }, true);
+    };//getItemsByCategoriaId
+
+    ModeloMeteo.prototype.getItemsByCategoriaName = function(nombreCategoria) {
+      return $filter('filter')(this.data, function (item) {
+        return (item[2] == nombreCategoria);
+      }, true);
+    }//getItemsByCategoriaName
+
+    return ModeloMeteo;
+
+})//ModeloMeteo
+
+.factory('SLoader', function($ionicLoading){
+    var icono_spinner = "<ion-spinner icon='lines' class='spinner-calm'></ion-spinner><br/>";
+    var show = function(){
+      var templateLoader = "Cargando datos...";
+      $ionicLoading.show({template:templateLoader, noBackdrop:true});
+    };
+    var hide = function(){
+      $ionicLoading.hide();
     };
     return {
-      getSatEspana: getSatEspana
-    };
-
-}) // SMeteo
-*/
-
-
+      show: show,
+      hide: hide
+    }
+})//SLoader
 
 .factory('$exceptionHandler', function($injector) {
   return function(exception, cause) {

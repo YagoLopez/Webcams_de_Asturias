@@ -18,18 +18,17 @@ angular.module('wca.controllers',[])
 
   })
 
-.controller('TabsCtrl', function($scope, $stateParams, $ionicLoading, $rootScope, $ionicFilterBar,
+.controller('TabsCtrl', function($scope, $stateParams, SLoader, $rootScope, $ionicFilterBar,
                                  SFusionTable, $filter, $ionicScrollDelegate, SPopup, $ionicNavBarDelegate){
 
-    // mostrar loader
-    //var icono_spinner = "<ion-spinner icon='lines' class='spinner-calm'></ion-spinner><br/>";
-    var templateLoader = "Cargando datos...";
-    $ionicLoading.show({template:templateLoader, noBackdrop:true});
+    //var templateLoader = "Cargando datos...";
+    //$ionicLoading.show({template:templateLoader, noBackdrop:true});
+    SLoader.show();
     // Guarda parametros url en variables temporales;
     var concejo = $stateParams.concejo || '';
     var idCategoria = $stateParams.idCategoria || '';
 
-    //TODO: revisar esto
+    //TODO: revisar esto. hacer un servicio para no usar rootscope?
     $rootScope.mostrarLupa = true;
     // elimina search bar si estuviera activada al mostrar la vista
     //if ($rootScope.filterBarInstance)
@@ -99,7 +98,8 @@ angular.module('wca.controllers',[])
         });
       };
 
-      $ionicLoading.hide();
+      //$ionicLoading.hide();
+      SLoader.hide();
 
     }).error(function(data, status) {
       $ionicLoading.hide();
@@ -542,16 +542,37 @@ angular.module('wca.controllers',[])
 .controller('SatSpCtrl', function($scope, $http, $window){
 }) // SatSpCtrl
 
-.controller('MeteoCtrl', function($scope, SFusionTable, $http, SPopup){
+.controller('MeteoCtrl', function($scope, $rootScope, SFusionTable, $http, SPopup, ModeloMeteo, SLoader){
+
+  $rootScope.mostrarLupa = false;
+
+  var showError = function(){
+  SPopup.show(
+    'Error', ' MeteoCtrl: NO DATA. Compruebe conexión de red' );
+  };
+
+  SLoader.show();
+
   var queryString = 'SELECT * FROM '+SFusionTable.TABLE_METEO_ID;
   SFusionTable.getRemoteData(queryString)
     .success(function(data){
-      console.log(data);
-    })
+      if(!data.rows){
+        showError();
+        return;
+      }
+      modeloMeteo = new ModeloMeteo(data.rows);
+      $scope.getItemsByCategoriaId = function(idCategoria){
+        return modeloMeteo.getItemsByCategoriaId(idCategoria);
+      }
+      SLoader.hide();
+    })//success
     .error(function(status){
-      SPopup.show('Error', 'No se han podido cargar datos remotos. MeteoCtrl()');
-    });
-}) // SatSpCtrl
+      showError();
+    });//error
+
+
+
+}) // MeteoCtrl
 
 
 ; // FIN
