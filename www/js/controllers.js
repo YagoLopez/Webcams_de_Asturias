@@ -7,6 +7,7 @@
 
 angular.module('wca.controllers',[])
 
+// ====================================================================================================================
 .controller('AppCtrl', function($scope) {
 
   //// With the new view caching in Ionic, Controllers are only called
@@ -17,8 +18,9 @@ angular.module('wca.controllers',[])
   ////});
 
   })
-
-.controller('TabsCtrl', function($scope, $stateParams, SLoader, $rootScope, $ionicFilterBar,
+// ====================================================================================================================
+  /**********************************************************************************************************************/
+  .controller('TabsCtrl', function($scope, $stateParams, SLoader, $rootScope, $ionicFilterBar,
                                  SFusionTable, $filter, $ionicScrollDelegate, SPopup, $ionicNavBarDelegate){
 
     //var templateLoader = "Cargando datos...";
@@ -107,7 +109,7 @@ angular.module('wca.controllers',[])
     });
 
 })// TabsCtrl
-
+// ====================================================================================================================
 .controller('MapaCtrl', function($scope, $stateParams, SMapa, $rootScope){
 
   $rootScope.mostrarLupa = false;
@@ -153,7 +155,7 @@ angular.module('wca.controllers',[])
   // Fin Geolocalizacion ----------------------------------------------------------------------------------------------
 
 }) // fin MapaGlobalCtrl
-
+// ====================================================================================================================
 .controller('MapaGlobalCtrl', function($scope, $rootScope, SMapa, SFusionTable, SPopup){
     var layer = null;
     var mapa = null;
@@ -209,7 +211,7 @@ angular.module('wca.controllers',[])
     mapa.setZoom(zoomLevel+1);
 
 }) //mapaglobalctrl
-
+// ====================================================================================================================
 .controller('PanoramioCtrl', function($scope, $stateParams, SMapa, $ionicModal, $rootScope){
 
     var lat = $rootScope.lat;
@@ -267,7 +269,7 @@ angular.module('wca.controllers',[])
     // FIN DIALOGO MODAL ----------------------------------------------------------------------------------------------
 
 }) // panoramio ctrl
-
+// ====================================================================================================================
 .controller('DetalleCtrl', function($scope, $stateParams, $ionicModal, SMapa, SClima, $filter, $rootScope,
                                     SPopup, SWikipedia, $ionicSlideBoxDelegate, $ionicPopover){
 
@@ -348,7 +350,7 @@ angular.module('wca.controllers',[])
     });
 
 })// DetalleCtrl
-
+// ====================================================================================================================
 .controller('StreetViewCtrl', function($scope, SMapa, $stateParams, $rootScope, SPopup){
 
   $scope.lugar = $stateParams.lugar || '';
@@ -379,51 +381,53 @@ angular.module('wca.controllers',[])
   })//$scope.on
 
 })//StreetViewCtrl
-
+// ====================================================================================================================
 .controller('GifPlayerCtrl', function($scope, $window, $interval, $stateParams, SMeteo, ItemMeteo){
 
   //TODO: añadir loader
-  //TODO: crear servicio
+  //TODO: crear servicio de esto
 
-  //$scope.calculateDimensions = function(gesture) {
-  //  $scope.dev_width = $window.innerWidth;
-  //  $scope.dev_height = $window.innerHeight;
-  //  console.log('dev_width', $scope.dev_width);
-  //  console.log('dev_height', $scope.dev_height);
-  //}
-  //
-  //angular.element($window).bind('resize', function(){
-  //  $scope.$apply(function() {
-  //    $scope.calculateDimensions();
-  //  })
-  //});
-  //
-  //$scope.calculateDimensions();
+  // Calculo de dimensiones de ventana al redimensionar ---------------------------------------------------------------
+  $scope.calculateDimensions = function(gesture) {
+    $scope.dev_width = $window.innerWidth;
+    $scope.dev_height = $window.innerHeight;
+    console.log('dev_width', $scope.dev_width);
+    console.log('dev_height', $scope.dev_height);
+  }
 
-    // Obtiene itemMeteo ----------------------------------------------------------------------------------------------
-    //$scope.itemMeteo = SMeteo.getItemById($stateParams.id_item_meteo);
-    //console.log('itemMeteo', $scope.itemMeteo);
-    $scope.itemMeteo = new ItemMeteo(SMeteo.getItemById($stateParams.id_item_meteo));
-    console.log('itemMeteo Object', $scope.itemMeteo);
-    // ----------------------------------------------------------------------------------------------------------------
+  angular.element($window).bind('resize', function(){
+    $scope.$apply(function() {
+      $scope.calculateDimensions();
+    })
+  });
 
-    // inicializaciones ---------------------------------------------------------------------------------------------
-    $scope.currentFrame = 0;
-    var isGifPlaying = false;
-    var timer = null;
+  $scope.calculateDimensions();
+  // ------------------------------------------------------------------------------------------------------------------
 
-    var killTimer = function(){
-      if(angular.isDefined(timer))
-      {
-        $interval.cancel(timer);
-        timer = undefined;
-        isGifPlaying = false;
-        console.log('timer cancelado');
-      }
-    };// killtimer
-    // ----------------------------------------------------------------------------------------------------------------
+  // Obtiene itemMeteo ------------------------------------------------------------------------------------------------
+  $scope.itemMeteo = new ItemMeteo(SMeteo.getItemById($stateParams.id_item_meteo));
+  console.log('itemMeteo Object', $scope.itemMeteo);
+  // ------------------------------------------------------------------------------------------------------------------
 
-    $scope.$on('$ionicView.afterEnter', function(){
+  // inicializaciones -------------------------------------------------------------------------------------------------
+  $scope.currentFrame = 0;
+  var isGifPlaying = false;
+  var timer = null;
+  // ------------------------------------------------------------------------------------------------------------------
+
+  // Detencion de timer -----------------------------------------------------------------------------------------------
+  var killTimer = function(){
+    if(angular.isDefined(timer))
+    {
+      $interval.cancel(timer);
+      timer = undefined;
+      isGifPlaying = false;
+      console.log('timer cancelado');
+    }
+  };// killtimer
+  // ------------------------------------------------------------------------------------------------------------------
+
+  $scope.$on('$ionicView.afterEnter', function(){
       // Constructor de gif en base a parametros ----------------------------------------------------------------------
       var gifAnimado = new SuperGif({
         gif: document.getElementById('gif'),
@@ -549,23 +553,18 @@ angular.module('wca.controllers',[])
 
     }); // scope.on
 
-
-    $scope.$on('$ionicView.leave', function(){
-      console.log('abandonando vista');
-    }); //on ionicview.leave
-
-    $scope.$on("$destroy",function(){
+  $scope.$on("$destroy",function(){
       console.log('ondestroy -> pause animation');
       window.clearTimeout();
       $scope.pause();
     });
 
-
 }) // gif player ctrl
-
+// ====================================================================================================================
 .controller('SatSpCtrl', function($scope, $http, $window){
 }) // SatSpCtrl
-
+// ====================================================================================================================
+/*
 .controller('MeteoCtrl', function($scope, $rootScope, SFusionTable, $http, SPopup, SMeteo, SLoader){
 
   $rootScope.mostrarLupa = false;
@@ -593,7 +592,7 @@ angular.module('wca.controllers',[])
     });//error
 
 }) // MeteoCtrl
-
+*/
 .controller('MeteoCtrl2', function($scope, $rootScope, SFusionTable, SPopup, SMeteo, SLoader){
 
   $rootScope.mostrarLupa = false;
@@ -623,5 +622,6 @@ angular.module('wca.controllers',[])
   });//error
 
 })//MeteoCtrl2
+// ====================================================================================================================
 
 ; // FIN
