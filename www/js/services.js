@@ -96,6 +96,7 @@ angular.module('wca.services',[])
     var creaFusionTableLayer = function(filtroMarkers){
       var query = { select: 'col7', from: SFusionTable.TABLE_ID, where: filtroMarkers };
       var options = { styleId: 6, templateId: 8 };
+      //noinspection UnnecessaryLocalVariableJS
       var layer = new google.maps.FusionTablesLayer({
         //heatmap: { enabled: false },
         query: query,
@@ -138,7 +139,7 @@ angular.module('wca.services',[])
     return { show: show };
   }) // popup
 
-.factory('SWikipedia', function($http){
+  .factory('SWikipedia', function($http){
 
     var info = function(termino){
       return $http.jsonp('https://es.wikipedia.org/w/api.php?'+
@@ -183,6 +184,7 @@ angular.module('wca.services',[])
     };
   })//SWikipedia
 
+  /*
 .factory('ModeloMeteo', function($filter, SFusionTable){
 
     var queryString = 'SELECT * FROM '+SFusionTable.TABLE_METEO_ID;
@@ -213,8 +215,9 @@ angular.module('wca.services',[])
     return ModeloMeteo;
 
 })//ModeloMeteo
+*/
 
-.factory('ModeloMeteo2', function($filter){
+  .factory('SMeteo', function($filter){
 
   var service = {};
 
@@ -245,9 +248,9 @@ angular.module('wca.services',[])
 
   return service;
 
-})//ModeloMeteo2
+})//SMeteo
 
-.factory('ItemMeteo', function(){
+  .factory('ItemMeteo', function(){
 
     //columnas por indice de array:
     //    item[0]: id
@@ -303,7 +306,7 @@ angular.module('wca.services',[])
     return ItemMeteo;
 })//ItemMeteo
 
-.factory('SLoader', function($ionicLoading){
+  .factory('SLoader', function($ionicLoading){
     var icono_spinner = "<ion-spinner icon='lines' class='spinner-calm'></ion-spinner><br/>";
     var show = function(){
       var templateLoader = "Cargando datos...";
@@ -318,7 +321,7 @@ angular.module('wca.services',[])
     }
 })//SLoader
 
-.factory('$exceptionHandler', function($injector) {
+  .factory('$exceptionHandler', function($injector) {
   return function(exception, cause) {
     var SPopup = $injector.get('SPopup');
     SPopup.show('Error', 'Detalles: '+exception.message);

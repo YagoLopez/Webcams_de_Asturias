@@ -380,7 +380,7 @@ angular.module('wca.controllers',[])
 
 })//StreetViewCtrl
 
-.controller('GifPlayerCtrl', function($scope, $window, $interval, $stateParams, ModeloMeteo2, ItemMeteo){
+.controller('GifPlayerCtrl', function($scope, $window, $interval, $stateParams, SMeteo, ItemMeteo){
 
   //TODO: añadir loader
   //TODO: crear servicio
@@ -401,14 +401,29 @@ angular.module('wca.controllers',[])
   //$scope.calculateDimensions();
 
     // Obtiene itemMeteo ----------------------------------------------------------------------------------------------
-    //$scope.itemMeteo = ModeloMeteo2.getItemById($stateParams.id_item_meteo);
+    //$scope.itemMeteo = SMeteo.getItemById($stateParams.id_item_meteo);
     //console.log('itemMeteo', $scope.itemMeteo);
-    $scope.itemMeteo = new ItemMeteo(ModeloMeteo2.getItemById($stateParams.id_item_meteo));
+    $scope.itemMeteo = new ItemMeteo(SMeteo.getItemById($stateParams.id_item_meteo));
     console.log('itemMeteo Object', $scope.itemMeteo);
     // ----------------------------------------------------------------------------------------------------------------
 
-    $scope.$on('$ionicView.afterEnter', function(){
+    // inicializaciones ---------------------------------------------------------------------------------------------
+    $scope.currentFrame = 0;
+    var isGifPlaying = false;
+    var timer = null;
 
+    var killTimer = function(){
+      if(angular.isDefined(timer))
+      {
+        $interval.cancel(timer);
+        timer = undefined;
+        isGifPlaying = false;
+        console.log('timer cancelado');
+      }
+    };// killtimer
+    // ----------------------------------------------------------------------------------------------------------------
+
+    $scope.$on('$ionicView.afterEnter', function(){
       // Constructor de gif en base a parametros ----------------------------------------------------------------------
       var gifAnimado = new SuperGif({
         gif: document.getElementById('gif'),
@@ -426,10 +441,7 @@ angular.module('wca.controllers',[])
         console.log('gifAnimado', gifAnimado);
         console.log('currentFrame', $scope.currentFrame);
       });
-      // inicializaciones ---------------------------------------------------------------------------------------------
-      $scope.currentFrame = 0;
-      var isGifPlaying = false;
-      var timer = null;
+
       var rangeSlider = document.getElementById('levelRange');
       // zoom ---------------------------------------------------------------------------------------------------------
       $scope.zoomIn = function(){
@@ -461,7 +473,7 @@ angular.module('wca.controllers',[])
         }
       };
       $scope.play = function(){
-        killTimer;
+        killTimer();
         isGifPlaying = true;
         gifAnimado.play();
         sondearPosicion();
@@ -514,9 +526,10 @@ angular.module('wca.controllers',[])
         timer = $interval( function(){
           rangeSlider.value = gifAnimado.get_current_frame();
           $scope.currentFrame = gifAnimado.get_current_frame();
-          //console.log('current frame', $scope.currentFrame);
+          console.log('current frame', $scope.currentFrame);
         }, 50); // fin interval
       };// getposicion
+/*
       var killTimer = function(){
         if(angular.isDefined(timer))
         {
@@ -526,24 +539,37 @@ angular.module('wca.controllers',[])
           console.log('timer cancelado');
         }
       };// killtimer
+*/
       $scope.irPosicion = function(posicion){
         gifAnimado.move_to(posicion);
         console.log('currentFrame', $scope.currentFrame);
         console.log('valor', posicion);
       };//irposicion
-     // player controls ----------------------------------------------------------------------------------------------
+      // player controls ----------------------------------------------------------------------------------------------
 
     }); // scope.on
+
+
+    $scope.$on('$ionicView.leave', function(){
+      console.log('abandonando vista');
+    }); //on ionicview.leave
+
+    $scope.$on("$destroy",function(){
+      console.log('ondestroy -> pause animation');
+      window.clearTimeout();
+      $scope.pause();
+    });
+
 
 }) // gif player ctrl
 
 .controller('SatSpCtrl', function($scope, $http, $window){
 }) // SatSpCtrl
 
-.controller('MeteoCtrl', function($scope, $rootScope, SFusionTable, $http, SPopup, ModeloMeteo2, SLoader){
+.controller('MeteoCtrl', function($scope, $rootScope, SFusionTable, $http, SPopup, SMeteo, SLoader){
 
   $rootScope.mostrarLupa = false;
-  var queryString = 'SELECT * FROM '+ModeloMeteo2.TABLE_METEO_ID;
+  var queryString = 'SELECT * FROM '+SMeteo.TABLE_METEO_ID;
   var showError = function(){
     SPopup.show('Error', ' MeteoCtrl: NO DATA. Compruebe conexión de red' );
   };
@@ -568,14 +594,14 @@ angular.module('wca.controllers',[])
 
 }) // MeteoCtrl
 
-.controller('MeteoCtrl2', function($scope, $rootScope, SFusionTable, SPopup, ModeloMeteo2, SLoader){
+.controller('MeteoCtrl2', function($scope, $rootScope, SFusionTable, SPopup, SMeteo, SLoader){
 
   $rootScope.mostrarLupa = false;
   var showError = function(status){
     SPopup.show(
       'Error', ' MeteoCtrl: Compruebe conexión de red. Estado: '+status );
   };
-  var queryString = 'SELECT * FROM '+ModeloMeteo2.TABLE_METEO_ID;
+  var queryString = 'SELECT * FROM '+SMeteo.TABLE_METEO_ID;
 
   SLoader.show();
 
@@ -586,9 +612,9 @@ angular.module('wca.controllers',[])
         showError('No data');
         return;
       }
-      ModeloMeteo2.setData(data.rows);
+      SMeteo.setData(data.rows);
       $scope.getItemsByCategoriaId = function(idCategoria){
-        return ModeloMeteo2.getItemsByCategoriaId(idCategoria);
+        return SMeteo.getItemsByCategoriaId(idCategoria);
       }
       SLoader.hide();
     }//success
