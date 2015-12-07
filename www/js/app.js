@@ -146,7 +146,7 @@ angular.module('wca', ['ionic', 'wca.controllers', 'wca.services',
     })
 // -------------------------------------------------------------------------------------------------------------------
   .state('app.gif-player', {
-    url: '/gif-player/:id_img_meteo',
+    url: '/gif-player/:id_item_meteo',
     views: {
       'menuContent': {
         templateUrl: 'templates/gif-player.html',

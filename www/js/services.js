@@ -5,7 +5,6 @@ angular.module('wca.services',[])
     var API_ENDPOINT = 'https://www.googleapis.com/fusiontables/v2/query';
     var API_KEY = 'AIzaSyBsdouSTimjrC2xHmbGgOt8VfbLBWc9Gps';
     var TABLE_ID = '1gX5maFbqFyRziZiUYlpOBYhcC1v9lGkKqCXvZREF';  //TODO: tabla webcams. Cambiar nombre
-    var TABLE_METEO_ID = '1Y_vt2nTVFSYHpMuwe0u60bQzp4FlLtc33A8qd2_x';
 
     var getRemoteData = function( sql_query_string ) {
       var url = API_ENDPOINT+ '?sql=' +sql_query_string+ '&key=' +API_KEY+'&callback=JSON_CALLBACK';
@@ -21,7 +20,6 @@ angular.module('wca.services',[])
       API_ENDPOINT: API_ENDPOINT,
       API_KEY: API_KEY,
       TABLE_ID: TABLE_ID,
-      TABLE_METEO_ID: TABLE_METEO_ID,
       getRemoteData: getRemoteData,
       getLocalData: getLocalData
     }
@@ -222,6 +220,8 @@ angular.module('wca.services',[])
 
   var meteoData = null;
 
+  service.TABLE_METEO_ID = '1Y_vt2nTVFSYHpMuwe0u60bQzp4FlLtc33A8qd2_x';
+
   service.getData = function(){
     return meteoData;
   };
@@ -243,11 +243,65 @@ angular.module('wca.services',[])
     }, true);
   };//getItemsByCategoriaId
 
-
-
   return service;
 
 })//ModeloMeteo2
+
+.factory('ItemMeteo', function(){
+
+    //columnas por indice de array:
+    //    item[0]: id
+    //    item[1]: descripcion
+    //    item[2]: categoría
+    //    item[3]: nombre
+    //    item[4]: espectro
+    //    item[5]: fuente
+    //    item[6]: url
+    //    item[7]: idCategoria
+    //    item[8]: tipo imagen
+
+    function ItemMeteo(arr){
+      if(arr){
+        this.id = arr[0][0];
+        this.descripcion = arr[0][1];
+        this.categoria = arr[0][2];
+        this.nombre = arr[0][3];
+        this.espectro = arr[0][4];
+        this.fuente = arr[0][5];
+        this.url = arr[0][6];
+        this.idCategoria= arr[0][7];
+        this.tipoImagen= arr[0][2];
+      }
+    }
+    ItemMeteo.prototype.getId = function (){
+      return this.id;
+    };
+    ItemMeteo.prototype.getDescripcion = function (){
+      return this.descripcion;
+    };
+    ItemMeteo.prototype.getCategoria = function(){
+      return this.categoria
+    };
+    ItemMeteo.prototype.getNombre= function(){
+      return this.nombre;
+    };
+    ItemMeteo.prototype.getEspectro= function(){
+      return this.espectro
+    };
+    ItemMeteo.prototype.getFuente= function(){
+      return this.fuente
+    };
+    ItemMeteo.prototype.getUrl= function(){
+      return this.url
+    };
+    ItemMeteo.prototype.getIdCategoria = function(){
+      return this.idCategoria
+    };
+    ItemMeteo.prototype.getTipoImagen= function(){
+      return this.tipoImagen;
+    };
+    return ItemMeteo;
+})//ItemMeteo
 
 .factory('SLoader', function($ionicLoading){
     var icono_spinner = "<ion-spinner icon='lines' class='spinner-calm'></ion-spinner><br/>";

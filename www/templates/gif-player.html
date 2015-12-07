@@ -56,7 +56,9 @@ obtener los datos binarios por javascript de la cache
     <!--TODO: arreglar la altura de ion-scroll-->
     <!--<ion-scroll id="gifScroll" zooming="true" direction="xy" style="width:100%;height:25em;padding-top: 50px;">-->
       <!--<div id="gifContainer" data-tap-disabled>-->
-          <img id="gif" rel:animated_src="http://sat24.mobi/Image/satir/europa/sp"
+      <!--itemMeteo.length: {{ itemMeteo.length }}<br>-->
+      <!--url imagen: {{ itemMeteo[0][6] }}-->
+          <img id="gif" rel:animated_src="{{ itemMeteo.getUrl() }}"
                rel:auto_play="0" rel:fps="500" ng-click="playPause()"/>
       <!--</div>-->
     <!--</ion-scroll>-->

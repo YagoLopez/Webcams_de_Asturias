@@ -380,7 +380,7 @@ angular.module('wca.controllers',[])
 
 })//StreetViewCtrl
 
-.controller('GifPlayerCtrl', function($scope, $window, $interval, $stateParams, ModeloMeteo2){
+.controller('GifPlayerCtrl', function($scope, $window, $interval, $stateParams, ModeloMeteo2, ItemMeteo){
 
   //TODO: añadir loader
   //TODO: crear servicio
@@ -401,20 +401,22 @@ angular.module('wca.controllers',[])
   //$scope.calculateDimensions();
 
     // Obtiene itemMeteo ----------------------------------------------------------------------------------------------
-    $scope.itemMeteo = ModeloMeteo2.getItemById($stateParams.id_img_meteo);
-    console.log('itemMeteo', $scope.itemMeteo);
+    //$scope.itemMeteo = ModeloMeteo2.getItemById($stateParams.id_item_meteo);
+    //console.log('itemMeteo', $scope.itemMeteo);
+    $scope.itemMeteo = new ItemMeteo(ModeloMeteo2.getItemById($stateParams.id_item_meteo));
+    console.log('itemMeteo Object', $scope.itemMeteo);
     // ----------------------------------------------------------------------------------------------------------------
 
     $scope.$on('$ionicView.afterEnter', function(){
 
-    // Constructor de gif en base a parametros
+      // Constructor de gif en base a parametros ----------------------------------------------------------------------
       var gifAnimado = new SuperGif({
         gif: document.getElementById('gif'),
         loop_mode: 0,
         draw_while_loading: 1
         //max_width: $scope.dev_width
       });
-      // Carga un gif animado remoto y lo descompone en fotogramas para procesarlo
+      // Carga un gif animado remoto y lo descompone en fotogramas para procesarlo ------------------------------------
       gifAnimado.load(function(){
         $scope.totalFrames = gifAnimado.get_length();
         $scope.currentFrame = gifAnimado.get_current_frame();
@@ -424,12 +426,12 @@ angular.module('wca.controllers',[])
         console.log('gifAnimado', gifAnimado);
         console.log('currentFrame', $scope.currentFrame);
       });
-      // inicializaciones
+      // inicializaciones ---------------------------------------------------------------------------------------------
       $scope.currentFrame = 0;
       var isGifPlaying = false;
       var timer = null;
       var rangeSlider = document.getElementById('levelRange');
-      // zoom --------------------------------------------------------------------------------------------------------
+      // zoom ---------------------------------------------------------------------------------------------------------
       $scope.zoomIn = function(){
         //var gifContainer = document.getElementById('gifContainer');
         //gifContainer.className = 'gifZoomed';
@@ -450,7 +452,6 @@ angular.module('wca.controllers',[])
         //startTransform: 'scale(0.5)'
       }).panzoom('zoom');
       $('.jsgif > canvas').panzoom('zoom', 1.0, { silent: true });
-      // pan-zoom -----------------------------------------------------------------------------------------------------
       // player controls ----------------------------------------------------------------------------------------------
       $scope.playPause = function(){
         if (isGifPlaying) {
@@ -539,18 +540,18 @@ angular.module('wca.controllers',[])
 .controller('SatSpCtrl', function($scope, $http, $window){
 }) // SatSpCtrl
 
-.controller('MeteoCtrl', function($scope, $rootScope, SFusionTable, $http, SPopup, ModeloMeteo, SLoader){
-
-  $rootScope.mostrarLupa = false;
+.controller('MeteoCtrl', function($scope, $rootScope, SFusionTable, $http, SPopup, ModeloMeteo2, SLoader){
 
   var showError = function(){
+  var queryString = 'SELECT * FROM '+ModeloMeteo2.TABLE_METEO_ID;
+  $rootScope.mostrarLupa = false;
+
   SPopup.show(
     'Error', ' MeteoCtrl: NO DATA. Compruebe conexión de red' );
   };
 
   SLoader.show();
 
-  var queryString = 'SELECT * FROM '+SFusionTable.TABLE_METEO_ID;
   SFusionTable.getRemoteData(queryString)
     .success(function(data){
       if(!data.rows){
@@ -569,7 +570,6 @@ angular.module('wca.controllers',[])
 
 }) // MeteoCtrl
 
-
 .controller('MeteoCtrl2', function($scope, $rootScope, SFusionTable, SPopup, ModeloMeteo2, SLoader){
 
   $rootScope.mostrarLupa = false;
@@ -577,7 +577,7 @@ angular.module('wca.controllers',[])
     SPopup.show(
       'Error', ' MeteoCtrl: Compruebe conexión de red. Estado: '+status );
   };
-  var queryString = 'SELECT * FROM '+SFusionTable.TABLE_METEO_ID;
+  var queryString = 'SELECT * FROM '+ModeloMeteo2.TABLE_METEO_ID;
 
   SLoader.show();
 
