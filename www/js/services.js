@@ -307,10 +307,10 @@ angular.module('wca.services',[])
 })//ItemMeteo
 
   .factory('SLoader', function($ionicLoading){
-    var icono_spinner = "<ion-spinner icon='lines' class='spinner-calm'></ion-spinner><br/>";
+    var spinnerIco = "<ion-spinner icon='lines' class='spinner-calm'></ion-spinner><br/>";
+    var contenidoLoader = "Cargando datos...";
     var show = function(){
-      var templateLoader = "Cargando datos...";
-      $ionicLoading.show({template:templateLoader, noBackdrop:true});
+      $ionicLoading.show({template: contenidoLoader, noBackdrop:true});
     };
     var hide = function(){
       $ionicLoading.hide();

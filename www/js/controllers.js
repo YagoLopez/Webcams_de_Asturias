@@ -382,10 +382,11 @@ angular.module('wca.controllers',[])
 
 })//StreetViewCtrl
 // ====================================================================================================================
-.controller('GifPlayerCtrl', function($scope, $window, $interval, $stateParams, SMeteo, ItemMeteo){
+.controller('GifPlayerCtrl', function($scope, $window, $interval, $stateParams, SMeteo, ItemMeteo, SLoader){
 
-  //TODO: añadir loader
   //TODO: crear servicio de esto
+  //TODO: poner imagen gif con loader
+  SLoader.show();
 
   // Calculo de dimensiones de ventana al redimensionar ---------------------------------------------------------------
   $scope.calculateDimensions = function(gesture) {
@@ -394,27 +395,22 @@ angular.module('wca.controllers',[])
     console.log('dev_width', $scope.dev_width);
     console.log('dev_height', $scope.dev_height);
   }
-
   angular.element($window).bind('resize', function(){
     $scope.$apply(function() {
       $scope.calculateDimensions();
     })
   });
-
   $scope.calculateDimensions();
-  // ------------------------------------------------------------------------------------------------------------------
 
   // Obtiene itemMeteo ------------------------------------------------------------------------------------------------
   $scope.itemMeteo = new ItemMeteo(SMeteo.getItemById($stateParams.id_item_meteo));
-  console.log('itemMeteo Object', $scope.itemMeteo);
-  // ------------------------------------------------------------------------------------------------------------------
-
   // inicializaciones -------------------------------------------------------------------------------------------------
   $scope.currentFrame = 0;
   var isGifPlaying = false;
   var timer = null;
-  // ------------------------------------------------------------------------------------------------------------------
-
+  if(angular.equals({}, $scope.itemMeteo)){
+    SLoader.hide();
+  }
   // Detencion de timer -----------------------------------------------------------------------------------------------
   var killTimer = function(){
     if(angular.isDefined(timer))
@@ -425,27 +421,27 @@ angular.module('wca.controllers',[])
       console.log('timer cancelado');
     }
   };// killtimer
-  // ------------------------------------------------------------------------------------------------------------------
 
+  // Evento ionicView.afterEnter --------------------------------------------------------------------------------------
   $scope.$on('$ionicView.afterEnter', function(){
       // Constructor de gif en base a parametros ----------------------------------------------------------------------
       var gifAnimado = new SuperGif({
         gif: document.getElementById('gif'),
         loop_mode: 0,
         draw_while_loading: 1
+        //on_end: SLoader.hide()
         //max_width: $scope.dev_width
       });
-      // Carga un gif animado remoto y lo descompone en fotogramas para procesarlo ------------------------------------
+      // Carga gif animado remoto y lo descompone en fotogramas para procesarlo ---------------------------------------
       gifAnimado.load(function(){
         $scope.totalFrames = gifAnimado.get_length();
         $scope.currentFrame = gifAnimado.get_current_frame();
         $scope.gifAnimado = gifAnimado;
         $scope.$apply();
-        //console.log('canvas width', canvas.width);
+        SLoader.hide();
         console.log('gifAnimado', gifAnimado);
         console.log('currentFrame', $scope.currentFrame);
       });
-
       var rangeSlider = document.getElementById('levelRange');
       // zoom ---------------------------------------------------------------------------------------------------------
       $scope.zoomIn = function(){
@@ -553,11 +549,13 @@ angular.module('wca.controllers',[])
 
     }); // scope.on
 
+  // Evento destroy ---------------------------------------------------------------------------------------------------
   $scope.$on("$destroy",function(){
       console.log('ondestroy -> pause animation');
       window.clearTimeout();
       $scope.pause();
     });
+
 
 }) // gif player ctrl
 // ====================================================================================================================
