@@ -5,7 +5,7 @@
 //http%3A%2F%2Fwebcamsdeasturias.com%2Finterior.php%3Fcategoria%3D1
 
 angular.module('wca', ['ionic', 'wca.controllers', 'wca.services',
-  'jett.ionic.filter.bar', 'ngMaterial', /*'ionicLazyLoad'*/])
+  'jett.ionic.filter.bar', 'ngMaterial' /*'ionicLazyLoad'*/])
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
@@ -166,6 +166,16 @@ angular.module('wca', ['ionic', 'wca.controllers', 'wca.services',
     }
   })
 // -------------------------------------------------------------------------------------------------------------------
+  .state('app.img-viewer', {
+    url: '/img-viewer/:id_item_meteo',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/img-viewer.html',
+        controller: 'ImgViewerCtrl'
+      }
+    }
+  })
+// -------------------------------------------------------------------------------------------------------------------
 
 ; // fin de estados
 
@@ -183,7 +193,7 @@ angular.module('wca', ['ionic', 'wca.controllers', 'wca.services',
         angular.element(this).attr("src", iAttrs.fallbackSrc);
       });
     }
-  }
+  };
   return fallbackSrc;
 })
 

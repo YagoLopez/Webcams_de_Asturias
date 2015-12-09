@@ -18,6 +18,7 @@ angular.module('wca.controllers',[])
   ////});
 
   })
+
 // ====================================================================================================================
   /**********************************************************************************************************************/
   .controller('TabsCtrl', function($scope, $stateParams, SLoader, $rootScope, $ionicFilterBar,
@@ -109,6 +110,7 @@ angular.module('wca.controllers',[])
     });
 
 })// TabsCtrl
+
 // ====================================================================================================================
 .controller('MapaCtrl', function($scope, $stateParams, SMapa, $rootScope){
 
@@ -155,6 +157,7 @@ angular.module('wca.controllers',[])
   // Fin Geolocalizacion ----------------------------------------------------------------------------------------------
 
 }) // fin MapaGlobalCtrl
+
 // ====================================================================================================================
 .controller('MapaGlobalCtrl', function($scope, $rootScope, SMapa, SFusionTable, SPopup){
     var layer = null;
@@ -211,6 +214,7 @@ angular.module('wca.controllers',[])
     mapa.setZoom(zoomLevel+1);
 
 }) //mapaglobalctrl
+
 // ====================================================================================================================
 .controller('PanoramioCtrl', function($scope, $stateParams, SMapa, $ionicModal, $rootScope){
 
@@ -269,6 +273,7 @@ angular.module('wca.controllers',[])
     // FIN DIALOGO MODAL ----------------------------------------------------------------------------------------------
 
 }) // panoramio ctrl
+
 // ====================================================================================================================
 .controller('DetalleCtrl', function($scope, $stateParams, $ionicModal, SMapa, SClima, $filter, $rootScope,
                                     SPopup, SWikipedia, $ionicSlideBoxDelegate, $ionicPopover){
@@ -350,6 +355,7 @@ angular.module('wca.controllers',[])
     });
 
 })// DetalleCtrl
+
 // ====================================================================================================================
 .controller('StreetViewCtrl', function($scope, SMapa, $stateParams, $rootScope, SPopup){
 
@@ -381,8 +387,9 @@ angular.module('wca.controllers',[])
   })//$scope.on
 
 })//StreetViewCtrl
+
 // ====================================================================================================================
-.controller('GifPlayerCtrl', function($scope, $window, $interval, $stateParams, SMeteo, ItemMeteo, SLoader){
+.controller('GifPlayerCtrl', function($scope, $window, $interval, $stateParams, SMeteo, ItemMeteo, SLoader, $state){
 
   //TODO: crear servicio de esto
   //TODO: poner imagen gif con loader
@@ -404,6 +411,11 @@ angular.module('wca.controllers',[])
 
   // Obtiene itemMeteo ------------------------------------------------------------------------------------------------
   $scope.itemMeteo = new ItemMeteo(SMeteo.getItemById($stateParams.id_item_meteo));
+  console.log('tipo imagen', $scope.itemMeteo.tipoImagen);
+  //TODO: falta por hacer la transición al estado donde se muestra la imagen estática
+  if ($scope.itemMeteo.tipoImagen != 'Animación'){
+    $state.transition('img-viewer');
+  };
   // inicializaciones -------------------------------------------------------------------------------------------------
   $scope.currentFrame = 0;
   var isGifPlaying = false;
@@ -558,9 +570,11 @@ angular.module('wca.controllers',[])
 
 
 }) // gif player ctrl
+
 // ====================================================================================================================
 .controller('SatSpCtrl', function($scope, $http, $window){
 }) // SatSpCtrl
+
 // ====================================================================================================================
 /*
 .controller('MeteoCtrl', function($scope, $rootScope, SFusionTable, $http, SPopup, SMeteo, SLoader){
@@ -620,6 +634,15 @@ angular.module('wca.controllers',[])
   });//error
 
 })//MeteoCtrl2
+
+// ====================================================================================================================
+
+.controller('ImgViewerCtrl', function($scope, $stateParams, ItemMeteo, ModeloMeteo){
+    $scope.itemMeteo = new ItemMeteo(ModeloMeteo.getItemById($stateParams.id_item_meteo));
+    console.log('itemMeteo', $scope.itemMeteo);
+
+})//ImgViewerCtrl
+
 // ====================================================================================================================
 
 ; // FIN
