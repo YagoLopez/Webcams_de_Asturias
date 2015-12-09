@@ -135,16 +135,6 @@ angular.module('wca', ['ionic', 'wca.controllers', 'wca.services',
     }
   })
 // -------------------------------------------------------------------------------------------------------------------
-  .state('app.sat-sp', {
-      url: '/sat-sp',
-      views: {
-        'menuContent': {
-          templateUrl: 'templates/sat-sp.html',
-          controller: 'SatSpCtrl'
-        }
-      }
-    })
-// -------------------------------------------------------------------------------------------------------------------
   .state('app.gif-player', {
     url: '/gif-player/:id_item_meteo',
     cache: false,
@@ -161,7 +151,7 @@ angular.module('wca', ['ionic', 'wca.controllers', 'wca.services',
     views: {
       'menuContent': {
         templateUrl: 'templates/meteo.html',
-        controller: 'MeteoCtrl2'
+        controller: 'MeteoCtrl'
       }
     }
   })

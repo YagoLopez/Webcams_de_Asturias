@@ -273,9 +273,10 @@ angular.module('wca.services',[])
         this.fuente = arr[0][5];
         this.url = arr[0][6];
         this.idCategoria= arr[0][7];
-        this.tipoImagen= arr[0][2];
+        this.tipoImagen= arr[0][8];
       }
     }
+/*
     ItemMeteo.prototype.getId = function (){
       return this.id;
     };
@@ -303,6 +304,7 @@ angular.module('wca.services',[])
     ItemMeteo.prototype.getTipoImagen= function(){
       return this.tipoImagen;
     };
+*/
     return ItemMeteo;
 })//ItemMeteo
 

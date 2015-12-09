@@ -18,9 +18,7 @@ angular.module('wca.controllers',[])
   ////});
 
   })
-
 // ====================================================================================================================
-  /**********************************************************************************************************************/
   .controller('TabsCtrl', function($scope, $stateParams, SLoader, $rootScope, $ionicFilterBar,
                                  SFusionTable, $filter, $ionicScrollDelegate, SPopup, $ionicNavBarDelegate){
 
@@ -109,8 +107,7 @@ angular.module('wca.controllers',[])
       SPopup.show('Error', 'Fallo obteniendo datos de cámaras<br>SFusionTable.getRemoteData(): '+status)
     });
 
-})// TabsCtrl
-
+})
 // ====================================================================================================================
 .controller('MapaCtrl', function($scope, $stateParams, SMapa, $rootScope){
 
@@ -156,8 +153,7 @@ angular.module('wca.controllers',[])
   */
   // Fin Geolocalizacion ----------------------------------------------------------------------------------------------
 
-}) // fin MapaGlobalCtrl
-
+})
 // ====================================================================================================================
 .controller('MapaGlobalCtrl', function($scope, $rootScope, SMapa, SFusionTable, SPopup){
     var layer = null;
@@ -213,8 +209,7 @@ angular.module('wca.controllers',[])
     mapa.setCenter(SMapa.OVIEDO);
     mapa.setZoom(zoomLevel+1);
 
-}) //mapaglobalctrl
-
+})
 // ====================================================================================================================
 .controller('PanoramioCtrl', function($scope, $stateParams, SMapa, $ionicModal, $rootScope){
 
@@ -272,8 +267,7 @@ angular.module('wca.controllers',[])
     };
     // FIN DIALOGO MODAL ----------------------------------------------------------------------------------------------
 
-}) // panoramio ctrl
-
+})
 // ====================================================================================================================
 .controller('DetalleCtrl', function($scope, $stateParams, $ionicModal, SMapa, SClima, $filter, $rootScope,
                                     SPopup, SWikipedia, $ionicSlideBoxDelegate, $ionicPopover){
@@ -354,9 +348,8 @@ angular.module('wca.controllers',[])
       $scope.popover = popover;
     });
 
-})// DetalleCtrl
-
-// ====================================================================================================================
+})
+// =====================================================================================================
 .controller('StreetViewCtrl', function($scope, SMapa, $stateParams, $rootScope, SPopup){
 
   $scope.lugar = $stateParams.lugar || '';
@@ -386,10 +379,9 @@ angular.module('wca.controllers',[])
     //})//hallaLatLng
   })//$scope.on
 
-})//StreetViewCtrl
-
+})
 // ====================================================================================================================
-.controller('GifPlayerCtrl', function($scope, $window, $interval, $stateParams, SMeteo, ItemMeteo, SLoader, $state){
+.controller('GifPlayerCtrl', function($scope, $window, $interval, $stateParams, SMeteo, ItemMeteo, SLoader, $state, $rootScope){
 
   //TODO: crear servicio de esto
   //TODO: poner imagen gif con loader
@@ -412,10 +404,24 @@ angular.module('wca.controllers',[])
   // Obtiene itemMeteo ------------------------------------------------------------------------------------------------
   $scope.itemMeteo = new ItemMeteo(SMeteo.getItemById($stateParams.id_item_meteo));
   console.log('tipo imagen', $scope.itemMeteo.tipoImagen);
-  //TODO: falta por hacer la transición al estado donde se muestra la imagen estática
+/*
   if ($scope.itemMeteo.tipoImagen != 'Animación'){
-    $state.transition('img-viewer');
+    SLoader.hide();
+    $state.go('app.img-viewer', {relative:'app.meteo'});
+
+
+
+    $rootScope.$on('$stateChangeSuccess', function(ev, to, toParams, from, fromParams) {
+      $rootScope.previousState = from.name;
+      $rootScope.currentState = to.name;
+      console.log('Previous state:'+$rootScope.previousState);
+      console.log('Current state:'+$rootScope.currentState);
+    });
+
+
+    return;
   };
+*/
   // inicializaciones -------------------------------------------------------------------------------------------------
   $scope.currentFrame = 0;
   var isGifPlaying = false;
@@ -569,43 +575,9 @@ angular.module('wca.controllers',[])
     });
 
 
-}) // gif player ctrl
-
+})
 // ====================================================================================================================
-.controller('SatSpCtrl', function($scope, $http, $window){
-}) // SatSpCtrl
-
-// ====================================================================================================================
-/*
-.controller('MeteoCtrl', function($scope, $rootScope, SFusionTable, $http, SPopup, SMeteo, SLoader){
-
-  $rootScope.mostrarLupa = false;
-  var queryString = 'SELECT * FROM '+SMeteo.TABLE_METEO_ID;
-  var showError = function(){
-    SPopup.show('Error', ' MeteoCtrl: NO DATA. Compruebe conexión de red' );
-  };
-
-  SLoader.show();
-
-  SFusionTable.getRemoteData(queryString)
-    .success(function(data){
-      if(!data.rows){
-        showError();
-        return;
-      }
-      modeloMeteo = new ModeloMeteo(data.rows);
-      $scope.getItemsByCategoriaId = function(idCategoria){
-        return modeloMeteo.getItemsByCategoriaId(idCategoria);
-      }
-      SLoader.hide();
-    })//success
-    .error(function(status){
-      showError();
-    });//error
-
-}) // MeteoCtrl
-*/
-.controller('MeteoCtrl2', function($scope, $rootScope, SFusionTable, SPopup, SMeteo, SLoader){
+.controller('MeteoCtrl', function($scope, $rootScope, SFusionTable, SPopup, SMeteo, SLoader){
 
   $rootScope.mostrarLupa = false;
   var showError = function(status){
@@ -633,16 +605,13 @@ angular.module('wca.controllers',[])
     SLoader.hide();
   });//error
 
-})//MeteoCtrl2
-
+})
 // ====================================================================================================================
+.controller('ImgViewerCtrl', function($scope, $stateParams, ItemMeteo, SMeteo){
+    //$scope.itemMeteo = new ItemMeteo(SMeteo.getItemById($stateParams.id_item_meteo));
+    //console.log('itemMeteo', $scope.itemMeteo);
 
-.controller('ImgViewerCtrl', function($scope, $stateParams, ItemMeteo, ModeloMeteo){
-    $scope.itemMeteo = new ItemMeteo(ModeloMeteo.getItemById($stateParams.id_item_meteo));
-    console.log('itemMeteo', $scope.itemMeteo);
-
-})//ImgViewerCtrl
-
+})
 // ====================================================================================================================
 
 ; // FIN
