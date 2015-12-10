@@ -185,13 +185,12 @@ angular.module('wca.services',[])
     };
   })
 // ====================================================================================================================
-.factory('SMeteo', function($filter){
+  .factory('TablaMeteo', function($filter){
 
   var service = {};
-
   var meteoData = null;
 
-  service.TABLE_METEO_ID = '1Y_vt2nTVFSYHpMuwe0u60bQzp4FlLtc33A8qd2_x';
+  service.FUSION_TABLE_ID = '1Y_vt2nTVFSYHpMuwe0u60bQzp4FlLtc33A8qd2_x';
 
   service.getData = function(){
     return meteoData;
@@ -207,12 +206,11 @@ angular.module('wca.services',[])
     }, true);
   };//getItemsByCategoriaId
 
-
   service.getItemById = function(idItem) {
     return $filter('filter')(meteoData, function (item) {
       return (item[0] == idItem);
     }, true);
-  };//getItemsByCategoriaId
+  };//getItemById
 
   return service;
 
@@ -258,7 +256,6 @@ angular.module('wca.services',[])
   };
 })
 // ====================================================================================================================
-
 
 
 ; // FIN

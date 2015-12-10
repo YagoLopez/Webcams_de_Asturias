@@ -381,7 +381,7 @@ angular.module('wca.controllers',[])
 
 })
 // ====================================================================================================================
-.controller('GifPlayerCtrl', function($scope, $window, $interval, $stateParams, SMeteo, ItemMeteo, SLoader, $state, $rootScope){
+.controller('GifPlayerCtrl', function($scope, $window, $interval, $stateParams, TablaMeteo, ItemMeteo, SLoader, $state, $rootScope){
 
   //TODO: crear servicio de esto
   //TODO: poner imagen gif con loader
@@ -402,7 +402,7 @@ angular.module('wca.controllers',[])
   $scope.calculateDimensions();
 
   // Obtiene itemMeteo ------------------------------------------------------------------------------------------------
-  $scope.itemMeteo = new ItemMeteo(SMeteo.getItemById($stateParams.id_item_meteo));
+  $scope.itemMeteo = new ItemMeteo(TablaMeteo.getItemById($stateParams.id_item_meteo));
   console.log('tipo imagen', $scope.itemMeteo.tipoImagen);
 /*
   if ($scope.itemMeteo.tipoImagen != 'Animación'){
@@ -577,14 +577,14 @@ angular.module('wca.controllers',[])
 
 })
 // ====================================================================================================================
-.controller('MeteoCtrl', function($scope, $rootScope, SFusionTable, SPopup, SMeteo, SLoader){
+.controller('MeteoCtrl', function($scope, $rootScope, SFusionTable, SPopup, TablaMeteo, SLoader){
 
   $rootScope.mostrarLupa = false;
   var showError = function(status){
     SPopup.show(
       'Error', ' MeteoCtrl: Compruebe conexión de red. Estado: '+status );
   };
-  var queryString = 'SELECT * FROM '+SMeteo.TABLE_METEO_ID;
+  var queryString = 'SELECT * FROM '+TablaMeteo.FUSION_TABLE_ID;
 
   SLoader.show();
 
@@ -595,9 +595,9 @@ angular.module('wca.controllers',[])
         showError('No data');
         return;
       }
-      SMeteo.setData(data.rows);
+      TablaMeteo.setData(data.rows);
       $scope.getItemsByCategoriaId = function(idCategoria){
-        return SMeteo.getItemsByCategoriaId(idCategoria);
+        return TablaMeteo.getItemsByCategoriaId(idCategoria);
       }
       SLoader.hide();
     }//success
@@ -607,8 +607,8 @@ angular.module('wca.controllers',[])
 
 })
 // ====================================================================================================================
-.controller('ImgViewerCtrl', function($scope, $stateParams, ItemMeteo, SMeteo){
-    $scope.itemMeteo = new ItemMeteo( SMeteo.getItemById($stateParams.id_item_meteo) );
+.controller('ImgViewerCtrl', function($scope, $stateParams, ItemMeteo, TablaMeteo){
+    $scope.itemMeteo = new ItemMeteo( TablaMeteo.getItemById($stateParams.id_item_meteo) );
     $scope.$on('$ionicView.afterEnter', function(){
       document.getElementById('gifScroll').style.background = 'none';
     });
