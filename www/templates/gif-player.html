@@ -60,9 +60,10 @@ obtener los datos binarios por javascript de la cache
     <!--</ion-scroll>-->
     <!-- fin imagen ------------------------------------------------------------------------------------------>
 
-    <div class="card" style="/*margin:1px*/">
+    <!--<div class="card" style="/*margin:1px*/">-->
       <div class="item item-text-wrap">
         <!-- range slider ---------------------------------------------------------------------------------------->
+        <div class="card">
         <label class="range range-assertive" style="padding: 0 3%;">
           <input id="levelRange" type="range" min="0" max="{{ gifAnimado.get_length()-1 }}"
                  value="{{ currentFrame }}" ng-model="currentFrame" ng-change="irPosicion(currentFrame)"
@@ -86,7 +87,9 @@ obtener los datos binarios por javascript de la cache
             <i class="icon ion-ios-skipforward-outline" ng-click="end()" style="cursor: pointer;"></i>
           </div>
         </div>
+        </div>
         <!-- zoom ------------------------------------------------------------------------------------------------>
+        <div class="card">
         <section class="buttons" style="font-size:25px;padding-left:10%;padding-right:5%;align-items:center">
           <i class="icon ion-ios-plus-outline zoom-in" style="cursor: pointer;"></i>
           <i class="icon ion-ios-minus-outline zoom-out" style="cursor: pointer;"></i>
@@ -100,9 +103,10 @@ obtener los datos binarios por javascript de la cache
             {{ gifAnimado.get_current_frame()+1 }}</b> de {{ gifAnimado.get_length() }}
           </div>
         </div>
+        </div>
         <!-- fin leyenda ------------------------------------------------------------------------------------------>
       </div>
-    </div>
+    </div><!-- card -->
 
     <!-- detalles --------------------------------------------------------------------------------------------->
     <div class="card">
