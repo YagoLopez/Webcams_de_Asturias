@@ -9,7 +9,25 @@
 <ion-view view-title="Imágen">
   <ion-content>
     <ion-scroll id="gifScroll" zooming="true" direction="xy">
-      <img src="{{ itemMeteo.url }}" width="100%"/>
-    <ion-scroll>
+      <img src="{{ ::itemMeteo.url }}" width="100%"/>
+    </ion-scroll>
+    <!-- detalles --------------------------------------------------------------------------------------------->
+    <div class="card">
+      <div class="item item-divider">
+        Detalles:
+      </div>
+      <div class="item item-text-wrap">
+        <!--TODO: hacer un campo en la tabla meteo con la url de creditos-->
+        <div><span style="color:green">&#187; Descripción:</span> {{ ::itemMeteo.descripcion }}</div>
+        <div><span style="color:green">&#187; Categoría:</span> {{ ::itemMeteo.categoria}}</div>
+        <div><span style="color:green">&#187; Nombre:</span> {{ ::itemMeteo.nombre}}</div>
+        <div><span style="color:green">&#187; Espectro:</span> {{ ::itemMeteo.espectro}}</div>
+        <div><span style="color:green">&#187; Fuente:</span> <a href="{{::itemMeteo.url}}" target="_blank">
+          {{ ::itemMeteo.fuente}}</a>
+        </div>
+        <div><span style="color:green">&#187; Tipo imagen:</span> {{ ::itemMeteo.tipoImagen}}</div>
+      </div>
+    </div>
+    <!-- fin detalles ----------------------------------------------------------------------------------------->
   </ion-content>
 </ion-view>

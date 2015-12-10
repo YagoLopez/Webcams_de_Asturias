@@ -148,6 +148,7 @@ angular.module('wca', ['ionic', 'wca.controllers', 'wca.services',
 // -------------------------------------------------------------------------------------------------------------------
   .state('app.meteo', {
     url: '/meteo',
+    cache: false,
     views: {
       'menuContent': {
         templateUrl: 'templates/meteo.html',
@@ -158,6 +159,7 @@ angular.module('wca', ['ionic', 'wca.controllers', 'wca.services',
 // -------------------------------------------------------------------------------------------------------------------
   .state('app.img-viewer', {
     url: '/img-viewer/:id_item_meteo',
+    cache: false,
     views: {
       'menuContent': {
         templateUrl: 'templates/img-viewer.html',
