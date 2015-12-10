@@ -67,14 +67,11 @@ obtener los datos binarios por javascript de la cache
       <div class="item item-text-wrap">
         <!-- pan-zoom -------------------------------------------------------------------------------------------->
         <section class="buttons">
-          <!--<button class="zoom-in">Zoom In</button>-->
-          <!--<button class="zoom-out">Zoom Out</button>-->
           <div style="font-size:40px">
             <i class="icon ion-ios-plus-outline zoom-in" style="cursor: pointer;"></i>
             <i class="icon ion-ios-minus-outline zoom-out" style="cursor: pointer;"></i>
             <input type="range" class="zoom-range" min="0.4" max="5" step="0.05"/>
-            <i class="icon ion-arrow-expand reset" style="cursor: pointer; color:darkgray"></i>
-            <!--<button class="reset">Reset</button>-->
+            <i class="icon ion-arrow-expand reset" style="cursor: pointer; color:gray; font-size:35px"></i>
           </div>
         </section>
         <!-- pan-zoom -------------------------------------------------------------------------------------------->
@@ -84,27 +81,17 @@ obtener los datos binarios por javascript de la cache
                  value="{{ currentFrame }}" ng-model="currentFrame" ng-change="irPosicion(currentFrame)"
                  style="margin:0"/>
         </label>
-        <div style="width:100%;height:50px;display:block;font-size:40px;">
+        <div style="width:100%;height:50px;display:block;font-size:45px;">
           <i class="icon ion-ios-play-outline" ng-click="playPause()" style="cursor: pointer;"></i>
-          <i class="icon ion-ios-fastforward-outline" ng-click="forward()" style="cursor: pointer;"></i>
           <i class="icon ion-ios-rewind-outline" ng-click="backward()" style="cursor: pointer;"></i>
-          <i class="icon ion-ios-skipbackward-outline" ng-click="end()" style="cursor: pointer;"></i>
+          <i class="icon ion-ios-fastforward-outline" ng-click="forward()" style="cursor: pointer;"></i>
+          <i class="icon ion-ios-skipbackward-outline" ng-click="restart()" style="cursor: pointer;"></i>
+          <i class="icon ion-ios-skipforward-outline" ng-click="end()" style="cursor: pointer;"></i>
         </div>
         <!-- fin range slider ------------------------------------------------------------------------------------>
-        <!-- botones --------------------------------------------------------------------------------------------->
-        <!--
-            <div>
-              <button ng-click="playPause()">Reproducir/Detener</button>
-              <button ng-click="backward()">-1</button>
-              <button ng-click="forward()">+1</button>
-              <button ng-click="restart()">Inicio</button>
-              <button ng-click="end()">Final</button>
-            </div>
-        -->
-        <!-- fin botones ----------------------------------------------------------------------------------------->
         <!-- Leyenda --------------------------------------------------------------------------------------------->
-        <div style="width:100%">
-          Fotograma: {{ gifAnimado.get_current_frame()+1 }} de {{ gifAnimado.get_length() }}
+        <div style="width:100%; font-size:smaller">
+          Fotograma: <b style="color:red">{{ gifAnimado.get_current_frame()+1 }}</b> de {{ gifAnimado.get_length() }}
         </div>
         <!-- fin leyenda ------------------------------------------------------------------------------------------>
       </div>
@@ -116,12 +103,14 @@ obtener los datos binarios por javascript de la cache
         Detalles:
       </div>
       <div class="item item-text-wrap">
-        <div>descripción: {{ ::itemMeteo.descripcion }}</div>
-        <div>categoría: {{ ::itemMeteo.categoria}}</div>
-        <div>nombre: {{ ::itemMeteo.nombre}}</div>
-        <div>espectro: {{ ::itemMeteo.espectro}}</div>
-        <div>fuente: {{ ::itemMeteo.fuente}}</div>
-        <div>tipo imagen: {{ ::itemMeteo.tipoImagen}}</div>
+        <div><span style="color:green">&#187; Descripción:</span> {{ ::itemMeteo.descripcion }}</div>
+        <div><span style="color:green">&#187; Categoría:</span> {{ ::itemMeteo.categoria}}</div>
+        <div><span style="color:green">&#187; Nombre:</span> {{ ::itemMeteo.nombre}}</div>
+        <div><span style="color:green">&#187; Espectro:</span> {{ ::itemMeteo.espectro}}</div>
+        <div><span style="color:green">&#187; Fuente:</span> <a href="{{::itemMeteo.url}}" target="_blank">
+          {{ ::itemMeteo.fuente}}</a>
+        </div>
+        <div><span style="color:green">&#187; Tipo imagen:</span> {{ ::itemMeteo.tipoImagen}}</div>
       </div>
     </div>
     <!-- fin detalles ----------------------------------------------------------------------------------------->
