@@ -47,9 +47,6 @@ obtener los datos binarios por javascript de la cache
         -webkit-transition-duration: 500ms;
         transform: scale(1);
       }
-      #target{
-        width: 100%;
-      }
     </style>
 
     <!-- imagen ---------------------------------------------------------------------------------------------->
@@ -63,7 +60,7 @@ obtener los datos binarios por javascript de la cache
     <!--</ion-scroll>-->
     <!-- fin imagen ------------------------------------------------------------------------------------------>
 
-    <div class="card" style="margin:1px">
+    <div class="card" style="/*margin:1px*/">
       <div class="item item-text-wrap">
         <!-- range slider ---------------------------------------------------------------------------------------->
         <label class="range range-assertive" style="padding: 0 3%;">
@@ -72,7 +69,7 @@ obtener los datos binarios por javascript de la cache
                  style="margin:0"/>
         </label>
         <!-- botones control-------------------------------------------------------------------------------------->
-        <div class="row" style="font-size:45px;padding-left:2%;padding-right:2%">
+        <div class="row" style="font-size:30px;padding: 0 2%;">
           <div class="col col-15">
             <i class="icon ion-ios-play-outline" ng-click="playPause()" style="cursor: pointer;"></i>
           </div>
@@ -90,18 +87,18 @@ obtener los datos binarios por javascript de la cache
           </div>
         </div>
         <!-- zoom ------------------------------------------------------------------------------------------------>
-        <section class="buttons">
-          <div>Zoom</div>
-          <div style="font-size:40px">
-            <i class="icon ion-ios-plus-outline zoom-in" style="cursor: pointer;"></i>
-            <i class="icon ion-ios-minus-outline zoom-out" style="cursor: pointer;"></i>
-            <input type="range" class="zoom-range" min="0.4" max="5" step="0.05"/>
-            <i class="icon ion-arrow-expand reset" style="cursor: pointer; color:gray; font-size:35px"></i>
-          </div>
+        <section class="buttons" style="font-size:25px;padding-left:10%;padding-right:5%;align-items:center">
+          <i class="icon ion-ios-plus-outline zoom-in" style="cursor: pointer;"></i>
+          <i class="icon ion-ios-minus-outline zoom-out" style="cursor: pointer;"></i>
+          <input type="range" class="zoom-range" min="0.4" max="5" step="0.05"/>
+          <i class="icon ion-arrow-expand reset" style="cursor: pointer; color:lightgray; font-size:30px;vertical-align:bottom"></i>
         </section>
         <!-- Leyenda --------------------------------------------------------------------------------------------->
-        <div style="width:100%; font-size:smaller">
-          Fotograma: <b style="color:red">{{ gifAnimado.get_current_frame()+1 }}</b> de {{ gifAnimado.get_length() }}
+        <div style="width: 100%;text-align:center;padding-bottom:5%">
+          <!--<span style="font-size:small;">Zoom</span><br>-->
+          <div>Fotograma: <b style="color:red">
+            {{ gifAnimado.get_current_frame()+1 }}</b> de {{ gifAnimado.get_length() }}
+          </div>
         </div>
         <!-- fin leyenda ------------------------------------------------------------------------------------------>
       </div>

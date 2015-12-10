@@ -4,6 +4,7 @@ En vez de descargar la imagen usando xhr, descargarla como una imagen normal con
 obtener los datos binarios por javascript de la cache
 -->
 <!--TODO: probar a usar la directiva awesome-slider en lugar del range slider de ionic-->
+<!--TODO: al cargar la página la imagen tiene tamaño nulo-->
 <ion-view view-title="Animación" xmlns:rel="http://www.w3.org/1999/xhtml">
   <ion-content>
     <style>
@@ -46,57 +47,80 @@ obtener los datos binarios por javascript de la cache
         -webkit-transition-duration: 500ms;
         transform: scale(1);
       }
-      #target{
-        width: 100%;
-      }
     </style>
-        <!-- imagen ---------------------------------------------------------------------------------------------->
-        <!--TODO: arreglar la altura de ion-scroll-->
-        <!--<ion-scroll id="gifScroll" zooming="true" direction="xy" style="width:100%;height:25em;">-->
-          <!--<div id="gifContainer" data-tap-disabled>-->
-              <img id="gif" rel:animated_src="http://sat24.mobi/Image/satir/europa/sp"
-                   rel:auto_play="0" rel:fps="500" ng-click="playPause()"/>
-          <!--</div>-->
-        <!--</ion-scroll>-->
-        <!-- fin imagen ------------------------------------------------------------------------------------------>
-        <!-- pan-zoom -------------------------------------------------------------------------------------------->
-        <section class="buttons">
-          <button class="zoom-in">Zoom In</button>
-          <button class="zoom-out">Zoom Out</button>
-          <input type="range" class="zoom-range" min="0.4" max="5" step="0.05"/>
-          <button class="reset">Reset</button>
-        </section>
-        <!-- pan-zoom -------------------------------------------------------------------------------------------->
+
+    <!-- imagen ---------------------------------------------------------------------------------------------->
+    <!--TODO: arreglar la altura de ion-scroll-->
+    <!--TODO: poner un gif loader como imagen estática en el supergif-->
+    <!--<ion-scroll id="gifScroll" zooming="true" direction="xy" style="width:100%;height:25em;padding-top: 50px;">-->
+      <!--<div id="gifContainer" data-tap-disabled>-->
+          <img id="gif" rel:animated_src="{{ itemMeteo.url }}" rel:auto_play="0"
+               rel:fps="500" style="width:100%;" ng-click="playPause()"/>
+      <!--</div>-->
+    <!--</ion-scroll>-->
+    <!-- fin imagen ------------------------------------------------------------------------------------------>
+
+    <div class="card" style="margin:1px">
+      <div class="item item-text-wrap">
         <!-- range slider ---------------------------------------------------------------------------------------->
         <label class="range range-assertive" style="padding: 0 3%;">
           <input id="levelRange" type="range" min="0" max="{{ gifAnimado.get_length()-1 }}"
                  value="{{ currentFrame }}" ng-model="currentFrame" ng-change="irPosicion(currentFrame)"
-                  style="margin:0"/>
+                 style="margin:0"/>
         </label>
-        <div style="width:100%;height:50px;display:block;font-size:40px;">
-          <i class="icon ion-ios-play-outline" ng-click="playPause()" style="cursor: pointer;"></i>
-          <i class="icon ion-ios-skipbackward-outline" ng-click="end()" style="cursor: pointer;"></i>
-          <i class="icon ion-ios-fastforward-outline" ng-click="end()" style="cursor: pointer;"></i>
-          <i class="icon ion-ios-rewind-outline" ng-click="end()" style="cursor: pointer;"></i>
-          <i class="icon ion-ios-rewind-outline" ng-click="end()" style="cursor: pointer;"></i>
+        <!-- botones control-------------------------------------------------------------------------------------->
+        <div class="row" style="font-size:30px;padding-left:2%;padding-right:2%;padding-top:0;padding-bottom:0;">
+          <div class="col col-15" style="font-size:30px">
+            <i class="icon ion-ios-play-outline" ng-click="playPause()" style="cursor: pointer;"></i>
+          </div>
+          <div class="col col-25">
+            <i class="icon ion-ios-rewind-outline" ng-click="backward()" style="cursor: pointer;"></i>
+          </div>
+          <div class="col col-25">
+            <i class="icon ion-ios-fastforward-outline" ng-click="forward()" style="cursor: pointer;"></i>
+          </div>
+          <div class="col">
+            <i class="icon ion-ios-skipbackward-outline" ng-click="restart()" style="cursor: pointer;"></i>
+          </div>
+          <div class="col">
+            <i class="icon ion-ios-skipforward-outline" ng-click="end()" style="cursor: pointer;"></i>
+          </div>
         </div>
-        <!-- fin range slider ------------------------------------------------------------------------------------>
-        <!-- botones --------------------------------------------------------------------------------------------->
-        <div>
-          <button ng-click="playPause()">Reproducir/Detener</button>
-          <button ng-click="backward()">-1</button>
-          <button ng-click="forward()">+1</button>
-          <button ng-click="restart()">Inicio</button>
-          <button ng-click="end()">Final</button>
-          <button ng-click="zoomIn()">ZoomIn</button>
-          <button ng-click="zoomOut()">ZoomOut</button>
-        </div>
-        <!-- fin botones ----------------------------------------------------------------------------------------->
+        <!-- zoom ------------------------------------------------------------------------------------------------>
+        <section class="buttons">
+          <div>Zoom</div>
+          <div style="font-size:30px">
+            <i class="icon ion-ios-plus-outline zoom-in" style="cursor: pointer;"></i>
+            <i class="icon ion-ios-minus-outline zoom-out" style="cursor: pointer;"></i>
+            <input type="range" class="zoom-range" min="0.4" max="5" step="0.05"/>
+            <i class="icon ion-arrow-expand reset" style="cursor: pointer; color:gray; font-size:35px"></i>
+          </div>
+        </section>
         <!-- Leyenda --------------------------------------------------------------------------------------------->
-        <div style="width:100%">
-          Fotograma: {{ gifAnimado.get_current_frame()+1 }} de {{ gifAnimado.get_length() }}
+        <div style="width:100%; font-size:smaller">
+          Fotograma: <b style="color:red">{{ gifAnimado.get_current_frame()+1 }}</b> de {{ gifAnimado.get_length() }}
         </div>
-        <!-- fin leyenda ----------------------------------------------------------------------------------------->
+        <!-- fin leyenda ------------------------------------------------------------------------------------------>
+      </div>
+    </div>
+
+    <!-- detalles --------------------------------------------------------------------------------------------->
+    <div class="card">
+      <div class="item item-divider">
+        Detalles:
+      </div>
+      <div class="item item-text-wrap">
+        <div><span style="color:green">&#187; Descripción:</span> {{ ::itemMeteo.descripcion }}</div>
+        <div><span style="color:green">&#187; Categoría:</span> {{ ::itemMeteo.categoria}}</div>
+        <div><span style="color:green">&#187; Nombre:</span> {{ ::itemMeteo.nombre}}</div>
+        <div><span style="color:green">&#187; Espectro:</span> {{ ::itemMeteo.espectro}}</div>
+        <div><span style="color:green">&#187; Fuente:</span> <a href="{{::itemMeteo.url}}" target="_blank">
+          {{ ::itemMeteo.fuente}}</a>
+        </div>
+        <div><span style="color:green">&#187; Tipo imagen:</span> {{ ::itemMeteo.tipoImagen}}</div>
+      </div>
+    </div>
+    <!-- fin detalles ----------------------------------------------------------------------------------------->
 
   </ion-content>
 </ion-view>
