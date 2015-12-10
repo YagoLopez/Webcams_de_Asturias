@@ -608,9 +608,10 @@ angular.module('wca.controllers',[])
 })
 // ====================================================================================================================
 .controller('ImgViewerCtrl', function($scope, $stateParams, ItemMeteo, SMeteo){
-    //$scope.itemMeteo = new ItemMeteo(SMeteo.getItemById($stateParams.id_item_meteo));
-    //console.log('itemMeteo', $scope.itemMeteo);
-
+    $scope.itemMeteo = new ItemMeteo( SMeteo.getItemById($stateParams.id_item_meteo) );
+    $scope.$on('$ionicView.afterEnter', function(){
+      document.getElementById('gifScroll').style.background = 'none';
+    });
 })
 // ====================================================================================================================
 

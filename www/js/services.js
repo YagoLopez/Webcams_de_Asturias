@@ -1,5 +1,6 @@
 angular.module('wca.services',[])
 
+// ====================================================================================================================
   .factory('SFusionTable', function($http){
 
     var API_ENDPOINT = 'https://www.googleapis.com/fusiontables/v2/query';
@@ -23,8 +24,8 @@ angular.module('wca.services',[])
       getRemoteData: getRemoteData,
       getLocalData: getLocalData
     }
-  }) // SFusionTable
-
+  })
+// ====================================================================================================================
   .factory('SMapa', function(SFusionTable, SPopup){
 
     var OVIEDO = {lat: 43.3667, lng: -5.8333}; // centro de mapa vista global
@@ -114,8 +115,8 @@ angular.module('wca.services',[])
       crear: crear,
       creaFusionTableLayer: creaFusionTableLayer
     }
-  }) // SMapa
-
+  })
+// ====================================================================================================================
   .factory('SClima', function($http){
 
     var getData = function(lat, lng){
@@ -127,8 +128,8 @@ angular.module('wca.services',[])
       getData: getData
     }
 
-  }) // SClima service
-
+  })
+// ====================================================================================================================
   .factory('SPopup', function($ionicPopup){
     var show = function(titulo, msg) {
       $ionicPopup.alert({
@@ -137,8 +138,8 @@ angular.module('wca.services',[])
       });
     };
     return { show: show };
-  }) // popup
-
+  })
+// ====================================================================================================================
   .factory('SWikipedia', function($http){
 
     var info = function(termino){
@@ -182,42 +183,9 @@ angular.module('wca.services',[])
       infoAmpliada: infoAmpliada,
       infoLatLngWikipedia: infoLatLngWikipedia
     };
-  })//SWikipedia
-
-  /*
-.factory('ModeloMeteo', function($filter, SFusionTable){
-
-    var queryString = 'SELECT * FROM '+SFusionTable.TABLE_METEO_ID;
-
-    function ModeloMeteo(data){
-      this.data = data;
-      //this.data2 = SFusionTable.getRemoteData(queryString).success;
-    };
-
-    ModeloMeteo.prototype.getItemsByCategoriaId = function(idCategoria) {
-      return $filter('filter')(this.data, function (item) {
-        return (item[7] == idCategoria);
-      }, true);
-    };//getItemsByCategoriaId
-
-    ModeloMeteo.prototype.getItemsByCategoriaName = function(nombreCategoria) {
-      return $filter('filter')(this.data, function (item) {
-        return (item[2] == nombreCategoria);
-      }, true);
-    }//getItemsByCategoriaName
-
-    ModeloMeteo.prototype.getItemMeteo = function(id){
-      var itemsFiltrados = $filter('filter')(this.data, function(item){
-      console.log('item', item[0] == id)
-      }, true)
-    };//getItemMeteo
-
-    return ModeloMeteo;
-
-})//ModeloMeteo
-*/
-
-  .factory('SMeteo', function($filter){
+  })
+// ====================================================================================================================
+.factory('SMeteo', function($filter){
 
   var service = {};
 
@@ -248,21 +216,9 @@ angular.module('wca.services',[])
 
   return service;
 
-})//SMeteo
-
+})
+// ====================================================================================================================
   .factory('ItemMeteo', function(){
-
-    //columnas por indice de array:
-    //    item[0]: id
-    //    item[1]: descripcion
-    //    item[2]: categoría
-    //    item[3]: nombre
-    //    item[4]: espectro
-    //    item[5]: fuente
-    //    item[6]: url
-    //    item[7]: idCategoria
-    //    item[8]: tipo imagen
-
     function ItemMeteo(arr){
       if(arr){
         this.id = arr[0][0];
@@ -276,38 +232,9 @@ angular.module('wca.services',[])
         this.tipoImagen= arr[0][8];
       }
     }
-/*
-    ItemMeteo.prototype.getId = function (){
-      return this.id;
-    };
-    ItemMeteo.prototype.getDescripcion = function (){
-      return this.descripcion;
-    };
-    ItemMeteo.prototype.getCategoria = function(){
-      return this.categoria
-    };
-    ItemMeteo.prototype.getNombre= function(){
-      return this.nombre;
-    };
-    ItemMeteo.prototype.getEspectro= function(){
-      return this.espectro
-    };
-    ItemMeteo.prototype.getFuente= function(){
-      return this.fuente
-    };
-    ItemMeteo.prototype.getUrl= function(){
-      return this.url
-    };
-    ItemMeteo.prototype.getIdCategoria = function(){
-      return this.idCategoria
-    };
-    ItemMeteo.prototype.getTipoImagen= function(){
-      return this.tipoImagen;
-    };
-*/
     return ItemMeteo;
-})//ItemMeteo
-
+  })
+// ====================================================================================================================
   .factory('SLoader', function($ionicLoading){
     var spinnerIco = "<ion-spinner icon='lines' class='spinner-calm'></ion-spinner><br/>";
     var contenidoLoader = "Cargando datos...";
@@ -321,8 +248,8 @@ angular.module('wca.services',[])
       show: show,
       hide: hide
     }
-})//SLoader
-
+})
+// ====================================================================================================================
   .factory('$exceptionHandler', function($injector) {
   return function(exception, cause) {
     var SPopup = $injector.get('SPopup');
@@ -330,6 +257,7 @@ angular.module('wca.services',[])
     console.error(exception);
   };
 })
+// ====================================================================================================================
 
 
 
