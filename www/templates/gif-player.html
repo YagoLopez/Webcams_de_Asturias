@@ -5,7 +5,7 @@ obtener los datos binarios por javascript de la cache
 -->
 <!--TODO: probar a usar la directiva awesome-slider en lugar del range slider de ionic-->
 <!--TODO: al cargar la página la imagen tiene tamaño nulo-->
-<ion-view view-title="Animación" xmlns:rel="http://www.w3.org/1999/xhtml">
+<ion-view view-title="{{ ::itemMeteo.categoria }}" xmlns:rel="http://www.w3.org/1999/xhtml">
   <ion-content>
     <style>
       div.jsgif > canvas{
@@ -49,7 +49,7 @@ obtener los datos binarios por javascript de la cache
       }
     </style>
 
-    <!-- imagen ---------------------------------------------------------------------------------------------->
+    <!-- imagen -------------------------------------------------------------------------------------------------->
     <!--TODO: arreglar la altura de ion-scroll-->
     <!--TODO: poner un gif loader como imagen estática en el supergif-->
     <!--<ion-scroll id="gifScroll" zooming="true" direction="xy" style="width:100%;height:25em;padding-top: 50px;">-->
@@ -58,73 +58,69 @@ obtener los datos binarios por javascript de la cache
                rel:fps="500" style="width:100%;" ng-click="playPause()"/>
       <!--</div>-->
     <!--</ion-scroll>-->
-    <!-- fin imagen ------------------------------------------------------------------------------------------>
+    <!-- fin imagen ---------------------------------------------------------------------------------------------->
 
-    <!--<div class="card" style="/*margin:1px*/">-->
-      <div class="item item-text-wrap">
-        <!-- range slider ---------------------------------------------------------------------------------------->
-        <div class="card">
-        <label class="range range-assertive" style="padding: 0 3%;">
-          <input id="levelRange" type="range" min="0" max="{{ gifAnimado.get_length()-1 }}"
-                 value="{{ currentFrame }}" ng-model="currentFrame" ng-change="irPosicion(currentFrame)"
-                 style="margin:0"/>
-        </label>
-        <!-- botones control-------------------------------------------------------------------------------------->
-        <div class="row" style="font-size:30px;padding: 0 2%;">
-          <div class="col col-15">
-            <i class="icon ion-ios-play-outline" ng-click="playPause()" style="cursor: pointer;"></i>
-          </div>
-          <div class="col col-25">
-            <i class="icon ion-ios-rewind-outline" ng-click="backward()" style="cursor: pointer;"></i>
-          </div>
-          <div class="col col-25">
-            <i class="icon ion-ios-fastforward-outline" ng-click="forward()" style="cursor: pointer;"></i>
-          </div>
-          <div class="col">
-            <i class="icon ion-ios-skipbackward-outline" ng-click="restart()" style="cursor: pointer;"></i>
-          </div>
-          <div class="col">
-            <i class="icon ion-ios-skipforward-outline" ng-click="end()" style="cursor: pointer;"></i>
-          </div>
-        </div>
-        </div>
-        <!-- zoom ------------------------------------------------------------------------------------------------>
-        <div class="card">
-        <section class="buttons" style="font-size:25px;padding-left:10%;padding-right:5%;align-items:center">
-          <i class="icon ion-ios-plus-outline zoom-in" style="cursor: pointer;"></i>
-          <i class="icon ion-ios-minus-outline zoom-out" style="cursor: pointer;"></i>
-          <input type="range" class="zoom-range" min="0.4" max="5" step="0.05"/>
-          <i class="icon ion-arrow-expand reset" style="cursor: pointer; color:lightgray; font-size:30px;vertical-align:bottom"></i>
-        </section>
-        <!-- Leyenda --------------------------------------------------------------------------------------------->
-        <div style="width: 100%;text-align:center;padding-bottom:5%">
-          <!--<span style="font-size:small;">Zoom</span><br>-->
-          <div>Fotograma: <b style="color:red">
-            {{ gifAnimado.get_current_frame()+1 }}</b> de {{ gifAnimado.get_length() }}
-          </div>
-        </div>
-        </div>
-        <!-- fin leyenda ------------------------------------------------------------------------------------------>
+  <div class="card">
+    <!-- range slider ---------------------------------------------------------------------------------------->
+    <label class="range range-assertive" style="padding: 0 3%;">
+    <input id="levelRange" type="range" min="0" max="{{ gifAnimado.get_length()-1 }}"
+           value="{{ currentFrame }}" ng-model="currentFrame" ng-change="irPosicion(currentFrame)"
+           style="margin:0"/>
+    </label>
+    <!-- botones control-------------------------------------------------------------------------------------->
+    <div class="row" style="font-size:30px;padding: 0 2%;">
+      <div class="col col-15">
+        <i class="icon ion-ios-play-outline" ng-click="playPause()" style="cursor: pointer; margin-left:20px;"></i>
       </div>
-    </div><!-- card -->
-
-    <!-- detalles --------------------------------------------------------------------------------------------->
-    <div class="card">
-      <div class="item item-divider">
-        Detalles:
+      <div class="col col-20">
+        <i class="icon ion-ios-rewind-outline" ng-click="backward()" style="cursor: pointer;"></i>
       </div>
-      <div class="item item-text-wrap">
-        <div><span style="color:green">&#187; Descripción:</span> {{ ::itemMeteo.descripcion }}</div>
-        <div><span style="color:green">&#187; Categoría:</span> {{ ::itemMeteo.categoria}}</div>
-        <div><span style="color:green">&#187; Nombre:</span> {{ ::itemMeteo.nombre}}</div>
-        <div><span style="color:green">&#187; Espectro:</span> {{ ::itemMeteo.espectro}}</div>
-        <div><span style="color:green">&#187; Fuente:</span> <a href="{{::itemMeteo.url}}" target="_blank">
-          {{ ::itemMeteo.fuente}}</a>
-        </div>
-        <div><span style="color:green">&#187; Tipo imagen:</span> {{ ::itemMeteo.tipoImagen}}</div>
+      <div class="col col-20">
+        <i class="icon ion-ios-fastforward-outline" ng-click="forward()" style="cursor: pointer;"></i>
+      </div>
+      <div class="col">
+        <i class="icon ion-ios-skipbackward-outline" ng-click="restart()" style="cursor: pointer;"></i>
+      </div>
+      <div class="col">
+        <i class="icon ion-ios-skipforward-outline" ng-click="end()" style="cursor: pointer;"></i>
       </div>
     </div>
-    <!-- fin detalles ----------------------------------------------------------------------------------------->
+    <!-- Leyenda --------------------------------------------------------------------------------------------->
+    <div style="width: 100%;text-align:center;padding-bottom:2px">
+      <!--<span style="font-size:small;">Zoom</span><br>-->
+      <div>Fotograma: <b style="color:red">
+        {{ gifAnimado.get_current_frame()+1 }}</b> de {{ ::gifAnimado.get_length() }}
+      </div>
+    </div>
+    <!-- fin leyenda ------------------------------------------------------------------------------------------>
+  </div>
+
+  <div class="card">
+    <!-- zoom ------------------------------------------------------------------------------------------------>
+    <section class="buttons" style="font-size:25px;padding-left:5%;padding-right:8%;text-align:center">
+      <i class="icon ion-ios-plus-outline zoom-in" style="cursor: pointer;"></i>
+      <i class="icon ion-ios-minus-outline zoom-out" style="cursor: pointer;"></i>
+      <input type="range" class="zoom-range" min="0.4" max="5" step="0.05"/>
+      <i class="icon ion-arrow-expand reset" style="cursor: pointer; color:lightgray; font-size:30px;vertical-align:bottom"></i>
+    </section>
+    <div style="text-align:center">Zoom</div>
+    <!-- zoom ------------------------------------------------------------------------------------------------>
+  </div>
+
+  <div class="card">
+      <!-- detalles --------------------------------------------------------------------------------------------->
+      <div class="item item-divider" style="font-size:small">
+        Detalles:
+      </div>
+      <div class="item item-text-wrap" style="font-size:small">
+        <div><span style="color:green">&#187; Espectro:</span> {{ ::itemMeteo.espectro}}</div>
+        <div><span style="color:green">&#187; Fuente:</span> <a href="{{::itemMeteo.urlFuente}}" target="_blank">
+          {{ ::itemMeteo.fuente}}</a>
+        </div>
+        <div><span style="color:green">&#187; Descripción:</span> {{ ::itemMeteo.descripcion }}</div>
+      </div>
+      <!-- fin detalles ----------------------------------------------------------------------------------------->
+    </div>
 
   </ion-content>
 </ion-view>

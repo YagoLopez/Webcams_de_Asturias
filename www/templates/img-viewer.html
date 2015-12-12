@@ -8,16 +8,15 @@
     background-image: url(../img/spinner.gif);
     background-color: transparent;
   }
-
 </style>
 
-<ion-view view-title="Imágen">
+<ion-view view-title="{{itemMeteo.nombre}}">
 
   <ion-header-bar class="bar-subheader bar-light">
     <!-- pinch ------------------------------------------------------------------------------------------------>
     <div style="text-align: center">
       <span>Zoom imagen</span>
-      <img style="width:10%;vertical-align:middle" src="../img/pinch1.png"/>
+      <img style="width:35px;vertical-align:middle" src="../img/pinch1.png"/>
     </div>
     <!-- pinch ------------------------------------------------------------------------------------------------>
   </ion-header-bar>
@@ -33,13 +32,12 @@
       </div>
       <div class="item item-text-wrap" style="font-size:small">
         <!--TODO: hacer un campo en la tabla meteo con la url de creditos-->
-        <div><span style="color:green">&#187; Descripción:</span> {{ ::itemMeteo.descripcion }}</div>
-        <div><span style="color:green">&#187; Categoría:</span> {{ ::itemMeteo.categoria}}</div>
         <div><span style="color:green">&#187; Nombre:</span> {{ ::itemMeteo.nombre}}</div>
-        <div><span style="color:green">&#187; Fuente:</span> <a href="{{::itemMeteo.url}}" target="_blank">
+        <div><span style="color:green">&#187; Fuente:</span> <a href="{{ ::itemMeteo.urlFuente }}" target="_blank">
           {{ ::itemMeteo.fuente}}</a>
         </div>
         <div><span style="color:green">&#187; Tipo imagen:</span> {{ ::itemMeteo.tipoImagen}}</div>
+        <div><span style="color:green">&#187; Descripción:</span> {{ ::itemMeteo.descripcion }}</div>
       </div>
     </div>
     <!-- fin detalles ----------------------------------------------------------------------------------------->

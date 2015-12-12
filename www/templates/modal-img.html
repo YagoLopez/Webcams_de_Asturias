@@ -9,21 +9,20 @@
       </button>
     </div>
   </ion-header-bar>
+  <ion-header-bar class="bar-subheader bar-light">
+    <div style="text-align: center">
+      <span>Zoom imagen</span>
+      <img style="width:10%;vertical-align:middle" src="../img/pinch1.png"/>
+    </div>
+  </ion-header-bar>
 
-  <!--<ion-content>-->
+  <ion-scroll zooming="true" direction="xy" style="/*width: 500px; height: 500px*/">
+    <img ng-src="{{urlImg}}" width="160%" height="160%"/>
+    <div style="text-align:center;font-size:small">
+      <div>{{titulo}}</div>
+      <div>Autor: <a href="{{urlAutor}}" target="_blank">{{autor}}</a></div>
+      <hr/>
+    </div>
+  </ion-scroll>
 
-    <ion-scroll zooming="true" direction="xy" style="/*width: 500px; height: 500px*/">
-      <!--<div style="width: 5000px; height: 5000px; background: url('https://upload.wikimedia.org/wikipedia/commons/a/ad/Europe_geological_map-en.jpg') repeat"></div>-->
-
-      <img ng-src="{{urlImg}}" width="160%" height="160%"/>
-      <div style="text-align:center;font-size:small">
-        <div>{{titulo}}</div>
-        <div>Autor: <a href="{{urlAutor}}" target="_blank">{{autor}}</a></div>
-        <hr/>
-      </div>
-
-
-    </ion-scroll>
-
-  <!--</ion-content>-->
 </ion-modal-view>

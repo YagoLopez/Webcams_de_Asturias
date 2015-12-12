@@ -99,12 +99,11 @@ angular.module('wca.controllers',[])
         });
       };
 
-      //$ionicLoading.hide();
       SLoader.hide();
 
     }).error(function(data, status) {
       $ionicLoading.hide();
-      SPopup.show('Error', 'Fallo obteniendo datos de cámaras<br>SFusionTable.getRemoteData(): '+status)
+      SPopup.show("Error", "Fallo obteniendo datos de cámaras<br>SFusionTable.getRemoteData(): "+status)
     });
 
 })
@@ -381,7 +380,7 @@ angular.module('wca.controllers',[])
 
 })
 // ====================================================================================================================
-.controller('GifPlayerCtrl', function($scope, $window, $interval, $stateParams, TablaMeteo, ItemMeteo, SLoader, $state, $rootScope){
+.controller('GifPlayerCtrl', function($scope, $window, $interval, $stateParams, TablaMeteo, ItemMeteo, SLoader, $state, $rootScope, SPopup){
 
   //TODO: crear servicio de esto
   //TODO: poner imagen gif con loader
@@ -404,30 +403,15 @@ angular.module('wca.controllers',[])
   // Obtiene itemMeteo ------------------------------------------------------------------------------------------------
   $scope.itemMeteo = new ItemMeteo(TablaMeteo.getItemById($stateParams.id_item_meteo));
   console.log('tipo imagen', $scope.itemMeteo.tipoImagen);
-/*
-  if ($scope.itemMeteo.tipoImagen != 'Animación'){
-    SLoader.hide();
-    $state.go('app.img-viewer', {relative:'app.meteo'});
 
-
-
-    $rootScope.$on('$stateChangeSuccess', function(ev, to, toParams, from, fromParams) {
-      $rootScope.previousState = from.name;
-      $rootScope.currentState = to.name;
-      console.log('Previous state:'+$rootScope.previousState);
-      console.log('Current state:'+$rootScope.currentState);
-    });
-
-
-    return;
-  };
-*/
   // inicializaciones -------------------------------------------------------------------------------------------------
   $scope.currentFrame = 0;
   var isGifPlaying = false;
   var timer = null;
   if(angular.equals({}, $scope.itemMeteo)){
     SLoader.hide();
+    SPopup.show('Error', 'No se han podido descargar datos remotos. Comprobar conexión de red');
+    return;
   }
   // Detencion de timer -----------------------------------------------------------------------------------------------
   var killTimer = function(){
@@ -461,16 +445,6 @@ angular.module('wca.controllers',[])
         console.log('currentFrame', $scope.currentFrame);
       });
       var rangeSlider = document.getElementById('levelRange');
-      // zoom ---------------------------------------------------------------------------------------------------------
-      $scope.zoomIn = function(){
-        //var gifContainer = document.getElementById('gifContainer');
-        //gifContainer.className = 'gifZoomed';
-      };// zoomIn
-      $scope.zoomOut = function(){
-        //var gifContainer = document.getElementById('gifContainer');
-        //gifContainer.className = 'gifUnzoomed';
-      };// zoomOut
-      // zoom --------------------------------------------------------------------------------------------------------
       // pan-zoom ---------------------------------------------------------------------------------------------------
       $('.jsgif > canvas').panzoom({
         $zoomIn: $('.zoom-in'),
@@ -546,18 +520,7 @@ angular.module('wca.controllers',[])
           $scope.currentFrame = gifAnimado.get_current_frame();
           console.log('current frame', $scope.currentFrame);
         }, 50); // fin interval
-      };// getposicion
-/*
-      var killTimer = function(){
-        if(angular.isDefined(timer))
-        {
-          $interval.cancel(timer);
-          timer = undefined;
-          isGifPlaying = false;
-          console.log('timer cancelado');
-        }
-      };// killtimer
-*/
+      };// sondear posicion
       $scope.irPosicion = function(posicion){
         gifAnimado.move_to(posicion);
         console.log('currentFrame', $scope.currentFrame);
@@ -573,7 +536,6 @@ angular.module('wca.controllers',[])
       window.clearTimeout();
       $scope.pause();
     });
-
 
 })
 // ====================================================================================================================

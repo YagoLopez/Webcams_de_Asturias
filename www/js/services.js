@@ -228,6 +228,7 @@ angular.module('wca.services',[])
         this.url = arr[0][6];
         this.idCategoria= arr[0][7];
         this.tipoImagen= arr[0][8];
+        this.urlFuente = arr[0][9];
       }
     }
     return ItemMeteo;
@@ -236,7 +237,10 @@ angular.module('wca.services',[])
   .factory('SLoader', function($ionicLoading){
     var spinnerIco = "<ion-spinner icon='lines' class='spinner-calm'></ion-spinner><br/>";
     var contenidoLoader = "Cargando datos...";
-    var show = function(){
+    var show = function(texto){
+      if(texto){
+        contenidoLoader = texto;
+      }
       $ionicLoading.show({template: contenidoLoader, noBackdrop:true});
     };
     var hide = function(){

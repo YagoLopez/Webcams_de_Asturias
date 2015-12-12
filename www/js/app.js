@@ -76,7 +76,6 @@ angular.module('wca', ['ionic', 'wca.controllers', 'wca.services',
   views: {
   'tab-mosaico': {
     templateUrl: 'templates/mosaico.html'
-    //controller: 'MosaicoCtrl'
     }
   }
   })
