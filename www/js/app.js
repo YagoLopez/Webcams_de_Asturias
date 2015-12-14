@@ -66,7 +66,6 @@ angular.module('wca', ['ionic', 'wca.controllers', 'wca.services',
   views: {
     'tab-listado': {
     templateUrl: 'templates/listado.html'
-    //controller:'ListadoCtrl'
     }
   }
   })

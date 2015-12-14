@@ -5,7 +5,8 @@ angular.module('wca.services',[])
 
     var API_ENDPOINT = 'https://www.googleapis.com/fusiontables/v2/query';
     var API_KEY = 'AIzaSyBsdouSTimjrC2xHmbGgOt8VfbLBWc9Gps';
-    var TABLE_ID = '1gX5maFbqFyRziZiUYlpOBYhcC1v9lGkKqCXvZREF';  //TODO: tabla webcams. Cambiar nombre
+    //var TABLE_ID = '1gX5maFbqFyRziZiUYlpOBYhcC1v9lGkKqCXvZREF';
+    var TABLE_ID = '1ANK5N8w-qaKyyXKJ09jOM110q2FXDinKa4YNxyWj';
 
     var getRemoteData = function( sql_query_string ) {
       var url = API_ENDPOINT+ '?sql=' +sql_query_string+ '&key=' +API_KEY+'&callback=JSON_CALLBACK';

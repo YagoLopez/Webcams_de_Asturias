@@ -387,18 +387,18 @@ angular.module('wca.controllers',[])
   SLoader.show();
 
   // Calculo de dimensiones de ventana al redimensionar ---------------------------------------------------------------
-  $scope.calculateDimensions = function(gesture) {
-    $scope.dev_width = $window.innerWidth;
-    $scope.dev_height = $window.innerHeight;
-    console.log('dev_width', $scope.dev_width);
-    console.log('dev_height', $scope.dev_height);
-  }
-  angular.element($window).bind('resize', function(){
-    $scope.$apply(function() {
-      $scope.calculateDimensions();
-    })
-  });
-  $scope.calculateDimensions();
+  //$scope.calculateDimensions = function(gesture) {
+  //  $scope.dev_width = $window.innerWidth;
+  //  $scope.dev_height = $window.innerHeight;
+  //  console.log('dev_width', $scope.dev_width);
+  //  console.log('dev_height', $scope.dev_height);
+  //}
+  //angular.element($window).bind('resize', function(){
+  //  $scope.$apply(function() {
+  //    $scope.calculateDimensions();
+  //  })
+  //});
+  //$scope.calculateDimensions();
 
   // Obtiene itemMeteo ------------------------------------------------------------------------------------------------
   $scope.itemMeteo = new ItemMeteo(TablaMeteo.getItemById($stateParams.id_item_meteo));
