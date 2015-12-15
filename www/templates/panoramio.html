@@ -1,4 +1,4 @@
-<ion-view cache-view="false" view-title="Fotos">
+<ion-view view-title="Fotos">
 <ion-content>
 
   <style>
@@ -21,6 +21,7 @@
   }
   .panoramio-wapi-tos {
     text-align: center;
+    width:90%;
   }
   </style>
 
@@ -28,13 +29,12 @@
 
       <div id="divPanoramio"></div>
       <div id="divCreditos"></div>
-      <div>Zona: {{lugar}}, {{concejo}}</div>
+      <div>Zona: {{ ::cam.lugar }}, {{ ::cam.concejo }}</div>
       <!--<div ng-show="!hayFotos" style="text-align: center">-->
       <!--No se han encontrado fotos de Panoramio en los alrededores de la ubicación de la cámara-->
       <!--</div>-->
     </div>
 
-    <!--<section layout="row" layout-sm="column" layout-align="center center" layout-wrap style="width:100%">-->
     <div layout="row" layout-align="space-around center" style="padding:6%">
       <md-button class="md-raised md-primary" ng-click="prevPhoto()"
                  style="width:40%;height:40px" ng-disabled="fotos.getAtStart()">
@@ -48,7 +48,6 @@
         Siguiente
       </md-button>
     </div>
-  <!--</section>-->
 
     <div class="container">
       <md-button class="md-raised md-primary" ng-click="showModal()" style="width:80%;height:40px">

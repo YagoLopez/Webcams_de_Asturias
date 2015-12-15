@@ -3,9 +3,11 @@
 //TODO: hacer una tabla propia para las categorias en fusion tables y hacer join de la tabla de webcams y la de categorias
 //TODO: Hacer tabla para concejos
 //TODO: Morphing icono backwards
+//TODO: recordar que el codigo que se encuentra en el evento on.afterviewEnter se ejecuta siempre. Probar a quitar la cache de las vistas que usan este icono a ver que pasa
 
 angular.module('wca.controllers',[])
 
+// ====================================================================================================================
 .controller('AppCtrl', function($scope) {
 
   //// With the new view caching in Ionic, Controllers are only called
@@ -16,19 +18,18 @@ angular.module('wca.controllers',[])
   ////});
 
   })
-
-.controller('TabsCtrl', function($scope, $stateParams, $ionicLoading, $rootScope, $ionicFilterBar,
+// ====================================================================================================================
+  .controller('TabsCtrl', function($scope, $stateParams, SLoader, $rootScope, $ionicFilterBar,
                                  SFusionTable, $filter, $ionicScrollDelegate, SPopup, $ionicNavBarDelegate){
 
-    // mostrar loader
-    //var icono_spinner = "<ion-spinner icon='lines' class='spinner-calm'></ion-spinner><br/>";
-    var templateLoader = "Cargando datos...";
-    $ionicLoading.show({template:templateLoader, noBackdrop:true});
+    //var templateLoader = "Cargando datos...";
+    //$ionicLoading.show({template:templateLoader, noBackdrop:true});
+    SLoader.show();
     // Guarda parametros url en variables temporales;
     var concejo = $stateParams.concejo || '';
     var idCategoria = $stateParams.idCategoria || '';
 
-    //TODO: revisar esto
+    //TODO: revisar esto. hacer un servicio para no usar rootscope?
     $rootScope.mostrarLupa = true;
     // elimina search bar si estuviera activada al mostrar la vista
     //if ($rootScope.filterBarInstance)
@@ -43,9 +44,10 @@ angular.module('wca.controllers',[])
     }
 
     //TODO: cachear las imagenes
-    var sqlQuery = 'SELECT Lugar,Concejo,Imagen,Categoria,rowid FROM '+ SFusionTable.TABLE_ID;
+    var sqlQuery = 'SELECT Lugar,Concejo,Imagen,Categoria,rowid,latitud,longitud FROM '+ SFusionTable.TABLE_ID;
     SFusionTable.getRemoteData(sqlQuery).success(function(data){
 
+      console.log('data', data);
       // -------------------------------------------------------------------------------------------------------------
       // FILTRO 1: filtra las cams por parametros de url: concejo y categoria
       // -------------------------------------------------------------------------------------------------------------
@@ -98,29 +100,30 @@ angular.module('wca.controllers',[])
         });
       };
 
-      $ionicLoading.hide();
+      SLoader.hide();
 
     }).error(function(data, status) {
       $ionicLoading.hide();
-      SPopup.show('Error', 'Fallo obteniendo datos de cámaras<br>SFusionTable.getRemoteData(): '+status)
+      SPopup.show("Error", "Fallo obteniendo datos de cámaras<br>SFusionTable.getRemoteData(): "+status)
     });
 
-})// TabsCtrl
-
+})
+// ====================================================================================================================
 .controller('MapaCtrl', function($scope, $stateParams, SMapa, $rootScope){
 
   $rootScope.mostrarLupa = false;
   $scope.$on('$ionicView.afterEnter', function() {
-    $scope.lugar = $stateParams.lugar;
-    $scope.concejo = $stateParams.concejo;
+    //$scope.lugar = $stateParams.lugar;
+    //$scope.concejo = $stateParams.concejo;
     var mapa = SMapa.crear(document.getElementById('mapa'));
     var layer = SMapa.creaFusionTableLayer().setMap(mapa);
 
-    if(!$rootScope.lat || !$rootScope.lng){
+    //if(!$rootScope.cam.lat || !$rootScope.cam.lng){
+    if(!$rootScope.cam){
       mapa.setCenter(SMapa.OVIEDO);
       mapa.setZoom(8);
     } else {
-        mapa.setCenter( {lat: $rootScope.lat, lng: $rootScope.lng} );
+        mapa.setCenter( {lat: $rootScope.cam.lat, lng: $rootScope.cam.lng} );
         mapa.setZoom(13);
     }// else
   }); // $scope.on
@@ -151,8 +154,8 @@ angular.module('wca.controllers',[])
   */
   // Fin Geolocalizacion ----------------------------------------------------------------------------------------------
 
-}) // fin MapaGlobalCtrl
-
+})
+// ====================================================================================================================
 .controller('MapaGlobalCtrl', function($scope, $rootScope, SMapa, SFusionTable, SPopup){
     var layer = null;
     var mapa = null;
@@ -207,12 +210,12 @@ angular.module('wca.controllers',[])
     mapa.setCenter(SMapa.OVIEDO);
     mapa.setZoom(zoomLevel+1);
 
-}) //mapaglobalctrl
-
+})
+// ====================================================================================================================
 .controller('PanoramioCtrl', function($scope, $stateParams, SMapa, $ionicModal, $rootScope){
 
-    var lat = $rootScope.lat;
-    var lng = $rootScope.lng;
+    var lat = $rootScope.cam.lat;
+    var lng = $rootScope.cam.lng;
     var OFFSET = 0.002;
     var hayFotoSiguiente = function(){
       return !FotosPanoramio.getAtEnd();
@@ -229,8 +232,6 @@ angular.module('wca.controllers',[])
     FotosPanoramio.setPosition(0);
 
     $rootScope.mostrarLupa = false;
-    $scope.lugar = $stateParams.lugar;
-    $scope.concejo = $stateParams.concejo;
     $scope.fotos = FotosPanoramio;
     $scope.nextPhoto = function(){
       if (hayFotoSiguiente())
@@ -244,7 +245,7 @@ angular.module('wca.controllers',[])
   //TODO: avisar cuando no hay fotos panoramio
 
     // DIALOGO MODAL ----------------------------------------------------------------------------------------------
-    $ionicModal.fromTemplateUrl('templates/modal-img.html', {
+    $ionicModal.fromTemplateUrl('templates/modal-panoramio.html', {
       scope: $scope,
       animation: 'scale-in'
     }).then(function(modal) {
@@ -265,10 +266,10 @@ angular.module('wca.controllers',[])
     };
     // FIN DIALOGO MODAL ----------------------------------------------------------------------------------------------
 
-}) // panoramio ctrl
-
+})
+// ====================================================================================================================
 .controller('DetalleCtrl', function($scope, $stateParams, $ionicModal, SMapa, SClima, $filter, $rootScope,
-                                    SPopup, SWikipedia, $ionicSlideBoxDelegate, $ionicPopover){
+                                    SPopup, SWikipedia, $ionicSlideBoxDelegate, $ionicPopover, Cam, Cam2){
 
     $scope.rowid = $stateParams.rowid;
     $rootScope.mostrarLupa = false;
@@ -278,50 +279,44 @@ angular.module('wca.controllers',[])
       return;
     };
 
-    var cam = $filter('filter')($rootScope.items, function(cam) {
+    var datosCam = $filter('filter')($rootScope.items, function(cam) {
       return cam[4] == $scope.rowid;
     });
-    $scope.lugar = cam[0][0];
-    $scope.concejo = cam[0][1];
-    $scope.imagen = cam[0][2];
-    $scope.categoria = cam[0][3];
+
+    //TODO: es cam singleton??? Si no lo es hacerlo asi
+    //Cam.Constructor(datosCam);
+    $rootScope.cam = new Cam2(datosCam);
+    console.log('rootscope.cam', $rootScope.cam);
+
     // CLIMA ---------------------------------------------------------------------------------------------------------
     var div = document.getElementById('void');
-    SMapa.hallaLatLng(div, $scope.lugar, $scope.concejo, function(coords){
-
-      //TODO: no usar rootscope. Crear un servicio para almacenar lat, lng, lugar, concejo y compartir entre controllers
-      $rootScope.lat = coords.lat();
-      $rootScope.lng = coords.lng();
-
-      SClima.getData( $rootScope.lat, $rootScope.lng ).success(function(climadata){
-        //console.log('datos de clima', climadata);
-        $scope.descripcion = climadata.weather[0].description;
-        $scope.temp = climadata.main.temp;
-        $scope.presion = climadata.main.pressure;
-        $scope.humedad = climadata.main.humidity;
-        $scope.nubosidad = climadata.clouds.all;
-        $scope.velocidadViento = climadata.wind.speed;
-        $scope.direccionViento = climadata.wind.deg;
-        //volumen precipitaciones ultimas 3 horas
-        //$scope.precipitacion = climadata.rain['3h'];
-        //url icono: http://openweathermap.org/img/w/10n.png
-        $scope.iconoUrl = 'http://openweathermap.org/img/w/'+climadata.weather[0].icon+'.png' ;
-
-      }).error(function(status){
-        SPopup.show('Error', 'SClima.getData(): '+status)
-      });
-    });// hallalatlng
+    SClima.getData( $rootScope.cam.lat, $rootScope.cam.lng ).success(function(climadata){
+      console.log('datos de clima', climadata);
+      $scope.descripcion = climadata.weather[0].description;
+      $scope.temp = climadata.main.temp;
+      $scope.presion = climadata.main.pressure;
+      $scope.humedad = climadata.main.humidity;
+      $scope.nubosidad = climadata.clouds.all;
+      $scope.velocidadViento = climadata.wind.speed;
+      $scope.direccionViento = climadata.wind.deg;
+      //volumen precipitaciones ultimas 3 horas
+      //$scope.precipitacion = climadata.rain['3h'];
+      //url icono: http://openweathermap.org/img/w/10n.png
+      $scope.iconoUrl = 'http://openweathermap.org/img/w/'+climadata.weather[0].icon+'.png' ;
+    }).error(function(status){
+      SPopup.show('Error', 'SClima.getData(): '+status)
+    });
     // FIN CLIMA -----------------------------------------------------------------------------------------------------
 
     // WIKIPEDIA -----------------------------------------------------------------------------------------------------
-    SWikipedia.info($scope.concejo).success(function(data){
+    SWikipedia.info($rootScope.cam.concejo).success(function(data){
       var pageid = data.query.pageids[0];
       if(pageid) {
         $scope.infoConcejo = data.query.pages[pageid].extract;
         //console.log('extract', $scope.infoConcejo);
       }
     }).error(function(status){
-      console.warn(status);
+      $scope.infoConcejo = 'No se ha podido obtener información remota: '+status;
     });
     // FIN WIKIPEDIA -------------------------------------------------------------------------------------------------
 
@@ -346,15 +341,15 @@ angular.module('wca.controllers',[])
       $scope.popover = popover;
     });
 
-})// DetalleCtrl
-
+})
+// =====================================================================================================
 .controller('StreetViewCtrl', function($scope, SMapa, $stateParams, $rootScope, SPopup){
 
-  $scope.lugar = $stateParams.lugar || '';
-  $scope.concejo = $stateParams.concejo || '';
+  //$scope.lugar = $stateParams.lugar || '';
+  //$scope.concejo = $stateParams.concejo || '';
   $rootScope.mostrarLupa = false;
 
-  var coords = {lat: $rootScope.lat, lng: $rootScope.lng};
+  var coords = {lat: $rootScope.cam.lat, lng: $rootScope.cam.lng};
 
   if(!coords.lat || !coords.lng) {
     SPopup.show('Aviso', 'Faltan coordenadas geográficas');
@@ -363,7 +358,6 @@ angular.module('wca.controllers',[])
 
   $scope.$on('$ionicView.afterEnter', function() {
     var div = document.getElementById('street-view');
-    //SMapa.hallaLatLng(div, $scope.lugar, $scope.concejo, function (coords) {
       var streetViewService = new google.maps.StreetViewService();
       streetViewService.getPanoramaByLocation(coords, SMapa.RADIO_BUSQUEDA, function (data, status) {
         if (status == google.maps.StreetViewStatus.OK) {
@@ -374,70 +368,75 @@ angular.module('wca.controllers',[])
             'getPanoramaByLocation(): '+status);
         }
       })
-    //})//hallaLatLng
   })//$scope.on
 
-})//StreetViewCtrl
+})
+// ====================================================================================================================
+.controller('GifPlayerCtrl', function($scope, $window, $interval, $stateParams, TablaMeteo, ItemMeteo, SLoader, $state, $rootScope, SPopup){
 
-.controller('SatSpCtrl', function($scope, $http, $window){
-}) // SatSpCtrl
+  //TODO: crear servicio de esto
+  //TODO: poner imagen gif con loader
+  SLoader.show();
 
-.controller('GifPlayerCtrl', function($scope, $window, $interval, $exceptionHandler){
+  // Calculo de dimensiones de ventana al redimensionar ---------------------------------------------------------------
+  //$scope.calculateDimensions = function(gesture) {
+  //  $scope.dev_width = $window.innerWidth;
+  //  $scope.dev_height = $window.innerHeight;
+  //  console.log('dev_width', $scope.dev_width);
+  //  console.log('dev_height', $scope.dev_height);
+  //}
+  //angular.element($window).bind('resize', function(){
+  //  $scope.$apply(function() {
+  //    $scope.calculateDimensions();
+  //  })
+  //});
+  //$scope.calculateDimensions();
 
-    //TODO: añadir loader
-    //var urlGif = 'http://neige.meteociel.fr/satellite/anim_ir_color.gif';
-    //var urlGifCors = 'http://localhost:8100/gif/anim_ir_color.gif';
-    //var urlGifCors2 = 'http://cors.io/?u=http://neige.meteociel.fr/satellite/anim_ir_color.gif';
-    //$scope.calculateDimensions = function(gesture) {
-    //  $scope.dev_width = $window.innerWidth;
-    //  $scope.dev_height = $window.innerHeight;
-    //}
-    //
-    //angular.element($window).bind('resize', function(){
-    //  $scope.$apply(function() {
-    //    $scope.calculateDimensions();
-    //  })
-    //});
-    //
-    //$scope.calculateDimensions();
+  // Obtiene itemMeteo ------------------------------------------------------------------------------------------------
+  $scope.itemMeteo = new ItemMeteo(TablaMeteo.getItemById($stateParams.id_item_meteo));
+  console.log('tipo imagen', $scope.itemMeteo.tipoImagen);
 
+  // inicializaciones -------------------------------------------------------------------------------------------------
+  $scope.currentFrame = 0;
+  var isGifPlaying = false;
+  var timer = null;
+  if(angular.equals({}, $scope.itemMeteo)){
+    SLoader.hide();
+    SPopup.show('Error', 'No se han podido descargar datos remotos. Comprobar conexión de red');
+    return;
+  }
+  // Detencion de timer -----------------------------------------------------------------------------------------------
+  var killTimer = function(){
+    if(angular.isDefined(timer))
+    {
+      $interval.cancel(timer);
+      timer = undefined;
+      isGifPlaying = false;
+      console.log('timer cancelado');
+    }
+  };// killtimer
 
-    $scope.$on('$ionicView.afterEnter', function(){
-
+  // Evento ionicView.afterEnter --------------------------------------------------------------------------------------
+  $scope.$on('$ionicView.afterEnter', function(){
+      // Constructor de gif en base a parametros ----------------------------------------------------------------------
       var gifAnimado = new SuperGif({
         gif: document.getElementById('gif'),
         loop_mode: 0,
         draw_while_loading: 1
+        //on_end: SLoader.hide()
         //max_width: $scope.dev_width
       });
-
-      // carga gif remoto
+      // Carga gif animado remoto y lo descompone en fotogramas para procesarlo ---------------------------------------
       gifAnimado.load(function(){
         $scope.totalFrames = gifAnimado.get_length();
         $scope.currentFrame = gifAnimado.get_current_frame();
         $scope.gifAnimado = gifAnimado;
         $scope.$apply();
-        //console.log('canvas width', canvas.width);
+        SLoader.hide();
         console.log('gifAnimado', gifAnimado);
         console.log('currentFrame', $scope.currentFrame);
       });
-
-      // inicializaciones
-      $scope.currentFrame = 0;
-      var isGifPlaying = false;
-      var timer = null;
       var rangeSlider = document.getElementById('levelRange');
-
-      // zoom --------------------------------------------------------------------------------------------------------
-      $scope.zoomIn = function(){
-        //var gifContainer = document.getElementById('gifContainer');
-        //gifContainer.className = 'gifZoomed';
-      };// zoomIn
-      $scope.zoomOut = function(){
-        //var gifContainer = document.getElementById('gifContainer');
-        //gifContainer.className = 'gifUnzoomed';
-      };// zoomOut
-      // zoom --------------------------------------------------------------------------------------------------------
       // pan-zoom ---------------------------------------------------------------------------------------------------
       $('.jsgif > canvas').panzoom({
         $zoomIn: $('.zoom-in'),
@@ -449,8 +448,7 @@ angular.module('wca.controllers',[])
         //startTransform: 'scale(0.5)'
       }).panzoom('zoom');
       $('.jsgif > canvas').panzoom('zoom', 1.0, { silent: true });
-      // pan-zoom ---------------------------------------------------------------------------------------------------
-
+      // player controls ----------------------------------------------------------------------------------------------
       $scope.playPause = function(){
         if (isGifPlaying) {
           $scope.pause();
@@ -459,7 +457,7 @@ angular.module('wca.controllers',[])
         }
       };
       $scope.play = function(){
-        killTimer;
+        killTimer();
         isGifPlaying = true;
         gifAnimado.play();
         sondearPosicion();
@@ -508,36 +506,67 @@ angular.module('wca.controllers',[])
         $scope.currentFrame = gifAnimado.get_current_frame();
         console.log('current frame', gifAnimado.get_current_frame());
       }
-
       var sondearPosicion = function(){
         timer = $interval( function(){
           rangeSlider.value = gifAnimado.get_current_frame();
           $scope.currentFrame = gifAnimado.get_current_frame();
-          //console.log('current frame', $scope.currentFrame);
+          console.log('current frame', $scope.currentFrame);
         }, 50); // fin interval
-      };// getposicion
-
-      var killTimer = function(){
-        if(angular.isDefined(timer))
-        {
-          $interval.cancel(timer);
-          timer = undefined;
-          isGifPlaying = false;
-          console.log('timer cancelado');
-        }
-      };// killtimer
-
+      };// sondear posicion
       $scope.irPosicion = function(posicion){
         gifAnimado.move_to(posicion);
         console.log('currentFrame', $scope.currentFrame);
         console.log('valor', posicion);
       };//irposicion
+      // player controls ----------------------------------------------------------------------------------------------
 
     }); // scope.on
 
-// WHAMMY -----------------------------------------------------------------------------------------------------------------
+  // Evento destroy ---------------------------------------------------------------------------------------------------
+  $scope.$on("$destroy",function(){
+      console.log('ondestroy -> pause animation');
+      window.clearTimeout();
+      $scope.pause();
+    });
 
+})
+// ====================================================================================================================
+.controller('MeteoCtrl', function($scope, $rootScope, SFusionTable, SPopup, TablaMeteo, SLoader){
 
-  }) // meteo player ctrl
+  $rootScope.mostrarLupa = false;
+  var showError = function(status){
+    SPopup.show(
+      'Error', ' MeteoCtrl: Compruebe conexión de red. Estado: '+status );
+  };
+  var queryString = 'SELECT * FROM '+TablaMeteo.FUSION_TABLE_ID;
+
+  SLoader.show();
+
+  SFusionTable.getRemoteData(queryString).success(
+    function(data){
+      if(!data.rows){
+        SLoader.hide();
+        showError('No data');
+        return;
+      }
+      TablaMeteo.setData(data.rows);
+      $scope.getItemsByCategoriaId = function(idCategoria){
+        return TablaMeteo.getItemsByCategoriaId(idCategoria);
+      }
+      SLoader.hide();
+    }//success
+  ).error(function(status){
+    SLoader.hide();
+  });//error
+
+})
+// ====================================================================================================================
+.controller('ImgViewerCtrl', function($scope, $stateParams, ItemMeteo, TablaMeteo){
+    $scope.itemMeteo = new ItemMeteo( TablaMeteo.getItemById($stateParams.id_item_meteo) );
+    $scope.$on('$ionicView.afterEnter', function(){
+      document.getElementById('gifScroll').style.background = 'none';
+    });
+})
+// ====================================================================================================================
 
 ; // FIN

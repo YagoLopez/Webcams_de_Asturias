@@ -63,6 +63,7 @@ angular.module('wca', ['ionic', 'wca.controllers', 'wca.services',
 // -------------------------------------------------------------------------------------------------------------------
   .state('app.tabs.listado', {
   url: '/listado',
+  cache: false,
   views: {
     'tab-listado': {
     templateUrl: 'templates/listado.html'
@@ -72,6 +73,7 @@ angular.module('wca', ['ionic', 'wca.controllers', 'wca.services',
 // -------------------------------------------------------------------------------------------------------------------
   .state('app.tabs.mosaico', {
   url: '/mosaico',
+  cache: false,
   views: {
   'tab-mosaico': {
     templateUrl: 'templates/mosaico.html'
@@ -80,7 +82,7 @@ angular.module('wca', ['ionic', 'wca.controllers', 'wca.services',
   })
 // -------------------------------------------------------------------------------------------------------------------
   .state('app.mapa', {
-    url: '/mapa?lugar&concejo',
+    url: '/mapa',
     cache: false,
     views: {
       'menuContent': {
@@ -102,7 +104,7 @@ angular.module('wca', ['ionic', 'wca.controllers', 'wca.services',
   })
 // -------------------------------------------------------------------------------------------------------------------
   .state('app.streetview', {
-    url: '/streetview?lugar&concejo',
+    url: '/streetview',
     cache: false,
     views: {
       'menuContent': {
@@ -113,7 +115,8 @@ angular.module('wca', ['ionic', 'wca.controllers', 'wca.services',
   })
 // -------------------------------------------------------------------------------------------------------------------
   .state('app.panoramio', {
-    url: '/panoramio?lugar&concejo',
+    url: '/panoramio',
+    cache:false,
     views: {
       'menuContent': {
         templateUrl: 'templates/panoramio.html',

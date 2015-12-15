@@ -212,10 +212,14 @@ angular.module('wca.controllers',[])
 
 })
 // ====================================================================================================================
-.controller('PanoramioCtrl', function($scope, $stateParams, SMapa, $ionicModal, $rootScope){
+.controller('PanoramioCtrl', function($scope, $stateParams, SMapa, $ionicModal, $rootScope, SPopup){
 
-    var lat = $rootScope.lat;
-    var lng = $rootScope.lng;
+    if(!$rootScope.cam){
+      SPopup.show('Error', 'Faltan datos. Probar otra opción de Menú');
+      return;
+    }
+    var lat = $rootScope.cam.lat;
+    var lng = $rootScope.cam.lng;
     var OFFSET = 0.002;
     var hayFotoSiguiente = function(){
       return !FotosPanoramio.getAtEnd();
@@ -232,8 +236,6 @@ angular.module('wca.controllers',[])
     FotosPanoramio.setPosition(0);
 
     $rootScope.mostrarLupa = false;
-    $scope.lugar = $stateParams.lugar;
-    $scope.concejo = $stateParams.concejo;
     $scope.fotos = FotosPanoramio;
     $scope.nextPhoto = function(){
       if (hayFotoSiguiente())
@@ -247,7 +249,7 @@ angular.module('wca.controllers',[])
   //TODO: avisar cuando no hay fotos panoramio
 
     // DIALOGO MODAL ----------------------------------------------------------------------------------------------
-    $ionicModal.fromTemplateUrl('templates/modal-img.html', {
+    $ionicModal.fromTemplateUrl('templates/modal-panoramio.html', {
       scope: $scope,
       animation: 'scale-in'
     }).then(function(modal) {
@@ -347,31 +349,25 @@ angular.module('wca.controllers',[])
 // =====================================================================================================
 .controller('StreetViewCtrl', function($scope, SMapa, $stateParams, $rootScope, SPopup){
 
-  $scope.lugar = $stateParams.lugar || '';
-  $scope.concejo = $stateParams.concejo || '';
   $rootScope.mostrarLupa = false;
 
-  var coords = {lat: $rootScope.lat, lng: $rootScope.lng};
-
-  if(!coords.lat || !coords.lng) {
-    SPopup.show('Aviso', 'Faltan coordenadas geográficas');
+  if(!$rootScope.cam) {
+    SPopup.show('Error', 'Faltan datos. Probar otra opción de menú');
     return;
   }
+  var coords = {lat: $rootScope.cam.lat, lng: $rootScope.cam.lng};
 
   $scope.$on('$ionicView.afterEnter', function() {
     var div = document.getElementById('street-view');
-    //SMapa.hallaLatLng(div, $scope.lugar, $scope.concejo, function (coords) {
       var streetViewService = new google.maps.StreetViewService();
       streetViewService.getPanoramaByLocation(coords, SMapa.RADIO_BUSQUEDA, function (data, status) {
         if (status == google.maps.StreetViewStatus.OK) {
           SMapa.creaStreetView(div, data.location.latLng);
-          //SMapa.creaStreetView( div, {lat:$rootScope.lat, lng:$rootScope.lng} );
         } else {
           SPopup.show('Aviso', 'Panorama StreetView no disponible en esta ubicación<br>' +
             'getPanoramaByLocation(): '+status);
         }
       })
-    //})//hallaLatLng
   })//$scope.on
 
 })
