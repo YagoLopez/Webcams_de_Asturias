@@ -19,7 +19,7 @@ angular.module('wca.controllers',[])
 
   })
 // ====================================================================================================================
-  .controller('TabsCtrl', function($scope, $stateParams, SLoader, $rootScope, $ionicFilterBar,
+.controller('TabsCtrl', function($scope, $stateParams, SLoader, $rootScope, $ionicFilterBar,
                                  SFusionTable, $filter, $ionicScrollDelegate, SPopup, $ionicNavBarDelegate){
 
     //var templateLoader = "Cargando datos...";
@@ -273,7 +273,7 @@ angular.module('wca.controllers',[])
 })
 // ====================================================================================================================
 .controller('DetalleCtrl', function($scope, $stateParams, $ionicModal, SMapa, SClima, $filter, $rootScope,
-                                    SPopup, SWikipedia, $ionicSlideBoxDelegate, $ionicPopover, Cam, Cam2){
+                                    SPopup, SWikipedia, $ionicSlideBoxDelegate, $ionicPopover, Cam){
 
     $scope.rowid = $stateParams.rowid;
     $rootScope.mostrarLupa = false;
@@ -288,8 +288,7 @@ angular.module('wca.controllers',[])
     });
 
     //TODO: es cam singleton??? Si no lo es hacerlo asi
-    //Cam.Constructor(datosCam);
-    $rootScope.cam = new Cam2(datosCam);
+    $rootScope.cam = new Cam(datosCam);
     console.log('rootscope.cam', $rootScope.cam);
 
     // CLIMA ---------------------------------------------------------------------------------------------------------
@@ -372,11 +371,11 @@ angular.module('wca.controllers',[])
 
 })
 // ====================================================================================================================
-.controller('GifPlayerCtrl', function($scope, $window, $interval, $stateParams, TablaMeteo, ItemMeteo, SLoader, $state, $rootScope, SPopup){
+.controller('GifPlayerCtrl', function($scope, $window, $interval, $stateParams, TablaMeteo, ItemMeteo, SLoader,
+                                      $state, $rootScope, SPopup){
 
   //TODO: crear servicio de esto
-  //TODO: poner imagen gif con loader
-  SLoader.show();
+  SLoader.showWithBackdrop();
 
   // Calculo de dimensiones de ventana al redimensionar ---------------------------------------------------------------
   //$scope.calculateDimensions = function(gesture) {

@@ -237,17 +237,28 @@ angular.module('wca.services',[])
   .factory('SLoader', function($ionicLoading){
     var spinnerIco = "<ion-spinner icon='lines' class='spinner-calm'></ion-spinner><br/>";
     var contenidoLoader = "Cargando datos...";
+
     var show = function(texto){
       if(texto){
         contenidoLoader = texto;
       }
-      $ionicLoading.show({template: contenidoLoader, noBackdrop:true});
+      $ionicLoading.show({template: contenidoLoader, noBackdrop: true});
     };
+
+    var showWithBackdrop = function(texto){
+      if(texto){
+        contenidoLoader = texto;
+      }
+      $ionicLoading.show({template: contenidoLoader, noBackdrop: false});
+    };
+
     var hide = function(){
       $ionicLoading.hide();
     };
+
     return {
       show: show,
+      showWithBackdrop: showWithBackdrop,
       hide: hide
     }
 })
@@ -261,38 +272,7 @@ angular.module('wca.services',[])
 })
 // ====================================================================================================================
   .factory('Cam', function(){
-    var lugar;
-    var concejo;
-    var imagen;
-    var categoria;
-    var id;
-    var lat;
-    var lng;
-    var Constructor = function(arrayDatosCam){
-      lugar = arrayDatosCam[0][0];
-      concejo = arrayDatosCam[0][1];
-      imagen = arrayDatosCam[0][2];
-      categoria = arrayDatosCam[0][3];
-      id = arrayDatosCam[0][4];
-      lat = arrayDatosCam[0][5];
-      lng = arrayDatosCam[0][6];
-      console.log('lugar de cam', lugar);
-
-    };
-    return {
-      lugar: lugar,
-      concejo: concejo,
-      imagen: imagen,
-      categoria: categoria,
-      id: id,
-      lat: lat,
-      lng: lng,
-      Constructor: Constructor
-    }
-  })
-// ====================================================================================================================
-  .factory('Cam2', function(){
-    function Cam2(arrayDatosCam){
+    function Cam(arrayDatosCam){
       if(arrayDatosCam) {
         this.lugar = arrayDatosCam[0][0];
         this.concejo = arrayDatosCam[0][1];
@@ -303,9 +283,8 @@ angular.module('wca.services',[])
         this.lng = arrayDatosCam[0][6];
       }//if
     }
-    return Cam2;
+    return Cam;
   })
-
 // ====================================================================================================================
 
 ; // FIN

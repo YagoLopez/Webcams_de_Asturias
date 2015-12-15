@@ -62,7 +62,7 @@ obtener los datos binarios por javascript de la cache
 
   <div class="card">
     <!-- range slider ---------------------------------------------------------------------------------------->
-    <label class="range range-assertive" style="padding: 0 3%;">
+    <label class="range range-assertive" style="padding: 0 3%;" ng-click="pause()">
     <input id="levelRange" type="range" min="0" max="{{ gifAnimado.get_length()-1 }}"
            value="{{ currentFrame }}" ng-model="currentFrame" ng-change="irPosicion(currentFrame)"
            style="margin:0"/>
