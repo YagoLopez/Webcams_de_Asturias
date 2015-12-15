@@ -70,36 +70,11 @@ angular.module('wca.services',[])
       return mapa;
     }; // crear()
 
-/*
-    var creaMapa = function (domElement, filtro){
-      var mapa = new google.maps.Map(domElement,  {
-        mapTypeControl: true,
-        mapTypeControlOptions: { style: google.maps.MapTypeControlStyle.DROPDOWN_MENU },
-        mapTypeId: google.maps.MapTypeId.TERRAIN
-      });
-      layer = new google.maps.FusionTablesLayer({
-        map: mapa,
-        //heatmap: { enabled: false },
-        query: {
-          select: 'col7',
-          from: SFusionTable.TABLE_ID,
-          where: filtro
-        },
-        options: {
-          styleId: 6,
-          templateId: 8
-        }
-      });
-      return mapa;
-    }; // creaMapa()
-*/
-
     var creaFusionTableLayer = function(filtroMarkers){
       var query = { select: 'col7', from: SFusionTable.TABLE_ID, where: filtroMarkers };
       var options = { styleId: 6, templateId: 8 };
-      //noinspection UnnecessaryLocalVariableJS
       var layer = new google.maps.FusionTablesLayer({
-        //heatmap: { enabled: false },
+        heatmap: { enabled: false },
         query: query,
         options: options
       });
@@ -109,7 +84,6 @@ angular.module('wca.services',[])
     return {
       OVIEDO: OVIEDO,
       RADIO_BUSQUEDA: RADIO_BUSQUEDA,
-      //creaMapa: creaMapa,
       hallaLatLng: hallaLatLng,
       creaStreetView: creaStreetView,
       crear: crear,

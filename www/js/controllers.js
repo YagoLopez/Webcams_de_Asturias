@@ -4,6 +4,7 @@
 //TODO: Hacer tabla para concejos
 //TODO: Morphing icono backwards
 //TODO: recordar que el codigo que se encuentra en el evento on.afterviewEnter se ejecuta siempre. Probar a quitar la cache de las vistas que usan este icono a ver que pasa
+//TODO: hacer perfilado, ver como se comporta la memoria y el procesador al ejecutar la app
 
 angular.module('wca.controllers',[])
 
@@ -164,6 +165,7 @@ angular.module('wca.controllers',[])
     $scope.checked = null;
 
     var sqlQueryConcejos = 'SELECT Concejo FROM '+SFusionTable.TABLE_ID+' GROUP BY Concejo';
+
     SFusionTable.getRemoteData(sqlQueryConcejos).success(function(data){
       $scope.concejos = data.rows;
     }).error(function(status){
@@ -178,37 +180,41 @@ angular.module('wca.controllers',[])
     });
 
     $scope.concejoEscogido = function(concejo){
-
       $scope.checked = 'con';
       // elimina retornos de carro y espacios en blanco al principio y al final
       concejo = concejo.replace(/(\r\n|\n|\r)/gm,'').trim();
       var filtro = 'Concejo=\'' + concejo + '\''; // el concejo tiene que ir entre comillas
-      if(layer)
+      //if(layer)
         layer.setMap(null);
       layer = SMapa.creaFusionTableLayer(filtro);
       layer.setMap(mapa);
       mapa.setCenter(SMapa.OVIEDO);
       mapa.setZoom(zoomLevel);
-
     }; // concejo escogido
 
     $scope.categoriaEscogida = function(categoria){
-
       $scope.checked = 'cat';
       categoria = categoria.replace(/(\r\n|\n|\r)/gm,'').trim();
       var filtro = 'Categoria=\'' + categoria + '\'';
-      if(layer)
+      //if(layer)
         layer.setMap(null);
       layer = SMapa.creaFusionTableLayer(filtro);
       layer.setMap(mapa);
       mapa.setCenter(SMapa.OVIEDO);
       mapa.setZoom(zoomLevel);
-
     }; // categoria escogida
 
+    $scope.mostrarTodos = function(){
+      if(layer)
+        layer.setMap(null);
+      layer = SMapa.creaFusionTableLayer();
+      layer.setMap(mapa);
+      mapa.setCenter(SMapa.OVIEDO);
+      mapa.setZoom(zoomLevel);
+    }
+
     mapa = SMapa.crear(document.getElementById('mapaglobal'));
-    mapa.setCenter(SMapa.OVIEDO);
-    mapa.setZoom(zoomLevel+1);
+    $scope.mostrarTodos(); // por defecto
 
 })
 // ====================================================================================================================
@@ -279,7 +285,7 @@ angular.module('wca.controllers',[])
     $rootScope.mostrarLupa = false;
 
     if(!$rootScope.items || !$scope.rowid){
-      SPopup.show('Aviso', 'No hay datos de cámara/s. Escoger otra opción de menú');
+      SPopup.show('Aviso', 'No hay datos de cámara. Escoger otra opción de menú');
       return;
     };
 
