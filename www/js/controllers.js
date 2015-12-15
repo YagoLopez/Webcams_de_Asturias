@@ -2,9 +2,9 @@
 //TODO: revisar las dependencias que se pasan a los controladores
 //TODO: hacer una tabla propia para las categorias en fusion tables y hacer join de la tabla de webcams y la de categorias
 //TODO: Hacer tabla para concejos
-//TODO: Morphing icono backwards
 //TODO: recordar que el codigo que se encuentra en el evento on.afterviewEnter se ejecuta siempre. Probar a quitar la cache de las vistas que usan este icono a ver que pasa
 //TODO: hacer perfilado, ver como se comporta la memoria y el procesador al ejecutar la app
+//TODO: poner categorías en la barra de titulo de los listados
 
 angular.module('wca.controllers',[])
 
@@ -205,6 +205,7 @@ angular.module('wca.controllers',[])
     }; // categoria escogida
 
     $scope.mostrarTodos = function(){
+      $scope.checked = null;
       if(layer)
         layer.setMap(null);
       layer = SMapa.creaFusionTableLayer();
