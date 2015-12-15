@@ -5,8 +5,7 @@ angular.module('wca.services',[])
 
     var API_ENDPOINT = 'https://www.googleapis.com/fusiontables/v2/query';
     var API_KEY = 'AIzaSyBsdouSTimjrC2xHmbGgOt8VfbLBWc9Gps';
-    //var TABLE_ID = '1gX5maFbqFyRziZiUYlpOBYhcC1v9lGkKqCXvZREF';
-    var TABLE_ID = '1ANK5N8w-qaKyyXKJ09jOM110q2FXDinKa4YNxyWj';
+    var TABLE_ID = '1gX5maFbqFyRziZiUYlpOBYhcC1v9lGkKqCXvZREF';
 
     var getRemoteData = function( sql_query_string ) {
       var url = API_ENDPOINT+ '?sql=' +sql_query_string+ '&key=' +API_KEY+'&callback=JSON_CALLBACK';
@@ -261,6 +260,52 @@ angular.module('wca.services',[])
   };
 })
 // ====================================================================================================================
+  .factory('Cam', function(){
+    var lugar;
+    var concejo;
+    var imagen;
+    var categoria;
+    var id;
+    var lat;
+    var lng;
+    var Constructor = function(arrayDatosCam){
+      lugar = arrayDatosCam[0][0];
+      concejo = arrayDatosCam[0][1];
+      imagen = arrayDatosCam[0][2];
+      categoria = arrayDatosCam[0][3];
+      id = arrayDatosCam[0][4];
+      lat = arrayDatosCam[0][5];
+      lng = arrayDatosCam[0][6];
+      console.log('lugar de cam', lugar);
 
+    };
+    return {
+      lugar: lugar,
+      concejo: concejo,
+      imagen: imagen,
+      categoria: categoria,
+      id: id,
+      lat: lat,
+      lng: lng,
+      Constructor: Constructor
+    }
+  })
+// ====================================================================================================================
+  .factory('Cam2', function(){
+    function Cam2(arrayDatosCam){
+      if(arrayDatosCam) {
+        this.lugar = arrayDatosCam[0][0];
+        this.concejo = arrayDatosCam[0][1];
+        this.imagen = arrayDatosCam[0][2];
+        this.categoria = arrayDatosCam[0][3];
+        this.id = arrayDatosCam[0][4];
+        this.lat = arrayDatosCam[0][5];
+        this.lng = arrayDatosCam[0][6];
+      }//if
+    }
+    return Cam2;
+  })
+
+// ====================================================================================================================
 
 ; // FIN

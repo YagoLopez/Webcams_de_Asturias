@@ -4,7 +4,6 @@
 <!--TODO: filtrar markers por concejo y categoria (lugar?)-->
 <!--TODO: poner búsqueda en google places de sitios de interes cercanos a la cámara-->
 <ion-view view-title="Mapa" cache-view="false">
-  <!--<ion-content header-shrink scroll-event-interval="1">-->
   <ion-content>
 
     <style>
@@ -13,14 +12,11 @@
       }
       #mapa{background: transparent url(../img/c.png) no-repeat center center;}
     </style>
-lat: {{$root.lat}}<br>
-lng: {{$root.lng}}<br>
 
     <div id="mapa" data-tap-disabled="true" style="width: 100%; height: 60%"></div>
-    <p>Lugar: {{lugar}}</p>
-    <p>Concejo: {{concejo}}</p>
-    <p>idCategoria: {{idCategoria}}</p>
-
+    <p>Lugar: {{ ::cam.lugar }}</p>
+    <p>Concejo: {{ ::cam.concejo }}</p>
+    <p>idCategoria: {{ ::cam.idCategoria }}</p>
 
   </ion-content>
 </ion-view>

@@ -44,9 +44,10 @@ angular.module('wca.controllers',[])
     }
 
     //TODO: cachear las imagenes
-    var sqlQuery = 'SELECT Lugar,Concejo,Imagen,Categoria,rowid FROM '+ SFusionTable.TABLE_ID;
+    var sqlQuery = 'SELECT Lugar,Concejo,Imagen,Categoria,rowid,latitud,longitud FROM '+ SFusionTable.TABLE_ID;
     SFusionTable.getRemoteData(sqlQuery).success(function(data){
 
+      console.log('data', data);
       // -------------------------------------------------------------------------------------------------------------
       // FILTRO 1: filtra las cams por parametros de url: concejo y categoria
       // -------------------------------------------------------------------------------------------------------------
@@ -112,16 +113,17 @@ angular.module('wca.controllers',[])
 
   $rootScope.mostrarLupa = false;
   $scope.$on('$ionicView.afterEnter', function() {
-    $scope.lugar = $stateParams.lugar;
-    $scope.concejo = $stateParams.concejo;
+    //$scope.lugar = $stateParams.lugar;
+    //$scope.concejo = $stateParams.concejo;
     var mapa = SMapa.crear(document.getElementById('mapa'));
     var layer = SMapa.creaFusionTableLayer().setMap(mapa);
 
-    if(!$rootScope.lat || !$rootScope.lng){
+    //if(!$rootScope.cam.lat || !$rootScope.cam.lng){
+    if(!$rootScope.cam){
       mapa.setCenter(SMapa.OVIEDO);
       mapa.setZoom(8);
     } else {
-        mapa.setCenter( {lat: $rootScope.lat, lng: $rootScope.lng} );
+        mapa.setCenter( {lat: $rootScope.cam.lat, lng: $rootScope.cam.lng} );
         mapa.setZoom(13);
     }// else
   }); // $scope.on
@@ -269,7 +271,7 @@ angular.module('wca.controllers',[])
 })
 // ====================================================================================================================
 .controller('DetalleCtrl', function($scope, $stateParams, $ionicModal, SMapa, SClima, $filter, $rootScope,
-                                    SPopup, SWikipedia, $ionicSlideBoxDelegate, $ionicPopover){
+                                    SPopup, SWikipedia, $ionicSlideBoxDelegate, $ionicPopover, Cam, Cam2){
 
     $scope.rowid = $stateParams.rowid;
     $rootScope.mostrarLupa = false;
@@ -279,50 +281,44 @@ angular.module('wca.controllers',[])
       return;
     };
 
-    var cam = $filter('filter')($rootScope.items, function(cam) {
+    var datosCam = $filter('filter')($rootScope.items, function(cam) {
       return cam[4] == $scope.rowid;
     });
-    $scope.lugar = cam[0][0];
-    $scope.concejo = cam[0][1];
-    $scope.imagen = cam[0][2];
-    $scope.categoria = cam[0][3];
+
+    //TODO: es cam singleton??? Si no lo es hacerlo asi
+    //Cam.Constructor(datosCam);
+    $rootScope.cam = new Cam2(datosCam);
+    console.log('rootscope.cam', $rootScope.cam);
+
     // CLIMA ---------------------------------------------------------------------------------------------------------
     var div = document.getElementById('void');
-    SMapa.hallaLatLng(div, $scope.lugar, $scope.concejo, function(coords){
-
-      //TODO: no usar rootscope. Crear un servicio para almacenar lat, lng, lugar, concejo y compartir entre controllers
-      $rootScope.lat = coords.lat();
-      $rootScope.lng = coords.lng();
-
-      SClima.getData( $rootScope.lat, $rootScope.lng ).success(function(climadata){
-        //console.log('datos de clima', climadata);
-        $scope.descripcion = climadata.weather[0].description;
-        $scope.temp = climadata.main.temp;
-        $scope.presion = climadata.main.pressure;
-        $scope.humedad = climadata.main.humidity;
-        $scope.nubosidad = climadata.clouds.all;
-        $scope.velocidadViento = climadata.wind.speed;
-        $scope.direccionViento = climadata.wind.deg;
-        //volumen precipitaciones ultimas 3 horas
-        //$scope.precipitacion = climadata.rain['3h'];
-        //url icono: http://openweathermap.org/img/w/10n.png
-        $scope.iconoUrl = 'http://openweathermap.org/img/w/'+climadata.weather[0].icon+'.png' ;
-
-      }).error(function(status){
-        SPopup.show('Error', 'SClima.getData(): '+status)
-      });
-    });// hallalatlng
+    SClima.getData( $rootScope.cam.lat, $rootScope.cam.lng ).success(function(climadata){
+      console.log('datos de clima', climadata);
+      $scope.descripcion = climadata.weather[0].description;
+      $scope.temp = climadata.main.temp;
+      $scope.presion = climadata.main.pressure;
+      $scope.humedad = climadata.main.humidity;
+      $scope.nubosidad = climadata.clouds.all;
+      $scope.velocidadViento = climadata.wind.speed;
+      $scope.direccionViento = climadata.wind.deg;
+      //volumen precipitaciones ultimas 3 horas
+      //$scope.precipitacion = climadata.rain['3h'];
+      //url icono: http://openweathermap.org/img/w/10n.png
+      $scope.iconoUrl = 'http://openweathermap.org/img/w/'+climadata.weather[0].icon+'.png' ;
+    }).error(function(status){
+      SPopup.show('Error', 'SClima.getData(): '+status)
+    });
     // FIN CLIMA -----------------------------------------------------------------------------------------------------
 
     // WIKIPEDIA -----------------------------------------------------------------------------------------------------
-    SWikipedia.info($scope.concejo).success(function(data){
+    SWikipedia.info($rootScope.cam.concejo).success(function(data){
       var pageid = data.query.pageids[0];
       if(pageid) {
         $scope.infoConcejo = data.query.pages[pageid].extract;
         //console.log('extract', $scope.infoConcejo);
       }
     }).error(function(status){
-      console.warn(status);
+      $scope.infoConcejo = 'No se ha podido obtener información remota: '+status;
     });
     // FIN WIKIPEDIA -------------------------------------------------------------------------------------------------
 
