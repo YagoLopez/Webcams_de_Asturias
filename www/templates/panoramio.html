@@ -20,6 +20,7 @@
     width: 100% ;
   }
   .panoramio-wapi-tos {
+    display: none;
     text-align: center;
     width:90%;
   }
@@ -27,13 +28,17 @@
 
   <div class="container">
 
-      <div id="divPanoramio"></div>
-      <div id="divCreditos"></div>
-      <div>Zona: {{ ::cam.lugar }}, {{ ::cam.concejo }}</div>
-      <!--<div ng-show="!hayFotos" style="text-align: center">-->
-      <!--No se han encontrado fotos de Panoramio en los alrededores de la ubicación de la cámara-->
-      <!--</div>-->
-    </div>
+    <div id="divPanoramio"></div>
+    <div id="divCreditos"></div>
+
+  </div>
+
+
+
+  <div class="card">
+    <div class="item item-divider" style="text-align:center;font-size:small">Zona: {{ ::cam.lugar }}</div>
+    <div class="item item-divider" style="text-align:center;font-size:small">Concejo: {{ ::cam.concejo }}</div>
+
 
     <div layout="row" layout-align="space-around center" style="padding:6%">
       <md-button class="md-raised md-primary" ng-click="prevPhoto()"
@@ -41,7 +46,6 @@
         <i class="icon ion-arrow-left-a"></i>
         Anterior
       </md-button>
-
       <md-button class="md-raised md-primary" ng-click="nextPhoto()"
                  style="width:40%;height:40px" ng-disabled="fotos.getAtEnd()">
         <i class="icon ion-arrow-right-a"></i>
@@ -54,7 +58,10 @@
         <i class="icon ion-arrow-expand"></i>
         Ampliar
       </md-button>
+      <br>
     </div>
+
+  </div>
 
 </ion-content>
 </ion-view>
