@@ -1,10 +1,11 @@
-//TODO: hacer cuadro de dialogo para mostrar imagen de cam?
+//TODO: terminar cuadro de dialogo para mostrar imagen de cam
 //TODO: revisar las dependencias que se pasan a los controladores
 //TODO: hacer una tabla propia para las categorias en fusion tables y hacer join de la tabla de webcams y la de categorias
 //TODO: Hacer tabla para concejos
 //TODO: recordar que el codigo que se encuentra en el evento on.afterviewEnter se ejecuta siempre. Probar a quitar la cache de las vistas que usan este icono a ver que pasa
 //TODO: hacer perfilado, ver como se comporta la memoria y el procesador al ejecutar la app
 //TODO: poner categorías en la barra de titulo de los listados
+//TODO: poner animacion en el marcador para distinguir cual es
 
 angular.module('wca.controllers',[])
 

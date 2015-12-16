@@ -25,7 +25,7 @@ angular.module('wca', ['ionic', 'wca.controllers', 'wca.services',
 
 .config(function($stateProvider, $urlRouterProvider, $compileProvider, $ionicConfigProvider, $ionicFilterBarConfigProvider) {
 
-    // disable debug info
+    // enable/disable debug info
     $compileProvider.debugInfoEnabled(true);
     // remove back button text completely
     $ionicConfigProvider.backButton.previousTitleText(false).text(' ');
