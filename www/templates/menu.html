@@ -1,9 +1,14 @@
 <!--TODO: hacer submenu para poder navegar por municipios-->
 <ion-side-menus enable-menu-with-back-views="true">
 
+  <!--<style>-->
+    <!--.mynavbar{-->
+      <!--height:150px !important;-->
+    <!--}-->
+  <!--</style>-->
   <!-- Side Menu Content -------------------------------------------------------------------------------------------->
   <ion-side-menu-content drag-content="false">
-    <ion-nav-bar class="bar-calm" style="height:0;">
+    <ion-nav-bar class="bar-calm">
       <ion-nav-back-button class="button-icon ion-android-arrow-back">
       </ion-nav-back-button>
       <ion-nav-buttons side="left">
@@ -19,11 +24,10 @@
     <ion-nav-view name="menuContent"></ion-nav-view>
   </ion-side-menu-content>
   <!-- Fin Side Menu Content ---------------------------------------------------------------------------------------->
-  <!--TODO: poner iconos en las entradas de menu-->
   <!-- Side Menu ---------------------------------------------------------------------------------------------------->
   <ion-side-menu side="left">
 
-    <ion-header-bar class="bar-positive">
+    <ion-header-bar class="bar-positive" style="height:150px;display:block;">
       <h1 class="title">Webcams de Asturias</h1>
     </ion-header-bar>
 
@@ -36,52 +40,43 @@
     7 playas
     -->
 
-    <ion-content>
-      <ion-list>
+    <ion-content style="top: 150px;">
+      <style>
+        #menuaapp > div > ion-item {border-style:none;}
+      </style>
+      <ion-list id="menuaapp">
         <ion-item menu-close href="#/app/tabs/listado?idCategoria=7">
+          <i class="icon icon-left ion-ios-sunny" style="font-size:30px;vertical-align:text-top"></i>&nbsp;
           Playas
         </ion-item>
         <ion-item menu-close href="#/app/tabs/listado?idCategoria=1">
+          <i class="icon icon-left ion-ios-home" style="font-size:25px;vertical-align:text-top"></i>&nbsp;
           Poblaciones
         </ion-item>
         <ion-item menu-close href="#/app/tabs/listado?idCategoria=2">
+          <i class="icon icon-left ion-android-boat" style="font-size:25px;vertical-align:text-top"></i>&nbsp;
           Puertos
         </ion-item>
         <ion-item menu-close href="#/app/tabs/listado?idCategoria=5">
+          <i class="icon icon-left ion-android-boat" style="font-size:25px;vertical-align:text-top"></i>&nbsp;
           Ríos
         </ion-item>
         <ion-item menu-close href="#/app/tabs/listado?idCategoria=3">
+          <i class="icon icon-left ion-android-image" style="font-size:30px;vertical-align:text-top"></i>&nbsp;
           Montaña
         </ion-item>
         <ion-item menu-close href="#/app/tabs/listado">
+          <i class="icon icon-left ion-ios-list-outline" style="font-size:25px;vertical-align:text-top"></i>&nbsp;
           Listado Completo
         </ion-item>
         <ion-item menu-close href="#/app/mapaglobal">
+          <i class="icon icon-left ion-earth" style="font-size:25px;vertical-align:text-top"></i>&nbsp;
           Mapa Global
         </ion-item>
         <ion-item menu-close href="#/app/meteo">
+          <i class="icon icon-left ion-ios-partlysunny" style="font-size:35px;vertical-align:text-top"></i>&nbsp;
           Meteo
         </ion-item>
-
-<!--
-        <ion-item style="padding:0;">
-          <div style="width:100%;padding:16px 0px 16px 16px;cursor: pointer;" ng-click="verSubmenu=!verSubmenu">
-            Meteorología
-          </div>
-          <div ng-show="verSubmenu">
-            <ion-item menu-close href="#/app/sat-sp" style="padding-left:16px;font-size:small">
-              Sat. España
-            </ion-item>
-            <ion-item menu-close href="#" style="padding-left:16px;font-size:small">
-              Sat. Europa
-            </ion-item>
-            <ion-item menu-close href="#" style="padding-left:16px;font-size:small">
-              Mapas
-            </ion-item>
-          </div>
-        </ion-item>
--->
-
       </ion-list>
     </ion-content>
 
