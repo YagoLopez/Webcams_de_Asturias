@@ -182,6 +182,10 @@ angular.module('wca.controllers',[])
     $scope.arrayUrls_a_arrayNombres = function(arr){
       return SCategorias.arrayUrls_a_arrayNombres(arr);
     }
+    $scope.url_a_nombre = function(url){
+      console.log('url_a_nombre', SCategorias.url_a_nombre(url));
+      return SCategorias.url_a_nombre(url);
+    }
 
     $scope.concejoEscogido = function(concejo){
       $scope.checked = 'con';
@@ -199,8 +203,18 @@ angular.module('wca.controllers',[])
       $scope.checked = 'cat';
       categoria = categoria.replace(/(\r\n|\n|\r)/gm,'').trim();
       var filtro = 'Categoria=\'' + categoria + '\'';
-      //if(layer)
-        layer.setMap(null);
+
+
+
+
+      console.log('categoria escogida', categoria);
+
+
+
+
+
+
+      layer.setMap(null);
       layer = SMapa.creaFusionTableLayer(filtro);
       layer.setMap(mapa);
       mapa.setCenter(SMapa.OVIEDO);

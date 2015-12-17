@@ -274,6 +274,8 @@ angular.module('wca.services',[])
         nombreCategoria = 'Ríos';
       if (urlCategoria === 'http://webcamsdeasturias.com/interior.php?categoria=7')
         nombreCategoria = 'Playas';
+      //console.log('url categoria', urlCategoria);
+      //console.log('nombre categoria', nombreCategoria);
     return nombreCategoria;
     };
 
