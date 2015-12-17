@@ -245,13 +245,13 @@ angular.module('wca.services',[])
   };
 })
 // ====================================================================================================================
-  .factory('Cam', function(){
+  .factory('Cam', function(SCategorias){
     function Cam(arrayDatosCam){
       if(arrayDatosCam) {
         this.lugar = arrayDatosCam[0][0];
         this.concejo = arrayDatosCam[0][1];
         this.imagen = arrayDatosCam[0][2];
-        this.categoria = arrayDatosCam[0][3];
+        this.categoria = SCategorias.url_a_nombre( arrayDatosCam[0][3] );
         this.id = arrayDatosCam[0][4];
         this.lat = arrayDatosCam[0][5];
         this.lng = arrayDatosCam[0][6];
@@ -260,5 +260,38 @@ angular.module('wca.services',[])
     return Cam;
   })
 // ====================================================================================================================
+  .factory('SCategorias', function(){
+    var nombreCategoria;
+
+    var url_a_nombre = function(urlCategoria){
+      if (urlCategoria === 'http://webcamsdeasturias.com/interior.php?categoria=1')
+        nombreCategoria = 'Poblaciones';
+      if (urlCategoria === 'http://webcamsdeasturias.com/interior.php?categoria=2')
+        nombreCategoria = 'Puertos';
+      if (urlCategoria === 'http://webcamsdeasturias.com/interior.php?categoria=3')
+        nombreCategoria = 'Montaña';
+      if (urlCategoria === 'http://webcamsdeasturias.com/interior.php?categoria=5')
+        nombreCategoria = 'Ríos';
+      if (urlCategoria === 'http://webcamsdeasturias.com/interior.php?categoria=7')
+        nombreCategoria = 'Playas';
+    return nombreCategoria;
+    };
+
+    var arrayUrls_a_arrayNombres = function(arr){
+      if(arr){
+        for (var i = 0; i < arr.length; i++){
+          arr[i][0] = url_a_nombre( arr[i][0] );
+        }
+      }//if
+      return arr;
+    };
+
+    return {
+      url_a_nombre: url_a_nombre,
+      arrayUrls_a_arrayNombres: arrayUrls_a_arrayNombres
+    }
+  })
+// ====================================================================================================================
+
 
 ; // FIN

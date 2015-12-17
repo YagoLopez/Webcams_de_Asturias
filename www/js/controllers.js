@@ -120,7 +120,6 @@ angular.module('wca.controllers',[])
     var mapa = SMapa.crear(document.getElementById('mapa'));
     var layer = SMapa.creaFusionTableLayer().setMap(mapa);
 
-    //if(!$rootScope.cam.lat || !$rootScope.cam.lng){
     if(!$rootScope.cam){
       mapa.setCenter(SMapa.OVIEDO);
       mapa.setZoom(8);
@@ -158,7 +157,7 @@ angular.module('wca.controllers',[])
 
 })
 // ====================================================================================================================
-.controller('MapaGlobalCtrl', function($scope, $rootScope, SMapa, SFusionTable, SPopup){
+.controller('MapaGlobalCtrl', function($scope, $rootScope, SMapa, SFusionTable, SPopup, SCategorias){
     var layer = null;
     var mapa = null;
     var zoomLevel = 7;
@@ -180,13 +179,16 @@ angular.module('wca.controllers',[])
       SPopup.show('Error', 'Fallo cargando lista categorias: '+status);
     });
 
+    $scope.arrayUrls_a_arrayNombres = function(arr){
+      return SCategorias.arrayUrls_a_arrayNombres(arr);
+    }
+
     $scope.concejoEscogido = function(concejo){
       $scope.checked = 'con';
       // elimina retornos de carro y espacios en blanco al principio y al final
       concejo = concejo.replace(/(\r\n|\n|\r)/gm,'').trim();
       var filtro = 'Concejo=\'' + concejo + '\''; // el concejo tiene que ir entre comillas
-      //if(layer)
-        layer.setMap(null);
+      layer.setMap(null);
       layer = SMapa.creaFusionTableLayer(filtro);
       layer.setMap(mapa);
       mapa.setCenter(SMapa.OVIEDO);
@@ -302,7 +304,6 @@ angular.module('wca.controllers',[])
     // CLIMA ---------------------------------------------------------------------------------------------------------
     var div = document.getElementById('void');
     SClima.getData( $rootScope.cam.lat, $rootScope.cam.lng ).success(function(climadata){
-      console.log('datos de clima', climadata);
       $scope.descripcion = climadata.weather[0].description;
       $scope.temp = climadata.main.temp;
       $scope.presion = climadata.main.pressure;
