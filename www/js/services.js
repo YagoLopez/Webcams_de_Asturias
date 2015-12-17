@@ -29,7 +29,7 @@ angular.module('wca.services',[])
   .factory('SMapa', function(SFusionTable, SPopup){
 
     var OVIEDO = {lat: 43.3667, lng: -5.8333}; // centro de mapa vista global
-    var RADIO_BUSQUEDA = 500; // radio de búsqueda de panorama StreetView en metros a partir latLng
+    var RADIO_BUSQUEDA = 500; // radio de búsqueda de StreetView en metros a partir latLng
 
     var hallaLatLng = function (domElement, lugar, concejo, fn){
       var request = {

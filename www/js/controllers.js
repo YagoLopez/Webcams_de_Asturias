@@ -213,7 +213,7 @@ angular.module('wca.controllers',[])
       layer.setMap(mapa);
       mapa.setCenter(SMapa.OVIEDO);
       mapa.setZoom(zoomLevel);
-    }
+    };
 
     mapa = SMapa.crear(document.getElementById('mapaglobal'));
     $scope.mostrarTodos(); // por defecto
