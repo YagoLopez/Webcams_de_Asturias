@@ -279,18 +279,19 @@ angular.module('wca.services',[])
     return nombreCategoria;
     };
 
-    var arrayUrls_a_arrayNombres = function(arr){
-      if(arr){
-        for (var i = 0; i < arr.length; i++){
-          arr[i][0] = url_a_nombre( arr[i][0] );
-        }
-      }//if
-      return arr;
-    };
+    //var arrayUrls_a_arrayNombres = function(arr){
+    //  if(arr){
+    //    for (var i = 0; i < arr.length; i++){
+    //      arr[i][0] = url_a_nombre( arr[i][0] );
+    //    }
+    //  }//if
+    //  return arr;
+    //};
 
     return {
-      url_a_nombre: url_a_nombre,
-      arrayUrls_a_arrayNombres: arrayUrls_a_arrayNombres
+      url_a_nombre: url_a_nombre
+      //,
+      //arrayUrls_a_arrayNombres: arrayUrls_a_arrayNombres
     }
   })
 // ====================================================================================================================

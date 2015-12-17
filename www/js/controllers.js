@@ -179,11 +179,10 @@ angular.module('wca.controllers',[])
       SPopup.show('Error', 'Fallo cargando lista categorias: '+status);
     });
 
-    $scope.arrayUrls_a_arrayNombres = function(arr){
-      return SCategorias.arrayUrls_a_arrayNombres(arr);
-    }
-    $scope.url_a_nombre = function(url){
-      console.log('url_a_nombre', SCategorias.url_a_nombre(url));
+    //$scope.arrayUrls_a_arrayNombres = function(arr){
+    //  return SCategorias.arrayUrls_a_arrayNombres(arr);
+    //}
+    $scope.urlCategoria_a_nombre = function(url){
       return SCategorias.url_a_nombre(url);
     }
 
@@ -203,18 +202,7 @@ angular.module('wca.controllers',[])
       $scope.checked = 'cat';
       categoria = categoria.replace(/(\r\n|\n|\r)/gm,'').trim();
       var filtro = 'Categoria=\'' + categoria + '\'';
-
-
-
-
-      console.log('categoria escogida', categoria);
-
-
-
-
-
-
-      layer.setMap(null);
+      layer.setMap(null); // borra layer antigua si la hubiera
       layer = SMapa.creaFusionTableLayer(filtro);
       layer.setMap(mapa);
       mapa.setCenter(SMapa.OVIEDO);
@@ -229,6 +217,8 @@ angular.module('wca.controllers',[])
       layer.setMap(mapa);
       mapa.setCenter(SMapa.OVIEDO);
       mapa.setZoom(zoomLevel);
+      document.getElementById('selectConcejo').selectedIndex = -1;
+      document.getElementById('selectCategoria').selectedIndex = -1;
     };
 
     mapa = SMapa.crear(document.getElementById('mapaglobal'));
