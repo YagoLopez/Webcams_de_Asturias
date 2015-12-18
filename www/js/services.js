@@ -274,25 +274,10 @@ angular.module('wca.services',[])
         nombreCategoria = 'Ríos';
       if (urlCategoria === 'http://webcamsdeasturias.com/interior.php?categoria=7')
         nombreCategoria = 'Playas';
-      //console.log('url categoria', urlCategoria);
-      //console.log('nombre categoria', nombreCategoria);
     return nombreCategoria;
     };
 
-    //var arrayUrls_a_arrayNombres = function(arr){
-    //  if(arr){
-    //    for (var i = 0; i < arr.length; i++){
-    //      arr[i][0] = url_a_nombre( arr[i][0] );
-    //    }
-    //  }//if
-    //  return arr;
-    //};
-
-    return {
-      url_a_nombre: url_a_nombre
-      //,
-      //arrayUrls_a_arrayNombres: arrayUrls_a_arrayNombres
-    }
+    return { url_a_nombre: url_a_nombre }
   })
 // ====================================================================================================================
 

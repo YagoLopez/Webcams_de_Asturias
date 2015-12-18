@@ -39,7 +39,7 @@ angular.module('wca', ['ionic', 'wca.controllers', 'wca.services',
 // -------------------------------------------------------------------------------------------------------------------
   .state('app', {
     url: '/app',
-    abstract: true,
+    abstract: false,
     templateUrl: 'templates/menu.html',
     controller: 'AppCtrl'
   })
@@ -75,7 +75,7 @@ angular.module('wca', ['ionic', 'wca.controllers', 'wca.services',
   url: '/mosaico',
   cache: false,
   views: {
-  'tab-mosaico': {
+    'tab-mosaico': {
     templateUrl: 'templates/mosaico.html'
     }
   }

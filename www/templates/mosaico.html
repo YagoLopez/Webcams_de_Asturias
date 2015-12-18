@@ -1,30 +1,48 @@
-<ion-view title="Mosaico" hide-back-button="true">
+<ion-view title="Mosaico">
 
   <ion-content>
+    <style type="text/css">
+      .divImg {
+        font-size: xx-small;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      .itemCam {
+        padding: 0;
+        text-decoration: none;
+      }
+
+    </style>
     <!--TODO: arreglar el texto de pie de foto para que se vea con elipsis como en el listado-->
     <div class="grid">
       <div class="row" ng-repeat="cam in items track by cam[4]"
-           ng-if="$index % 3 === 0" force-refresh-images="true" style="padding:0; margin:0px;">
+           ng-if="$index % 3 === 0" style="padding:0; margin:0;">
 
-        <ion-item class="col col-33 animated zoomIn" ng-if="$index < items.length" ng-click="showModal($index)">
+        <ion-item class="col col-33 animated zoomIn" ng-if="$index < items.length">
+          <a href="#/app/detalle/{{ cam[4] }}" class="itemCam">
           <!--<img ng-src="{{ items[$index][2] }}" width="100%" />-->
           <!--<img src="http://lorempixel.com/400/200/sports/1/" width="100%" >-->
           <img ng-src="http://api.randomuser.me/portraits/thumb/men/{{$index}}.jpg">
-          <div style="font-size: xx-small; overflow:inherit">{{ items[$index][0] }}</div>
+          <div class="divImg">{{ items[$index][0] }}</div>
+          </a>
         </ion-item>
 
         <ion-item class="col col-33 animated zoomIn" ng-if="$index+1 < items.length" ng-click="showModal($index+1)">
+          <a href="#/app/detalle/{{ cam[4] }}" class="itemCam">
           <!--<img ng-src="{{ items[$index+1][2] }}" width="100%" />-->
           <!--<img src="http://lorempixel.com/400/200/sports/1/" width="100%" >-->
           <img ng-src="http://api.randomuser.me/portraits/thumb/men/{{$index+1}}.jpg">
-          <div style="font-size: xx-small; overflow:inherit">{{ items[$index+1][0] }}</div>
+          <div class="divImg">{{ items[$index+1][0] }}</div>
+          </a>
         </ion-item>
 
         <ion-item class="col col-33 animated zoomIn" ng-if="$index+2 < items.length" ng-click="showModal($index+2)">
+          <a href="#/app/detalle/{{ cam[4] }}" class="itemCam">
           <!--<img ng-src="{{ items[$index+2][2] }}" width="100%" />-->
           <!--<img src="http://lorempixel.com/400/200/sports/1/" width="100%" >-->
           <img ng-src="http://api.randomuser.me/portraits/thumb/men/{{$index+2}}.jpg">
-          <div style="font-size: xx-small; overflow:inherit">{{ items[$index+2][0] }}</div>
+          <div class="divImg">{{ items[$index+2][0] }}</div>
+          </a>
         </ion-item>
 
 

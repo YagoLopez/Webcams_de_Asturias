@@ -1,11 +1,16 @@
+//TODO: que funcione la vista de mosaico
+//TODO: señalar con punto rojo el marcador en el mapa
 //TODO: terminar cuadro de dialogo para mostrar imagen de cam
 //TODO: revisar las dependencias que se pasan a los controladores
-//TODO: hacer una tabla propia para las categorias en fusion tables y hacer join de la tabla de webcams y la de categorias
-//TODO: Hacer tabla para concejos
 //TODO: recordar que el codigo que se encuentra en el evento on.afterviewEnter se ejecuta siempre. Probar a quitar la cache de las vistas que usan este icono a ver que pasa
 //TODO: hacer perfilado, ver como se comporta la memoria y el procesador al ejecutar la app
 //TODO: poner categorías en la barra de titulo de los listados
 //TODO: poner animacion en el marcador para distinguir cual es
+//TODO: que en ios aparezca arriba la barra de pestañas
+//TODO: hacer zoom en maapa global cuando se escoja filtro por concejo. Usar coordenaadas lat lng
+//TODO: ideas resolver el problema de navegacion en vista de tabs:
+//1) Crear un boton 'back' manualmente en la vistaaa de detalle. al hacer click -> history.goBack()
+//2) Crear una animacion de entrada en vista de detalla usaando slide-left-to-right de animate.css
 
 angular.module('wca.controllers',[])
 
@@ -179,9 +184,6 @@ angular.module('wca.controllers',[])
       SPopup.show('Error', 'Fallo cargando lista categorias: '+status);
     });
 
-    //$scope.arrayUrls_a_arrayNombres = function(arr){
-    //  return SCategorias.arrayUrls_a_arrayNombres(arr);
-    //}
     $scope.urlCategoria_a_nombre = function(url){
       return SCategorias.url_a_nombre(url);
     }
@@ -190,9 +192,9 @@ angular.module('wca.controllers',[])
       $scope.checked = 'con';
       // elimina retornos de carro y espacios en blanco al principio y al final
       concejo = concejo.replace(/(\r\n|\n|\r)/gm,'').trim();
-      var filtro = 'Concejo=\'' + concejo + '\''; // el concejo tiene que ir entre comillas
-      layer.setMap(null);
-      layer = SMapa.creaFusionTableLayer(filtro);
+      var filtroConcejo = 'Concejo=\'' + concejo + '\''; // el concejo tiene que ir entre comillas
+      layer.setMap(null); // borra layer anterior si la hubiera
+      layer = SMapa.creaFusionTableLayer(filtroConcejo);
       layer.setMap(mapa);
       mapa.setCenter(SMapa.OVIEDO);
       mapa.setZoom(zoomLevel);
@@ -201,9 +203,9 @@ angular.module('wca.controllers',[])
     $scope.categoriaEscogida = function(categoria){
       $scope.checked = 'cat';
       categoria = categoria.replace(/(\r\n|\n|\r)/gm,'').trim();
-      var filtro = 'Categoria=\'' + categoria + '\'';
+      var filtroCategoria = 'Categoria=\'' + categoria + '\'';
       layer.setMap(null); // borra layer antigua si la hubiera
-      layer = SMapa.creaFusionTableLayer(filtro);
+      layer = SMapa.creaFusionTableLayer(filtroCategoria);
       layer.setMap(mapa);
       mapa.setCenter(SMapa.OVIEDO);
       mapa.setZoom(zoomLevel);
