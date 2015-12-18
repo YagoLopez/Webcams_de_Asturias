@@ -66,7 +66,6 @@ angular.module('wca.services',[])
         mapTypeControlOptions: { style: google.maps.MapTypeControlStyle.DROPDOWN_MENU },
         mapTypeId: google.maps.MapTypeId.TERRAIN
       });
-      _mapa = mapa;
       return mapa;
     }; // crear()
 
@@ -81,13 +80,24 @@ angular.module('wca.services',[])
       return layer;
     }; // creaFusionTableLayer()
 
+    var creaMarker = function(posicionLatLng, mapa, titulo){
+      var marker = new google.maps.Marker({
+        position: posicionLatLng,
+        map: mapa,
+        title: titulo,
+        icon: 'https://storage.googleapis.com/support-kms-prod/SNP_2752125_en_v0'
+        //animation: google.maps.Animation.DROP
+      });
+    };
+
     return {
       OVIEDO: OVIEDO,
       RADIO_BUSQUEDA: RADIO_BUSQUEDA,
       hallaLatLng: hallaLatLng,
       creaStreetView: creaStreetView,
       crear: crear,
-      creaFusionTableLayer: creaFusionTableLayer
+      creaFusionTableLayer: creaFusionTableLayer,
+      creaMarker: creaMarker
     }
   })
 // ====================================================================================================================
@@ -262,6 +272,7 @@ angular.module('wca.services',[])
 // ====================================================================================================================
   .factory('SCategorias', function(){
     var nombreCategoria;
+    var urlBaseCategoria = 'http://webcamsdeasturias.com/interior.php?categoria=';
 
     var url_a_nombre = function(urlCategoria){
       if (urlCategoria === 'http://webcamsdeasturias.com/interior.php?categoria=1')
@@ -277,7 +288,14 @@ angular.module('wca.services',[])
     return nombreCategoria;
     };
 
-    return { url_a_nombre: url_a_nombre }
+    var idCategoria_a_nombre = function(idCategoria){
+      return url_a_nombre(urlBaseCategoria+idCategoria);
+    };
+
+    return {
+      url_a_nombre: url_a_nombre,
+      idCategoria_a_nombre: idCategoria_a_nombre
+    }
   })
 // ====================================================================================================================
 

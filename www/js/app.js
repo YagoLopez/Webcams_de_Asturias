@@ -35,7 +35,7 @@ angular.module('wca', ['ionic', 'wca.controllers', 'wca.services',
     }
     $ionicFilterBarConfigProvider.placeholder('Buscar');
     // avoids prefetch of templates. only actual template is loaded
-    //$ionicConfigProvider.templates.maxPrefetch(0);
+    $ionicConfigProvider.templates.maxPrefetch(3);
 
     $stateProvider
 // -------------------------------------------------------------------------------------------------------------------
@@ -129,7 +129,7 @@ angular.module('wca', ['ionic', 'wca.controllers', 'wca.services',
 // -------------------------------------------------------------------------------------------------------------------
   .state('app.detalle', {
     url: '/detalle/:rowid',
-    cache: false,
+    cache: true,
     views: {
       'menuContent': {
         templateUrl: 'templates/detalle.html',
@@ -170,6 +170,36 @@ angular.module('wca', ['ionic', 'wca.controllers', 'wca.services',
       }
     }
   })
+// -------------------------------------------------------------------------------------------------------------------
+      .state('app.stats', {
+        url: '/stats',
+        cache: true,
+        views: {
+          'menuContent': {
+            templateUrl: 'templates/stats.html'
+          }
+        }
+      })
+// -------------------------------------------------------------------------------------------------------------------
+      .state('app.heatmap', {
+        url: '/heatmap',
+        cache: true,
+        views: {
+          'menuContent': {
+            templateUrl: 'templates/heatmap.html'
+          }
+        }
+      })
+// -------------------------------------------------------------------------------------------------------------------
+      .state('app.graficos', {
+        url: '/graficos',
+        cache: true,
+        views: {
+          'menuContent': {
+            templateUrl: 'templates/graficos.html'
+          }
+        }
+      })
 // -------------------------------------------------------------------------------------------------------------------
 
 ; // fin de estados

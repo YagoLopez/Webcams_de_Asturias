@@ -42,15 +42,16 @@
     <!-- Card ------------------------------------------------------------------------------------------------------>
     <div class="list card">
       <div class="item item-image" style="height:100%; width:100%">
-        <img ng-src="http://api.randomuser.me/portraits/thumb/men/1.jpg">
+        <!--<img ng-src="http://api.randomuser.me/portraits/thumb/men/1.jpg">-->
         <!--<img ng-src="../img/ionic.png">-->
-        <!--<img ng-src="{{imagen}}">-->
-        <!--<img  ng-src="{{ imagen}}" fallback-src="http://google.com/favicon.ico"/>-->
+        <img ng-src="{{ ::cam.imagen }}" fallback-src="http://google.com/favicon.ico"/>
         <!--<img ng-src="http://loremflickr.com/500/500?random={{$index+1}}">-->
       </div>
+      <div class="item item-body" style="font-size:small">
+        <!--<i class="icon ion-ios-checkmark-outline" style="color:#387ef5;"></i>-->
+        <!--<b>Lugar: </b>-->{{ ::cam.lugar }}<br>
+      </div>
       <div class="item item-body" style="font-size: small;">
-          <i class="icon ion-ios-checkmark-outline" style="color:#387ef5;"></i>
-          <b>Lugar: </b>{{ ::cam.lugar }}<br>
           <i class="icon ion-ios-checkmark-outline" style="color:#387ef5;"></i>
           <b>Concejo: </b>{{ ::cam.concejo }}<br>
           <i class="icon ion-ios-checkmark-outline" style="color:#387ef5;"></i>

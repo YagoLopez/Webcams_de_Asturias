@@ -1,4 +1,4 @@
-<ion-view title="Mosaico">
+<ion-view view-title="{{tituloVista}}">
 
   <ion-content>
     <style type="text/css">
@@ -13,13 +13,12 @@
       }
 
     </style>
-    <!--TODO: arreglar el texto de pie de foto para que se vea con elipsis como en el listado-->
     <div class="grid">
       <div class="row" ng-repeat="cam in items track by cam[4]"
            ng-if="$index % 3 === 0" style="padding:0; margin:0;">
 
         <ion-item class="col col-33 animated zoomIn" ng-if="$index < items.length">
-          <a href="#/app/detalle/{{ cam[4] }}" class="itemCam">
+          <a href="#/app/detalle/{{ items[$index][4] }}" class="itemCam">
           <!--<img ng-src="{{ items[$index][2] }}" width="100%" />-->
           <!--<img src="http://lorempixel.com/400/200/sports/1/" width="100%" >-->
           <img ng-src="http://api.randomuser.me/portraits/thumb/men/{{$index}}.jpg">
@@ -28,7 +27,7 @@
         </ion-item>
 
         <ion-item class="col col-33 animated zoomIn" ng-if="$index+1 < items.length" ng-click="showModal($index+1)">
-          <a href="#/app/detalle/{{ cam[4] }}" class="itemCam">
+          <a href="#/app/detalle/{{ items[$index+1][4] }}" class="itemCam">
           <!--<img ng-src="{{ items[$index+1][2] }}" width="100%" />-->
           <!--<img src="http://lorempixel.com/400/200/sports/1/" width="100%" >-->
           <img ng-src="http://api.randomuser.me/portraits/thumb/men/{{$index+1}}.jpg">
@@ -37,7 +36,7 @@
         </ion-item>
 
         <ion-item class="col col-33 animated zoomIn" ng-if="$index+2 < items.length" ng-click="showModal($index+2)">
-          <a href="#/app/detalle/{{ cam[4] }}" class="itemCam">
+          <a href="#/app/detalle/{{ items[$index+2][4] }}" class="itemCam">
           <!--<img ng-src="{{ items[$index+2][2] }}" width="100%" />-->
           <!--<img src="http://lorempixel.com/400/200/sports/1/" width="100%" >-->
           <img ng-src="http://api.randomuser.me/portraits/thumb/men/{{$index+2}}.jpg">

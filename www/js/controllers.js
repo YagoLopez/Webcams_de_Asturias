@@ -1,16 +1,17 @@
-//TODO: que funcione la vista de mosaico
-//TODO: señalar con punto rojo el marcador en el mapa
 //TODO: terminar cuadro de dialogo para mostrar imagen de cam
 //TODO: revisar las dependencias que se pasan a los controladores
 //TODO: recordar que el codigo que se encuentra en el evento on.afterviewEnter se ejecuta siempre. Probar a quitar la cache de las vistas que usan este icono a ver que pasa
 //TODO: hacer perfilado, ver como se comporta la memoria y el procesador al ejecutar la app
 //TODO: poner categorías en la barra de titulo de los listados
-//TODO: poner animacion en el marcador para distinguir cual es
 //TODO: que en ios aparezca arriba la barra de pestañas
 //TODO: hacer zoom en maapa global cuando se escoja filtro por concejo. Usar coordenaadas lat lng
-//TODO: ideas resolver el problema de navegacion en vista de tabs:
-//2) Crear una animacion de entrada en vista de detalla usaando slide-left-to-right de animate.css
 //TODO: nombres de categorías en nav-bar en el listado y el mosaico
+//TODO: cambiar el icono de fallback image
+//TODO: buscar imagen e icono para splash screen e icono de app
+//TODO: podria ser mejor arrojar una excepcion en vez de llamaar a SPopup cada vez que hay un error. Ya se encarga el
+//servicio de excepciones de capturar la excepcion y mostrar un popup. De esta forma está más centralizado el tratamiento
+//de errores
+//TODO: no se que pasa con el titulo del listado. revisar
 
 angular.module('wca.controllers',[])
 
@@ -26,24 +27,14 @@ angular.module('wca.controllers',[])
   })
 // ====================================================================================================================
 .controller('TabsCtrl', function($scope, $stateParams, SLoader, $rootScope, $ionicFilterBar,
-                                 SFusionTable, $filter, $ionicScrollDelegate, SPopup, $ionicNavBarDelegate){
+                                 SFusionTable, $filter, $ionicScrollDelegate, SPopup, $ionicNavBarDelegate, SCategorias){
 
-    //var templateLoader = "Cargando datos...";
-    //$ionicLoading.show({template:templateLoader, noBackdrop:true});
     SLoader.show();
-    // Guarda parametros url en variables temporales;
     var concejo = $stateParams.concejo || '';
     var idCategoria = $stateParams.idCategoria || '';
 
     //TODO: revisar esto. hacer un servicio para no usar rootscope?
     $rootScope.mostrarLupa = true;
-    // elimina search bar si estuviera activada al mostrar la vista
-    //if ($rootScope.filterBarInstance)
-    //  $rootScope.filterBarInstance();
-    //console.log('rootScope.filterBarInstance', $rootScope.filterBarInstance);
-
-    // inicializa filter bar
-    //$rootScope.filterBarInstance = null;
 
     function esSubcadena(idCategoria, urlCategoria) {
       return (urlCategoria.indexOf('categoria='+idCategoria) > -1);
@@ -53,7 +44,8 @@ angular.module('wca.controllers',[])
     var sqlQuery = 'SELECT Lugar,Concejo,Imagen,Categoria,rowid,latitud,longitud FROM '+ SFusionTable.TABLE_ID;
     SFusionTable.getRemoteData(sqlQuery).success(function(data){
 
-      console.log('data', data);
+      //console.log('data', data);
+
       // -------------------------------------------------------------------------------------------------------------
       // FILTRO 1: filtra las cams por parametros de url: concejo y categoria
       // -------------------------------------------------------------------------------------------------------------
@@ -76,6 +68,7 @@ angular.module('wca.controllers',[])
       // Despues de filtrar, guardar parametros en scope. Se hace asi para que el filtrado sea mas eficiente
       $rootScope.concejo = concejo;
       $rootScope.idCategoria = idCategoria;
+      $scope.tituloVista = SCategorias.idCategoria_a_nombre(idCategoria);
 
       // -------------------------------------------------------------------------------------------------------------
       // FILTRO 2: filtra las cams segun una cadena de texto que haya introducido el usuario
@@ -118,17 +111,18 @@ angular.module('wca.controllers',[])
 .controller('MapaCtrl', function($scope, $stateParams, SMapa, $rootScope){
 
   $rootScope.mostrarLupa = false;
+
   $scope.$on('$ionicView.afterEnter', function() {
-    //$scope.lugar = $stateParams.lugar;
-    //$scope.concejo = $stateParams.concejo;
     var mapa = SMapa.crear(document.getElementById('mapa'));
     var layer = SMapa.creaFusionTableLayer().setMap(mapa);
+    var posicion = {lat: $rootScope.cam.lat, lng: $rootScope.cam.lng};
 
     if(!$rootScope.cam){
       mapa.setCenter(SMapa.OVIEDO);
       mapa.setZoom(8);
     } else {
-        mapa.setCenter( {lat: $rootScope.cam.lat, lng: $rootScope.cam.lng} );
+        SMapa.creaMarker(posicion, mapa);
+        mapa.setCenter(posicion);
         mapa.setZoom(13);
     }// else
   }); // $scope.on
@@ -313,8 +307,7 @@ angular.module('wca.controllers',[])
     // CLIMA ---------------------------------------------------------------------------------------------------------
     var div = document.getElementById('void');
     SClima.getData( $rootScope.cam.lat, $rootScope.cam.lng ).success(function(climadata){
-console.log('climadata', climadata);
-      if(climadata){
+      if(climadata.weather){
         $scope.descripcion = climadata.weather[0].description;
         $scope.temp = climadata.main.temp;
         $scope.presion = climadata.main.pressure;
