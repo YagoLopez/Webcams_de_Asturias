@@ -9,8 +9,8 @@
 //TODO: que en ios aparezca arriba la barra de pestañas
 //TODO: hacer zoom en maapa global cuando se escoja filtro por concejo. Usar coordenaadas lat lng
 //TODO: ideas resolver el problema de navegacion en vista de tabs:
-//1) Crear un boton 'back' manualmente en la vistaaa de detalle. al hacer click -> history.goBack()
 //2) Crear una animacion de entrada en vista de detalla usaando slide-left-to-right de animate.css
+//TODO: nombres de categorías en nav-bar en el listado y el mosaico
 
 angular.module('wca.controllers',[])
 
@@ -23,7 +23,6 @@ angular.module('wca.controllers',[])
   //// listen for the $ionicView.enter event:
   ////$scope.$on('$ionicView.enter', function(e) {
   ////});
-
   })
 // ====================================================================================================================
 .controller('TabsCtrl', function($scope, $stateParams, SLoader, $rootScope, $ionicFilterBar,
@@ -299,6 +298,10 @@ angular.module('wca.controllers',[])
       return;
     };
 
+    $scope.$on('$ionicView.beforeEnter', function (event, viewData) {
+      viewData.enableBack = true;
+    });
+
     var datosCam = $filter('filter')($rootScope.items, function(cam) {
       return cam[4] == $scope.rowid;
     });
@@ -310,17 +313,22 @@ angular.module('wca.controllers',[])
     // CLIMA ---------------------------------------------------------------------------------------------------------
     var div = document.getElementById('void');
     SClima.getData( $rootScope.cam.lat, $rootScope.cam.lng ).success(function(climadata){
-      $scope.descripcion = climadata.weather[0].description;
-      $scope.temp = climadata.main.temp;
-      $scope.presion = climadata.main.pressure;
-      $scope.humedad = climadata.main.humidity;
-      $scope.nubosidad = climadata.clouds.all;
-      $scope.velocidadViento = climadata.wind.speed;
-      $scope.direccionViento = climadata.wind.deg;
-      //volumen precipitaciones ultimas 3 horas
-      //$scope.precipitacion = climadata.rain['3h'];
-      //url icono: http://openweathermap.org/img/w/10n.png
-      $scope.iconoUrl = 'http://openweathermap.org/img/w/'+climadata.weather[0].icon+'.png' ;
+console.log('climadata', climadata);
+      if(climadata){
+        $scope.descripcion = climadata.weather[0].description;
+        $scope.temp = climadata.main.temp;
+        $scope.presion = climadata.main.pressure;
+        $scope.humedad = climadata.main.humidity;
+        $scope.nubosidad = climadata.clouds.all;
+        $scope.velocidadViento = climadata.wind.speed;
+        $scope.direccionViento = climadata.wind.deg;
+        //volumen precipitaciones ultimas 3 horas
+        //$scope.precipitacion = climadata.rain['3h'];
+        //url icono: http://openweathermap.org/img/w/10n.png
+        $scope.iconoUrl = 'http://openweathermap.org/img/w/'+climadata.weather[0].icon+'.png' ;
+      } else {
+        $scope.descripcion = 'No se ha podido obtener infromación meteorológica'
+      }
     }).error(function(status){
       SPopup.show('Error', 'SClima.getData(): '+status)
     });

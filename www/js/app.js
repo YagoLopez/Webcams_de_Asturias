@@ -34,12 +34,14 @@ angular.module('wca', ['ionic', 'wca.controllers', 'wca.services',
       $ionicConfigProvider.scrolling.jsScrolling(false);
     }
     $ionicFilterBarConfigProvider.placeholder('Buscar');
+    // avoids prefetch of templates. only actual template is loaded
+    //$ionicConfigProvider.templates.maxPrefetch(0);
 
     $stateProvider
 // -------------------------------------------------------------------------------------------------------------------
   .state('app', {
     url: '/app',
-    abstract: false,
+    abstract: true,
     templateUrl: 'templates/menu.html',
     controller: 'AppCtrl'
   })
@@ -127,7 +129,7 @@ angular.module('wca', ['ionic', 'wca.controllers', 'wca.services',
 // -------------------------------------------------------------------------------------------------------------------
   .state('app.detalle', {
     url: '/detalle/:rowid',
-    cache: true,
+    cache: false,
     views: {
       'menuContent': {
         templateUrl: 'templates/detalle.html',
