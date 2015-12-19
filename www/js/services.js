@@ -275,15 +275,15 @@ angular.module('wca.services',[])
     var urlBaseCategoria = 'http://webcamsdeasturias.com/interior.php?categoria=';
 
     var url_a_nombre = function(urlCategoria){
-      if (urlCategoria === 'http://webcamsdeasturias.com/interior.php?categoria=1')
+      if (urlCategoria === urlBaseCategoria+'1')
         nombreCategoria = 'Poblaciones';
-      if (urlCategoria === 'http://webcamsdeasturias.com/interior.php?categoria=2')
+      if (urlCategoria === urlBaseCategoria+'2')
         nombreCategoria = 'Puertos';
-      if (urlCategoria === 'http://webcamsdeasturias.com/interior.php?categoria=3')
+      if (urlCategoria === urlBaseCategoria+'3')
         nombreCategoria = 'Montaña';
-      if (urlCategoria === 'http://webcamsdeasturias.com/interior.php?categoria=5')
+      if (urlCategoria === urlBaseCategoria+'5')
         nombreCategoria = 'Ríos';
-      if (urlCategoria === 'http://webcamsdeasturias.com/interior.php?categoria=7')
+      if (urlCategoria === urlBaseCategoria+'7')
         nombreCategoria = 'Playas';
     return nombreCategoria;
     };

@@ -35,7 +35,6 @@
     <file url="file://$PROJECT_DIR$/www/templates/popover.html" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/www/templates/stats.html" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/www/templates/streetview.html" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/www/templates/tabs-backup.html" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/www/templates/tabs.html" charset="UTF-8" />
   </component>
 </project>

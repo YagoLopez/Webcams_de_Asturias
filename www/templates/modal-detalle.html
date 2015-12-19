@@ -8,17 +8,18 @@
         <i class="icon icon-right ion-android-close"></i>
       </button>
     </div>
+
   </ion-header-bar>
   <ion-header-bar class="bar-subheader bar-light">
     <div style="text-align: center">
-      <span>Zoom imagen</span>
+      <span>Zoom: </span>
       <img style="width:35px;vertical-align:middle" src="../img/pinch1.png"/>
     </div>
   </ion-header-bar>
 
   <ion-content>
     <ion-scroll zooming="true" direction="xy" style="margin-top:0;width: 100%; height:100%">
-      <img ng-src="{{ ::cam.imagen }}"/>
+      <img ng-src="{{ cam.imagen }}"/>
     </ion-scroll>
   </ion-content>
 

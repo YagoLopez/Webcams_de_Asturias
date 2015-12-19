@@ -1,15 +1,15 @@
 //TODO: revisar las dependencias que se pasan a los controladores
 //TODO: recordar que el codigo que se encuentra en el evento on.afterviewEnter se ejecuta siempre. Probar a quitar la cache de las vistas que usan este icono a ver que pasa
 //TODO: hacer perfilado, ver como se comporta la memoria y el procesador al ejecutar la app
-//TODO: que en ios aparezca arriba la barra de pestañas
+//TODO: que en ios aparezca abajo la barra de pestañas
 //TODO: hacer zoom en maapa global cuando se escoja filtro por concejo. Usar coordenaadas lat lng
-//TODO: cambiar el icono de fallback image
 //TODO: buscar imagen e icono para splash screen e icono de app
 //TODO: podria ser mejor arrojar una excepcion en vez de llamaar a SPopup cada vez que hay un error. Ya se encarga el
 //servicio de excepciones de capturar la excepcion y mostrar un popup. De esta forma está más centralizado el tratamiento
 //de errores
 //TODO: no se que pasa con el titulo del listado. revisar
-//TODO: poner background loader en heatmap
+//TODO: poner background loader en heatmap y en iframes de estadisticas
+//TODO: borrar console.logs
 
 angular.module('wca.controllers',[])
 
@@ -280,7 +280,7 @@ angular.module('wca.controllers',[])
 })
 // ====================================================================================================================
 .controller('DetalleCtrl', function($scope, $stateParams, $ionicModal, SMapa, SClima, $filter, $rootScope,
-                                    SPopup, SWikipedia, $ionicSlideBoxDelegate, $ionicPopover, Cam){
+                                    SPopup, SWikipedia, $ionicSlideBoxDelegate, $ionicPopover, Cam, SLoader){
 
     $scope.rowid = $stateParams.rowid;
     $rootScope.mostrarLupa = false;
@@ -357,6 +357,10 @@ angular.module('wca.controllers',[])
     }).then(function(popover) {
       $scope.popover = popover;
     });
+
+    $scope.reloadImg = function(){
+      $rootScope.cam.imagen =$rootScope.cam.imagen + '#' + new Date().getTime();
+    }
 
 })
 // =====================================================================================================
