@@ -17,7 +17,6 @@
     <file url="file://$PROJECT_DIR$/www/templates/detalle.html" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/www/templates/gif-player-backup.html" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/www/templates/gif-player.html" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/www/templates/graficos.html" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/www/templates/heatmap.html" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/www/templates/img-viewer.html" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/www/templates/listado-backup.html" charset="UTF-8" />
@@ -33,6 +32,8 @@
     <file url="file://$PROJECT_DIR$/www/templates/mosaico.html" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/www/templates/panoramio.html" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/www/templates/popover.html" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/www/templates/por_categoria.html" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/www/templates/por_concejo.html" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/www/templates/stats.html" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/www/templates/streetview.html" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/www/templates/tabs.html" charset="UTF-8" />

@@ -127,16 +127,16 @@ angular.module('wca', ['ionic', 'wca.controllers', 'wca.services',
     }
   })
 // -------------------------------------------------------------------------------------------------------------------
-  .state('app.detalle', {
-    url: '/detalle/:rowid',
-    cache: false,
-    views: {
-      'menuContent': {
-        templateUrl: 'templates/detalle.html',
-        controller:'DetalleCtrl'
-      }
-    }
-  })
+      .state('app.detalle', {
+        url: '/detalle/:rowid',
+        cache: false,
+        views: {
+          'menuContent': {
+            templateUrl: 'templates/detalle.html',
+            controller: 'DetalleCtrl'
+          }
+        }
+      })
 // -------------------------------------------------------------------------------------------------------------------
   .state('app.gif-player', {
     url: '/gif-player/:id_item_meteo',
@@ -151,7 +151,7 @@ angular.module('wca', ['ionic', 'wca.controllers', 'wca.services',
 // -------------------------------------------------------------------------------------------------------------------
   .state('app.meteo', {
     url: '/meteo',
-    cache: false,
+    cache: true,
     views: {
       'menuContent': {
         templateUrl: 'templates/meteo.html',
@@ -191,12 +191,22 @@ angular.module('wca', ['ionic', 'wca.controllers', 'wca.services',
         }
       })
 // -------------------------------------------------------------------------------------------------------------------
-      .state('app.graficos', {
-        url: '/graficos',
+      .state('app.por_categoria', {
+        url: '/por_categoria',
         cache: true,
         views: {
           'menuContent': {
-            templateUrl: 'templates/graficos.html'
+            templateUrl: 'templates/por_categoria.html'
+          }
+        }
+      })
+// -------------------------------------------------------------------------------------------------------------------
+      .state('app.por_concejo', {
+        url: '/por_concejo',
+        cache: true,
+        views: {
+          'menuContent': {
+            templateUrl: 'templates/por_concejo.html'
           }
         }
       })

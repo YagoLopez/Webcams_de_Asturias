@@ -2,14 +2,14 @@
 <!--TODO: lazy loading de imagenes-->
 <!--TODO: pasar todos los nombres de dominio a IPs para optimizar tiempos de carga-->
 <!--TODO: poner url de wikipedia en la pestaña de información-->
-<ion-view view-title="Detalles" xmlns:rel="http://www.w3.org/1999/xhtml">
+<ion-view view-title="Detalles">
 
   <ion-nav-buttons side="secondary">
     <button class="button button-icon icon ion-android-more-vertical" ng-click="popover.show($event)">
     </button>
   </ion-nav-buttons>
 
-  <ion-content class="animated fadeInRight">
+  <ion-content>
     <style>
       .card {
         padding-top: 1px;
@@ -51,14 +51,14 @@
       <div class="item item-image" style="height:100%; width:100%">
         <img ng-src="{{ cam.imagen }}" fallback-src="../img/imgFail.png" class="imgLoader"/>
       </div>
-      <div class="item item-body" style="font-size:small">
+      <div class="item item-body" style="font-size:small;padding-top:8px;padding-bottom:8px">
         {{ ::cam.lugar }}<br>
       </div>
-      <div class="item item-body" style="font-size: small;padding-top:5px;padding-bottom:5px">
+      <div class="item item-body" style="font-size: small">
           <i class="icon ion-ios-checkmark-outline" style="color:#387ef5;"></i>
-          <b>Concejo: </b>{{ ::cam.concejo }}<br>
+          Concejo: {{ ::cam.concejo }}<br>
           <i class="icon ion-ios-checkmark-outline" style="color:#387ef5;"></i>
-          <b>Categoría: </b>{{ ::cam.categoria }}
+          Categoría: {{ ::cam.categoria }}
       </div>
       <!-- botones ------------------------------------------------------------------------------------------------->
       <div class="item item-text-wrap" style="padding:0;">
