@@ -1,12 +1,6 @@
 <style type="text/css">
   #gifScroll {
     width: 100%;
-    /*height: 60%;*/
-    /*padding-top: 50px;*/
-    background-repeat: no-repeat;
-    background-position: center 50px;
-    background-image: url(../img/spinner.gif);
-    background-color: transparent;
   }
 </style>
 
@@ -31,7 +25,6 @@
         Detalles:
       </div>
       <div class="item item-text-wrap" style="font-size:small">
-        <!--TODO: hacer un campo en la tabla meteo con la url de creditos-->
         <div><span style="color:green">&#187; Nombre:</span> {{ ::itemMeteo.nombre}}</div>
         <div><span style="color:green">&#187; Fuente:</span> <a href="{{ ::itemMeteo.urlFuente }}" target="_blank">
           {{ ::itemMeteo.fuente}}</a>

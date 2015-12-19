@@ -4,7 +4,6 @@ En vez de descargar la imagen usando xhr, descargarla como una imagen normal con
 obtener los datos binarios por javascript de la cache
 -->
 <!--TODO: probar a usar la directiva awesome-slider en lugar del range slider de ionic-->
-<!--TODO: al cargar la página la imagen tiene tamaño nulo-->
 <ion-view view-title="{{ ::itemMeteo.categoria }}" xmlns:rel="http://www.w3.org/1999/xhtml">
   <ion-content>
     <style>
@@ -50,8 +49,6 @@ obtener los datos binarios por javascript de la cache
     </style>
 
     <!-- imagen -------------------------------------------------------------------------------------------------->
-    <!--TODO: arreglar la altura de ion-scroll-->
-    <!--TODO: poner un gif loader como imagen estática en el supergif-->
     <!--<ion-scroll id="gifScroll" zooming="true" direction="xy" style="width:100%;height:25em;padding-top: 50px;">-->
       <!--<div id="gifContainer" data-tap-disabled>-->
           <img id="gif" rel:animated_src="{{ itemMeteo.url }}" rel:auto_play="0"

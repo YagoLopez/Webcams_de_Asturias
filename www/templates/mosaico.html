@@ -19,7 +19,7 @@
 
         <ion-item class="col col-33 animated zoomIn" ng-if="$index < items.length">
           <a href="#/app/detalle/{{ items[$index][4] }}" class="itemCam">
-          <!--<img ng-src="{{ items[$index][2] }}" width="100%" />-->
+          <!--<img ng-src="{{ items[$index][4] }}" width="100%" />-->
           <!--<img src="http://lorempixel.com/400/200/sports/1/" width="100%" >-->
           <img ng-src="http://api.randomuser.me/portraits/thumb/men/{{$index}}.jpg">
           <div class="divImg">{{ items[$index][0] }}</div>
@@ -28,7 +28,7 @@
 
         <ion-item class="col col-33 animated zoomIn" ng-if="$index+1 < items.length" ng-click="showModal($index+1)">
           <a href="#/app/detalle/{{ items[$index+1][4] }}" class="itemCam">
-          <!--<img ng-src="{{ items[$index+1][2] }}" width="100%" />-->
+          <!--<img ng-src="{{ items[$index+1][4] }}" width="100%" />-->
           <!--<img src="http://lorempixel.com/400/200/sports/1/" width="100%" >-->
           <img ng-src="http://api.randomuser.me/portraits/thumb/men/{{$index+1}}.jpg">
           <div class="divImg">{{ items[$index+1][0] }}</div>
@@ -37,7 +37,7 @@
 
         <ion-item class="col col-33 animated zoomIn" ng-if="$index+2 < items.length" ng-click="showModal($index+2)">
           <a href="#/app/detalle/{{ items[$index+2][4] }}" class="itemCam">
-          <!--<img ng-src="{{ items[$index+2][2] }}" width="100%" />-->
+          <!--<img ng-src="{{ items[$index+2][4] }}" width="100%" />-->
           <!--<img src="http://lorempixel.com/400/200/sports/1/" width="100%" >-->
           <img ng-src="http://api.randomuser.me/portraits/thumb/men/{{$index+2}}.jpg">
           <div class="divImg">{{ items[$index+2][0] }}</div>
