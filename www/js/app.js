@@ -196,7 +196,8 @@ angular.module('wca', ['ionic', 'wca.controllers', 'wca.services',
         cache: true,
         views: {
           'menuContent': {
-            templateUrl: 'templates/por_categoria.html'
+            templateUrl: 'templates/por_categoria.html',
+            controller: 'PorCategoriaCtrl'
           }
         }
       })
@@ -206,7 +207,8 @@ angular.module('wca', ['ionic', 'wca.controllers', 'wca.services',
         cache: true,
         views: {
           'menuContent': {
-            templateUrl: 'templates/por_concejo.html'
+            templateUrl: 'templates/por_concejo.html',
+            controller: 'PorConcejoCtrl'
           }
         }
       })
