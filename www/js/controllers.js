@@ -358,8 +358,15 @@ angular.module('wca.controllers',[])
       $scope.popover = popover;
     });
 
+    $scope.tipvisibility = false;
     $scope.reloadImg = function(){
-      $rootScope.cam.imagen =$rootScope.cam.imagen + '#' + new Date().getTime();
+      $rootScope.cam.imagen = $rootScope.cam.imagen + '#' + new Date().getTime();
+      $scope.tipvisibility = true;
+      setTimeout(function(){
+        $scope.$apply(function(){
+          $scope.tipvisibility = false;
+        })
+      }, 800);
     }
 
 })

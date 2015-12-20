@@ -50,6 +50,9 @@
     <div class="list card">
       <div class="item item-image" style="height:100%; width:100%">
         <img ng-src="{{ cam.imagen }}" fallback-src="../img/imgFail.png" class="imgLoader"/>
+        <md-tooltip md-visible="tipvisibility">
+          Recarga de imagen
+        </md-tooltip>
       </div>
       <div class="item item-body" style="font-size:small;padding-top:8px;padding-bottom:8px">
         {{ ::cam.lugar }}<br>
@@ -136,7 +139,11 @@
 
     <div id="void"></div>
 
-
+<!--
+    <md-tooltip md-visible="true" md-direction="{{'bottom'}}">
+      Insert Drive
+    </md-tooltip>
+-->
 
   </ion-content>
 </ion-view>
