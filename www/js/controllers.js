@@ -362,9 +362,12 @@ angular.module('wca.controllers',[])
     $scope.reloadImg = function(){
       $rootScope.cam.imagen = $rootScope.cam.imagen + '#' + new Date().getTime();
       $scope.tipvisibility = true;
+      console.log('scope.tipvisibility', $scope.tipvisibility);
+
       setTimeout(function(){
         $scope.$apply(function(){
           $scope.tipvisibility = false;
+          console.log('scope.tipvisibility apagado', $scope.tipvisibility);
         })
       }, 800);
     }
