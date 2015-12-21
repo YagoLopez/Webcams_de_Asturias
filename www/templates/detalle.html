@@ -93,7 +93,7 @@
           <i class="icon ion-ios-partlysunny"></i>
           Meteorología
         </a>
-        <a class="tab-item" ng-click="page='second'" ng-class="{active:page === 'second'}" style="font-size:small;">
+        <a class="tab-item" ng-click="page='second';getInfo()" ng-class="{active:page === 'second'}" style="font-size:small;">
           <i class="icon ion-document-text"></i>
           Información
         </a>
@@ -136,14 +136,7 @@
     </md-button>
     <!-- FAB button -------------------------------------------------------------------------------------------------->
 
-
     <div id="void"></div>
-
-<!--
-    <md-tooltip md-visible="true" md-direction="{{'bottom'}}">
-      Insert Drive
-    </md-tooltip>
--->
 
   </ion-content>
 </ion-view>

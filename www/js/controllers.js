@@ -9,7 +9,6 @@
 //de errores
 //TODO: no se que pasa con el titulo del listado. revisar
 //TODO: borrar console.logs
-//TODO: avisar de la recarga de imaagen en laa vista detalle
 
 angular.module('wca.controllers',[])
 
@@ -28,8 +27,8 @@ angular.module('wca.controllers',[])
                                  SFusionTable, $filter, $ionicScrollDelegate, SPopup, $ionicNavBarDelegate, SCategorias){
 
     SLoader.show();
-    var concejo = $stateParams.concejo || '';
-    var idCategoria = $stateParams.idCategoria || '';
+    var concejo = $stateParams.concejo;
+    var idCategoria = $stateParams.idCategoria;
 
     //TODO: revisar esto. hacer un servicio para no usar rootscope?
     $rootScope.mostrarLupa = true;
@@ -66,7 +65,12 @@ angular.module('wca.controllers',[])
       // Despues de filtrar, guardar parametros en scope. Se hace asi para que el filtrado sea mas eficiente
       $rootScope.concejo = concejo;
       $rootScope.idCategoria = idCategoria;
-      $scope.tituloVista = SCategorias.idCategoria_a_nombre(idCategoria);
+
+      if(!idCategoria || idCategoria == ''){
+        $scope.tituloVista = 'Lista completa'
+      } else {
+        $scope.tituloVista = SCategorias.idCategoria_a_nombre(idCategoria);
+      }
 
       // -------------------------------------------------------------------------------------------------------------
       // FILTRO 2: filtra las cams segun una cadena de texto que haya introducido el usuario
@@ -326,16 +330,18 @@ angular.module('wca.controllers',[])
     // FIN CLIMA -----------------------------------------------------------------------------------------------------
 
     // WIKIPEDIA -----------------------------------------------------------------------------------------------------
-    SWikipedia.info($rootScope.cam.concejo).success(function(data){
-      var pageid = data.query.pageids[0];
-      if(pageid) {
-        $scope.infoConcejo = data.query.pages[pageid].extract;
-        //console.log('extract', $scope.infoConcejo);
-      }
-    }).error(function(status){
-      $scope.infoConcejo = 'No se ha podido obtener información remota: '+status;
-    });
-    // FIN WIKIPEDIA -------------------------------------------------------------------------------------------------
+    $scope.getInfo = function(){
+      SWikipedia.info($rootScope.cam.concejo).success(function(data){
+        var pageid = data.query.pageids[0];
+        if(pageid) {
+          $scope.infoConcejo = data.query.pages[pageid].extract;
+          console.log('extract', $scope.infoConcejo);
+        }
+      }).error(function(status){
+        $scope.infoConcejo = 'No se ha podido obtener información remota: '+status;
+      });
+    }//getInfo
+    // WIKIPEDIA -----------------------------------------------------------------------------------------------------
 
     // DIALOGO MODAL -------------------------------------------------------------------------------------------------
     $ionicModal.fromTemplateUrl('templates/modal-detalle.html', {

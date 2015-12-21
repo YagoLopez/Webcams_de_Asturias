@@ -7,28 +7,31 @@
   margin-top:15px;
 }
 .enlaceListado{
-  border-width:2px;
-  border-style:outset;
+  border: 2px outset;
 }
 .resalteListado{
-  color:#28a54c
+  color:#28a54c;
 }
 .textoListado {
-  font-size:small
+  font-size:small;
 }
 /*****************************************/
+/*
 .chat-item.ng-enter {
   -webkit-animation: fadeInLeft 1s;
   animation: fadeInLeft 1s;
 }
+*/
 
+/*
 .chat-item.ng-enter-stagger {
   -webkit-animation-delay:200ms;
   animation-delay:200ms;
-  /* override to make sure it's not inherited from other styles */
+  /!* override to make sure it's not inherited from other styles *!/
   -webkit-animation-duration:0;
   animation-duration:0;
 }
+*/
 /*****************************************/
 .scale-in {
   -webkit-transform: scale(0.0);

@@ -31,7 +31,7 @@ angular.module('wca', ['ionic', 'wca.controllers', 'wca.services',
       $ionicConfigProvider.scrolling.jsScrolling(false);
     }
     $ionicFilterBarConfigProvider.placeholder('Buscar');
-    // avoids prefetch of templates. only actual template is loaded
+    // num templates to prefectch
     $ionicConfigProvider.templates.maxPrefetch(3);
 
     $stateProvider
