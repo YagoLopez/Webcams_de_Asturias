@@ -4,8 +4,8 @@
 
   <ion-content class="animated fadeIn">
     <div class="list">
-      <div collection-repeat="cam in items track by cam[4]" item-heigth="100px">
-      <!--<div ng-repeat="cam in items track by cam[4]">-->
+      <!--<div collection-repeat="cam in items track by cam[4]" item-heigth="100px">-->
+      <div ng-repeat="cam in items track by cam[4]">
         <a class="item item-thumbnail-left item-icon-right" href="#/app/detalle/{{ cam[4] }}">
           <!--<img ng-src="http://api.randomuser.me/portraits/thumb/men/{{$index}}.jpg" height="50%">-->
           <img src="../img/ionic.png" fallback-src="../img/imgFail.png"/>
