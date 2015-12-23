@@ -2,13 +2,13 @@
 <!--TODO: cuando falla al cargar la imagen avisar al usuario en el listado que puede intentar recargarla-->
 <ion-view view-title="{{tituloVista}}">
 
-  <ion-content class="animated fadeIn">
+  <ion-content>
     <div class="list">
       <!--<div collection-repeat="cam in items track by cam[4]" item-heigth="100px">-->
       <div ng-repeat="cam in items track by cam[4]">
         <a class="item item-thumbnail-left item-icon-right" href="#/app/detalle/{{ cam[4] }}">
           <!--<img ng-src="http://api.randomuser.me/portraits/thumb/men/{{$index}}.jpg" height="50%">-->
-          <img src="../img/ionic.png" fallback-src="../img/imgFail.png"/>
+          <img src="img/ionic.png" fallback-src="../img/imgFail.png"/>
           <!--<img  ng-src="{{ cam[2]}}" fallback-src="http://google.com/favicon.ico"/>-->
           <!--<img ng-src="http://loremflickr.com/500/500?random={{$index+1}}" fallback-src="http://google.com/favicon.ico">-->
           <div class="divListado">
