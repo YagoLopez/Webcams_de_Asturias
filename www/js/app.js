@@ -32,7 +32,7 @@ angular.module('wca', ['ionic', 'wca.controllers', 'wca.services',
     }
     $ionicFilterBarConfigProvider.placeholder('Buscar');
     // num templates to prefectch
-    $ionicConfigProvider.templates.maxPrefetch(3);
+    $ionicConfigProvider.templates.maxPrefetch();
 
     $stateProvider
 // -------------------------------------------------------------------------------------------------------------------
@@ -210,11 +210,22 @@ angular.module('wca', ['ionic', 'wca.controllers', 'wca.services',
         }
       })
 // -------------------------------------------------------------------------------------------------------------------
+      .state('app.listado2', {
+        url: '/listado2?concejo&idCategoria',
+        cache: true,
+        views: {
+          'menuContent': {
+            templateUrl: 'templates/listado2.html',
+            controller: 'Listado2Ctrl'
+          }
+        }
+      })
+// -------------------------------------------------------------------------------------------------------------------
 
 ; // fin de estados
 
   // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/app/tabs/listado');
+  $urlRouterProvider.otherwise('app/listado2?idCategoria=7');
 
 // -------------------------------------------------------------------------------------------------------------------
 
