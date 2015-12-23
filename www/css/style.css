@@ -1,10 +1,8 @@
 /* Empty. Add your own CSS if you like*/
-/*
 .platform-android .has-header.has-tabs-top, .platform-android .has-tabs-top.has-header {
-  /!*top: 127px;*!/
-  top:200px;
+  top: 127px;
+  /*top:200px;*/
 }
-*/
 .divListado {
   margin-top:15px;
 }

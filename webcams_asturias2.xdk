@@ -6,7 +6,7 @@
       "projectTypeName": "com.intel.xdk.projecttype.jsapp",
       "src": "",
       "projectGuid": "5026b907-8667-4c9e-a1ed-6f06fd4b87b6",
-      "lastModifiedDate": 1450791111941,
+      "lastModifiedDate": 1450843731585,
       "creationDate": 1450749850707
     },
     "sourceDirectory": "www",
@@ -76,7 +76,8 @@
           "android-targetSdkVersion": "19",
           "android-installLocation": "auto",
           "Fullscreen": true,
-          "Orientation": "portrait"
+          "Orientation": "portrait",
+          "android-signed": false
         },
         "isActive_": true,
         "appName_": "webcams_asturias2",

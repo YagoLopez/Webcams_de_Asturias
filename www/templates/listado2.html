@@ -1,0 +1,40 @@
+<!--TODO: añadir geolocalicacion y busqueda de camaras cercanas-->
+<!--TODO: cuando falla al cargar la imagen avisar al usuario en el listado que puede intentar recargarla-->
+<ion-view view-title="{{tituloVista}}">
+
+  <ion-content>
+    <style type="text/css">
+      .myclass{padding:0;}
+    </style>
+    listado2
+    <ion-list>
+      <ion-item class="myclass item-thumbnail-left item-icon-right"
+                collection-repeat="cam in items track by cam[4]" href="#/app/detalle/{{ cam[4] }}">
+        <!--<a class="item item-thumbnail-left item-icon-right" href="#/app/detalle/{{ cam[4] }}">-->
+        <img src="img/ionic.png" fallback-src="../img/imgFail.png"/>
+        <!--<img ng-src="http://api.randomuser.me/portraits/thumb/men/{{$index}}.jpg" height="50%">-->
+        <!--<img  ng-src="{{ cam[2]}}" fallback-src="http://google.com/favicon.ico"/>-->
+        <!--<img ng-src="http://loremflickr.com/500/500?random={{$index+1}}" fallback-src="http://google.com/favicon.ico">-->
+        <div class="divListado">
+          <p>
+            <span class="resalteListado"><b>&#187; </b></span>
+            <span class="textoListado">{{ cam[0] }}</span>
+          </p>
+          <p>
+            <span class="resalteListado"><b>&#187; </b></span>
+            <span class="textoListado">Concejo: {{ cam[1] }}</span>
+          </p>
+          <!--<p>Categoría: {{cam[3]}}</p>-->
+          <!--<p>indice: {{ $index }}</p>-->
+          <!--<p>ROWID: {{cam[4]}}</p>-->
+        </div>
+        <i class="icon ion-android-exit" style="color: #387ef5;"></i>
+        <!--</a>-->
+      </ion-item>
+    </ion-list>
+
+  <br/>
+  <br/>
+
+  </ion-content>
+</ion-view>
