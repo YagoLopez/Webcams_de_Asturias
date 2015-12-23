@@ -50,9 +50,6 @@
     <div class="list card">
       <div class="item item-image" style="height:100%; width:100%">
         <img ng-src="{{ cam.imagen }}" fallback-src="../img/imgFail.png" class="imgLoader"/>
-        <md-tooltip md-visible="tipvisibility">
-          Recarga de imagen
-        </md-tooltip>
       </div>
       <div class="item item-body" style="font-size:small;padding-top:8px;padding-bottom:8px">
         {{ ::cam.lugar }}<br>
@@ -67,16 +64,20 @@
       <div class="item item-text-wrap" style="padding:0;">
         <div class="row">
           <div class="col">
+<!--
             <md-button class="md-raised md-primary" ng-click="showModal()" style="height: 40px; width:100%">
               <i class="icon ion-arrow-expand"></i>
               Ampliar
             </md-button>
+-->
           </div>
           <div class="col">
+<!--
             <md-button class="md-raised md-primary" ng-click="reloadImg()" style="height: 40px; width:100%">
               <i class="icon ion-ios-reload"></i>
               Recargar
             </md-button>
+-->
           </div>
         </div>
       </div>

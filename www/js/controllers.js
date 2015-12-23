@@ -687,7 +687,7 @@ angular.module('wca.controllers',[])
     var sqlQuery = 'SELECT Lugar,Concejo,Imagen,Categoria,rowid,latitud,longitud FROM '+ SFusionTable.TABLE_ID;
     SFusionTable.getRemoteData(sqlQuery).success(function(data){
 
-      console.log('data', data);
+      //console.log('data', data);
 
       // -------------------------------------------------------------------------------------------------------------
       // FILTRO 1: filtra las cams por parametros de url: concejo y categoria
@@ -708,7 +708,7 @@ angular.module('wca.controllers',[])
 
       // Inicialmente items contiene las cams filtradas solo por parametros de url
       $rootScope.items = camsFiltradasPorUrl;
-      console.log('rootscope.items', $rootScope.items);
+      //console.log('rootscope.items', $rootScope.items);
       // Despues de filtrar, guardar parametros en scope. Se hace asi para que el filtrado sea mas eficiente
       $rootScope.concejo = concejo;
       $rootScope.idCategoria = idCategoria;
