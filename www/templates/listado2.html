@@ -1,11 +1,18 @@
 <!--TODO: añadir geolocalicacion y busqueda de camaras cercanas-->
 <!--TODO: cuando falla al cargar la imagen avisar al usuario en el listado que puede intentar recargarla-->
 <ion-view view-title="{{tituloVista}}">
+  <style type="text/css">
+    .myclass{padding:0;}
+    #btnMosaico{padding:0;border:0;}
+  </style>
+
+  <ion-nav-buttons side="right">
+    <!--<button class="button button-icon icon ion-search"></button>-->
+    <a id="btnMosaico" class="button button-icon icon ion-settings"
+            href="#/app/mosaico2?concejo={{ cam[1] }}&idCategoria={{ cam[3] }}"></a>
+  </ion-nav-buttons>
 
   <ion-content>
-    <style type="text/css">
-      .myclass{padding:0;}
-    </style>
     listado2
     <ion-list>
       <ion-item class="myclass item-thumbnail-left item-icon-right"

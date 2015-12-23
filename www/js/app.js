@@ -212,10 +212,21 @@ angular.module('wca', ['ionic', 'wca.controllers', 'wca.services',
 // -------------------------------------------------------------------------------------------------------------------
       .state('app.listado2', {
         url: '/listado2?concejo&idCategoria',
-        cache: true,
+        cache: false,
         views: {
           'menuContent': {
             templateUrl: 'templates/listado2.html',
+            controller: 'Listado2Ctrl'
+          }
+        }
+      })
+// -------------------------------------------------------------------------------------------------------------------
+      .state('app.mosaico2', {
+        url: '/mosaico2?concejo&idCategoria',
+        cache: false,
+        views: {
+          'menuContent': {
+            templateUrl: 'templates/mosaico2.html',
             controller: 'Listado2Ctrl'
           }
         }
