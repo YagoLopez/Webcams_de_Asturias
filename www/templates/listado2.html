@@ -2,41 +2,64 @@
 <!--TODO: cuando falla al cargar la imagen avisar al usuario en el listado que puede intentar recargarla-->
 <ion-view view-title="{{tituloVista}}">
   <style type="text/css">
-    .myclass{padding:0;}
+    /*.myclass{padding:0;}*/
     #btnMosaico{padding:0;border:0;}
+/*    .my-content {
+      width: 100%;
+      height: 100%;
+      overflow-y: scroll;
+    }
+
+    .my-list {
+      list-style: none;
+      font-size: 25px;
+      line-height: 62px;
+    }
+
+    .my-item, .my-item-divider {
+      height: 62px;
+      border-bottom: 1px solid #ddd;
+      padding-left: 15px;
+      width: 100%;
+    }*/
+    .itemCam {
+      padding: 0;
+      text-decoration: none;
+    }
   </style>
 
   <ion-nav-buttons side="right">
-    <a id="btnMosaico" class="button button-icon icon ion-settings"
-            href="#/app/mosaico2?concejo={{ concejo }}&idCategoria={{ idCategoria }}"></a>
+    <a id="btnMosaico" class="button button-icon icon ion-grid"
+            href="#/app/mosaico2?concejo={{ ::concejo }}&idCategoria={{ ::idCategoria }}"></a>
   </ion-nav-buttons>
 
   <ion-content>
-    listado2<br>
-    concejo: {{concejo}}<br>
-    idcategoria: {{idCategoria}}<br>
+    listado2 javascript scroll true<br>
+    concejo: {{::concejo}}<br>
+    idcategoria: {{::idCategoria}}<br>
 
-    <ion-list>
-      <ion-item class="myclass item-thumbnail-left item-icon-right"
-                collection-repeat="cam in items track by cam[4]" href="#/app/detalle/{{ cam[4] }}">
+    <div>
+      <!--<div class="item item-thumbnail-left" ng-repeat="cam in items track by cam[4]" href="#/app/detalle/{{ ::cam[4] }}">-->
+      <!--<div class="item item-thumbnail-left" ng-repeat="cam in items track by cam[4]">-->
+        <a class="item item-thumbnail-left" ng-repeat="cam in items track by cam[4]" href="#/app/detalle/{{ ::items[$index][4] }}">
         <img ng-src="img/ionic.png" fallback-src="../img/imgFail.png"/>
         <div class="divListado">
           <p>
             <span class="resalteListado"><b>&#187; </b></span>
-            <span class="textoListado">{{ cam[0] }}</span>
+            <span class="textoListado">{{ ::cam[0] }}</span>
           </p>
           <p>
             <span class="resalteListado"><b>&#187; </b></span>
-            <span class="textoListado">Concejo: {{ cam[1] }}</span>
+            <span class="textoListado">Concejo: {{ ::cam[1] }}</span>
           </p>
           <!--<p>Categoría: {{cam[3]}}</p>-->
           <!--<p>indice: {{ $index }}</p>-->
           <!--<p>ROWID: {{cam[4]}}</p>-->
         </div>
         <i class="icon ion-android-exit" style="color: #387ef5;"></i>
-        <!--</a>-->
-      </ion-item>
-    </ion-list>
+        </a>
+      </div>
+    </div>
 
   <br/>
   <br/>

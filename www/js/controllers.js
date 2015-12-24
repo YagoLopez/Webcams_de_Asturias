@@ -13,6 +13,7 @@
 angular.module('wca.controllers',[])
 
 // ====================================================================================================================
+/*
 .controller('AppCtrl', function($scope) {
 
   //// With the new view caching in Ionic, Controllers are only called
@@ -22,7 +23,9 @@ angular.module('wca.controllers',[])
   ////$scope.$on('$ionicView.enter', function(e) {
   ////});
   })
+*/
 // ====================================================================================================================
+/*
 .controller('TabsCtrl', function($scope, $stateParams, SLoader, $rootScope, $ionicFilterBar,
                                  SFusionTable, $filter, $ionicScrollDelegate, SPopup, $ionicNavBarDelegate, SCategorias){
 
@@ -109,6 +112,7 @@ angular.module('wca.controllers',[])
     });
 
 })
+*/
 // ====================================================================================================================
 .controller('MapaCtrl', function($scope, $stateParams, SMapa, $rootScope){
 

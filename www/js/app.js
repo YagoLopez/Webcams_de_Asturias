@@ -2,9 +2,9 @@
 //var url_api = "https://www.googleapis.com/fusiontables/v2/query?sql=SELECT%20*%20FROM%201gX5maFbqFyRziZiUYlpOBYhcC1v9lGkKqCXvZREF&key=AIzaSyBsdouSTimjrC2xHmbGgOt8VfbLBWc9Gps";
 
 angular.module('wca', ['ionic', 'wca.controllers', 'wca.services',
-  'jett.ionic.filter.bar'/*, 'ngMaterial' 'ionicLazyLoad'*/])
+  'jett.ionic.filter.bar' /*, 'ngMaterial' 'ionicLazyLoad'*/])
 
-.run(function($ionicPlatform) {
+.run(function($ionicPlatform, $animate) {
   $ionicPlatform.ready(function() {
 
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
@@ -20,10 +20,11 @@ angular.module('wca', ['ionic', 'wca.controllers', 'wca.services',
   });
 })
 
-.config(function($stateProvider, $urlRouterProvider, $compileProvider, $ionicConfigProvider, $ionicFilterBarConfigProvider) {
+.config(function($stateProvider, $urlRouterProvider, $compileProvider, $ionicConfigProvider,
+                 $ionicFilterBarConfigProvider, $logProvider) {
 
     // enable/disable debug info
-    $compileProvider.debugInfoEnabled(true);
+    $compileProvider.debugInfoEnabled(false);
     // remove back button text completely
     $ionicConfigProvider.backButton.previousTitleText(false).text(' ');
     // native scroll by default
@@ -34,13 +35,18 @@ angular.module('wca', ['ionic', 'wca.controllers', 'wca.services',
     // num templates to prefectch
     $ionicConfigProvider.templates.maxPrefetch();
 
+    //deactivate angular log system
+    $logProvider.debugEnabled(false);
+    $compileProvider.debugInfoEnabled(false);
+
     $stateProvider
 // -------------------------------------------------------------------------------------------------------------------
   .state('app', {
     url: '/app',
     abstract: true,
-    templateUrl: 'templates/menu.html',
-    controller: 'AppCtrl'
+    templateUrl: 'templates/menu.html'
+    //    ,
+    //controller: 'AppCtrl'
   })
 // -------------------------------------------------------------------------------------------------------------------
   //TODO: utilizar resolve en la definicion de estado para obtener datos remotos en vez de en metodo run(). Probar a ver
@@ -60,25 +66,25 @@ angular.module('wca', ['ionic', 'wca.controllers', 'wca.services',
     //}
   })
 // -------------------------------------------------------------------------------------------------------------------
-  .state('app.tabs.listado', {
-  url: '/listado',
-  cache: false,
-  views: {
-    'tab-listado': {
-    templateUrl: 'templates/listado.html'
-    }
-  }
-  })
+//  .state('app.tabs.listado', {
+//  url: '/listado',
+//  cache: false,
+//  views: {
+//    'tab-listado': {
+//    templateUrl: 'templates/listado.html'
+//    }
+//  }
+//  })
 // -------------------------------------------------------------------------------------------------------------------
-  .state('app.tabs.mosaico', {
-  url: '/mosaico',
-  cache: false,
-  views: {
-    'tab-mosaico': {
-    templateUrl: 'templates/mosaico.html'
-    }
-  }
-  })
+//  .state('app.tabs.mosaico', {
+//  url: '/mosaico',
+//  cache: false,
+//  views: {
+//    'tab-mosaico': {
+//    templateUrl: 'templates/mosaico.html'
+//    }
+//  }
+//  })
 // -------------------------------------------------------------------------------------------------------------------
   .state('app.mapa', {
     url: '/mapa',

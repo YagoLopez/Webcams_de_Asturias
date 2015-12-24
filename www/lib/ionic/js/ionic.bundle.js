@@ -4763,7 +4763,7 @@ ionic.views.Scroll = ionic.views.View.inherit({
 
       // The ms interval for triggering scroll events
       scrollEventInterval: 10,
-
+      //scrollEventInterval: 0,
       freeze: false,
 
       getContentWidth: function() {

@@ -4,9 +4,9 @@
 <!--To change the contents of this file, see the documentation on the intelxdk.config.additions.xml file.-->
 <intelxdk:version value="1.0"/>
 <intelxdk:cordova-cli version="5.1.1"/>
-<name>webcams_asturias2</name>
+<name>wca</name>
 <description>laskfakls</description>
-<author>alskfjlaskj</author>
+<author>slfksldk</author>
 <content src="index.html"/>
 <access origin="*"/>
 <allow-intent href="http://*"/>

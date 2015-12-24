@@ -6,7 +6,7 @@
       "projectTypeName": "com.intel.xdk.projecttype.jsapp",
       "src": "",
       "projectGuid": "5026b907-8667-4c9e-a1ed-6f06fd4b87b6",
-      "lastModifiedDate": 1450843731585,
+      "lastModifiedDate": 1450894657933,
       "creationDate": 1450749850707
     },
     "sourceDirectory": "www",
@@ -80,7 +80,7 @@
           "android-signed": false
         },
         "isActive_": true,
-        "appName_": "webcams_asturias2",
+        "appName_": "wca",
         "appID_": "not.yet.specified",
         "appAccess_": {
           "mode": "whitelist",
@@ -101,7 +101,7 @@
         "crosswalkVersion_": "14",
         "cordovaCLIVersion_": "5.1.1",
         "appDescription_": "laskfakls",
-        "appAuthor_": "alskfjlaskj"
+        "appAuthor_": "slfksldk"
       },
       "Android-Crosswalk": {
         "platform_": "android",
