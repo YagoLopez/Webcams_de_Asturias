@@ -288,7 +288,7 @@ angular.module('wca.controllers',[])
 })
 // ====================================================================================================================
 .controller('DetalleCtrl', function($scope, $stateParams, $ionicModal, SMapa, SClima, $filter, $rootScope,
-                                    SPopup, SWikipedia, $ionicSlideBoxDelegate, $ionicPopover, Cam, SLoader){
+                                    SPopup, SWikipedia, $ionicSlideBoxDelegate, $ionicPopover, Cam, SLoader, $compile){
 
     $scope.rowid = $stateParams.rowid;
     $rootScope.mostrarLupa = false;
@@ -298,7 +298,7 @@ angular.module('wca.controllers',[])
       return;
     };
 
-    $scope.$on('$ionicView.beforeEnter', function (event, viewData) {
+    $scope.$on('$ionicView.afterEnter', function (event, viewData) {
       viewData.enableBack = true;
     });
 
@@ -308,7 +308,7 @@ angular.module('wca.controllers',[])
 
     //TODO: es cam singleton??? Si no lo es hacerlo asi
     $rootScope.cam = new Cam(datosCam);
-    console.log('rootscope.cam', $rootScope.cam);
+    //console.log('rootscope.cam', $rootScope.cam);
 
     // CLIMA ---------------------------------------------------------------------------------------------------------
     var div = document.getElementById('void');
@@ -334,12 +334,14 @@ angular.module('wca.controllers',[])
     // FIN CLIMA -----------------------------------------------------------------------------------------------------
 
     // WIKIPEDIA -----------------------------------------------------------------------------------------------------
+    $scope.infoConcejo = 'Cargando...'
     $scope.getInfo = function(){
       SWikipedia.info($rootScope.cam.concejo).success(function(data){
         var pageid = data.query.pageids[0];
         if(pageid) {
           $scope.infoConcejo = data.query.pages[pageid].extract;
-          console.log('extract', $scope.infoConcejo);
+          $scope.wikipediaCredits = '<br>Fuente: <a href="http://org.wikipedia.es" target="_blank">Wikipedia</a>';
+          //console.log('extract', $scope.infoConcejo);
         }
       }).error(function(status){
         $scope.infoConcejo = 'No se ha podido obtener información remota: '+status;
@@ -417,7 +419,6 @@ angular.module('wca.controllers',[])
 
   // Obtiene itemMeteo ------------------------------------------------------------------------------------------------
   $scope.itemMeteo = new ItemMeteo(TablaMeteo.getItemById($stateParams.id_item_meteo));
-  console.log('tipo imagen', $scope.itemMeteo.tipoImagen);
 
   // inicializaciones -------------------------------------------------------------------------------------------------
   $scope.currentFrame = 0;
@@ -425,7 +426,7 @@ angular.module('wca.controllers',[])
   var timer = null;
   if(angular.equals({}, $scope.itemMeteo)){
     SLoader.hide();
-    SPopup.show('Error', 'No se han podido descargar datos remotos. Comprobar conexión de red');
+    SPopup.show('Error', 'Posibles causas: 1) No conexión de datos. 2) Fallo servidor remoto');
     return;
   }
   // Detencion de timer -----------------------------------------------------------------------------------------------

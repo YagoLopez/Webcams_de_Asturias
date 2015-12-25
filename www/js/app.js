@@ -27,17 +27,20 @@ angular.module('wca', ['ionic', 'wca.controllers', 'wca.services',
     $compileProvider.debugInfoEnabled(false);
     // remove back button text completely
     $ionicConfigProvider.backButton.previousTitleText(false).text(' ');
-    // native scroll by default
+    // enable/disable ntive scroll
     if (!ionic.Platform.isIOS()) {
-      $ionicConfigProvider.scrolling.jsScrolling(false);
+      $ionicConfigProvider.scrolling.jsScrolling(true);
     }
     $ionicFilterBarConfigProvider.placeholder('Buscar');
     // num templates to prefectch
     $ionicConfigProvider.templates.maxPrefetch();
 
-    //deactivate angular log system
+    // disable angular log system
     $logProvider.debugEnabled(false);
     $compileProvider.debugInfoEnabled(false);
+
+    // desactivr transiciones de ionic
+    //$ionicConfigProvider.views.transition('none');
 
     $stateProvider
 // -------------------------------------------------------------------------------------------------------------------

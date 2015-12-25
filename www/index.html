@@ -3,37 +3,27 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+<!--
+  <meta http-equiv="Content-Security-Policy" content="default-src *; script-src 'self' 'unsafe-inline'
+  'unsafe-eval' *; style-src  'self' 'unsafe-inline' *">
+-->
+
   <title></title>
 
   <!-- Ionic Framework css and fonts --------------------------------------------------------------------------------->
-  <script src="lib/ionic/js/ionic.bundle.js"></script>
-  <!--<script src="//code.ionicframework.com/nightly/js/ionic.bundle.js"></script>-->
+  <!-- version 1.2.1 -->
+  <script src="lib/ionic-1.2.1/js/ionic.bundle.js"></script>
   <script src="cordova.js"></script><!-- cordova script (this will be a 404 during development) -->
-  <link href="lib/ionic/css/ionic.min.css" rel="stylesheet">
+  <link href="lib/ionic-1.2.1/css/ionic.css" rel="stylesheet">
+  <!-- fin version 1.2.1 -->
+  <!-- version 1.1 -->
+  <!--<script src="lib/ionic/js/ionic.bundle.js"></script>-->
+  <!--&lt;!&ndash;<script src="//code.ionicframework.com/nightly/js/ionic.bundle.js"></script>&ndash;&gt;-->
+  <!--<script src="cordova.js"></script>&lt;!&ndash; cordova script (this will be a 404 during development) &ndash;&gt;-->
+  <!--<link href="lib/ionic/css/ionic.min.css" rel="stylesheet">-->
   <!--<link href='https://fonts.googleapis.com/css?family=RobotoDraft:400,500,700,400italic' rel='stylesheet' type='text/css'>-->
+  <!-- fin version 1.1 -->
   <!-- Fin Ionic Framework css and fonts ----------------------------------------------------------------------------->
-
-  <!-- Material Design Lite ------------------------------------------------------------------------------------------>
-<!--
-  TODO: al incluir mdl desciende el rendimiento de las animaciones
-  <script src="https://storage.googleapis.com/code.getmdl.io/1.0.5/material.min.js"></script>
-  <link rel="stylesheet" href="https://storage.googleapis.com/code.getmdl.io/1.0.5/material.indigo-pink.min.css">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-  <link rel="stylesheet" href="https://rawgit.com/delta98/ionic-material-design-lite/master/dist/css/ionic.material-design-lite.css">
--->
-  <!-- Fin Material Design Lite -------------------------------------------------------------------------------------->
-
-  <!--TODO: usar ficheros locales de recursos en vez de descargarlos de internet-->
-
-  <!-- Angular Material ---------------------------------------------------------------------------------------------->
-<!--
-  <link rel="stylesheet" href="lib/angular-material/angular-material.min.css">
-  <script src="lib/hammer/hammer.js"></script>
-  <script src="lib/angular-aria/angular-aria.min.js"></script>
-  <script src="lib/angular-material/angular-material.min.js"></script>
-  <link href="lib/angular-material/icon.css" rel="stylesheet">
--->
-  <!-- Fin Angular Material ------------------------------------------------------------------------------------------>
 
   <!-- Ficheros propios de la app ------------------------------------------------------------------------------------>
   <link href="css/style.css" rel="stylesheet">
@@ -56,8 +46,8 @@
   <!-- Fin Lazy Load Images ------------------------------------------------------------------------------------------>
 
   <!-- Google Maps --------------------------------------------------------------------------------------------------->
-  <script src="lib/gmaps/gmaps.js"></script>
-  <!--<script async defer src="https://maps.googleapis.com/maps/api/js?&libraries=places&language=es"></script>-->
+  <!--<script src="lib/gmaps/gmaps.js"></script>-->
+  <script async defer src="https://maps.googleapis.com/maps/api/js?&libraries=places&language=es"></script>
   <!--<script src="//maps.googleapis.com/maps/api/js?key=AIzaSyB16sGmIekuGIvYOfNoW9T44377IU2d2Es&sensor=false"></script>-->
   <!--<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVANxcmNG7Shw2SHW7AvKTsI-FH6eTbFc&sensor=false">-->
   <!-- Fin Google Maps ----------------------------------------------------------------------------------------------->
@@ -67,14 +57,12 @@
   <!-- Fin Panoramio ------------------------------------------------------------------------------------------------->
 
   <!-- Giflib -------------------------------------------------------------------------------------------------------->
-  <!--<script type="text/javascript" src="lib/libgif-js/libgif.js"></script>-->
+  <script type="text/javascript" src="lib/libgif-js/libgif.js"></script>
   <!-- fin Giflibr --------------------------------------------------------------------------------------------------->
 
   <!-- JQuery PanZoom ------------------------------------------------------------------------------------------------>
-<!--
   <script src="lib/jquery/jquery-1.9.1.js"></script>
   <script src="lib/jquery/jquery.panzoom.js"></script>
--->
   <!-- Fin JQuery PanZoom -------------------------------------------------------------------------------------------->
 
   <!-- Debug intel xdk ------------------------------------------------------------------------------------------------>

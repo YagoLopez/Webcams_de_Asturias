@@ -30,12 +30,6 @@
       .tabs-color-positive{
         border-bottom: 1px solid;
       }
-/*
-      .md-button.md-fab.md-fab-bottom-right{
-        top:75%;
-        right:3%;
-      }
-*/
       .imgLoader{
         background: transparent url(../img/c.png) no-repeat center center;
       }
@@ -61,23 +55,19 @@
           Categoría: {{ ::cam.categoria }}
       </div>
       <!-- botones ------------------------------------------------------------------------------------------------->
-      <div class="item item-text-wrap" style="padding:0;">
+      <div class="item item-text-wrap" style="padding:0;text-align:center">
         <div class="row">
           <div class="col">
-<!--
-            <md-button class="md-raised md-primary" ng-click="showModal()" style="height: 40px; width:100%">
+            <button class="button button-calm" ng-click="showModal()" style="width:100%">
               <i class="icon ion-arrow-expand"></i>
               Ampliar
-            </md-button>
--->
+            </button>
           </div>
           <div class="col">
-<!--
-            <md-button class="md-raised md-primary" ng-click="reloadImg()" style="height: 40px; width:100%">
-              <i class="icon ion-ios-reload"></i>
+            <button class="button button-calm" ng-click="reloadImg()" style="width:100%">
+              <i class="icon ion-refresh"></i>
               Recargar
-            </md-button>
--->
+            </button>
           </div>
         </div>
       </div>
@@ -124,9 +114,9 @@
       <div class="item-body" style="width: 100%; overflow-y: scroll; height: 300px;"
            ng-class="{active:active}" ng-show="page === 'second'">
         <div>
-        {{ ::infoConcejo }}
+          {{ infoConcejo }}
         </div>
-        <div><br>Fuente: <a href="http://org.wikipedia.es" target="_blank">Wikipedia</a></div>
+        <div ng-bind-html="wikipediaCredits "></div>
       </div>
     </div>
     <!-- Fin Tabs ---------------------------------------------------------------------------------------------------->

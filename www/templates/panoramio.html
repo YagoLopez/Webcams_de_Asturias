@@ -1,3 +1,10 @@
+<style type="text/css">
+  div.item.item-body {
+    text-align: center;
+    font-size: small;
+    background-color: #f4f4f4;
+  }
+</style>
 <ion-view view-title="Fotos">
 <ion-content>
 
@@ -36,11 +43,11 @@
 
 
   <div class="card">
-    <div class="item item-divider" style="text-align:center;font-size:small">Zona: {{ ::cam.lugar }}</div>
-    <div class="item item-divider" style="text-align:center;font-size:small">Concejo: {{ ::cam.concejo }}</div>
+    <div class="item item-body">Zona: {{ ::cam.lugar }}</div>
+    <div class="item item-body">Concejo: {{ ::cam.concejo }}</div>
 
 
-    <div layout="row" layout-align="space-around center" style="padding:6%">
+<!--    <div layout="row" layout-align="space-around center" style="padding:6%">
       <md-button class="md-raised md-primary" ng-click="prevPhoto()"
                  style="width:40%;height:40px" ng-disabled="fotos.getAtStart()">
         <i class="icon ion-arrow-left-a"></i>
@@ -59,12 +66,35 @@
         Ampliar
       </md-button>
       <br>
+    </div>-->
+    <div class="item item-text-wrap" style="padding:0;text-align:center">
+      <div class="row">
+        <div class="col">
+          <button class="button button-calm" ng-click="prevPhoto()" style="width:100%">
+            <i class="icon ion-arrow-left-a"></i>
+            Anterior
+          </button>
+        </div>
+        <div class="col">
+          <button class="button button-calm" ng-click="nextPhoto()" style="width:100%">
+            Siguiente
+            <i class="icon ion-arrow-right-a"></i>
+          </button>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <button class="button button-calm" ng-click="showModal()" style="width:100%">
+            <i class="icon ion-arrow-expand"></i>
+            Ampliar
+          </button>
+        </div>
+      </div>
     </div>
-
-    <div class="item item-divider" style="text-align:center;font-size:small">
+    <div class="item item-body">
       Fuente: <a href="http://www.panoramio.com" target="_blank">Panoramio</a>
     </div>
-    <div class="item item-divider" style="text-align:center;font-size:small">
+    <div class="item item-body">
       Derechos: propiedad de los autores
     </div>
 

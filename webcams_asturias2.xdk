@@ -6,7 +6,7 @@
       "projectTypeName": "com.intel.xdk.projecttype.jsapp",
       "src": "",
       "projectGuid": "5026b907-8667-4c9e-a1ed-6f06fd4b87b6",
-      "lastModifiedDate": 1450894657933,
+      "lastModifiedDate": 1451004671730,
       "creationDate": 1450749850707
     },
     "sourceDirectory": "www",
@@ -47,7 +47,7 @@
         "description": "Cordova Device Plugin"
       },
       {
-        "version": "2.1.0",
+        "version": "3.0.0",
         "sourceLocation": "",
         "selectedState": "Included",
         "name": "Splashscreen",
@@ -60,7 +60,7 @@
         "dependsOn": [],
         "dependedBy": [],
         "topLevel": true,
-        "checksum": "170efb68",
+        "checksum": "3a611d61",
         "gitref": "",
         "description": "Cordova Splashscreen Plugin"
       }
@@ -110,17 +110,21 @@
         "preferences_": {
           "android-minSdkVersion": "14",
           "android-targetSdkVersion": "19",
-          "android-installLocation": "auto"
+          "android-installLocation": "auto",
+          "Orientation": "portrait",
+          "android-signed": false
         },
-        "isActive_": false,
-        "appName_": "webcams_asturias2",
+        "isActive_": true,
+        "appName_": "wca_crosswalk",
         "appID_": "not.yet.specified",
         "appAccess_": {
-          "mode": "legacy",
+          "mode": "whitelist",
           "network": [
             "*"
           ],
-          "intents": [],
+          "intents": [
+            "http://*"
+          ],
           "navigation": []
         },
         "icons_": [],
@@ -129,8 +133,10 @@
         "excludedLibraries_": "",
         "appVersion_": "0.0.1",
         "appVersionCode_": "1",
-        "crosswalkVersion_": "14",
-        "cordovaCLIVersion_": "5.1.1"
+        "crosswalkVersion_": "15",
+        "cordovaCLIVersion_": "5.1.1",
+        "appDescription_": "fasfasd",
+        "appAuthor_": "asfasdfa"
       },
       "iOS": {
         "platform_": "ios",
