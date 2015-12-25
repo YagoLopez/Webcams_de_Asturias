@@ -292,15 +292,17 @@ angular.module('wca.controllers',[])
 
     $scope.rowid = $stateParams.rowid;
     $rootScope.mostrarLupa = false;
+SLoader.show('Cargndo datos...');
 
     if(!$rootScope.items || !$scope.rowid){
+      SLoader.hide();
       SPopup.show('Aviso', 'No hay datos de cámara. Escoger otra opción de menú');
       return;
     };
 
-    $scope.$on('$ionicView.afterEnter', function (event, viewData) {
-      viewData.enableBack = true;
-    });
+    //$scope.$on('$ionicView.afterEnter', function (event, viewData) {
+    //  viewData.enableBack = true;
+    //});
 
     var datosCam = $filter('filter')($rootScope.items, function(cam) {
       return cam[4] == $scope.rowid;
@@ -331,8 +333,6 @@ angular.module('wca.controllers',[])
     }).error(function(status){
       SPopup.show('Error', 'SClima.getData(): '+status)
     });
-    // FIN CLIMA -----------------------------------------------------------------------------------------------------
-
     // WIKIPEDIA -----------------------------------------------------------------------------------------------------
     $scope.infoConcejo = 'Cargando...'
     $scope.getInfo = function(){
@@ -347,8 +347,6 @@ angular.module('wca.controllers',[])
         $scope.infoConcejo = 'No se ha podido obtener información remota: '+status;
       });
     }//getInfo
-    // WIKIPEDIA -----------------------------------------------------------------------------------------------------
-
     // DIALOGO MODAL -------------------------------------------------------------------------------------------------
     $ionicModal.fromTemplateUrl('templates/modal-detalle.html', {
       scope: $scope,
@@ -362,28 +360,26 @@ angular.module('wca.controllers',[])
     $scope.closeModal = function () {
       $scope.modal.hide();
     };
-    // FIN DIALOGO MODAL ----------------------------------------------------------------------------------------------
-
+    // POPOVER -------------------------------------------------------------------------------------------------
     $ionicPopover.fromTemplateUrl('templates/popover.html', {
       scope: $scope,
     }).then(function(popover) {
       $scope.popover = popover;
     });
-
-    $scope.tipvisibility = false;
+    // IMG LOADER -------------------------------------------------------------------------------------------------
     $scope.reloadImg = function(){
       $rootScope.cam.imagen = $rootScope.cam.imagen + '#' + new Date().getTime();
-      $scope.tipvisibility = true;
-      console.log('scope.tipvisibility', $scope.tipvisibility);
-
+      SLoader.show('Cargando imagen...');
       setTimeout(function(){
         $scope.$apply(function(){
-          $scope.tipvisibility = false;
-          console.log('scope.tipvisibility apagado', $scope.tipvisibility);
+          SLoader.hide();
         })
-      }, 800);
+      }, 500);
     }
-
+    // IMG LOADER -------------------------------------------------------------------------------------------------
+    $scope.$on('$ionicView.afterEnter', function() {
+      SLoader.hide();
+    });
 })
 // =====================================================================================================
 .controller('StreetViewCtrl', function($scope, SMapa, $stateParams, $rootScope, SPopup){
@@ -675,7 +671,7 @@ angular.module('wca.controllers',[])
 // ====================================================================================================================
 // ====================================================================================================================
   .controller('Listado2Ctrl', function($scope, $stateParams, SLoader, $rootScope, $ionicFilterBar,
-                                   SFusionTable, $filter, $ionicScrollDelegate, SPopup, /*$ionicNavBarDelegate,*/ SCategorias){
+                                   SFusionTable, $filter, $ionicScrollDelegate, SPopup, SCategorias){
 
     SLoader.show();
     var concejo = $stateParams.concejo;

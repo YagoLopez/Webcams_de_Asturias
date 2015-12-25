@@ -226,7 +226,7 @@ angular.module('wca.services',[])
       if(texto){
         contenidoLoader = texto;
       }
-      $ionicLoading.show({template: contenidoLoader, noBackdrop: true});
+      $ionicLoading.show({template: contenidoLoader, noBackdrop: true, hideOnStateChange: true});
     };
 
     var showWithBackdrop = function(texto){

@@ -43,8 +43,11 @@
 
 
   <div class="card">
-    <div class="item item-body">Zona: {{ ::cam.lugar }}</div>
-    <div class="item item-body">Concejo: {{ ::cam.concejo }}</div>
+    <div class="item item-body">
+      {{ ::cam.lugar }}<br/>
+      Concejo: {{ ::cam.concejo }}
+    </div>
+    <!--<div class="item item-body">Concejo: {{ ::cam.concejo }}</div>-->
 
 
 <!--    <div layout="row" layout-align="space-around center" style="padding:6%">
@@ -70,13 +73,13 @@
     <div class="item item-text-wrap" style="padding:0;text-align:center">
       <div class="row">
         <div class="col">
-          <button class="button button-calm" ng-click="prevPhoto()" style="width:100%">
+          <button class="button button-calm" ng-click="prevPhoto()" style="width:100%" ng-disabled="fotos.getAtStart()">
             <i class="icon ion-arrow-left-a"></i>
             Anterior
           </button>
         </div>
         <div class="col">
-          <button class="button button-calm" ng-click="nextPhoto()" style="width:100%">
+          <button class="button button-calm" ng-click="nextPhoto()" style="width:100%" ng-disabled="fotos.getAtEnd()">
             Siguiente
             <i class="icon ion-arrow-right-a"></i>
           </button>
@@ -94,10 +97,14 @@
     <div class="item item-body">
       Fuente: <a href="http://www.panoramio.com" target="_blank">Panoramio</a>
     </div>
+<!--
     <div class="item item-body">
       Derechos: propiedad de los autores
     </div>
-
+-->
+  </div>
+  <div style="text-align: center">
+    Derechos: propiedad de los autores
   </div>
 
 </ion-content>
