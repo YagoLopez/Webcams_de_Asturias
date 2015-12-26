@@ -40,17 +40,18 @@
       </label>
     </div>
 
+    <div style="text-align:center">
+      <button class="button button-calm" ng-click="mostrarTodos()" style="width:80%">
+        <i class="icon ion-arrow-expand"></i>
+        Mostrar Todas
+      </button>
+    </div>
+    <br><br>
+
     <!-- radio buttons que controlan el filtrado, ocultos por defecto -->
     <div class="hide">
       <ion-radio ng-model="checked" ng-value="'con'">Concejo:</ion-radio>
       <ion-radio ng-model="checked" ng-value="'cat'">Categoría:</ion-radio>
-    </div>
-
-    <div style="text-align:center">
-    <md-button class="md-raised md-primary" ng-click="mostrarTodos()" style="height: 40px; width:80%">
-      Mostrar todos
-    </md-button>
-    <br><br>
     </div>
 
   </ion-content>

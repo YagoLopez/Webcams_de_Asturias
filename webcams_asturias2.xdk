@@ -6,7 +6,7 @@
       "projectTypeName": "com.intel.xdk.projecttype.jsapp",
       "src": "",
       "projectGuid": "5026b907-8667-4c9e-a1ed-6f06fd4b87b6",
-      "lastModifiedDate": 1451004671730,
+      "lastModifiedDate": 1451097441028,
       "creationDate": 1450749850707
     },
     "sourceDirectory": "www",
@@ -115,8 +115,8 @@
           "android-signed": false
         },
         "isActive_": true,
-        "appName_": "wca_crosswalk",
-        "appID_": "not.yet.specified",
+        "appName_": "wca.crosswalk.native.scrolljs",
+        "appID_": "com.yagolopez.webcamsasturias",
         "appAccess_": {
           "mode": "whitelist",
           "network": [
@@ -131,7 +131,7 @@
         "splashes_": [],
         "addlPermissions_": "",
         "excludedLibraries_": "",
-        "appVersion_": "0.0.1",
+        "appVersion_": "1.0.0",
         "appVersionCode_": "1",
         "crosswalkVersion_": "15",
         "cordovaCLIVersion_": "5.1.1",

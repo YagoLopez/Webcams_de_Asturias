@@ -226,14 +226,14 @@ angular.module('wca.services',[])
       if(texto){
         contenidoLoader = texto;
       }
-      $ionicLoading.show({template: contenidoLoader, noBackdrop: true, hideOnStateChange: true});
+      $ionicLoading.show({template: contenidoLoader, noBackdrop: true, hideOnStateChange: true, duration: 10000 });
     };
 
     var showWithBackdrop = function(texto){
       if(texto){
         contenidoLoader = texto;
       }
-      $ionicLoading.show({template: contenidoLoader, noBackdrop: false});
+      $ionicLoading.show({template: contenidoLoader, noBackdrop: false, hideOnStateChange: true, duration: 10000});
     };
 
     var hide = function(){
