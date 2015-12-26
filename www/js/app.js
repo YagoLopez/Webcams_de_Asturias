@@ -135,7 +135,7 @@ angular.module('wca', ['ionic', 'wca.controllers', 'wca.services',
 // -------------------------------------------------------------------------------------------------------------------
       .state('app.detalle', {
         url: '/detalle/:rowid',
-        cache: trueç,
+        cache: true,
         views: {
           'menuContent': {
             templateUrl: 'templates/detalle.html',

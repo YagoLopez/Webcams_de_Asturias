@@ -366,17 +366,17 @@ SLoader.show('Cargndo datos...');
     }).then(function(popover) {
       $scope.popover = popover;
     });
-    // IMG LOADER -------------------------------------------------------------------------------------------------
+    // IMG RELOAD -------------------------------------------------------------------------------------------------
     $scope.reloadImg = function(){
       $rootScope.cam.imagen = $rootScope.cam.imagen + '#' + new Date().getTime();
-      SLoader.show('Cargando imagen...');
+      SLoader.show('Recargando imagen...');
       setTimeout(function(){
         $scope.$apply(function(){
           SLoader.hide();
         })
       }, 500);
     }
-    // IMG LOADER -------------------------------------------------------------------------------------------------
+    // IMG RELOAD -------------------------------------------------------------------------------------------------
     $scope.$on('$ionicView.afterEnter', function() {
       SLoader.hide();
     });
@@ -410,8 +410,7 @@ SLoader.show('Cargndo datos...');
 .controller('GifPlayerCtrl', function($scope, $window, $interval, $stateParams, TablaMeteo, ItemMeteo, SLoader,
                                       $state, $rootScope, SPopup){
 
-  //TODO: crear servicio de esto
-  SLoader.showWithBackdrop();
+  SLoader.showWithBackdrop('Cargando datos...');
 
   // Obtiene itemMeteo ------------------------------------------------------------------------------------------------
   $scope.itemMeteo = new ItemMeteo(TablaMeteo.getItemById($stateParams.id_item_meteo));
@@ -422,7 +421,7 @@ SLoader.show('Cargndo datos...');
   var timer = null;
   if(angular.equals({}, $scope.itemMeteo)){
     SLoader.hide();
-    SPopup.show('Error', 'Posibles causas: 1) No conexión de datos. 2) Fallo servidor remoto');
+    SPopup.show('Error', 'Datos insuficientes. Posibles causas: (1) No conexión de datos. (2) Fallo servidor remoto. Probar otra opción de menú');
     return;
   }
   // Detencion de timer -----------------------------------------------------------------------------------------------

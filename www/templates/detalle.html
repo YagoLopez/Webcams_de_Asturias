@@ -39,7 +39,6 @@
         bottom: 10px;
       }
     </style>
-
     <!-- Card ------------------------------------------------------------------------------------------------------>
     <div class="list card">
       <div class="item item-image" style="height:100%; width:100%">
@@ -49,9 +48,9 @@
         {{ ::cam.lugar }}<br>
       </div>
       <div class="item item-body" style="font-size: small">
-          <i class="icon ion-ios-checkmark-outline" style="color:#387ef5;"></i>
+          <i class="icon ion-ios-checkmark-outline" style="color:#387ef5;font-size:medium;"></i>
           Concejo: {{ ::cam.concejo }}<br>
-          <i class="icon ion-ios-checkmark-outline" style="color:#387ef5;"></i>
+          <i class="icon ion-ios-checkmark-outline" style="color:#387ef5;font-size:medium;"></i>
           Categoría: {{ ::cam.categoria }}
       </div>
       <!-- botones ------------------------------------------------------------------------------------------------->
@@ -76,7 +75,7 @@
     </div>
     <!-- Fin Card -------------------------------------------------------------------------------------------------->
 
-    <!-- Tabs -------------------------------------------------------------------------------------------------------->
+    <!-- Card ------------------------------------------------------------------------------------------------------>
     <div class="card">
 
       <div class="item item-divider tabs tabs-icon-left tabs-color-positive">
@@ -119,15 +118,15 @@
         <div ng-bind-html="wikipediaCredits"></div>
       </div>
     </div>
-    <!-- Fin Tabs ---------------------------------------------------------------------------------------------------->
+    <!-- Fin Card--------------------------------------------------------------------------------------------------->
 
-    <!-- FAB button -------------------------------------------------------------------------------------------------->
+    <!-- FAB button ------------------------------------------------------------------------------------------------>
 <!--
     <md-button class="md-fab md-primary" aria-label="Menu" ng-click="popover.show($event)">
       <i class="ion-plus-round"></i>
     </md-button>
 -->
-    <!-- FAB button -------------------------------------------------------------------------------------------------->
+    <!-- FAB button ------------------------------------------------------------------------------------------------>
 
     <div id="void" style="display:block"><br><br></div>
 

@@ -1,19 +1,11 @@
 <!--TODO: busqueda de google places-->
-
 <ion-view view-title="Mapa Global">
-  <!--<ion-content header-shrink scroll-event-interval="1">-->
   <ion-content>
 
     <style>
       .scroll {
         height: 100%;
-
-        /*background: url('http://cbwconline.com/IMG/Codepen/iOS 9 (1).jpg') no-repeat;*/
-        /*background-size: 100% 100%;*/
-        /*height: 100vh;*/
-        /*width: 100vh;*/
-        /*margin: 0;*/
-}
+      }
       #mapaglobal{background: transparent url(../img/c.png) no-repeat center center;}
     </style>
 
@@ -48,7 +40,7 @@
       </label>
     </div>
 
-    <!-- radio buttons que controlan el filtrado ocultos por defecto -->
+    <!-- radio buttons que controlan el filtrado, ocultos por defecto -->
     <div class="hide">
       <ion-radio ng-model="checked" ng-value="'con'">Concejo:</ion-radio>
       <ion-radio ng-model="checked" ng-value="'cat'">Categoría:</ion-radio>
