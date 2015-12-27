@@ -64,7 +64,7 @@ angular.module('wca.services',[])
       var mapa = new google.maps.Map(domElement,  {
         mapTypeControl: true,
         mapTypeControlOptions: { style: google.maps.MapTypeControlStyle.DROPDOWN_MENU },
-        mapTypeId: google.maps.MapTypeId.TERRAIN
+        mapTypeId: google.maps.MapTypeId.SATELLITE
       });
       return mapa;
     }; // crear()

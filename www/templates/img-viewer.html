@@ -14,9 +14,10 @@
     </div>
     <!-- pinch ------------------------------------------------------------------------------------------------>
   </ion-header-bar>
-
-  <ion-content class="has-subheader">
-    <ion-scroll id="gifScroll" zooming="true" direction="xy">
+  <!-- overflow-scroll=false para permitir scrolling con javascript de ionic. permite hacer zoom en imagen -->
+  <ion-content class="has-subheader" overflow-scroll="false">
+    <!-- locking=false para permitir srcroll simultaneo en ejes x,y. apropiado para hacer zoom -->
+    <ion-scroll id="gifScroll" zooming="true" direction="xy" locking="false">
       <img src="{{ ::itemMeteo.url }}" width="100%"/>
     </ion-scroll>
     <!-- detalles --------------------------------------------------------------------------------------------->

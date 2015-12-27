@@ -1,7 +1,7 @@
 <ion-modal-view title="Imagen">
 
   <ion-header-bar>
-    <h1 class="title">Imagen</h1>
+    <h1 class="title">Imagen tiempo real</h1>
     <div class="buttons">
       <button class="button button-clear" ng-click="closeModal()">
         Cerrar
@@ -16,8 +16,10 @@
     </div>
   </ion-header-bar>
 
-  <ion-content>
-    <ion-scroll zooming="true" direction="xy" style="margin-top:0;width: 100%; height:100%;text-align: center;">
+  <!-- overflow-scroll=false para permitir scrolling con javascript de ionic. permite hacer zoom en imagen -->
+  <ion-content overflow-scroll="false">
+    <!-- locking=false para permitir srcroll simultaneo en ejes x,y. apropiado para hacer zoom -->
+    <ion-scroll zooming="true" direction="xy" style="margin-top:0;width: 100%; height:100%;text-align: center;" locking="false">
       <img ng-src="{{ cam.imagen }}"/>
     </ion-scroll>
   </ion-content>

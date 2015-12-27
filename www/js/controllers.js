@@ -204,20 +204,17 @@ angular.module('wca.controllers',[])
     //TODO: poner todo esto dentro del evento ionicview.afterenter?
     $scope.rowid = $stateParams.rowid;
     $rootScope.mostrarLupa = false;
+    SLoader.show('Cargndo datos...');
 
     if(!$rootScope.items || !$scope.rowid){
+      SLoader.hide();
       SPopup.show('Aviso', 'No hay datos de cámara. Escoger otra opción de menú');
       return;
     };
 
-    //$scope.$on('$ionicView.afterEnter', function (event, viewData) {
-    //  viewData.enableBack = true;
-    //});
-
     var datosCam = $filter('filter')($rootScope.items, function(cam) {
       return cam[4] == $scope.rowid;
     });
-
     //TODO: es cam singleton??? Si no lo es hacerlo asi
     $rootScope.cam = new Cam(datosCam);
     //console.log('rootscope.cam', $rootScope.cam);
@@ -286,8 +283,14 @@ angular.module('wca.controllers',[])
         })
       }, 500);
     }
-    // IMG RELOAD -------------------------------------------------------------------------------------------------
-})
+    // FIN IMG RELOAD -------------------------------------------------------------------------------------------------
+
+    $scope.$on('$ionicView.afterEnter', function (event, viewData) {
+      SLoader.hide();
+      //viewData.enableBack = true;
+    });
+
+  })
 // =====================================================================================================
 .controller('StreetViewCtrl', function($scope, SMapa, $stateParams, $rootScope, SPopup){
 

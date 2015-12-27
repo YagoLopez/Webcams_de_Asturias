@@ -2,7 +2,7 @@
 //var url_api = "https://www.googleapis.com/fusiontables/v2/query?sql=SELECT%20*%20FROM%201gX5maFbqFyRziZiUYlpOBYhcC1v9lGkKqCXvZREF&key=AIzaSyBsdouSTimjrC2xHmbGgOt8VfbLBWc9Gps";
 
 angular.module('wca', ['ionic', 'wca.controllers', 'wca.services',
-  'jett.ionic.filter.bar' /*, 'ngMaterial' 'ionicLazyLoad'*/])
+  'jett.ionic.filter.bar' /*,'ionicLazyLoad'*/])
 
 .run(function($ionicPlatform, $animate) {
   $ionicPlatform.ready(function() {
@@ -17,6 +17,7 @@ angular.module('wca', ['ionic', 'wca.controllers', 'wca.services',
       // org.apache.cordova.statusbar required
       StatusBar.styleDefault();
     }
+    ionic.Platform.isFullScreen = true;
   });
 })
 
@@ -51,45 +52,6 @@ angular.module('wca', ['ionic', 'wca.controllers', 'wca.services',
     //    ,
     //controller: 'AppCtrl'
   })
-// -------------------------------------------------------------------------------------------------------------------
-/*
-  //TODO: utilizar resolve en la definicion de estado para obtener datos remotos en vez de en metodo run(). Probar a ver
-  .state('app.tabs', {
-    url: '/tabs?idCategoria&concejo',
-    cache: false,
-    views: {
-      'menuContent': {
-        templateUrl: 'templates/tabs.html',
-        controller: 'TabsCtrl'
-      }
-    }//,
-    //resolve: {
-    //  resolvedCams: function ($q, SFusionTable) {
-    //    return SFusionTable;
-    //  }
-    //}
-  })
-*/
-// -------------------------------------------------------------------------------------------------------------------
-//  .state('app.tabs.listado', {
-//  url: '/listado',
-//  cache: false,
-//  views: {
-//    'tab-listado': {
-//    templateUrl: 'templates/listado.html'
-//    }
-//  }
-//  })
-// -------------------------------------------------------------------------------------------------------------------
-//  .state('app.tabs.mosaico', {
-//  url: '/mosaico',
-//  cache: false,
-//  views: {
-//    'tab-mosaico': {
-//    templateUrl: 'templates/mosaico.html'
-//    }
-//  }
-//  })
 // -------------------------------------------------------------------------------------------------------------------
   .state('app.mapa', {
     url: '/mapa',
