@@ -4,7 +4,7 @@
 <!--To change the contents of this file, see the documentation on the intelxdk.config.additions.xml file.-->
 <intelxdk:version value="1.0"/>
 <intelxdk:cordova-cli version="5.1.1"/>
-<name>wca.crosswalk.native.scrolljs</name>
+<name>wca.crosswalk.js.scroll</name>
 <description>fasfasd</description>
 <author>asfasdfa</author>
 <content src="index.html"/>
@@ -17,7 +17,7 @@
 <preference name="android-targetSdkVersion" value="19"/>
 <preference name="android-installLocation" value="auto"/>
 <preference name="Orientation" value="portrait"/>
-<preference name="android-signed" value="false"/>
+<preference name="android-signed" value="true"/>
 <intelxdk:crosswalk version="15"/>
 <!--creationInfo:{"src":"","projectTypeName":"com.intel.xdk.projecttype.jsapp"}-->
-<preference name="debuggable" value="false"/></widget>
+<preference name="debuggable" value="true"/></widget>

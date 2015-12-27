@@ -442,7 +442,7 @@
         var transparency = null;
         var delay = null;
         var disposalMethod = null;
-        var disposalRestoreFromIdx = null;
+        var disposalRestoreFromIdx = 0;
         var lastDisposalMethod = null;
         var frame = null;
         var lastImg = null;
@@ -557,7 +557,8 @@
                 ctx.fillRect(mid, top, width - mid, height);
 
                 //ctx.fillStyle = 'teal';
-                ctx.fillStyle = 'rgba(255,0,22,.8)';
+                //ctx.fillStyle = 'rgba(255,0,22,.8)';
+                ctx.fillStyle = 'rgba(95,158,160,0.4)';
                 ctx.fillRect(0, top, mid, height);
             }
         };
@@ -635,13 +636,7 @@
             if (currIdx > 0) {
                 if (lastDisposalMethod === 3) {
                     // Restore to previous
-                    // If we disposed every frame including first frame up to this point, then we have
-                    // no composited frame to restore to. In this case, restore to background instead.
-                    if (disposalRestoreFromIdx !== null) {
-                    	frame.putImageData(frames[disposalRestoreFromIdx].data, 0, 0);
-                    } else {
-                    	frame.clearRect(lastImg.leftPos, lastImg.topPos, lastImg.width, lastImg.height);
-                    }
+                    frame.putImageData(frames[disposalRestoreFromIdx].data, 0, 0);
                 } else {
                     disposalRestoreFromIdx = currIdx - 1;
                 }
@@ -895,7 +890,7 @@
             loading = true;
             frames = [];
             clear();
-            disposalRestoreFromIdx = null;
+            disposalRestoreFromIdx = 0;
             lastDisposalMethod = null;
             frame = null;
             lastImg = null;

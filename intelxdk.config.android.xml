@@ -20,4 +20,4 @@
 <preference name="Orientation" value="portrait"/>
 <preference name="android-signed" value="false"/>
 <!--creationInfo:{"src":"","projectTypeName":"com.intel.xdk.projecttype.jsapp"}-->
-<preference name="debuggable" value="false"/></widget>
+<preference name="debuggable" value="true"/></widget>

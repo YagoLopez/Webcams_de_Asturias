@@ -34,14 +34,13 @@
   </ion-header-bar>
 
   <ion-content>
-    listado2 javascript ntive scroll false, collection repet flse<br>
-    concejo: {{::concejo}}<br>
-    idcategoria: {{::idCategoria}}<br>
+    <!--listado2 native scroll true, collection repet false<br>-->
+    <!--concejo: {{::concejo}}<br>-->
+    <!--idcategoria: {{::idCategoria}}<br>-->
 
     <div>
-      <!--<div class="item item-thumbnail-left" ng-repeat="cam in items track by cam[4]" href="#/app/detalle/{{ ::cam[4] }}">-->
-      <!--<div class="item item-thumbnail-left" ng-repeat="cam in items track by cam[4]">-->
-      <a class="item item-thumbnail-left item-icon-right" ng-repeat="cam in items track by cam[4]" href="#/app/detalle/{{ ::items[$index][4] }}">
+      <a class="item item-thumbnail-left item-icon-right" ng-repeat="cam in items track by cam[4]"
+         href="#/app/detalle/{{ ::items[$index][4] }}">
         <img ng-src="img/ionic.png" fallback-src="../img/imgFail.png" style="height: 60px;width: 60px;"/>
         <div class="divListado">
           <p>

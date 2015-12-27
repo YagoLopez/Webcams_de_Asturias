@@ -25,95 +25,6 @@ angular.module('wca.controllers',[])
   })
 */
 // ====================================================================================================================
-/*
-.controller('TabsCtrl', function($scope, $stateParams, SLoader, $rootScope, $ionicFilterBar,
-                                 SFusionTable, $filter, $ionicScrollDelegate, SPopup, $ionicNavBarDelegate, SCategorias){
-
-    SLoader.show();
-    var concejo = $stateParams.concejo;
-    var idCategoria = $stateParams.idCategoria;
-
-    //TODO: revisar esto. hacer un servicio para no usar rootscope?
-    $rootScope.mostrarLupa = true;
-
-    function esSubcadena(idCategoria, urlCategoria) {
-      return (urlCategoria.indexOf('categoria='+idCategoria) > -1);
-    }
-
-    //TODO: cachear las imagenes
-    var sqlQuery = 'SELECT Lugar,Concejo,Imagen,Categoria,rowid,latitud,longitud FROM '+ SFusionTable.TABLE_ID;
-    SFusionTable.getRemoteData(sqlQuery).success(function(data){
-
-      //console.log('data', data);
-
-      // -------------------------------------------------------------------------------------------------------------
-      // FILTRO 1: filtra las cams por parametros de url: concejo y categoria
-      // -------------------------------------------------------------------------------------------------------------
-      var camsFiltradasPorUrl = $filter('filter')(data.rows, function(cam){
-        if (concejo && idCategoria) {
-          // cam[1]: concejo de camara, cam[3]: url categoria (no id de categoria, no confundir)
-          return (cam[1].toLowerCase() == concejo.toLowerCase() && esSubcadena(idCategoria, cam[3]));
-        } else {
-          if (concejo)
-            return cam[1].toLowerCase() == concejo.toLowerCase();
-          if (idCategoria)
-            return esSubcadena(idCategoria, cam[3]);
-          if(!concejo && !idCategoria)
-            return data.rows;
-        }
-      });
-
-      // Inicialmente items contiene las cams filtradas solo por parametros de url
-      $rootScope.items = camsFiltradasPorUrl;
-      // Despues de filtrar, guardar parametros en scope. Se hace asi para que el filtrado sea mas eficiente
-      $rootScope.concejo = concejo;
-      $rootScope.idCategoria = idCategoria;
-
-      if(!idCategoria || idCategoria == ''){
-        $scope.tituloVista = 'Lista completa'
-      } else {
-        $scope.tituloVista = SCategorias.idCategoria_a_nombre(idCategoria);
-      }
-
-      // -------------------------------------------------------------------------------------------------------------
-      // FILTRO 2: filtra las cams segun una cadena de texto que haya introducido el usuario
-      // -------------------------------------------------------------------------------------------------------------
-      // este filtro se aplica sobre los datos previamente filtrados por url
-      //TODO: Habría que mejorar la búsqueda para que fuera menos estricta. Por ejemplo, si se introduce "puerto llanes" no se
-      //encuentra "Puerto de Llanes"
-
-      $rootScope.showFilterBar = function () {
-        $rootScope.filterBarInstance = $ionicFilterBar.show({
-          items: $rootScope.items,
-          update: function (filteredItems, filteredText) {
-            $rootScope.items = filteredItems;
-            $ionicScrollDelegate.scrollTop(false);
-          },
-          cancelText: 'Cancelar',
-          //done: function(){
-          //  $ionicSideMenuDelegate.canDragContent(false);
-          //  console.log('no se puede abrir el menu');
-          //
-          //},
-          //cancel: function(){
-            // destruye fileter bar
-            //$rootScope.filterBarInstance();
-            //console.log('filter bar destroyed');
-          //},
-          cancelOnStateChange: true
-        });
-      };
-
-      SLoader.hide();
-
-    }).error(function(data, status) {
-      $ionicLoading.hide();
-      SPopup.show("Error", "Fallo obteniendo datos de cámaras<br>SFusionTable.getRemoteData(): "+status)
-    });
-
-})
-*/
-// ====================================================================================================================
 .controller('MapaCtrl', function($scope, $stateParams, SMapa, $rootScope){
 
   $rootScope.mostrarLupa = false;
@@ -290,12 +201,11 @@ angular.module('wca.controllers',[])
 .controller('DetalleCtrl', function($scope, $stateParams, $ionicModal, SMapa, SClima, $filter, $rootScope,
                                     SPopup, SWikipedia, $ionicSlideBoxDelegate, $ionicPopover, Cam, SLoader, $compile){
 
+    //TODO: poner todo esto dentro del evento ionicview.afterenter?
     $scope.rowid = $stateParams.rowid;
     $rootScope.mostrarLupa = false;
-SLoader.show('Cargndo datos...');
 
     if(!$rootScope.items || !$scope.rowid){
-      SLoader.hide();
       SPopup.show('Aviso', 'No hay datos de cámara. Escoger otra opción de menú');
       return;
     };
@@ -377,9 +287,6 @@ SLoader.show('Cargndo datos...');
       }, 500);
     }
     // IMG RELOAD -------------------------------------------------------------------------------------------------
-    $scope.$on('$ionicView.afterEnter', function() {
-      SLoader.hide();
-    });
 })
 // =====================================================================================================
 .controller('StreetViewCtrl', function($scope, SMapa, $stateParams, $rootScope, SPopup){

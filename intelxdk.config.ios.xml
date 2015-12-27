@@ -12,4 +12,4 @@
 <preference name="ios-target" value="6"/>
 <preference name="ios-configuration" value="adhoc"/>
 <!--creationInfo:{"src":"","projectTypeName":"com.intel.xdk.projecttype.jsapp"}-->
-<preference name="debuggable" value="false"/></widget>
+<preference name="debuggable" value="true"/></widget>

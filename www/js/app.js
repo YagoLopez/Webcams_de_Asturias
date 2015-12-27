@@ -27,12 +27,12 @@ angular.module('wca', ['ionic', 'wca.controllers', 'wca.services',
     $compileProvider.debugInfoEnabled(false);
     // remove back button text completely
     $ionicConfigProvider.backButton.previousTitleText(false).text(' ');
-    // enable/disable ntive scroll
+    // enable/disable native scroll
     if (!ionic.Platform.isIOS()) {
-      $ionicConfigProvider.scrolling.jsScrolling(true);
+      $ionicConfigProvider.scrolling.jsScrolling(false);
     }
     $ionicFilterBarConfigProvider.placeholder('Buscar');
-    // num templates to prefectch
+    // num templates to prefetch
     $ionicConfigProvider.templates.maxPrefetch();
 
     // disable angular log system
@@ -40,7 +40,7 @@ angular.module('wca', ['ionic', 'wca.controllers', 'wca.services',
     $compileProvider.debugInfoEnabled(false);
 
     // desactivr transiciones de ionic
-    //$ionicConfigProvider.views.transition('none');
+    $ionicConfigProvider.views.transition('none');
 
     $stateProvider
 // -------------------------------------------------------------------------------------------------------------------
@@ -52,6 +52,7 @@ angular.module('wca', ['ionic', 'wca.controllers', 'wca.services',
     //controller: 'AppCtrl'
   })
 // -------------------------------------------------------------------------------------------------------------------
+/*
   //TODO: utilizar resolve en la definicion de estado para obtener datos remotos en vez de en metodo run(). Probar a ver
   .state('app.tabs', {
     url: '/tabs?idCategoria&concejo',
@@ -68,6 +69,7 @@ angular.module('wca', ['ionic', 'wca.controllers', 'wca.services',
     //  }
     //}
   })
+*/
 // -------------------------------------------------------------------------------------------------------------------
 //  .state('app.tabs.listado', {
 //  url: '/listado',
