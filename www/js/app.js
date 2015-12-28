@@ -226,6 +226,17 @@ angular.module('wca', ['ionic', 'wca.controllers', 'wca.services',
   return fallbackSrc;
 })
 
+.directive('iframeOnload', [function(){
+  return {
+    scope: {
+      callBack: '&iframeOnload'
+    },
+    link: function(scope, element, attrs){
+      element.on('load', function(){
+        return scope.callBack();
+      })
+    }
+  }}])
 
 /*
 .filter('concejoFltr', function(){

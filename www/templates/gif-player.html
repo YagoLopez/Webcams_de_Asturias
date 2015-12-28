@@ -1,8 +1,3 @@
-<!--
-TODO: a lo mejor hay una forma de cargar una imagen remota sin que de problemas cors usando javascript
-En vez de descargar la imagen usando xhr, descargarla como una imagen normal con el tag imz y el atributo src y después
-obtener los datos binarios por javascript de la cache
--->
 <!--TODO: probar a usar la directiva awesome-slider en lugar del range slider de ionic-->
 <ion-view view-title="{{ ::itemMeteo.categoria }}" xmlns:rel="http://www.w3.org/1999/xhtml">
   <ion-content>
@@ -14,28 +9,19 @@ obtener los datos binarios por javascript de la cache
         width:100%;
         /*height: 100%;*/
       }
+/*
       div.row > div > a {
         background-color:transparent;
       }
+*/
       .btnTransparente {
         background-color:transparent;
       }
-/*
-      #playControls > div > a > i {
-        font-size: 35px;
-        padding: 0;
-      }
-*/
-/*
-      #zoomControls > tbody > tr > td > a {
-        /!*background-color: transparent;*!/
-      }
-*/
       #playControls > tbody > tr > td > a > i {
         font-size: 35px;
       }
       #zoomControls > tbody > tr > td > a > i {
-        font-size: 35px;
+        font-size: 30px;
       }
       table {
         margin: 0 auto;
@@ -54,7 +40,7 @@ obtener los datos binarios por javascript de la cache
 
   <div class="card">
     <!-- range slider ---------------------------------------------------------------------------------------->
-    <label class="range range-assertive" style="padding: 0 3%;" ng-click="pause()">
+    <label class="range range-assertive" style="padding: 0 3%;" ng-click="pause()" on-touch="pause()">
     <input id="levelRange" type="range" min="0" max="{{ gifAnimado.get_length()-1 }}"
            value="{{ currentFrame }}" ng-model="currentFrame" ng-change="irPosicion(currentFrame)"
            style="margin:0"/>
@@ -90,27 +76,27 @@ obtener los datos binarios por javascript de la cache
     <table id="playControls">
       <tr>
         <td>
-          <a class="button btnTransparente" ng-click="playPause()">
+          <a class="button" ng-click="playPause()">
             <i class="ion-ios-play-outline"></i>
           </a>
         </td>
         <td>
-          <a class="button btnTransparente" ng-click="backward()">
+          <a class="button" ng-click="backward()">
             <i class="ion-ios-rewind-outline"></i>
           </a>
         </td>
         <td>
-          <a class="button btnTransparente" ng-click="forward()">
+          <a class="button" ng-click="forward()">
             <i class="ion-ios-fastforward-outline"></i>
           </a>
         </td>
         <td>
-          <a class="button btnTransparente" ng-click="restart()">
+          <a class="button" ng-click="restart()">
             <i class="ion-ios-skipbackward-outline"></i>
           </a>
         </td>
         <td>
-          <a class="button btnTransparente" ng-click="end()">
+          <a class="button" ng-click="end()">
             <i class="ion-ios-skipforward-outline"></i>
           </a>
         </td>
@@ -131,16 +117,16 @@ obtener los datos binarios por javascript de la cache
     <table id="zoomControls">
       <tr>
         <td>
-          <a class="button btnTransparente"><i class="ion-ios-plus-outline zoom-in" style=""></i></a>
+          <a class="button btnTransparente zoom-in"><i class="ion-ios-plus-outline" style=""></i></a>
         </td>
         <td>
-          <a class="button btnTransparente"><i class="ion-ios-minus-outline zoom-out"></i></a>
+          <a class="button btnTransparente zoom-out"><i class="ion-ios-minus-outline"></i></a>
         </td>
         <td style="vertical-align: middle;">
           <input type="range" class="zoom-range" min="0.4" max="5" step="0.05"/>
         </td>
         <td>
-          <a class="button btnTransparente"><i class="ion-arrow-expand reset" style="color:lightgray"></i></a>
+          <a class="button btnTransparente reset"><i class="ion-arrow-expand" style="color:lightgray"></i></a>
         </td>
       </tr>
     </table>

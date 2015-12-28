@@ -297,7 +297,7 @@ angular.module('wca.controllers',[])
   $rootScope.mostrarLupa = false;
 
   if(!$rootScope.cam) {
-    SPopup.show('Error', 'Faltan datos. Probar otra opción de menú');
+    SPopup.show('Error', 'Datos insuficientes. Probar otra opción de menú');
     return;
   }
   var coords = {lat: $rootScope.cam.lat, lng: $rootScope.cam.lng};
@@ -352,7 +352,6 @@ angular.module('wca.controllers',[])
         gif: document.getElementById('gif'),
         loop_mode: 0,
         draw_while_loading: 1
-        //on_end: SLoader.hide()
         //max_width: $scope.dev_width
       });
       // Carga gif animado remoto y lo descompone en fotogramas para procesarlo ---------------------------------------
@@ -497,7 +496,9 @@ angular.module('wca.controllers',[])
     });
 })
 // ====================================================================================================================
-  .controller('PorCategoriaCtrl', function($scope, $window, $sce){
+  .controller('PorCategoriaCtrl', function($scope, $window, $sce, SLoader){
+
+    SLoader.showWithBackdrop();
 
      //Calculo de dimensiones de ventana al redimensionar
     $scope.calculateDimensions = function(gesture) {
@@ -535,9 +536,16 @@ angular.module('wca.controllers',[])
     $scope.urlGraficoSectores = $sce.trustAsResourceUrl(urlGraficoSectores);
     $scope.urlGraficoBarras = $sce.trustAsResourceUrl(urlGraficoBarras);
 
+    $scope.cargaFrameTerminada = function(){
+      SLoader.hide();
+    }
+
   })
 // ====================================================================================================================
-  .controller('PorConcejoCtrl', function($scope, $window, $sce){
+  .controller('PorConcejoCtrl', function($scope, $window, $sce, SLoader){
+
+    SLoader.showWithBackdrop();
+
     //Calculo de dimensiones de ventana al redimensionar
     $scope.calculateDimensions = function(gesture) {
       $scope.dev_width = $window.innerWidth;
@@ -576,6 +584,9 @@ angular.module('wca.controllers',[])
     $scope.urlConcejosMasCams = $sce.trustAsResourceUrl(urlConcejosMasCams);
     $scope.urlCamsConcejo = $sce.trustAsResourceUrl(urlCamsConcejo);
 
+    $scope.cargaFrameTerminada = function(){
+      SLoader.hide();
+    }
   })
 // ====================================================================================================================
 // ====================================================================================================================

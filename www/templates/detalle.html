@@ -30,19 +30,14 @@
       .tabs-color-positive{
         border-bottom: 1px solid;
       }
-      /*.imgLoader{*/
-        /*background: transparent url(../img/c.png) no-repeat center center;*/
-      /*}*/
-      .md-fab {
-        background-color: cornflowerblue;
-        left: 75%;
-        bottom: 10px;
+      .imgLoader{
+        background: transparent url(img/c.png) no-repeat center center;
       }
     </style>
     <!-- Card ------------------------------------------------------------------------------------------------------>
     <div class="list card">
       <div class="item item-image" style="height:100%; width:100%">
-        <img ng-src="{{ cam.imagen }}" fallback-src="img/imgFail.png"/>
+        <img ng-src="{{ cam.imagen }}" fallback-src="img/imgFail.png" class="imgLoader"/>
       </div>
       <div class="item item-body" style="font-size:small;padding-top:8px;padding-bottom:8px;text-align:center">
         {{ ::cam.lugar }}<br>
