@@ -46,40 +46,21 @@
            style="margin:0"/>
     </label>
     <!-- botones control-------------------------------------------------------------------------------------->
-<!--    <div id="playControls" class="row" style="padding: 0 35px;">
-    <div class="col">
-      <a class="button" ng-click="playPause()">
-        <i class="ion-ios-play-outline"></i>
-      </a>
-    </div>
-    <div class="col">
-      <a class="button" ng-click="backward()">
-        <i class="ion-ios-rewind-outline"></i>
-      </a>
-    </div>
-    <div class="col">
-      <a class="button" ng-click="forward()">
-        <i class="ion-ios-fastforward-outline"></i>
-      </a>
-    </div>
-    <div class="col">
-      <a class="button" ng-click="restart()">
-        <i class="ion-ios-skipbackward-outline"></i>
-      </a>
-    </div>
-    <div class="col">
-      <a class="button" ng-click="end()">
-        <i class="ion-ios-skipforward-outline"></i>
-      </a>
-    </div>
-  </div>-->
     <table id="playControls">
       <tr>
+<!--
         <td>
           <a class="button" ng-click="playPause()">
             <i class="ion-ios-play-outline"></i>
           </a>
         </td>
+-->
+        <td>
+          <a class="button" ng-click="playPause();" ng-class="playButonnClicked?'button-assertive':''">
+            <i class="ion-ios-play-outline"></i>
+          </a>
+        </td>
+
         <td>
           <a class="button" ng-click="backward()">
             <i class="ion-ios-rewind-outline"></i>

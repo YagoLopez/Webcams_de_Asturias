@@ -378,6 +378,7 @@ angular.module('wca.controllers',[])
       $('.jsgif > canvas').panzoom('zoom', 1.0, { silent: true });
       // player controls ----------------------------------------------------------------------------------------------
       $scope.playPause = function(){
+        $scope.playButonnClicked = ! $scope.playButonnClicked;
         if (isGifPlaying) {
           $scope.pause();
         } else {
@@ -492,7 +493,7 @@ angular.module('wca.controllers',[])
 .controller('ImgViewerCtrl', function($scope, $stateParams, ItemMeteo, TablaMeteo){
     $scope.itemMeteo = new ItemMeteo( TablaMeteo.getItemById($stateParams.id_item_meteo) );
     $scope.$on('$ionicView.afterEnter', function(){
-      document.getElementById('gifScroll').style.background = 'none';
+      document.getElementById('imgContainer').style.background = 'none';
     });
 })
 // ====================================================================================================================

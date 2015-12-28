@@ -1,10 +1,3 @@
-<style type="text/css">
-  div.item.item-body {
-    text-align: center;
-    font-size: small;
-    background-color: #f4f4f4;
-  }
-</style>
 <ion-view view-title="Fotos">
 <ion-content>
 
@@ -31,6 +24,12 @@
     text-align: center;
     width:90%;
   }
+  div.item.item-body {
+    text-align: center;
+    font-size: small;
+    background-color: #f4f4f4;
+  }
+
   </style>
 
   <div class="container">
@@ -40,36 +39,12 @@
 
   </div>
 
-
-
   <div class="card">
     <div class="item item-body">
       {{ ::cam.lugar }}<br/>
       Concejo: {{ ::cam.concejo }}
     </div>
-    <!--<div class="item item-body">Concejo: {{ ::cam.concejo }}</div>-->
 
-
-<!--    <div layout="row" layout-align="space-around center" style="padding:6%">
-      <md-button class="md-raised md-primary" ng-click="prevPhoto()"
-                 style="width:40%;height:40px" ng-disabled="fotos.getAtStart()">
-        <i class="icon ion-arrow-left-a"></i>
-        Anterior
-      </md-button>
-      <md-button class="md-raised md-primary" ng-click="nextPhoto()"
-                 style="width:40%;height:40px" ng-disabled="fotos.getAtEnd()">
-        <i class="icon ion-arrow-right-a"></i>
-        Siguiente
-      </md-button>
-    </div>
-
-    <div class="container">
-      <md-button class="md-raised md-primary" ng-click="showModal()" style="width:80%;height:40px">
-        <i class="icon ion-arrow-expand"></i>
-        Ampliar
-      </md-button>
-      <br>
-    </div>-->
     <div class="item item-text-wrap" style="padding:0;text-align:center">
       <div class="row">
         <div class="col">

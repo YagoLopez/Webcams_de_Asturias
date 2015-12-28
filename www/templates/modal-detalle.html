@@ -1,27 +1,42 @@
 <ion-modal-view title="Imagen">
 
-  <ion-header-bar>
-    <h1 class="title">Imagen tiempo real</h1>
-    <div class="buttons">
-      <button class="button button-clear" ng-click="closeModal()">
+  <style type="text/css">
+    ion-scroll {
+      margin-top: 88px;
+      width: 100%;
+      height: 100%;
+      text-align: center;
+    }
+    ion-scroll > img {
+      width: 35px;
+      vertical-align: middle;
+    }
+    ion-header-bar > div > img {
+      width: 35px;
+      vertical-align: middle;
+    }
+  </style>
+
+  <ion-header-bar align-title="center">
+    <div class="title">
+      Zoom <img ng-src="img/pinch1.png"/>
+    </div>
+      <button class="button button-clear pull-right" ng-click="closeModal()">
         Cerrar
         <i class="icon icon-right ion-android-close"></i>
       </button>
-    </div>
-  </ion-header-bar>
-  <ion-header-bar class="bar-subheader bar-light">
-    <div style="text-align: center">
-      <span>Zoom: </span>
-      <img style="width:35px;vertical-align:middle" ng-src="img/pinch1.png"/>
-    </div>
   </ion-header-bar>
 
   <!-- overflow-scroll=false para permitir scrolling con javascript de ionic. permite hacer zoom en imagen -->
-  <ion-content overflow-scroll="false">
     <!-- locking=false para permitir srcroll simultaneo en ejes x,y. apropiado para hacer zoom -->
+<!--
     <ion-scroll zooming="true" direction="xy" style="margin-top:0;width: 100%; height:100%;text-align: center;" locking="false">
       <img ng-src="{{ cam.imagen }}"/>
     </ion-scroll>
-  </ion-content>
+-->
+
+    <ion-scroll zooming="true" direction="xy" locking="false">
+      <img ng-src="{{ cam.imagen }}"/>
+    </ion-scroll>
 
 </ion-modal-view>

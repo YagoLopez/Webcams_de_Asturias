@@ -1,39 +1,48 @@
-<style type="text/css">
-  #gifScroll {
-    width: 100%;
-  }
-</style>
-
 <ion-view view-title="{{itemMeteo.nombre}}">
+
+  <style type="text/css">
+    #imgContainer {
+      width: 100%;
+      height: 60%;
+      margin-top: 88px;
+    }
+    ion-header-bar > div > img {
+      width: 35px;
+      vertical-align: middle;
+    }
+  </style>
 
   <ion-header-bar class="bar-subheader bar-light">
     <!-- pinch ------------------------------------------------------------------------------------------------>
     <div style="text-align: center">
-      <span>Zoom imagen</span>
-      <img style="width:35px;vertical-align:middle" ng-src="img/pinch1.png"/>
+      <span>Zoom </span>
+      <img ng-src="img/pinch1.png"/>
     </div>
     <!-- pinch ------------------------------------------------------------------------------------------------>
   </ion-header-bar>
-  <!-- overflow-scroll=false para permitir scrolling con javascript de ionic. permite hacer zoom en imagen -->
-  <ion-content class="has-subheader" overflow-scroll="false">
-    <!-- locking=false para permitir srcroll simultaneo en ejes x,y. apropiado para hacer zoom -->
-    <ion-scroll id="gifScroll" zooming="true" direction="xy" locking="false">
-      <img src="{{ ::itemMeteo.url }}" width="100%"/>
-    </ion-scroll>
-    <!-- detalles --------------------------------------------------------------------------------------------->
-    <div class="card">
-      <div class="item item-divider">
-        Detalles:
-      </div>
-      <div class="item item-text-wrap" style="font-size:small">
-        <div><span style="color:green">&#187; Nombre:</span> {{ ::itemMeteo.nombre}}</div>
-        <div><span style="color:green">&#187; Fuente:</span> <a href="{{ ::itemMeteo.urlFuente }}" target="_blank">
-          {{ ::itemMeteo.fuente}}</a>
-        </div>
-        <div><span style="color:green">&#187; Tipo imagen:</span> {{ ::itemMeteo.tipoImagen}}</div>
-        <div><span style="color:green">&#187; Descripción:</span> {{ ::itemMeteo.descripcion }}</div>
-      </div>
+
+  <!-- locking=false para permitir srcroll simultaneo en ejes x,y. apropiado para hacer zoom -->
+  <ion-scroll id="imgContainer" zooming="true" direction="xy" locking="false">
+    <img ng-src="{{ ::itemMeteo.url }}" width="100%"/>
+  </ion-scroll>
+
+  <!-- detalles --------------------------------------------------------------------------------------------->
+  <div class="card">
+    <div class="item item-divider">
+      Detalles:
     </div>
-    <!-- fin detalles ----------------------------------------------------------------------------------------->
-  </ion-content>
+    <div class="item item-text-wrap" style="font-size:small">
+      <div><span style="color:green">&#187; Nombre:</span> {{ ::itemMeteo.nombre}}</div>
+      <div><span style="color:green">&#187; Fuente:</span> <a href="{{ ::itemMeteo.urlFuente }}" target="_blank">
+        {{ ::itemMeteo.fuente}}</a>
+      </div>
+      <div><span style="color:green">&#187; Tipo imagen:</span> {{ ::itemMeteo.tipoImagen}}</div>
+      <div><span style="color:green">&#187; Descripción:</span> {{ ::itemMeteo.descripcion }}</div>
+    </div>
+  </div>
+  <!-- fin detalles ----------------------------------------------------------------------------------------->
+
+  <!-- overflow-scroll=false para permitir scrolling con javascript de ionic. permite hacer zoom en imagen -->
+  <!--<ion-content class="has-subheader" overflow-scroll="false">-->
+  <!--</ion-content>-->
 </ion-view>
