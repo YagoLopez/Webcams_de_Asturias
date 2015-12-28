@@ -326,7 +326,7 @@ angular.module('wca.controllers',[])
 
   // inicializaciones -------------------------------------------------------------------------------------------------
   $scope.currentFrame = 0;
-  var isGifPlaying = false;
+  $scope.isGifPlaying = false;
   var timer = null;
   if(angular.equals({}, $scope.itemMeteo)){
     SLoader.hide();
@@ -339,7 +339,7 @@ angular.module('wca.controllers',[])
     {
       $interval.cancel(timer);
       timer = undefined;
-      isGifPlaying = false;
+      $scope.isGifPlaying = false;
       console.log('timer cancelado');
     }
   };// killtimer
@@ -377,8 +377,8 @@ angular.module('wca.controllers',[])
       $('.jsgif > canvas').panzoom('zoom', 1.0, { silent: true });
       // player controls ----------------------------------------------------------------------------------------------
       $scope.playPause = function(){
-        $scope.playButonClicked = ! $scope.playButonClicked;
-        if (isGifPlaying) {
+        //$scope.isGifPlaying = ! $scope.isGifPlaying;
+        if ($scope.isGifPlaying) {
           $scope.pause();
         } else {
           $scope.play();
@@ -386,21 +386,21 @@ angular.module('wca.controllers',[])
       };
       $scope.play = function(){
         killTimer();
-        isGifPlaying = true;
+        $scope.isGifPlaying = true;
         gifAnimado.play();
         sondearPosicion();
         console.log('current frame', gifAnimado.get_current_frame());
       };
       $scope.pause= function(){
         killTimer();
-        isGifPlaying = false;
+        $scope.isGifPlaying = false;
         gifAnimado.pause();
         console.log('pause');
         console.log('current frame', gifAnimado.get_current_frame());
       }
       $scope.restart= function(){
         killTimer();
-        isGifPlaying = false;
+        $scope.isGifPlaying = false;
         gifAnimado.pause();
         gifAnimado.move_to(0);
         rangeSlider.value = 0;
@@ -409,7 +409,7 @@ angular.module('wca.controllers',[])
       }
       $scope.forward= function(){
         killTimer();
-        isGifPlaying = false;
+        $scope.isGifPlaying = false;
         gifAnimado.pause();
         gifAnimado.move_relative(1);
         rangeSlider.value = gifAnimado.get_current_frame();
@@ -418,7 +418,7 @@ angular.module('wca.controllers',[])
       }
       $scope.backward= function(){
         killTimer();
-        isGifPlaying = false;
+        $scope.isGifPlaying = false;
         gifAnimado.pause();
         gifAnimado.move_relative(-1);
         rangeSlider.value = gifAnimado.get_current_frame();
