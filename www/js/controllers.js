@@ -377,7 +377,6 @@ angular.module('wca.controllers',[])
       $('.jsgif > canvas').panzoom('zoom', 1.0, { silent: true });
       // player controls ----------------------------------------------------------------------------------------------
       $scope.playPause = function(){
-        //$scope.isGifPlaying = ! $scope.isGifPlaying;
         if ($scope.isGifPlaying) {
           $scope.pause();
         } else {
