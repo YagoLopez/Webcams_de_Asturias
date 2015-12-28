@@ -212,9 +212,7 @@ angular.module('wca', ['ionic', 'wca.controllers', 'wca.services',
   $urlRouterProvider.otherwise('app/listado2?idCategoria=7');
 
 // -------------------------------------------------------------------------------------------------------------------
-
 })
-
 .directive('fallbackSrc', function () {
   var fallbackSrc = {
     link: function postLink(scope, iElement, iAttrs) {
@@ -225,7 +223,7 @@ angular.module('wca', ['ionic', 'wca.controllers', 'wca.services',
   };
   return fallbackSrc;
 })
-
+// -------------------------------------------------------------------------------------------------------------------
 .directive('iframeOnload', [function(){
   return {
     scope: {
@@ -237,6 +235,19 @@ angular.module('wca', ['ionic', 'wca.controllers', 'wca.services',
       })
     }
   }}])
+// -------------------------------------------------------------------------------------------------------------------
+  .directive('imageonload', function() {
+    return {
+      restrict: 'A',
+      link: function(scope, element, attrs) {
+        element.bind('load', function() {
+          //call the function that was passed
+          scope.$apply(attrs.imageonload);
+        });
+      }
+    };
+  })
+// -------------------------------------------------------------------------------------------------------------------
 
 /*
 .filter('concejoFltr', function(){

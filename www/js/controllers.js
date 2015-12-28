@@ -204,7 +204,7 @@ angular.module('wca.controllers',[])
     //TODO: poner todo esto dentro del evento ionicview.afterenter?
     $scope.rowid = $stateParams.rowid;
     $rootScope.mostrarLupa = false;
-    SLoader.show('Cargndo datos...');
+    //SLoader.show('Cargando datos...');
 
     if(!$rootScope.items || !$scope.rowid){
       SLoader.hide();
@@ -285,10 +285,9 @@ angular.module('wca.controllers',[])
     }
     // FIN IMG RELOAD -------------------------------------------------------------------------------------------------
 
-    $scope.$on('$ionicView.afterEnter', function (event, viewData) {
-      SLoader.hide();
-      //viewData.enableBack = true;
-    });
+    $scope.imgLoaded = function(){
+      //SLoader.hide();
+    }
 
   })
 // =====================================================================================================
@@ -378,7 +377,7 @@ angular.module('wca.controllers',[])
       $('.jsgif > canvas').panzoom('zoom', 1.0, { silent: true });
       // player controls ----------------------------------------------------------------------------------------------
       $scope.playPause = function(){
-        $scope.playButonnClicked = ! $scope.playButonnClicked;
+        $scope.playButonClicked = ! $scope.playButonClicked;
         if (isGifPlaying) {
           $scope.pause();
         } else {

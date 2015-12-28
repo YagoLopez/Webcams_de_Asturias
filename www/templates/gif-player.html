@@ -48,19 +48,11 @@
     <!-- botones control-------------------------------------------------------------------------------------->
     <table id="playControls">
       <tr>
-<!--
         <td>
-          <a class="button" ng-click="playPause()">
+          <a class="button" ng-click="playPause();" ng-class="playButonClicked?'button-assertive':''">
             <i class="ion-ios-play-outline"></i>
           </a>
         </td>
--->
-        <td>
-          <a class="button" ng-click="playPause();" ng-class="playButonnClicked?'button-assertive':''">
-            <i class="ion-ios-play-outline"></i>
-          </a>
-        </td>
-
         <td>
           <a class="button" ng-click="backward()">
             <i class="ion-ios-rewind-outline"></i>

@@ -13,16 +13,14 @@
   </style>
 
   <ion-header-bar class="bar-subheader bar-light">
-    <!-- pinch ------------------------------------------------------------------------------------------------>
     <div style="text-align: center">
       <span>Zoom </span>
       <img ng-src="img/pinch1.png"/>
     </div>
-    <!-- pinch ------------------------------------------------------------------------------------------------>
   </ion-header-bar>
 
   <!-- locking=false para permitir srcroll simultaneo en ejes x,y. apropiado para hacer zoom -->
-  <ion-scroll id="imgContainer" zooming="true" direction="xy" locking="false">
+  <ion-scroll id="imgContainer" zooming="true" direction="xy" locking="false" overflow-scroll="false">
     <img ng-src="{{ ::itemMeteo.url }}" width="100%"/>
   </ion-scroll>
 

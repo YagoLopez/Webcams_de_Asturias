@@ -1,5 +1,3 @@
-<!--TODO: poner advertencia: si no ser carga la imagen probar a recargar la pagina-->
-<!--TODO: lazy loading de imagenes-->
 <!--TODO: pasar todos los nombres de dominio a IPs para optimizar tiempos de carga-->
 <!--TODO: poner url de wikipedia en la pestaña de información-->
 <ion-view view-title="Detalles">
@@ -9,7 +7,7 @@
     </button>
   </ion-nav-buttons>
 
-  <ion-content>
+  <ion-content class="animated fadeIn">
     <style>
       .card {
         padding-top: 1px;
@@ -37,7 +35,7 @@
     <!-- Card ------------------------------------------------------------------------------------------------------>
     <div class="list card">
       <div class="item item-image" style="height:100%; width:100%">
-        <img ng-src="{{ cam.imagen }}" fallback-src="img/imgFail.png" class="imgLoader"/>
+        <img ng-src="{{ cam.imagen }}" fallback-src="img/imgFail.png" class="imgLoader" imageonload="imgLoaded()"/>
       </div>
       <div class="item item-body" style="font-size:small;padding-top:8px;padding-bottom:8px;text-align:center">
         {{ ::cam.lugar }}<br>
