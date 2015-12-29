@@ -6,7 +6,7 @@
       "projectTypeName": "com.intel.xdk.projecttype.jsapp",
       "src": "",
       "projectGuid": "5026b907-8667-4c9e-a1ed-6f06fd4b87b6",
-      "lastModifiedDate": 1451213989035,
+      "lastModifiedDate": 1451353870181,
       "creationDate": 1450749850707
     },
     "sourceDirectory": "www",
@@ -115,7 +115,7 @@
           "android-signed": true
         },
         "isActive_": true,
-        "appName_": "wca.cw.collection.repeat.view.animations.nodebug",
+        "appName_": "wca.crosswlk..animations.nodebug",
         "appID_": "com.yagolopez.webcamsasturias",
         "appAccess_": {
           "mode": "whitelist",

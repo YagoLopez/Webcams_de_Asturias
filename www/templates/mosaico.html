@@ -1,20 +1,9 @@
 <ion-view view-title="{{tituloVista}}">
-
-<!--
-  <ion-nav-buttons side="right">
-    <a id="btnMosaico" class="button button-icon icon ion-settings"
-       href="#/app/listado2?concejo={{ concejo }}&idCategoria={{ idCategoria }}"></a>
-  </ion-nav-buttons>
--->
   <ion-header-bar class="bar-subheader bar-light">
     <h1 class="title" style="text-align: center">Mosaico</h1>
   </ion-header-bar>
 
   <ion-content class="animated fadeIn">
-    <!--mosaico2<br>-->
-<!--concejo: {{concejo}}<br>-->
-    <!--idcategoria: {{idCategoria}}<br>-->
-
     <style type="text/css">
       .divImg {
         font-size: xx-small;
@@ -23,45 +12,42 @@
       }
       .itemCam {
         padding: 0;
-        text-decoration: none;
+        /*text-decoration: none;*/
       }
-
     </style>
     <div class="grid">
       <div class="row" ng-repeat="cam in items track by cam[4]"
            ng-if="$index % 3 === 0" style="padding:0; margin:0;">
 
         <ion-item class="col col-33" ng-if="$index < items.length">
-          <a href="#/app/detalle/{{ items[$index][4] }}" class="itemCam">
-          <!--<img ng-src="{{ items[$index][4] }}" width="100%" />-->
-          <img src="http://lorempixel.com/400/200/sports/{{$index}}/" width="100%" >
+          <a href="#/app/detalle/{{ items[$index][4] }}" class="item itemCam">
+          <img ng-src="{{ items[$index][2] }}" fallback-src="img/imgFail.png" width="100%"/>
+          <!--<img src="http://lorempixel.com/400/200/sports/{{$index}}/" width="100%" >-->
           <!--<img ng-src="http://api.randomuser.me/portraits/thumb/men/{{$index}}.jpg">-->
           <div class="divImg">{{ items[$index][0] }}</div>
           </a>
         </ion-item>
 
         <ion-item class="col col-33" ng-if="$index+1 < items.length" ng-click="showModal($index+1)">
-          <a href="#/app/detalle/{{ items[$index+1][4] }}" class="itemCam">
-          <!--<img ng-src="{{ items[$index+1][4] }}" width="100%" />-->
-          <img src="http://lorempixel.com/400/200/sports/{{$index}}/" width="100%" >
+          <a href="#/app/detalle/{{ items[$index+1][4] }}" class="item itemCam">
+          <img ng-src="{{ items[$index+1][2] }}" width="100%" />
+          <!--<img src="http://lorempixel.com/400/200/sports/{{$index}}/" width="100%" >-->
           <!--<img ng-src="http://api.randomuser.me/portraits/thumb/men/{{$index+1}}.jpg">-->
           <div class="divImg">{{ items[$index+1][0] }}</div>
           </a>
         </ion-item>
 
         <ion-item class="col col-33" ng-if="$index+2 < items.length" ng-click="showModal($index+2)">
-          <a href="#/app/detalle/{{ items[$index+2][4] }}" class="itemCam">
-          <!--<img ng-src="{{ items[$index+2][4] }}" width="100%" />-->
-          <img src="http://lorempixel.com/400/200/sports/{{$index}}/" width="100%" >
+          <a href="#/app/detalle/{{ items[$index+2][4] }}" class="item itemCam">
+          <img ng-src="{{ items[$index+2][2] }}" width="100%" />
+          <!--<img src="http://lorempixel.com/400/200/sports/{{$index}}/" width="100%" >-->
           <!--<img ng-src="http://api.randomuser.me/portraits/thumb/men/{{$index+2}}.jpg">-->
           <div class="divImg">{{ items[$index+2][0] }}</div>
           </a>
         </ion-item>
 
-
       </div>
     </div>
-
 
   </ion-content>
 </ion-view>

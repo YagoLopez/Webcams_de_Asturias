@@ -2,7 +2,7 @@
 //var url_api = "https://www.googleapis.com/fusiontables/v2/query?sql=SELECT%20*%20FROM%201gX5maFbqFyRziZiUYlpOBYhcC1v9lGkKqCXvZREF&key=AIzaSyBsdouSTimjrC2xHmbGgOt8VfbLBWc9Gps";
 
 angular.module('wca', ['ionic', 'wca.controllers', 'wca.services',
-  'jett.ionic.filter.bar' /*,'ionicLazyLoad'*/])
+  'jett.ionic.filter.bar'])
 
 .run(function($ionicPlatform, $animate) {
   $ionicPlatform.ready(function() {
@@ -19,6 +19,9 @@ angular.module('wca', ['ionic', 'wca.controllers', 'wca.services',
     }
     ionic.Platform.isFullScreen = true;
   });
+  //console = console || {};
+  //console.log = function(){};
+  //console.warn = function(){};
 })
 
 .config(function($stateProvider, $urlRouterProvider, $compileProvider, $ionicConfigProvider,
@@ -40,8 +43,11 @@ angular.module('wca', ['ionic', 'wca.controllers', 'wca.services',
     $logProvider.debugEnabled(false);
     $compileProvider.debugInfoEnabled(false);
 
-    // desactivr transiciones de ionic
+    // desactivar transiciones de estado
     $ionicConfigProvider.views.transition('none');
+
+    // nav bar title position for all platforms
+    $ionicConfigProvider.navBar.alignTitle('center');
 
     $stateProvider
 // -------------------------------------------------------------------------------------------------------------------
@@ -49,8 +55,6 @@ angular.module('wca', ['ionic', 'wca.controllers', 'wca.services',
     url: '/app',
     abstract: true,
     templateUrl: 'templates/menu.html'
-    //    ,
-    //controller: 'AppCtrl'
   })
 // -------------------------------------------------------------------------------------------------------------------
   .state('app.mapa', {
@@ -183,24 +187,24 @@ angular.module('wca', ['ionic', 'wca.controllers', 'wca.services',
         }
       })
 // -------------------------------------------------------------------------------------------------------------------
-      .state('app.listado2', {
-        url: '/listado2?concejo&idCategoria',
+      .state('app.listado', {
+        url: '/listado?concejo&idCategoria',
         cache: false,
         views: {
           'menuContent': {
-            templateUrl: 'templates/listado2.html',
-            controller: 'Listado2Ctrl'
+            templateUrl: 'templates/listado.html',
+            controller: 'ListadoCtrl'
           }
         }
       })
 // -------------------------------------------------------------------------------------------------------------------
-      .state('app.mosaico2', {
-        url: '/mosaico2?concejo&idCategoria',
+      .state('app.mosaico', {
+        url: '/mosaico?concejo&idCategoria',
         cache: false,
         views: {
           'menuContent': {
-            templateUrl: 'templates/mosaico2.html',
-            controller: 'Listado2Ctrl'
+            templateUrl: 'templates/mosaico.html',
+            controller: 'ListadoCtrl'
           }
         }
       })
@@ -209,7 +213,7 @@ angular.module('wca', ['ionic', 'wca.controllers', 'wca.services',
 ; // fin de estados
 
   // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('app/listado2?idCategoria=7');
+  $urlRouterProvider.otherwise('app/listado?idCategoria=7');
 
 // -------------------------------------------------------------------------------------------------------------------
 })
@@ -248,39 +252,5 @@ angular.module('wca', ['ionic', 'wca.controllers', 'wca.services',
     };
   })
 // -------------------------------------------------------------------------------------------------------------------
-
-/*
-.filter('concejoFltr', function(){
-
-  var filtro = function(datos_cam, concejo){
-    console.log('datos_cam.rows desde filter', datos_cam.rows)
-  if (!concejo)
-    return datos_cam.rows;
-  else
-    return datos_cam.rows;
-  }
-return filtro;
-    /!*
-      $scope.isActive = function(user) {
-        return user.User.Stats[0].active === "1";
-      };
-      and then in your HTML:
-
-        <div ng-repeat="user in _users | filter:isActive">
-        {{user.User.userid}}
-      </div>
-    *!/
-
-    //var myRedObjects = $filter('filter')(myObjects, { color: "red" });
-
-
-})
-*/
-
- //CORS request
-//angular.module('wca').config(function($httpProvider) {
-//    $httpProvider.defaults.useXDomain = true;
-//    delete $httpProvider.defaults.headers.common['X-Requested-With'];
-//  });
 
 ; // FIN

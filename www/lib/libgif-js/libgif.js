@@ -422,7 +422,7 @@
     };
 
     var SuperGif = function ( opts ) {
-      console.log('opts', opts);
+      //console.log('opts', opts);
         var options = {
             //viewport position
             vp_l: 0,
@@ -434,11 +434,8 @@
             c_h: null,
             fps: 100
         };
-      console.log('options antes', options);
-
       for (var i in opts ) { options[i] = opts[i] }
         if (options.vp_w && options.vp_h) options.is_vp = true;
-      console.log('options despues', options);
 
         var stream;
         var hdr;
@@ -465,7 +462,6 @@
         var gif = options.gif;
         if (gif.getAttribute('rel:fps')) {
           options.fps = gif.getAttribute('rel:fps');
-          console.log('asignacion de options.fps', options.fps);
         }
 
         if (typeof options.auto_play == 'undefined')
@@ -726,7 +722,6 @@
             var step = (function () {
                 var stepping = false;
                 //var delay = options.fps;
-                //console.log('delay desde step', delay);
                 var doStep = function () {
                     stepping = playing;
                     if (!stepping) return;
@@ -737,15 +732,12 @@
                     //TODO: modificaciones mias
                     //var delay = 1000;
                     var delay = options.fps;
-                    //console.log('options desde funcion doStep', options.fps);
 
                     if (!delay) delay = 100; // FIXME: Should this even default at all? What should it be?
 
                     var nextFrameNo = getNextFrameNo();
                     if (nextFrameNo === 0) {
                         //delay += loopDelay;
-                      console.log('delay modificado?', delay);
-
                       setTimeout(completeLoop, delay - 1);
                     }
 

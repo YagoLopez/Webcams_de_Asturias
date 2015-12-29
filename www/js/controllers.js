@@ -1,14 +1,15 @@
+//TODO: no se que pasa con el titulo del listado. revisar
+//todo: hacer icono y Splash screen
+//TODO: usar native trnsitions
 //TODO: revisar las dependencias que se pasan a los controladores
 //TODO: recordar que el codigo que se encuentra en el evento on.afterviewEnter se ejecuta siempre. Probar a quitar la cache de las vistas que usan este icono a ver que pasa
-//TODO: hacer perfilado, ver como se comporta la memoria y el procesador al ejecutar la app
+//TODO: hacer perfilado en chrome mobile, ver como se comporta la memoria y el procesador al ejecutar la app
 //TODO: que en ios aparezca abajo la barra de pestañas
 //TODO: hacer zoom en maapa global cuando se escoja filtro por concejo. Usar coordenaadas lat lng
 //TODO: buscar imagen e icono para splash screen e icono de app
 //TODO: podria ser mejor arrojar una excepcion en vez de llamaar a SPopup cada vez que hay un error. Ya se encarga el
 //servicio de excepciones de capturar la excepcion y mostrar un popup. De esta forma está más centralizado el tratamiento
 //de errores
-//TODO: no se que pasa con el titulo del listado. revisar
-//TODO: borrar console.logs
 
 angular.module('wca.controllers',[])
 
@@ -84,7 +85,7 @@ angular.module('wca.controllers',[])
     SFusionTable.getRemoteData(sqlQueryConcejos).success(function(data){
       $scope.concejos = data.rows;
     }).error(function(status){
-      SPopup.show('Error', 'Fallo cargando lista concejos: '+status);
+      SPopup.show('Error', 'Fallo cargando lista concejos. El servidor no respondió: '+status);
     });
 
     var sqlQueryCategorias = 'SELECT Categoria FROM '+SFusionTable.TABLE_ID+' GROUP BY Categoria';
@@ -204,7 +205,7 @@ angular.module('wca.controllers',[])
     //TODO: poner todo esto dentro del evento ionicview.afterenter?
     $scope.rowid = $stateParams.rowid;
     $rootScope.mostrarLupa = false;
-    //SLoader.show('Cargando datos...');
+    SLoader.show('Cargando...');
 
     if(!$rootScope.items || !$scope.rowid){
       SLoader.hide();
@@ -248,7 +249,6 @@ angular.module('wca.controllers',[])
         if(pageid) {
           $scope.infoConcejo = data.query.pages[pageid].extract;
           $scope.wikipediaCredits = '<br>Fuente: <a href="http://org.wikipedia.es" target="_blank">Wikipedia</a>';
-          //console.log('extract', $scope.infoConcejo);
         }
       }).error(function(status){
         $scope.infoConcejo = 'No se ha podido obtener información remota: '+status;
@@ -286,7 +286,7 @@ angular.module('wca.controllers',[])
     // FIN IMG RELOAD -------------------------------------------------------------------------------------------------
 
     $scope.imgLoaded = function(){
-      //SLoader.hide();
+      SLoader.hide();
     }
 
   })
@@ -340,7 +340,6 @@ angular.module('wca.controllers',[])
       $interval.cancel(timer);
       timer = undefined;
       $scope.isGifPlaying = false;
-      console.log('timer cancelado');
     }
   };// killtimer
 
@@ -360,8 +359,6 @@ angular.module('wca.controllers',[])
         $scope.gifAnimado = gifAnimado;
         $scope.$apply();
         SLoader.hide();
-        console.log('gifAnimado', gifAnimado);
-        console.log('currentFrame', $scope.currentFrame);
       });
       var rangeSlider = document.getElementById('levelRange');
       // pan-zoom ---------------------------------------------------------------------------------------------------
@@ -388,14 +385,11 @@ angular.module('wca.controllers',[])
         $scope.isGifPlaying = true;
         gifAnimado.play();
         sondearPosicion();
-        console.log('current frame', gifAnimado.get_current_frame());
       };
       $scope.pause= function(){
         killTimer();
         $scope.isGifPlaying = false;
         gifAnimado.pause();
-        console.log('pause');
-        console.log('current frame', gifAnimado.get_current_frame());
       }
       $scope.restart= function(){
         killTimer();
@@ -404,7 +398,6 @@ angular.module('wca.controllers',[])
         gifAnimado.move_to(0);
         rangeSlider.value = 0;
         $scope.currentFrame = gifAnimado.get_current_frame();
-        console.log('$scope.currentFrame', $scope.currentFrame);
       }
       $scope.forward= function(){
         killTimer();
@@ -413,7 +406,6 @@ angular.module('wca.controllers',[])
         gifAnimado.move_relative(1);
         rangeSlider.value = gifAnimado.get_current_frame();
         $scope.currentFrame = gifAnimado.get_current_frame();
-        console.log('current frame', gifAnimado.get_current_frame());
       }
       $scope.backward= function(){
         killTimer();
@@ -422,7 +414,6 @@ angular.module('wca.controllers',[])
         gifAnimado.move_relative(-1);
         rangeSlider.value = gifAnimado.get_current_frame();
         $scope.currentFrame = gifAnimado.get_current_frame();
-        console.log('current frame', gifAnimado.get_current_frame());
       }
       $scope.end= function(){
         killTimer();
@@ -431,19 +422,18 @@ angular.module('wca.controllers',[])
         gifAnimado.move_to(posicionFinal - 1);
         rangeSlider.value = gifAnimado.get_current_frame();
         $scope.currentFrame = gifAnimado.get_current_frame();
-        console.log('current frame', gifAnimado.get_current_frame());
       }
       var sondearPosicion = function(){
         timer = $interval( function(){
           rangeSlider.value = gifAnimado.get_current_frame();
           $scope.currentFrame = gifAnimado.get_current_frame();
-          console.log('current frame', $scope.currentFrame);
+          //console.log('current frame', $scope.currentFrame);
         }, 50); // fin interval
       };// sondear posicion
       $scope.irPosicion = function(posicion){
         gifAnimado.move_to(posicion);
-        console.log('currentFrame', $scope.currentFrame);
-        console.log('valor', posicion);
+        //console.log('currentFrame', $scope.currentFrame);
+        //console.log('valor', posicion);
       };//irposicion
       // player controls ----------------------------------------------------------------------------------------------
 
@@ -451,7 +441,7 @@ angular.module('wca.controllers',[])
 
   // Evento destroy ---------------------------------------------------------------------------------------------------
   $scope.$on("$destroy",function(){
-      console.log('ondestroy -> pause animation');
+      //console.log('ondestroy -> pause animation');
       window.clearTimeout();
       $scope.pause();
     });
@@ -588,8 +578,7 @@ angular.module('wca.controllers',[])
     }
   })
 // ====================================================================================================================
-// ====================================================================================================================
-  .controller('Listado2Ctrl', function($scope, $stateParams, SLoader, $rootScope, $ionicFilterBar,
+  .controller('ListadoCtrl', function($scope, $stateParams, SLoader, $rootScope, $ionicFilterBar,
                                    SFusionTable, $filter, $ionicScrollDelegate, SPopup, SCategorias){
 
     SLoader.show();

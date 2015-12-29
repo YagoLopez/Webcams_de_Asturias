@@ -9,11 +9,6 @@
         width:100%;
         /*height: 100%;*/
       }
-/*
-      div.row > div > a {
-        background-color:transparent;
-      }
-*/
       .btnTransparente {
         background-color:transparent;
       }
@@ -26,16 +21,11 @@
       table {
         margin: 0 auto;
       }
-
     </style>
 
     <!-- imagen -------------------------------------------------------------------------------------------------->
-    <!--<ion-scroll id="gifScroll" zooming="true" direction="xy" style="width:100%;height:25em;padding-top: 50px;">-->
-      <!--<div id="gifContainer" data-tap-disabled>-->
-          <img id="gif" rel:animated_src="{{ itemMeteo.url }}" rel:auto_play="0"
-               rel:fps="500" style="width:100%;" ng-click="playPause()"/>
-      <!--</div>-->
-    <!--</ion-scroll>-->
+    <img id="gif" rel:animated_src="{{ itemMeteo.url }}" rel:auto_play="0"
+         rel:fps="500" style="width:100%;" ng-click="playPause()"/>
     <!-- fin imagen ---------------------------------------------------------------------------------------------->
 
   <div class="card">
@@ -49,7 +39,7 @@
     <table id="playControls">
       <tr>
         <td>
-          <a class="button" ng-click="playPause()" ng-class="{'button-assertive': isGifPlaying}">
+          <a class="button" ng-click="playPause()" ng-class="{'button-positive': isGifPlaying}">
             <i class="ion-ios-play-outline"></i>
           </a>
         </td>

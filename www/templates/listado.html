@@ -6,18 +6,11 @@
       padding:0;
       border:0;
     }
-/*    .itemCam {
-      padding: 0;
-      text-decoration: none;
-    }*/
     .item-icon-right{
       min-height: 0;
-      padding-left: 75px;
+      padding-left: 80px;
     }
     .divListado {
-      /*
-      margin-top:15px;
-      */
       margin-top:10px;
       margin-left: 10px;
     }
@@ -25,22 +18,18 @@
 
   <ion-nav-buttons side="right">
     <a id="btnMosaico" class="button button-icon icon ion-grid"
-            href="#/app/mosaico2?concejo={{ ::concejo }}&idCategoria={{ ::idCategoria }}"></a>
+            href="#/app/mosaico?concejo={{ ::concejo }}&idCategoria={{ ::idCategoria }}"></a>
   </ion-nav-buttons>
 
   <ion-header-bar class="bar-subheader bar-light">
     <h1 class="title">Listado</h1>
   </ion-header-bar>
 
-  <ion-content class="animated fadeIn"><!-- fadeInDown, fadeInLeft, fadeInRight, fadeInUp, flipInX, flipInY, lightSpeedIn, slideInUp, slideInDown, slideInLeft, slideInRight, zoomIn-->
-    <!--listado2 native scroll true, collection repet false<br>-->
-    <!--concejo: {{::concejo}}<br>-->
-    <!--idcategoria: {{::idCategoria}}<br>-->
-
+  <ion-content class="animated fadeIn">
     <div>
       <a class="item item-thumbnail-left item-icon-right" ng-repeat="cam in items track by cam[4]"
          href="#/app/detalle/{{ ::items[$index][4] }}">
-        <img ng-src="img/ionic.png" fallback-src="img/imgFail.png" style="height: 60px;width: 60px;"/>
+        <img ng-src="{{ ::cam[2] }}" fallback-src="img/imgFail.png" style="height: 60px;width: 70px;"/>
         <div class="divListado">
           <p>
             <span class="resalteListado"><b>&#187; </b></span>
