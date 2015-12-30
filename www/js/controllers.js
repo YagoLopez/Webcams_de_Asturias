@@ -181,11 +181,13 @@ angular.module('wca.controllers',[])
 })
 // ====================================================================================================================
 .controller('DetalleCtrl', function($scope, $stateParams, $ionicModal, SMapa, SClima, $filter, $rootScope,
-                                    SPopup, SWikipedia, $ionicSlideBoxDelegate, $ionicPopover, Cam, SLoader, $compile){
+                                    /*$ionicFilterBar,*/ SPopup, SWikipedia, $ionicPopover,Cam, SLoader, $compile){
 
     //TODO: poner todo esto dentro del evento ionicview.afterenter?
+    // init
     $scope.rowid = $stateParams.rowid;
     SLoader.show('Cargando...');
+    //console.log('ionicfilterbr', $ionicFilterBar);
 
     if(!$rootScope.items || !$scope.rowid){
       SLoader.hide();
@@ -560,10 +562,6 @@ angular.module('wca.controllers',[])
     var concejo = $stateParams.concejo;
     var idCategoria = $stateParams.idCategoria;
 
-    $scope.$on('$ionicView.afterEnter', function(){
-      $rootScope.mostrarLupa = true;
-    })
-
     function esSubcadena(idCategoria, urlCategoria) {
       return (urlCategoria.indexOf('categoria='+idCategoria) > -1);
     }
@@ -604,18 +602,26 @@ angular.module('wca.controllers',[])
       } else {
         $rootScope.tituloVista = SCategorias.idCategoria_a_nombre(idCategoria);
       }
+      SLoader.hide();
 
+    }).error(function(data, status) {
+      $ionicLoading.hide();
+      SPopup.show("Error", "Fallo obteniendo datos de cámaras<br>SFusionTable.getRemoteData(): "+status);
+    });
+
+    $scope.$on('$ionicView.afterEnter', function(){
+      $rootScope.mostrarLupa = true;
       // -------------------------------------------------------------------------------------------------------------
-      // FILTRO 2: filtra las cams segun una cadena de texto que haya introducido el usuario
+      // FILTRO 2: filtra las cams segun una cadena de texto que haya introducido el usuario en la barra de busqueda
       // -------------------------------------------------------------------------------------------------------------
       // este filtro se aplica sobre los datos previamente filtrados por parametros url
       //TODO: Habría que mejorar la búsqueda para que fuera menos estricta. Por ejemplo, si se introduce "puerto llanes" no se
       //encuentra "Puerto de Llanes"
-
       $rootScope.showFilterBar = function () {
         $rootScope.filterBarInstance = $ionicFilterBar.show({
           items: $rootScope.items,
           update: function (filteredItems, filteredText) {
+            console.log('rootscope.items', $rootScope.items);
             $rootScope.items = filteredItems;
             $ionicScrollDelegate.scrollTop(false);
           },
@@ -630,16 +636,10 @@ angular.module('wca.controllers',[])
           //$rootScope.filterBarInstance();
           //console.log('filter bar destroyed');
           //},
-          cancelOnStateChange: true
+          cancelOnStateChange: false
         });
       };
-
-      SLoader.hide();
-
-    }).error(function(data, status) {
-      $ionicLoading.hide();
-      SPopup.show("Error", "Fallo obteniendo datos de cámaras<br>SFusionTable.getRemoteData(): "+status);
-    });
+    })
 
     $scope.$on('$ionicView.beforeLeave', function(){
       $rootScope.mostrarLupa = false;

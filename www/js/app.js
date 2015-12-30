@@ -36,6 +36,7 @@ angular.module('wca', ['ionic', 'wca.controllers', 'wca.services',
       $ionicConfigProvider.scrolling.jsScrolling(false);
     }
     $ionicFilterBarConfigProvider.placeholder('Buscar');
+    $ionicFilterBarConfigProvider.transition('vertical');
     // num templates to prefetch
     $ionicConfigProvider.templates.maxPrefetch();
     // disable angular log system
@@ -186,7 +187,7 @@ angular.module('wca', ['ionic', 'wca.controllers', 'wca.services',
 // -------------------------------------------------------------------------------------------------------------------
       .state('app.listado', {
         url: '/listado?concejo&idCategoria',
-        cache: false,
+        cache: true,
         views: {
           'menuContent': {
             templateUrl: 'templates/listado.html',
