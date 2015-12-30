@@ -6,7 +6,7 @@
 
   <ion-content class="animated fadeIn">
     <style type="text/css">
-      .divImg {
+      .txt {
         font-size: xx-small;
         overflow: hidden;
         text-overflow: ellipsis;
@@ -22,21 +22,21 @@
         <ion-item class="col col-33" ng-if="$index < items.length">
           <a href="#/app/detalle/{{ items[$index][4] }}" class="item itemCam">
           <img ng-src="{{ items[$index][2] }}" fallback-src="img/imgFail.png" width="100%"/>
-          <div class="divImg">{{ items[$index][0] }}</div>
+          <div class="txt">{{ items[$index][0] }}</div>
           </a>
         </ion-item>
 
         <ion-item class="col col-33" ng-if="$index+1 < items.length" ng-click="showModal($index+1)">
           <a href="#/app/detalle/{{ items[$index+1][4] }}" class="item itemCam">
           <img ng-src="{{ items[$index+1][2] }}" fallback-src="img/imgFail.png" width="100%" />
-          <div class="divImg">{{ items[$index+1][0] }}</div>
+          <div class="txt">{{ items[$index+1][0] }}</div>
           </a>
         </ion-item>
 
         <ion-item class="col col-33" ng-if="$index+2 < items.length" ng-click="showModal($index+2)">
           <a href="#/app/detalle/{{ items[$index+2][4] }}" class="item itemCam">
           <img ng-src="{{ items[$index+2][2] }}" fallback-src="img/imgFail.png" width="100%" />
-          <div class="divImg">{{ items[$index+2][0] }}</div>
+          <div class="txt">{{ items[$index+2][0] }}</div>
           </a>
         </ion-item>
 

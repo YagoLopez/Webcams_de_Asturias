@@ -15,6 +15,12 @@
       margin-top:10px;
       margin-left: 10px;
     }
+
+    #imWC {
+      height: 64px;
+      width: 72px;
+      top: 6px;
+    }
   </style>
 
   <ion-nav-buttons side="right">
@@ -30,7 +36,7 @@
     <div>
       <a class="item item-thumbnail-left item-icon-right" ng-repeat="cam in items track by cam[4]"
          href="#/app/detalle/{{ ::items[$index][4] }}">
-        <!--<img ng-src="{{ ::cam[2] }}" fallback-src="img/imgFail.png" style="height: 60px;width: 70px;"/>-->
+        <img id="imWC" ng-src="{{ ::cam[2] }}" fallback-src="img/imgFail.png"/>
         <div class="divListado">
           <p>
             <span class="resalteListado"><b>&#187; </b></span>

@@ -150,11 +150,6 @@ angular.module('wca', ['ionic', 'wca.controllers', 'wca.services',
             templateUrl: 'templates/stats.html'
           }
         }
-        //,
-        //onEnter: function ($rootScope) {
-        //  $rootScope.mostrarLupa = false;
-        //  console.log('lupa', $rootScope.mostrarLupa);
-        //}
       })
 // -------------------------------------------------------------------------------------------------------------------
       .state('app.heatmap', {
@@ -164,11 +159,6 @@ angular.module('wca', ['ionic', 'wca.controllers', 'wca.services',
           'menuContent': {
             templateUrl: 'templates/heatmap.html'
           }
-          //,
-          //onEnter: function ($rootScope) {
-          //  $rootScope.mostrarLupa = false;
-          //  console.log('lupa', $rootScope.mostrarLupa);
-          //}
         }
       })
 // -------------------------------------------------------------------------------------------------------------------

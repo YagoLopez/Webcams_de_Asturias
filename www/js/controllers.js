@@ -1,10 +1,9 @@
-//TODO: no se que pasa con el titulo del listado. revisar
 //todo: hacer icono y Splash screen
 //TODO: usar native trnsitions
 //TODO: revisar las dependencias que se pasan a los controladores
-//TODO: recordar que el codigo que se encuentra en el evento on.afterviewEnter se ejecuta siempre. Probar a quitar la cache de las vistas que usan este icono a ver que pasa
+//TODO: recordar que el codigo que se encuentra en el evento ionicView.afterEnter se ejecuta siempre. Probar a quitar la cache de las vistas que usan este icono a ver que pasa
 //TODO: hacer perfilado en chrome mobile, ver como se comporta la memoria y el procesador al ejecutar la app
-//TODO: hacer zoom en maapa global cuando se escoja filtro por concejo. Usar coordenaadas lat lng
+//TODO: hacer zoom en mapa global cuando se escoja filtro por concejo. Usar coordenadas lat lng
 //TODO: podria ser mejor arrojar una excepcion en vez de llamaar a SPopup cada vez que hay un error. Ya se encarga el
 //servicio de excepciones de capturar la excepcion y mostrar un popup. De esta forma está más centralizado el tratamiento
 //de errores
@@ -12,21 +11,7 @@
 angular.module('wca.controllers',[])
 
 // ====================================================================================================================
-/*
-.controller('AppCtrl', function($scope) {
-
-  //// With the new view caching in Ionic, Controllers are only called
-  //// when they are recreated or on app start, instead of every page change.
-  //// To listen for when this page is active (for example, to refresh data),
-  //// listen for the $ionicView.enter event:
-  ////$scope.$on('$ionicView.enter', function(e) {
-  ////});
-  })
-*/
-// ====================================================================================================================
 .controller('MapaCtrl', function($scope, $stateParams, SMapa, $rootScope){
-
-  //$rootScope.mostrarLupa = false;
 
   $scope.$on('$ionicView.afterEnter', function() {
     var mapa = SMapa.crear(document.getElementById('mapa'));
@@ -75,7 +60,6 @@ angular.module('wca.controllers',[])
     var layer = null;
     var mapa = null;
     var zoomLevel = 7;
-    //$rootScope.mostrarLupa = false;
     $scope.checked = null;
 
     var sqlQueryConcejos = 'SELECT Concejo FROM '+SFusionTable.TABLE_ID+' GROUP BY Concejo';
@@ -160,7 +144,6 @@ angular.module('wca.controllers',[])
     var FotosPanoramio = new panoramio.PhotoWidget('divPanoramio', rectanguloBusqueda, null);
     FotosPanoramio.setPosition(0);
 
-    //$rootScope.mostrarLupa = false;
     $scope.fotos = FotosPanoramio;
     $scope.nextPhoto = function(){
       if (hayFotoSiguiente())
@@ -202,7 +185,6 @@ angular.module('wca.controllers',[])
 
     //TODO: poner todo esto dentro del evento ionicview.afterenter?
     $scope.rowid = $stateParams.rowid;
-    //$rootScope.mostrarLupa = false;
     SLoader.show('Cargando...');
 
     if(!$rootScope.items || !$scope.rowid){
@@ -291,8 +273,6 @@ angular.module('wca.controllers',[])
 // =====================================================================================================
 .controller('StreetViewCtrl', function($scope, SMapa, $stateParams, $rootScope, SPopup){
 
-  //$rootScope.mostrarLupa = false;
-
   if(!$rootScope.cam) {
     SPopup.show('Error', 'Datos insuficientes. Probar otra opción de menú');
     return;
@@ -318,7 +298,6 @@ angular.module('wca.controllers',[])
                                       $state, $rootScope, SPopup){
 
   SLoader.showWithBackdrop('Cargando datos...');
-  //$rootScope.mostrarLupa = false;
 
     // Obtiene itemMeteo ------------------------------------------------------------------------------------------------
   $scope.itemMeteo = new ItemMeteo(TablaMeteo.getItemById($stateParams.id_item_meteo));
@@ -449,7 +428,6 @@ angular.module('wca.controllers',[])
 // ====================================================================================================================
 .controller('MeteoCtrl', function($scope, $rootScope, SFusionTable, SPopup, TablaMeteo, SLoader){
 
-  //$rootScope.mostrarLupa = false;
   var showError = function(status){
     SPopup.show(
       'Error', ' MeteoCtrl: Compruebe conexión de red. Estado: '+status );
@@ -478,7 +456,6 @@ angular.module('wca.controllers',[])
 })
 // ====================================================================================================================
 .controller('ImgViewerCtrl', function($scope, $stateParams, ItemMeteo, TablaMeteo){
-    //$rootScope.mostrarLupa = false;
     $scope.itemMeteo = new ItemMeteo( TablaMeteo.getItemById($stateParams.id_item_meteo) );
     $scope.$on('$ionicView.afterEnter', function(){
       document.getElementById('imgContainer').style.background = 'none';
@@ -488,8 +465,6 @@ angular.module('wca.controllers',[])
   .controller('PorCategoriaCtrl', function($scope, $window, $sce, SLoader, $rootScope){
 
     SLoader.showWithBackdrop();
-    //$rootScope.mostrarLupa = false;
-
     //Calculo de dimensiones de ventana al redimensionar
     $scope.calculateDimensions = function(gesture) {
       $scope.dev_width = $window.innerWidth;
@@ -535,8 +510,6 @@ angular.module('wca.controllers',[])
   .controller('PorConcejoCtrl', function($scope, $window, $sce, SLoader, $rootScope){
 
     SLoader.showWithBackdrop();
-    //$rootScope.mostrarLupa = false;
-
     //Calculo de dimensiones de ventana al redimensionar
     $scope.calculateDimensions = function(gesture) {
       $scope.dev_width = $window.innerWidth;
@@ -627,7 +600,7 @@ angular.module('wca.controllers',[])
       $rootScope.idCategoria = idCategoria;
 
       if(!idCategoria || idCategoria == ''){
-        $rootScope.tituloVista = 'Lista completa'
+        $rootScope.tituloVista = 'Todas'
       } else {
         $rootScope.tituloVista = SCategorias.idCategoria_a_nombre(idCategoria);
       }

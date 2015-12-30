@@ -29,12 +29,6 @@
 
   <!-- overflow-scroll=false para permitir scrolling con javascript de ionic. permite hacer zoom en imagen -->
     <!-- locking=false para permitir srcroll simultaneo en ejes x,y. apropiado para hacer zoom -->
-<!--
-    <ion-scroll zooming="true" direction="xy" style="margin-top:0;width: 100%; height:100%;text-align: center;" locking="false">
-      <img ng-src="{{ cam.imagen }}"/>
-    </ion-scroll>
--->
-
     <ion-scroll id="imgCamContainer" zooming="true" direction="xy" locking="false" overflow-scroll="false">
       <img ng-src="{{ cam.imagen }}"/>
     </ion-scroll>
