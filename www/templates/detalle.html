@@ -1,5 +1,3 @@
-<!--TODO: poner advertencia: si no ser carga la imagen probar a recargar la pagina-->
-<!--TODO: lazy loading de imagenes-->
 <!--TODO: pasar todos los nombres de dominio a IPs para optimizar tiempos de carga-->
 <!--TODO: poner url de wikipedia en la pestaña de información-->
 <ion-view view-title="Detalles">
@@ -30,53 +28,39 @@
       .tabs-color-positive{
         border-bottom: 1px solid;
       }
-/*
-      .md-button.md-fab.md-fab-bottom-right{
-        top:75%;
-        right:3%;
-      }
-*/
       .imgLoader{
-        background: transparent url(../img/c.png) no-repeat center center;
-      }
-      .md-fab {
-        background-color: cornflowerblue;
-        left: 75%;
-        bottom: 10px;
+        background: transparent url(img/c.png) no-repeat center center;
       }
     </style>
-
     <!-- Card ------------------------------------------------------------------------------------------------------>
     <div class="list card">
       <div class="item item-image" style="height:100%; width:100%">
-        <img ng-src="{{ cam.imagen }}" fallback-src="../img/imgFail.png" class="imgLoader"/>
-        <md-tooltip md-visible="tipvisibility">
-          Recarga de imagen
-        </md-tooltip>
+        <img ng-src="{{ cam.imagen }}" fallback-src="img/imgFail.png" class="imgLoader"
+             imageonload="imgLoaded()" on-touch="showModal()"/>
       </div>
-      <div class="item item-body" style="font-size:small;padding-top:8px;padding-bottom:8px">
+      <div class="item item-body" style="font-size:small;padding-top:8px;padding-bottom:8px;text-align:center">
         {{ ::cam.lugar }}<br>
       </div>
       <div class="item item-body" style="font-size: small">
-          <i class="icon ion-ios-checkmark-outline" style="color:#387ef5;"></i>
+          <i class="icon ion-ios-checkmark-outline" style="color:#387ef5;font-size:medium;"></i>
           Concejo: {{ ::cam.concejo }}<br>
-          <i class="icon ion-ios-checkmark-outline" style="color:#387ef5;"></i>
+          <i class="icon ion-ios-checkmark-outline" style="color:#387ef5;font-size:medium;"></i>
           Categoría: {{ ::cam.categoria }}
       </div>
       <!-- botones ------------------------------------------------------------------------------------------------->
-      <div class="item item-text-wrap" style="padding:0;">
+      <div class="item item-text-wrap" style="padding:0;text-align:center">
         <div class="row">
           <div class="col">
-            <md-button class="md-raised md-primary" ng-click="showModal()" style="height: 40px; width:100%">
+            <button class="button button-calm" ng-click="showModal()" style="width:100%">
               <i class="icon ion-arrow-expand"></i>
               Ampliar
-            </md-button>
+            </button>
           </div>
           <div class="col">
-            <md-button class="md-raised md-primary" ng-click="reloadImg()" style="height: 40px; width:100%">
-              <i class="icon ion-ios-reload"></i>
+            <button class="button button-calm" ng-click="reloadImg()" style="width:100%">
+              <i class="icon ion-refresh"></i>
               Recargar
-            </md-button>
+            </button>
           </div>
         </div>
       </div>
@@ -85,7 +69,7 @@
     </div>
     <!-- Fin Card -------------------------------------------------------------------------------------------------->
 
-    <!-- Tabs -------------------------------------------------------------------------------------------------------->
+    <!-- Card ------------------------------------------------------------------------------------------------------>
     <div class="card">
 
       <div class="item item-divider tabs tabs-icon-left tabs-color-positive">
@@ -102,7 +86,7 @@
       <div ng-init="page='first'"></div>
 
       <div class="item" ng-show="page === 'first'">
-        <div class="animated fadeIn" style="font-size:smaller">
+        <div style="font-size:smaller">
           <table>
             <tr>
               <td><img ng-src="{{::iconoUrl}}"/></td>
@@ -122,21 +106,15 @@
       </div>
       <div class="item-body" style="width: 100%; overflow-y: scroll; height: 300px;"
            ng-class="{active:active}" ng-show="page === 'second'">
-        <div class="animated fadeIn">
-        {{ ::infoConcejo }}
+        <div>
+          {{ infoConcejo }}
         </div>
-        <div><br>Fuente: <a href="http://org.wikipedia.es" target="_blank">Wikipedia</a></div>
+        <div ng-bind-html="wikipediaCredits"></div>
       </div>
     </div>
-    <!-- Fin Tabs ---------------------------------------------------------------------------------------------------->
+    <!-- Fin Card--------------------------------------------------------------------------------------------------->
 
-    <!-- FAB button -------------------------------------------------------------------------------------------------->
-    <md-button class="md-fab md-primary" aria-label="Menu" ng-click="popover.show($event)">
-      <i class="ion-plus-round"></i>
-    </md-button>
-    <!-- FAB button -------------------------------------------------------------------------------------------------->
-
-    <div id="void"></div>
+    <div id="void" style="display:block"><br><br></div>
 
   </ion-content>
 </ion-view>

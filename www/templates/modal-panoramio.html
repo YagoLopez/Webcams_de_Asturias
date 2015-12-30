@@ -1,3 +1,48 @@
+<ion-modal-view>
+  <style type="text/css">
+    #imgPanoramioContainer {
+      margin-top: 45px;
+      width: 100%;
+      height: 100%;
+      text-align: center;
+    }
+    #imgPanoramioContainer > img {
+      width: 35px;
+      vertical-align: middle;
+    }
+    ion-header-bar > div > img {
+      width: 35px;
+      vertical-align: middle;
+    }
+  </style>
+
+  <ion-header-bar align-title="center">
+    <div class="title">
+      Zoom <img ng-src="img/pinch1.png"/>
+    </div>
+    <button class="button button-clear pull-right" ng-click="closeModal()">
+      Cerrar
+      <i class="icon icon-right ion-android-close"></i>
+    </button>
+  </ion-header-bar>
+
+  <ion-scroll id="imgPanoramioContainer" zooming="true" direction="xy" locking="false" overflow-scroll="false">
+    <img ng-src="{{ urlImg }}"/>
+    <div style="font-size:small">
+      <div>{{ titulo}}</div>
+      <div>Autor: <a href="{{ urlAutor }}" target="_blank">{{ autor }}</a></div>
+    </div>
+  </ion-scroll>
+
+</ion-modal-view>
+
+
+
+
+
+
+
+<!--
 <ion-modal-view title="Imagen">
 
   <ion-header-bar>
@@ -12,17 +57,18 @@
   <ion-header-bar class="bar-subheader bar-light">
     <div style="text-align: center">
       <span>Zoom imagen</span>
-      <img style="width:35px;vertical-align:middle" src="../img/pinch1.png"/>
+      <img style="width:35px;vertical-align:middle" ng-src="img/pinch1.png"/>
     </div>
   </ion-header-bar>
 
-  <ion-scroll zooming="true" direction="xy" style="margin-top:88px;width: 100%; height:100%;text-align:center">
+  <ion-scroll zooming="true" direction="xy" style="margin-top:88px;width: 100%; height:100%;text-align:center"
+              locking="false" overflow-scroll="false">
     <img ng-src="{{ urlImg }}"/>
     <div style="text-align:center;font-size:small">
       <div>{{ titulo}}</div>
       <div>Autor: <a href="{{ urlAutor }}" target="_blank">{{ autor }}</a></div>
-      <!--<hr/>-->
     </div>
   </ion-scroll>
 
 </ion-modal-view>
+-->

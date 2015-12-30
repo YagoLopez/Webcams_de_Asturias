@@ -1,118 +1,19 @@
+//TODO: intentar acceder a bbdd en el controlador del estado app para cargar los datos siempre que se inicie la app
+//todo: hacer icono y Splash screen
+//TODO: usar native trnsitions
 //TODO: revisar las dependencias que se pasan a los controladores
-//TODO: recordar que el codigo que se encuentra en el evento on.afterviewEnter se ejecuta siempre. Probar a quitar la cache de las vistas que usan este icono a ver que pasa
-//TODO: hacer perfilado, ver como se comporta la memoria y el procesador al ejecutar la app
-//TODO: que en ios aparezca abajo la barra de pestañas
-//TODO: hacer zoom en maapa global cuando se escoja filtro por concejo. Usar coordenaadas lat lng
-//TODO: buscar imagen e icono para splash screen e icono de app
+//TODO: recordar que el codigo que se encuentra en el evento ionicView.afterEnter se ejecuta siempre. Probar a quitar la cache de las vistas que usan este icono a ver que pasa
+//TODO: hacer perfilado en chrome mobile, ver como se comporta la memoria y el procesador al ejecutar la app
+//TODO: hacer zoom en mapa global cuando se escoja filtro por concejo. Usar coordenadas lat lng
 //TODO: podria ser mejor arrojar una excepcion en vez de llamaar a SPopup cada vez que hay un error. Ya se encarga el
 //servicio de excepciones de capturar la excepcion y mostrar un popup. De esta forma está más centralizado el tratamiento
 //de errores
-//TODO: no se que pasa con el titulo del listado. revisar
-//TODO: borrar console.logs
+
 
 angular.module('wca.controllers',[])
 
 // ====================================================================================================================
-.controller('AppCtrl', function($scope) {
-
-  //// With the new view caching in Ionic, Controllers are only called
-  //// when they are recreated or on app start, instead of every page change.
-  //// To listen for when this page is active (for example, to refresh data),
-  //// listen for the $ionicView.enter event:
-  ////$scope.$on('$ionicView.enter', function(e) {
-  ////});
-  })
-// ====================================================================================================================
-.controller('TabsCtrl', function($scope, $stateParams, SLoader, $rootScope, $ionicFilterBar,
-                                 SFusionTable, $filter, $ionicScrollDelegate, SPopup, $ionicNavBarDelegate, SCategorias){
-
-    SLoader.show();
-    var concejo = $stateParams.concejo;
-    var idCategoria = $stateParams.idCategoria;
-
-    //TODO: revisar esto. hacer un servicio para no usar rootscope?
-    $rootScope.mostrarLupa = true;
-
-    function esSubcadena(idCategoria, urlCategoria) {
-      return (urlCategoria.indexOf('categoria='+idCategoria) > -1);
-    }
-
-    //TODO: cachear las imagenes
-    var sqlQuery = 'SELECT Lugar,Concejo,Imagen,Categoria,rowid,latitud,longitud FROM '+ SFusionTable.TABLE_ID;
-    SFusionTable.getRemoteData(sqlQuery).success(function(data){
-
-      //console.log('data', data);
-
-      // -------------------------------------------------------------------------------------------------------------
-      // FILTRO 1: filtra las cams por parametros de url: concejo y categoria
-      // -------------------------------------------------------------------------------------------------------------
-      var camsFiltradasPorUrl = $filter('filter')(data.rows, function(cam){
-        if (concejo && idCategoria) {
-          // cam[1]: concejo de camara, cam[3]: url categoria (no id de categoria, no confundir)
-          return (cam[1].toLowerCase() == concejo.toLowerCase() && esSubcadena(idCategoria, cam[3]));
-        } else {
-          if (concejo)
-            return cam[1].toLowerCase() == concejo.toLowerCase();
-          if (idCategoria)
-            return esSubcadena(idCategoria, cam[3]);
-          if(!concejo && !idCategoria)
-            return data.rows;
-        }
-      });
-
-      // Inicialmente items contiene las cams filtradas solo por parametros de url
-      $rootScope.items = camsFiltradasPorUrl;
-      // Despues de filtrar, guardar parametros en scope. Se hace asi para que el filtrado sea mas eficiente
-      $rootScope.concejo = concejo;
-      $rootScope.idCategoria = idCategoria;
-
-      if(!idCategoria || idCategoria == ''){
-        $scope.tituloVista = 'Lista completa'
-      } else {
-        $scope.tituloVista = SCategorias.idCategoria_a_nombre(idCategoria);
-      }
-
-      // -------------------------------------------------------------------------------------------------------------
-      // FILTRO 2: filtra las cams segun una cadena de texto que haya introducido el usuario
-      // -------------------------------------------------------------------------------------------------------------
-      // este filtro se aplica sobre los datos previamente filtrados por url
-      //TODO: Habría que mejorar la búsqueda para que fuera menos estricta. Por ejemplo, si se introduce "puerto llanes" no se
-      //encuentra "Puerto de Llanes"
-
-      $rootScope.showFilterBar = function () {
-        $rootScope.filterBarInstance = $ionicFilterBar.show({
-          items: $rootScope.items,
-          update: function (filteredItems, filteredText) {
-            $rootScope.items = filteredItems;
-            $ionicScrollDelegate.scrollTop(false);
-          },
-          cancelText: 'Cancelar',
-          //done: function(){
-          //  $ionicSideMenuDelegate.canDragContent(false);
-          //  console.log('no se puede abrir el menu');
-          //
-          //},
-          //cancel: function(){
-            // destruye fileter bar
-            //$rootScope.filterBarInstance();
-            //console.log('filter bar destroyed');
-          //},
-          cancelOnStateChange: true
-        });
-      };
-
-      SLoader.hide();
-
-    }).error(function(data, status) {
-      $ionicLoading.hide();
-      SPopup.show("Error", "Fallo obteniendo datos de cámaras<br>SFusionTable.getRemoteData(): "+status)
-    });
-
-})
-// ====================================================================================================================
 .controller('MapaCtrl', function($scope, $stateParams, SMapa, $rootScope){
-
-  $rootScope.mostrarLupa = false;
 
   $scope.$on('$ionicView.afterEnter', function() {
     var mapa = SMapa.crear(document.getElementById('mapa'));
@@ -161,7 +62,6 @@ angular.module('wca.controllers',[])
     var layer = null;
     var mapa = null;
     var zoomLevel = 7;
-    $rootScope.mostrarLupa = false;
     $scope.checked = null;
 
     var sqlQueryConcejos = 'SELECT Concejo FROM '+SFusionTable.TABLE_ID+' GROUP BY Concejo';
@@ -169,7 +69,7 @@ angular.module('wca.controllers',[])
     SFusionTable.getRemoteData(sqlQueryConcejos).success(function(data){
       $scope.concejos = data.rows;
     }).error(function(status){
-      SPopup.show('Error', 'Fallo cargando lista concejos: '+status);
+      SPopup.show('Error', 'Fallo cargando lista concejos. El servidor no respondió: '+status);
     });
 
     var sqlQueryCategorias = 'SELECT Categoria FROM '+SFusionTable.TABLE_ID+' GROUP BY Categoria';
@@ -246,7 +146,6 @@ angular.module('wca.controllers',[])
     var FotosPanoramio = new panoramio.PhotoWidget('divPanoramio', rectanguloBusqueda, null);
     FotosPanoramio.setPosition(0);
 
-    $rootScope.mostrarLupa = false;
     $scope.fotos = FotosPanoramio;
     $scope.nextPhoto = function(){
       if (hayFotoSiguiente())
@@ -284,27 +183,29 @@ angular.module('wca.controllers',[])
 })
 // ====================================================================================================================
 .controller('DetalleCtrl', function($scope, $stateParams, $ionicModal, SMapa, SClima, $filter, $rootScope,
-                                    SPopup, SWikipedia, $ionicSlideBoxDelegate, $ionicPopover, Cam, SLoader){
+                                    $ionicFilterBar, SPopup, SWikipedia, $ionicPopover,Cam, SLoader, $compile){
 
+    // init
     $scope.rowid = $stateParams.rowid;
-    $rootScope.mostrarLupa = false;
+    SLoader.show('Cargando...');
+    var filterBar = $('ion-filter-bar');
+    filterBar.hide();
+    $scope.$on('$ionicView.beforeLeave', function(){
+      filterBar.show();
+    })
 
     if(!$rootScope.items || !$scope.rowid){
+      SLoader.hide();
       SPopup.show('Aviso', 'No hay datos de cámara. Escoger otra opción de menú');
       return;
     };
 
-    $scope.$on('$ionicView.beforeEnter', function (event, viewData) {
-      viewData.enableBack = true;
-    });
-
     var datosCam = $filter('filter')($rootScope.items, function(cam) {
       return cam[4] == $scope.rowid;
     });
-
     //TODO: es cam singleton??? Si no lo es hacerlo asi
     $rootScope.cam = new Cam(datosCam);
-    console.log('rootscope.cam', $rootScope.cam);
+    //console.log('rootscope.cam', $rootScope.cam);
 
     // CLIMA ---------------------------------------------------------------------------------------------------------
     var div = document.getElementById('void');
@@ -327,22 +228,19 @@ angular.module('wca.controllers',[])
     }).error(function(status){
       SPopup.show('Error', 'SClima.getData(): '+status)
     });
-    // FIN CLIMA -----------------------------------------------------------------------------------------------------
-
     // WIKIPEDIA -----------------------------------------------------------------------------------------------------
+    $scope.infoConcejo = 'Cargando...'
     $scope.getInfo = function(){
       SWikipedia.info($rootScope.cam.concejo).success(function(data){
         var pageid = data.query.pageids[0];
         if(pageid) {
           $scope.infoConcejo = data.query.pages[pageid].extract;
-          console.log('extract', $scope.infoConcejo);
+          $scope.wikipediaCredits = '<br>Fuente: <a href="http://org.wikipedia.es" target="_blank">Wikipedia</a>';
         }
       }).error(function(status){
         $scope.infoConcejo = 'No se ha podido obtener información remota: '+status;
       });
     }//getInfo
-    // WIKIPEDIA -----------------------------------------------------------------------------------------------------
-
     // DIALOGO MODAL -------------------------------------------------------------------------------------------------
     $ionicModal.fromTemplateUrl('templates/modal-detalle.html', {
       scope: $scope,
@@ -356,36 +254,34 @@ angular.module('wca.controllers',[])
     $scope.closeModal = function () {
       $scope.modal.hide();
     };
-    // FIN DIALOGO MODAL ----------------------------------------------------------------------------------------------
-
+    // POPOVER -------------------------------------------------------------------------------------------------
     $ionicPopover.fromTemplateUrl('templates/popover.html', {
       scope: $scope,
     }).then(function(popover) {
       $scope.popover = popover;
     });
-
-    $scope.tipvisibility = false;
+    // IMG RELOAD -------------------------------------------------------------------------------------------------
     $scope.reloadImg = function(){
       $rootScope.cam.imagen = $rootScope.cam.imagen + '#' + new Date().getTime();
-      $scope.tipvisibility = true;
-      console.log('scope.tipvisibility', $scope.tipvisibility);
-
+      SLoader.show('Recargando imagen...');
       setTimeout(function(){
         $scope.$apply(function(){
-          $scope.tipvisibility = false;
-          console.log('scope.tipvisibility apagado', $scope.tipvisibility);
+          SLoader.hide();
         })
-      }, 800);
+      }, 500);
+    }
+    // FIN IMG RELOAD -------------------------------------------------------------------------------------------------
+
+    $scope.imgLoaded = function(){
+      SLoader.hide();
     }
 
-})
+  })
 // =====================================================================================================
 .controller('StreetViewCtrl', function($scope, SMapa, $stateParams, $rootScope, SPopup){
 
-  $rootScope.mostrarLupa = false;
-
   if(!$rootScope.cam) {
-    SPopup.show('Error', 'Faltan datos. Probar otra opción de menú');
+    SPopup.show('Error', 'Datos insuficientes. Probar otra opción de menú');
     return;
   }
   var coords = {lat: $rootScope.cam.lat, lng: $rootScope.cam.lng};
@@ -408,20 +304,18 @@ angular.module('wca.controllers',[])
 .controller('GifPlayerCtrl', function($scope, $window, $interval, $stateParams, TablaMeteo, ItemMeteo, SLoader,
                                       $state, $rootScope, SPopup){
 
-  //TODO: crear servicio de esto
-  SLoader.showWithBackdrop();
+  SLoader.showWithBackdrop('Cargando datos...');
 
-  // Obtiene itemMeteo ------------------------------------------------------------------------------------------------
+    // Obtiene itemMeteo ------------------------------------------------------------------------------------------------
   $scope.itemMeteo = new ItemMeteo(TablaMeteo.getItemById($stateParams.id_item_meteo));
-  console.log('tipo imagen', $scope.itemMeteo.tipoImagen);
 
   // inicializaciones -------------------------------------------------------------------------------------------------
   $scope.currentFrame = 0;
-  var isGifPlaying = false;
+  $scope.isGifPlaying = false;
   var timer = null;
   if(angular.equals({}, $scope.itemMeteo)){
     SLoader.hide();
-    SPopup.show('Error', 'No se han podido descargar datos remotos. Comprobar conexión de red');
+    SPopup.show('Error', 'Datos insuficientes. Posibles causas: (1) No conexión de datos. (2) Fallo servidor remoto. Probar otra opción de menú');
     return;
   }
   // Detencion de timer -----------------------------------------------------------------------------------------------
@@ -430,8 +324,7 @@ angular.module('wca.controllers',[])
     {
       $interval.cancel(timer);
       timer = undefined;
-      isGifPlaying = false;
-      console.log('timer cancelado');
+      $scope.isGifPlaying = false;
     }
   };// killtimer
 
@@ -442,7 +335,6 @@ angular.module('wca.controllers',[])
         gif: document.getElementById('gif'),
         loop_mode: 0,
         draw_while_loading: 1
-        //on_end: SLoader.hide()
         //max_width: $scope.dev_width
       });
       // Carga gif animado remoto y lo descompone en fotogramas para procesarlo ---------------------------------------
@@ -452,8 +344,6 @@ angular.module('wca.controllers',[])
         $scope.gifAnimado = gifAnimado;
         $scope.$apply();
         SLoader.hide();
-        console.log('gifAnimado', gifAnimado);
-        console.log('currentFrame', $scope.currentFrame);
       });
       var rangeSlider = document.getElementById('levelRange');
       // pan-zoom ---------------------------------------------------------------------------------------------------
@@ -469,7 +359,7 @@ angular.module('wca.controllers',[])
       $('.jsgif > canvas').panzoom('zoom', 1.0, { silent: true });
       // player controls ----------------------------------------------------------------------------------------------
       $scope.playPause = function(){
-        if (isGifPlaying) {
+        if ($scope.isGifPlaying) {
           $scope.pause();
         } else {
           $scope.play();
@@ -477,44 +367,38 @@ angular.module('wca.controllers',[])
       };
       $scope.play = function(){
         killTimer();
-        isGifPlaying = true;
+        $scope.isGifPlaying = true;
         gifAnimado.play();
         sondearPosicion();
-        console.log('current frame', gifAnimado.get_current_frame());
       };
       $scope.pause= function(){
         killTimer();
-        isGifPlaying = false;
+        $scope.isGifPlaying = false;
         gifAnimado.pause();
-        console.log('pause');
-        console.log('current frame', gifAnimado.get_current_frame());
       }
       $scope.restart= function(){
         killTimer();
-        isGifPlaying = false;
+        $scope.isGifPlaying = false;
         gifAnimado.pause();
         gifAnimado.move_to(0);
         rangeSlider.value = 0;
         $scope.currentFrame = gifAnimado.get_current_frame();
-        console.log('$scope.currentFrame', $scope.currentFrame);
       }
       $scope.forward= function(){
         killTimer();
-        isGifPlaying = false;
+        $scope.isGifPlaying = false;
         gifAnimado.pause();
         gifAnimado.move_relative(1);
         rangeSlider.value = gifAnimado.get_current_frame();
         $scope.currentFrame = gifAnimado.get_current_frame();
-        console.log('current frame', gifAnimado.get_current_frame());
       }
       $scope.backward= function(){
         killTimer();
-        isGifPlaying = false;
+        $scope.isGifPlaying = false;
         gifAnimado.pause();
         gifAnimado.move_relative(-1);
         rangeSlider.value = gifAnimado.get_current_frame();
         $scope.currentFrame = gifAnimado.get_current_frame();
-        console.log('current frame', gifAnimado.get_current_frame());
       }
       $scope.end= function(){
         killTimer();
@@ -523,19 +407,18 @@ angular.module('wca.controllers',[])
         gifAnimado.move_to(posicionFinal - 1);
         rangeSlider.value = gifAnimado.get_current_frame();
         $scope.currentFrame = gifAnimado.get_current_frame();
-        console.log('current frame', gifAnimado.get_current_frame());
       }
       var sondearPosicion = function(){
         timer = $interval( function(){
           rangeSlider.value = gifAnimado.get_current_frame();
           $scope.currentFrame = gifAnimado.get_current_frame();
-          console.log('current frame', $scope.currentFrame);
+          //console.log('current frame', $scope.currentFrame);
         }, 50); // fin interval
       };// sondear posicion
       $scope.irPosicion = function(posicion){
         gifAnimado.move_to(posicion);
-        console.log('currentFrame', $scope.currentFrame);
-        console.log('valor', posicion);
+        //console.log('currentFrame', $scope.currentFrame);
+        //console.log('valor', posicion);
       };//irposicion
       // player controls ----------------------------------------------------------------------------------------------
 
@@ -543,7 +426,7 @@ angular.module('wca.controllers',[])
 
   // Evento destroy ---------------------------------------------------------------------------------------------------
   $scope.$on("$destroy",function(){
-      console.log('ondestroy -> pause animation');
+      //console.log('ondestroy -> pause animation');
       window.clearTimeout();
       $scope.pause();
     });
@@ -552,7 +435,6 @@ angular.module('wca.controllers',[])
 // ====================================================================================================================
 .controller('MeteoCtrl', function($scope, $rootScope, SFusionTable, SPopup, TablaMeteo, SLoader){
 
-  $rootScope.mostrarLupa = false;
   var showError = function(status){
     SPopup.show(
       'Error', ' MeteoCtrl: Compruebe conexión de red. Estado: '+status );
@@ -583,13 +465,14 @@ angular.module('wca.controllers',[])
 .controller('ImgViewerCtrl', function($scope, $stateParams, ItemMeteo, TablaMeteo){
     $scope.itemMeteo = new ItemMeteo( TablaMeteo.getItemById($stateParams.id_item_meteo) );
     $scope.$on('$ionicView.afterEnter', function(){
-      document.getElementById('gifScroll').style.background = 'none';
+      document.getElementById('imgContainer').style.background = 'none';
     });
 })
 // ====================================================================================================================
-  .controller('PorCategoriaCtrl', function($scope, $window, $sce){
+  .controller('PorCategoriaCtrl', function($scope, $window, $sce, SLoader, $rootScope){
 
-     //Calculo de dimensiones de ventana al redimensionar
+    SLoader.showWithBackdrop();
+    //Calculo de dimensiones de ventana al redimensionar
     $scope.calculateDimensions = function(gesture) {
       $scope.dev_width = $window.innerWidth;
       $scope.dev_height = $window.innerHeight;
@@ -625,9 +508,15 @@ angular.module('wca.controllers',[])
     $scope.urlGraficoSectores = $sce.trustAsResourceUrl(urlGraficoSectores);
     $scope.urlGraficoBarras = $sce.trustAsResourceUrl(urlGraficoBarras);
 
+    $scope.cargaFrameTerminada = function(){
+      SLoader.hide();
+    }
+
   })
 // ====================================================================================================================
-  .controller('PorConcejoCtrl', function($scope, $window, $sce){
+  .controller('PorConcejoCtrl', function($scope, $window, $sce, SLoader, $rootScope){
+
+    SLoader.showWithBackdrop();
     //Calculo de dimensiones de ventana al redimensionar
     $scope.calculateDimensions = function(gesture) {
       $scope.dev_width = $window.innerWidth;
@@ -666,7 +555,100 @@ angular.module('wca.controllers',[])
     $scope.urlConcejosMasCams = $sce.trustAsResourceUrl(urlConcejosMasCams);
     $scope.urlCamsConcejo = $sce.trustAsResourceUrl(urlCamsConcejo);
 
+    $scope.cargaFrameTerminada = function(){
+      SLoader.hide();
+    }
   })
 // ====================================================================================================================
+  .controller('ListadoCtrl', function($scope, $stateParams, SLoader, $rootScope, $ionicFilterBar,
+                                   SFusionTable, $filter, $ionicScrollDelegate, SPopup, SCategorias, $ionicNavBarDelegate){
 
+    SLoader.show();
+    var concejo = $stateParams.concejo;
+    var idCategoria = $stateParams.idCategoria;
+
+    function esSubcadena(idCategoria, urlCategoria) {
+      return (urlCategoria.indexOf('categoria='+idCategoria) > -1);
+    }
+
+    var sqlQuery = 'SELECT Lugar,Concejo,Imagen,Categoria,rowid,latitud,longitud FROM '+ SFusionTable.TABLE_ID;
+    SFusionTable.getRemoteData(sqlQuery).success(function(data){
+      //console.log('data', data);
+      if(data.error){
+        console.error(data);
+        SLoader.hide();
+      }
+      // -------------------------------------------------------------------------------------------------------------
+      // FILTRO 1: filtra las cams por parametros de url: concejo y categoria
+      // -------------------------------------------------------------------------------------------------------------
+      var camsFiltradasPorUrl = $filter('filter')(data.rows, function(cam){
+        if (concejo && idCategoria) {
+          // cam[1]: concejo de camara, cam[3]: url categoria (no id de categoria, no confundir)
+          return (cam[1].toLowerCase() == concejo.toLowerCase() && esSubcadena(idCategoria, cam[3]));
+        } else {
+          if (concejo)
+            return cam[1].toLowerCase() == concejo.toLowerCase();
+          if (idCategoria)
+            return esSubcadena(idCategoria, cam[3]);
+          if(!concejo && !idCategoria)
+            return data.rows;
+        }
+      });
+
+      // Inicialmente items contiene las cams filtradas solo por parametros de url
+      $rootScope.items = camsFiltradasPorUrl;
+      // Despues de filtrar, guardar parametros en scope. Se hace asi para que el filtrado sea mas eficiente
+      $rootScope.concejo = concejo;
+      $rootScope.idCategoria = idCategoria;
+
+      if(!idCategoria || idCategoria == ''){
+        $rootScope.tituloVista = 'Todas'
+      } else {
+        $rootScope.tituloVista = SCategorias.idCategoria_a_nombre(idCategoria);
+      }
+      SLoader.hide();
+
+    }).error(function(data, status) {
+      $ionicLoading.hide();
+      SPopup.show("Error", "Fallo obteniendo datos de cámaras<br>SFusionTable.getRemoteData(): "+status);
+    });
+
+  $scope.$on('$ionicView.afterEnter', function(){
+      $rootScope.mostrarLupa = true;
+      // -------------------------------------------------------------------------------------------------------------
+      // FILTRO 2: filtra las cams segun una cadena de texto que haya introducido el usuario en la barra de busqueda
+      // -------------------------------------------------------------------------------------------------------------
+      // este filtro se aplica sobre los datos previamente filtrados por parametros url
+      //TODO: Habría que mejorar la búsqueda para que fuera menos estricta. Por ejemplo, si se introduce "puerto llanes" no se
+      //encuentra "Puerto de Llanes"
+      $rootScope.showFilterBar = function () {
+        $rootScope.filterBarInstance = $ionicFilterBar.show({
+          items: $rootScope.items,
+          update: function (filteredItems, filteredText) {
+            //console.log('rootscope.items', $rootScope.items);
+            $rootScope.items = filteredItems;
+            $ionicScrollDelegate.scrollTop(false);
+          },
+          cancelText: 'Cancelar',
+          //done: function(){
+          //  $ionicSideMenuDelegate.canDragContent(false);
+          //  console.log('no se puede abrir el menu');
+          //
+          //},
+          //cancel: function(){
+          // destruye fileter bar
+          //$rootScope.filterBarInstance();
+          //console.log('filter bar destroyed');
+          //},
+          cancelOnStateChange: false
+        });
+      };
+    })
+
+  $scope.$on('$ionicView.beforeLeave', function(){
+      $rootScope.mostrarLupa = false;
+    })
+
+  })
+// ====================================================================================================================
 ; // FIN

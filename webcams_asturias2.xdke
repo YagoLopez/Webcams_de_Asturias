@@ -1,0 +1,14 @@
+{
+  "project": {
+    "projectSettingsVersion": "2.0.0",
+    "initialAutoPluginCount": 0,
+    "currentBuildConfiguration": "Android",
+    "projectFiles": {},
+    "projectDirectories": {},
+    "currentService": {
+      "methodapi": "astronomy",
+      "endPoint": "Conditions",
+      "service": "wunderground"
+    }
+  }
+}

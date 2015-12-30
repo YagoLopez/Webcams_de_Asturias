@@ -2,7 +2,7 @@
 //var url_api = "https://www.googleapis.com/fusiontables/v2/query?sql=SELECT%20*%20FROM%201gX5maFbqFyRziZiUYlpOBYhcC1v9lGkKqCXvZREF&key=AIzaSyBsdouSTimjrC2xHmbGgOt8VfbLBWc9Gps";
 
 angular.module('wca', ['ionic', 'wca.controllers', 'wca.services',
-  'jett.ionic.filter.bar', 'ngMaterial' /*'ionicLazyLoad'*/])
+  'jett.ionic.filter.bar'])
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
@@ -17,67 +17,42 @@ angular.module('wca', ['ionic', 'wca.controllers', 'wca.services',
       // org.apache.cordova.statusbar required
       StatusBar.styleDefault();
     }
+    ionic.Platform.isFullScreen = true;
   });
+  //console = console || {};
+  //console.log = function(){};
+  //console.warn = function(){};
 })
 
-.config(function($stateProvider, $urlRouterProvider, $compileProvider, $ionicConfigProvider, $ionicFilterBarConfigProvider) {
+.config(function($stateProvider, $urlRouterProvider, $compileProvider, $ionicConfigProvider,
+                 $ionicFilterBarConfigProvider, $logProvider) {
 
     // enable/disable debug info
-    $compileProvider.debugInfoEnabled(true);
+    $compileProvider.debugInfoEnabled(false);
     // remove back button text completely
     $ionicConfigProvider.backButton.previousTitleText(false).text(' ');
-    // native scroll by default
+    // enable/disable native scroll
     if (!ionic.Platform.isIOS()) {
       $ionicConfigProvider.scrolling.jsScrolling(false);
     }
     $ionicFilterBarConfigProvider.placeholder('Buscar');
-    // num templates to prefectch
-    $ionicConfigProvider.templates.maxPrefetch(3);
+    $ionicFilterBarConfigProvider.transition('vertical');
+    // num templates to prefetch
+    $ionicConfigProvider.templates.maxPrefetch();
+    // disable angular log system
+    $logProvider.debugEnabled(false);
+    $compileProvider.debugInfoEnabled(false);
+    // desactivar transiciones de estado
+    $ionicConfigProvider.views.transition('none');
+    // nav bar title position for all platforms
+    $ionicConfigProvider.navBar.alignTitle('center');
 
     $stateProvider
 // -------------------------------------------------------------------------------------------------------------------
   .state('app', {
     url: '/app',
     abstract: true,
-    templateUrl: 'templates/menu.html',
-    controller: 'AppCtrl'
-  })
-// -------------------------------------------------------------------------------------------------------------------
-  //TODO: utilizar resolve en la definicion de estado para obtener datos remotos en vez de en metodo run(). Probar a ver
-  .state('app.tabs', {
-    url: '/tabs?idCategoria&concejo',
-    cache: false,
-    views: {
-      'menuContent': {
-        templateUrl: 'templates/tabs.html',
-        controller: 'TabsCtrl'
-      }
-    }//,
-    //resolve: {
-    //  resolvedCams: function ($q, SFusionTable) {
-    //    return SFusionTable;
-    //  }
-    //}
-  })
-// -------------------------------------------------------------------------------------------------------------------
-  .state('app.tabs.listado', {
-  url: '/listado',
-  cache: false,
-  views: {
-    'tab-listado': {
-    templateUrl: 'templates/listado.html'
-    }
-  }
-  })
-// -------------------------------------------------------------------------------------------------------------------
-  .state('app.tabs.mosaico', {
-  url: '/mosaico',
-  cache: false,
-  views: {
-    'tab-mosaico': {
-    templateUrl: 'templates/mosaico.html'
-    }
-  }
+    templateUrl: 'templates/menu.html'
   })
 // -------------------------------------------------------------------------------------------------------------------
   .state('app.mapa', {
@@ -126,7 +101,7 @@ angular.module('wca', ['ionic', 'wca.controllers', 'wca.services',
 // -------------------------------------------------------------------------------------------------------------------
       .state('app.detalle', {
         url: '/detalle/:rowid',
-        cache: false,
+        cache: true,
         views: {
           'menuContent': {
             templateUrl: 'templates/detalle.html',
@@ -210,16 +185,36 @@ angular.module('wca', ['ionic', 'wca.controllers', 'wca.services',
         }
       })
 // -------------------------------------------------------------------------------------------------------------------
+      .state('app.listado', {
+        url: '/listado?concejo&idCategoria',
+        cache: true,
+        views: {
+          'menuContent': {
+            templateUrl: 'templates/listado.html',
+            controller: 'ListadoCtrl'
+          }
+        }
+      })
+// -------------------------------------------------------------------------------------------------------------------
+      .state('app.mosaico', {
+        url: '/mosaico?concejo&idCategoria',
+        cache: false,
+        views: {
+          'menuContent': {
+            templateUrl: 'templates/mosaico.html',
+            controller: 'ListadoCtrl'
+          }
+        }
+      })
+// -------------------------------------------------------------------------------------------------------------------
 
 ; // fin de estados
 
   // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/app/tabs/listado');
+  $urlRouterProvider.otherwise('app/listado?idCategoria=7');
 
 // -------------------------------------------------------------------------------------------------------------------
-
 })
-
 .directive('fallbackSrc', function () {
   var fallbackSrc = {
     link: function postLink(scope, iElement, iAttrs) {
@@ -230,40 +225,30 @@ angular.module('wca', ['ionic', 'wca.controllers', 'wca.services',
   };
   return fallbackSrc;
 })
-
-
-/*
-.filter('concejoFltr', function(){
-
-  var filtro = function(datos_cam, concejo){
-    console.log('datos_cam.rows desde filter', datos_cam.rows)
-  if (!concejo)
-    return datos_cam.rows;
-  else
-    return datos_cam.rows;
-  }
-return filtro;
-    /!*
-      $scope.isActive = function(user) {
-        return user.User.Stats[0].active === "1";
-      };
-      and then in your HTML:
-
-        <div ng-repeat="user in _users | filter:isActive">
-        {{user.User.userid}}
-      </div>
-    *!/
-
-    //var myRedObjects = $filter('filter')(myObjects, { color: "red" });
-
-
-})
-*/
-
- //CORS request
-//angular.module('wca').config(function($httpProvider) {
-//    $httpProvider.defaults.useXDomain = true;
-//    delete $httpProvider.defaults.headers.common['X-Requested-With'];
-//  });
+// -------------------------------------------------------------------------------------------------------------------
+.directive('iframeOnload', [function(){
+  return {
+    scope: {
+      callBack: '&iframeOnload'
+    },
+    link: function(scope, element, attrs){
+      element.on('load', function(){
+        return scope.callBack();
+      })
+    }
+  }}])
+// -------------------------------------------------------------------------------------------------------------------
+  .directive('imageonload', function() {
+    return {
+      restrict: 'A',
+      link: function(scope, element, attrs) {
+        element.bind('load', function() {
+          //call the function that was passed
+          scope.$apply(attrs.imageonload);
+        });
+      }
+    };
+  })
+// -------------------------------------------------------------------------------------------------------------------
 
 ; // FIN

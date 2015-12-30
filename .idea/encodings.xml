@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="Encoding">
+    <file url="file://$PROJECT_DIR$/bower.json" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/ionic.project.backup2" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/package.json" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/scss/ionic.app.scss" charset="UTF-8" />
@@ -11,7 +12,6 @@
     <file url="file://$PROJECT_DIR$/www/js/services.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/www/lib/ionic-filter-bar/dist/ionic.filter.bar.css" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/www/lib/ionic-filter-bar/dist/ionic.filter.bar.js" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/www/lib/libgif-js/libgif-backup.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/www/lib/libgif-js/libgif.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/www/templates/detalle.html" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/www/templates/gif-player-backup.html" charset="UTF-8" />

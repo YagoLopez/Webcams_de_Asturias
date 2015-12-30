@@ -64,7 +64,7 @@ angular.module('wca.services',[])
       var mapa = new google.maps.Map(domElement,  {
         mapTypeControl: true,
         mapTypeControlOptions: { style: google.maps.MapTypeControlStyle.DROPDOWN_MENU },
-        mapTypeId: google.maps.MapTypeId.TERRAIN
+        mapTypeId: google.maps.MapTypeId.HYBRID
       });
       return mapa;
     }; // crear()
@@ -90,6 +90,12 @@ angular.module('wca.services',[])
       });
     };
 
+    var onMapLoaded = function(mapa, loader){
+      google.maps.event.addListenerOnce(mapa, 'idle', function(){
+        loader.hide();
+      });
+    };
+
     return {
       OVIEDO: OVIEDO,
       RADIO_BUSQUEDA: RADIO_BUSQUEDA,
@@ -97,7 +103,8 @@ angular.module('wca.services',[])
       creaStreetView: creaStreetView,
       crear: crear,
       creaFusionTableLayer: creaFusionTableLayer,
-      creaMarker: creaMarker
+      creaMarker: creaMarker,
+      onMapLoaded: onMapLoaded
     }
   })
 // ====================================================================================================================
@@ -226,14 +233,14 @@ angular.module('wca.services',[])
       if(texto){
         contenidoLoader = texto;
       }
-      $ionicLoading.show({template: contenidoLoader, noBackdrop: true});
+      $ionicLoading.show({template: contenidoLoader, noBackdrop: true, hideOnStateChange: true });
     };
 
     var showWithBackdrop = function(texto){
       if(texto){
         contenidoLoader = texto;
       }
-      $ionicLoading.show({template: contenidoLoader, noBackdrop: false});
+      $ionicLoading.show({template: contenidoLoader, noBackdrop: false, hideOnStateChange: true });
     };
 
     var hide = function(){
@@ -251,7 +258,6 @@ angular.module('wca.services',[])
   return function(exception, cause) {
     var SPopup = $injector.get('SPopup');
     SPopup.show('Error', 'Detalles: '+exception.message);
-    console.error(exception);
   };
 })
 // ====================================================================================================================

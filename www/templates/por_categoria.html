@@ -1,24 +1,25 @@
+<!--TODO: usar aqui el scroll nativo a ver si se puede hacer scroll-->
 <ion-view view-title="Categorías">
-  <ion-content>
+  <ion-content class="animated fadeIn">
     <style type="text/css">
       iframe {
         width: 100%;
-        height: 60%;
-        background: transparent url(../img/c.png) no-repeat center center;
+        height: 260px;
+        background: transparent url(img/c.png) no-repeat center center;
       }
     </style>
     <div class="item item-divider" style="font-size:small">
       Webcams por categoría (Sectores)
     </div>
-    <iframe ng-src="{{ ::urlGraficoSectores }}" scrolling="no" marginwidth="0" marginheight="0"
-            frameborder="0" allowfullscreen>
+    <iframe id="iframeGraficoSectores" ng-src="{{ ::urlGraficoSectores }}" scrolling="no" marginwidth="0" marginheight="0"
+            frameborder="0" allowfullscreen iframe-onload="cargaFrameTerminada()">
     </iframe>
 
     <div class="item item-divider" style="font-size:small">
       Webcams por categoría (Barras)
     </div>
-    <iframe ng-src="{{ ::urlGraficoBarras }}" scrolling="no" marginheight="0" marginwidth="0"
-            frameborder="0" allowfullscreen>
+    <iframe id="iframeGraficoBarras" ng-src="{{ ::urlGraficoBarras }}" scrolling="no" marginheight="0" marginwidth="0"
+            frameborder="0" allowfullscreen iframe-onload="cargaFrameTerminada()">
     </iframe>
 
     <div style="text-align:center" class="padding">Toque en sectores del diagrama para información específica</div>

@@ -1,4 +1,4 @@
-<ion-popover-view class="animated flipInX">
+<ion-popover-view class="animated bounceIn">
   <ion-content>
     <style>
       .popover{
@@ -9,23 +9,22 @@
       .smal{font-size: small;}
     </style>
     <div class="list" ng-click="popover.hide()">
+      <ion-list>
+        <ion-item href="#/app/mapa" class="item item-icon-left smal">
+          <i class="icon ion-android-pin"></i>
+          Ver en Mapa
+        </ion-item>
 
-      <a href="#/app/mapa" class="item item-icon-left smal">
-        <i class="icon ion-android-pin"></i>
-        Ver en Mapa
-      </a>
+        <ion-item href="#/app/streetview" class="item item-icon-left smal">
+          <i class="icon ion-ios-navigate"></i>
+          Ver en Street View
+        </ion-item>
 
-      <a href="#/app/streetview" class="item item-icon-left smal">
-        <i class="icon ion-ios-navigate"></i>
-        Ver en Street View
-      </a>
-
-      <a href="#/app/panoramio" class="item item-icon-left smal">
-        <i class="icon ion-images"></i>
-        Fotos de la zona
-      </a>
-
+        <ion-item href="#/app/panoramio" class="item item-icon-left smal">
+          <i class="icon ion-images"></i>
+          Fotos de la zona
+        </ion-item>
+      </ion-list>
     </div>
-
   </ion-content>
 </ion-popover-view>

@@ -1,8 +1,3 @@
-<!--
-TODO: a lo mejor hay una forma de cargar una imagen remota sin que de problemas cors usando javascript
-En vez de descargar la imagen usando xhr, descargarla como una imagen normal con el tag imz y el atributo src y después
-obtener los datos binarios por javascript de la cache
--->
 <!--TODO: probar a usar la directiva awesome-slider en lugar del range slider de ionic-->
 <ion-view view-title="{{ ::itemMeteo.categoria }}" xmlns:rel="http://www.w3.org/1999/xhtml">
   <ion-content>
@@ -14,74 +9,62 @@ obtener los datos binarios por javascript de la cache
         width:100%;
         /*height: 100%;*/
       }
-      .zoomIn
-      {
-/*
-        -webkit-transition-duration: 500ms;
-        /!*-webkit-transform: scale(1.5);*!/
-        /!* Firefox *!/
-        -moz-transform: scale(2);
-        /!* WebKit - Chrome and Safari *!/
-        -webkit-transform: scale(2);
-        /!* Internet Explorer 9 *!/
-        -ms-transform: scale(2);
-        /!* Opera *!/
-        -o-transform: scale(2);
-        /!* general syntax (IE10, probably others soon) *!/
-        transform: scale(2);
-*/
+      .btnTransparente {
+        background-color:transparent;
       }
-      .gifZoomed {
-        /*width: 200%;*/
-        /*height: 200%;*/
-        /*transform-origin: 0 0;*/
-        -webkit-transition-duration: 500ms;
-        transform: scale(2);
-
+      #playControls > tbody > tr > td > a > i {
+        font-size: 35px;
       }
-      .gifUnzoomed{
-        /*width:100%;*/
-        /*height: 100%;*/
-        transform-origin: 0 0;
-        -webkit-transition-duration: 500ms;
-        transform: scale(1);
+      #zoomControls > tbody > tr > td > a > i {
+        font-size: 30px;
+      }
+      table {
+        margin: 0 auto;
       }
     </style>
 
     <!-- imagen -------------------------------------------------------------------------------------------------->
-    <!--<ion-scroll id="gifScroll" zooming="true" direction="xy" style="width:100%;height:25em;padding-top: 50px;">-->
-      <!--<div id="gifContainer" data-tap-disabled>-->
-          <img id="gif" rel:animated_src="{{ itemMeteo.url }}" rel:auto_play="0"
-               rel:fps="500" style="width:100%;" ng-click="playPause()"/>
-      <!--</div>-->
-    <!--</ion-scroll>-->
+    <img id="gif" rel:animated_src="{{ itemMeteo.url }}" rel:auto_play="0"
+         rel:fps="500" style="width:100%;" ng-click="playPause()"/>
     <!-- fin imagen ---------------------------------------------------------------------------------------------->
 
   <div class="card">
     <!-- range slider ---------------------------------------------------------------------------------------->
-    <label class="range range-assertive" style="padding: 0 3%;" ng-click="pause()">
+    <label class="range range-assertive" style="padding: 0 3%;" ng-click="pause()" on-touch="pause()">
     <input id="levelRange" type="range" min="0" max="{{ gifAnimado.get_length()-1 }}"
            value="{{ currentFrame }}" ng-model="currentFrame" ng-change="irPosicion(currentFrame)"
            style="margin:0"/>
     </label>
     <!-- botones control-------------------------------------------------------------------------------------->
-    <div class="row" style="font-size:30px;padding: 0 2%;">
-      <div class="col col-15">
-        <i class="icon ion-ios-play-outline" ng-click="playPause()" style="cursor: pointer; margin-left:20px;"></i>
-      </div>
-      <div class="col col-20">
-        <i class="icon ion-ios-rewind-outline" ng-click="backward()" style="cursor: pointer;"></i>
-      </div>
-      <div class="col col-20">
-        <i class="icon ion-ios-fastforward-outline" ng-click="forward()" style="cursor: pointer;"></i>
-      </div>
-      <div class="col">
-        <i class="icon ion-ios-skipbackward-outline" ng-click="restart()" style="cursor: pointer;"></i>
-      </div>
-      <div class="col">
-        <i class="icon ion-ios-skipforward-outline" ng-click="end()" style="cursor: pointer;"></i>
-      </div>
-    </div>
+    <table id="playControls">
+      <tr>
+        <td>
+          <a class="button" ng-click="playPause()" ng-class="{'button-positive': isGifPlaying}">
+            <i class="ion-ios-play-outline"></i>
+          </a>
+        </td>
+        <td>
+          <a class="button" ng-click="backward()">
+            <i class="ion-ios-rewind-outline"></i>
+          </a>
+        </td>
+        <td>
+          <a class="button" ng-click="forward()">
+            <i class="ion-ios-fastforward-outline"></i>
+          </a>
+        </td>
+        <td>
+          <a class="button" ng-click="restart()">
+            <i class="ion-ios-skipbackward-outline"></i>
+          </a>
+        </td>
+        <td>
+          <a class="button" ng-click="end()">
+            <i class="ion-ios-skipforward-outline"></i>
+          </a>
+        </td>
+      </tr>
+    </table>
     <!-- Leyenda --------------------------------------------------------------------------------------------->
     <div style="width: 100%;text-align:center;padding-bottom:2px">
       <!--<span style="font-size:small;">Zoom</span><br>-->
@@ -94,13 +77,22 @@ obtener los datos binarios por javascript de la cache
 
   <div class="card">
     <!-- zoom ------------------------------------------------------------------------------------------------>
-    <section class="buttons" style="font-size:25px;padding-left:5%;padding-right:8%;text-align:center">
-      <i class="icon ion-ios-plus-outline zoom-in" style="cursor: pointer;"></i>
-      <i class="icon ion-ios-minus-outline zoom-out" style="cursor: pointer;"></i>
-      <input type="range" class="zoom-range" min="0.4" max="5" step="0.05"/>
-      <i class="icon ion-arrow-expand reset" style="cursor: pointer; color:lightgray; font-size:30px;vertical-align:bottom"></i>
-    </section>
-    <div style="text-align:center">Zoom</div>
+    <table id="zoomControls">
+      <tr>
+        <td>
+          <a class="button btnTransparente zoom-in"><i class="ion-ios-plus-outline" style=""></i></a>
+        </td>
+        <td>
+          <a class="button btnTransparente zoom-out"><i class="ion-ios-minus-outline"></i></a>
+        </td>
+        <td style="vertical-align: middle;">
+          <input type="range" class="zoom-range" min="0.4" max="5" step="0.05"/>
+        </td>
+        <td>
+          <a class="button btnTransparente reset"><i class="ion-arrow-expand" style="color:lightgray"></i></a>
+        </td>
+      </tr>
+    </table>
     <!-- zoom ------------------------------------------------------------------------------------------------>
   </div>
 
