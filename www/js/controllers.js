@@ -1,3 +1,4 @@
+//TODO: intentar acceder a bbdd en el controlador del estado app para cargar los datos siempre que se inicie la app
 //todo: hacer icono y Splash screen
 //TODO: usar native trnsitions
 //TODO: revisar las dependencias que se pasan a los controladores
@@ -7,6 +8,7 @@
 //TODO: podria ser mejor arrojar una excepcion en vez de llamaar a SPopup cada vez que hay un error. Ya se encarga el
 //servicio de excepciones de capturar la excepcion y mostrar un popup. De esta forma está más centralizado el tratamiento
 //de errores
+
 
 angular.module('wca.controllers',[])
 
@@ -181,13 +183,16 @@ angular.module('wca.controllers',[])
 })
 // ====================================================================================================================
 .controller('DetalleCtrl', function($scope, $stateParams, $ionicModal, SMapa, SClima, $filter, $rootScope,
-                                    /*$ionicFilterBar,*/ SPopup, SWikipedia, $ionicPopover,Cam, SLoader, $compile){
+                                    $ionicFilterBar, SPopup, SWikipedia, $ionicPopover,Cam, SLoader, $compile){
 
-    //TODO: poner todo esto dentro del evento ionicview.afterenter?
     // init
     $scope.rowid = $stateParams.rowid;
     SLoader.show('Cargando...');
-    //console.log('ionicfilterbr', $ionicFilterBar);
+    var filterBar = $('ion-filter-bar');
+    filterBar.hide();
+    $scope.$on('$ionicView.beforeLeave', function(){
+      filterBar.show();
+    })
 
     if(!$rootScope.items || !$scope.rowid){
       SLoader.hide();
@@ -592,7 +597,6 @@ angular.module('wca.controllers',[])
 
       // Inicialmente items contiene las cams filtradas solo por parametros de url
       $rootScope.items = camsFiltradasPorUrl;
-      //console.log('rootscope.items', $rootScope.items);
       // Despues de filtrar, guardar parametros en scope. Se hace asi para que el filtrado sea mas eficiente
       $rootScope.concejo = concejo;
       $rootScope.idCategoria = idCategoria;
@@ -609,7 +613,7 @@ angular.module('wca.controllers',[])
       SPopup.show("Error", "Fallo obteniendo datos de cámaras<br>SFusionTable.getRemoteData(): "+status);
     });
 
-    $scope.$on('$ionicView.afterEnter', function(){
+  $scope.$on('$ionicView.afterEnter', function(){
       $rootScope.mostrarLupa = true;
       // -------------------------------------------------------------------------------------------------------------
       // FILTRO 2: filtra las cams segun una cadena de texto que haya introducido el usuario en la barra de busqueda
@@ -621,7 +625,7 @@ angular.module('wca.controllers',[])
         $rootScope.filterBarInstance = $ionicFilterBar.show({
           items: $rootScope.items,
           update: function (filteredItems, filteredText) {
-            console.log('rootscope.items', $rootScope.items);
+            //console.log('rootscope.items', $rootScope.items);
             $rootScope.items = filteredItems;
             $ionicScrollDelegate.scrollTop(false);
           },
@@ -641,9 +645,10 @@ angular.module('wca.controllers',[])
       };
     })
 
-    $scope.$on('$ionicView.beforeLeave', function(){
+  $scope.$on('$ionicView.beforeLeave', function(){
       $rootScope.mostrarLupa = false;
     })
+
   })
 // ====================================================================================================================
 ; // FIN
