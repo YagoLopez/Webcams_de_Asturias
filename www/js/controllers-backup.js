@@ -562,6 +562,7 @@ angular.module('wca.controllers',[])
 })
 // ====================================================================================================================
 .controller('ImgViewerCtrl', function($scope, $stateParams, ItemMeteo, TablaMeteo){
+    $rootScope.mostrarLupa = false;
     $scope.itemMeteo = new ItemMeteo( TablaMeteo.getItemById($stateParams.id_item_meteo) );
     $scope.$on('$ionicView.afterEnter', function(){
       document.getElementById('gifScroll').style.background = 'none';

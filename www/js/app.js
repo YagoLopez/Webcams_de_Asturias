@@ -4,7 +4,7 @@
 angular.module('wca', ['ionic', 'wca.controllers', 'wca.services',
   'jett.ionic.filter.bar'])
 
-.run(function($ionicPlatform, $animate) {
+.run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
 
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
@@ -38,14 +38,11 @@ angular.module('wca', ['ionic', 'wca.controllers', 'wca.services',
     $ionicFilterBarConfigProvider.placeholder('Buscar');
     // num templates to prefetch
     $ionicConfigProvider.templates.maxPrefetch();
-
     // disable angular log system
     $logProvider.debugEnabled(false);
     $compileProvider.debugInfoEnabled(false);
-
     // desactivar transiciones de estado
     $ionicConfigProvider.views.transition('none');
-
     // nav bar title position for all platforms
     $ionicConfigProvider.navBar.alignTitle('center');
 
@@ -153,6 +150,11 @@ angular.module('wca', ['ionic', 'wca.controllers', 'wca.services',
             templateUrl: 'templates/stats.html'
           }
         }
+        //,
+        //onEnter: function ($rootScope) {
+        //  $rootScope.mostrarLupa = false;
+        //  console.log('lupa', $rootScope.mostrarLupa);
+        //}
       })
 // -------------------------------------------------------------------------------------------------------------------
       .state('app.heatmap', {
@@ -162,6 +164,11 @@ angular.module('wca', ['ionic', 'wca.controllers', 'wca.services',
           'menuContent': {
             templateUrl: 'templates/heatmap.html'
           }
+          //,
+          //onEnter: function ($rootScope) {
+          //  $rootScope.mostrarLupa = false;
+          //  console.log('lupa', $rootScope.mostrarLupa);
+          //}
         }
       })
 // -------------------------------------------------------------------------------------------------------------------

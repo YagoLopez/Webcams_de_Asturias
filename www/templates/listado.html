@@ -1,6 +1,7 @@
 <!--TODO: añadir geolocalicacion y busqueda de camaras cercanas-->
 <!--TODO: Hacer disclaimer-->
-<ion-view view-title="{{tituloVista}}">
+<ion-view view-title="Listado">
+  <ion-nav-title>{{tituloVista}}</ion-nav-title>
   <style type="text/css">
     #btnMosaico{
       padding:0;
@@ -21,7 +22,7 @@
             href="#/app/mosaico?concejo={{ ::concejo }}&idCategoria={{ ::idCategoria }}"></a>
   </ion-nav-buttons>
 
-  <ion-header-bar class="bar-subheader bar-light">
+  <ion-header-bar class="bar-subheader bar-stable">
     <h1 class="title">Listado</h1>
   </ion-header-bar>
 
@@ -29,7 +30,7 @@
     <div>
       <a class="item item-thumbnail-left item-icon-right" ng-repeat="cam in items track by cam[4]"
          href="#/app/detalle/{{ ::items[$index][4] }}">
-        <img ng-src="{{ ::cam[2] }}" fallback-src="img/imgFail.png" style="height: 60px;width: 70px;"/>
+        <!--<img ng-src="{{ ::cam[2] }}" fallback-src="img/imgFail.png" style="height: 60px;width: 70px;"/>-->
         <div class="divListado">
           <p>
             <span class="resalteListado"><b>&#187; </b></span>

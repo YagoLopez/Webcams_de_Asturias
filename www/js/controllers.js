@@ -4,9 +4,7 @@
 //TODO: revisar las dependencias que se pasan a los controladores
 //TODO: recordar que el codigo que se encuentra en el evento on.afterviewEnter se ejecuta siempre. Probar a quitar la cache de las vistas que usan este icono a ver que pasa
 //TODO: hacer perfilado en chrome mobile, ver como se comporta la memoria y el procesador al ejecutar la app
-//TODO: que en ios aparezca abajo la barra de pestañas
 //TODO: hacer zoom en maapa global cuando se escoja filtro por concejo. Usar coordenaadas lat lng
-//TODO: buscar imagen e icono para splash screen e icono de app
 //TODO: podria ser mejor arrojar una excepcion en vez de llamaar a SPopup cada vez que hay un error. Ya se encarga el
 //servicio de excepciones de capturar la excepcion y mostrar un popup. De esta forma está más centralizado el tratamiento
 //de errores
@@ -28,7 +26,7 @@ angular.module('wca.controllers',[])
 // ====================================================================================================================
 .controller('MapaCtrl', function($scope, $stateParams, SMapa, $rootScope){
 
-  $rootScope.mostrarLupa = false;
+  //$rootScope.mostrarLupa = false;
 
   $scope.$on('$ionicView.afterEnter', function() {
     var mapa = SMapa.crear(document.getElementById('mapa'));
@@ -77,7 +75,7 @@ angular.module('wca.controllers',[])
     var layer = null;
     var mapa = null;
     var zoomLevel = 7;
-    $rootScope.mostrarLupa = false;
+    //$rootScope.mostrarLupa = false;
     $scope.checked = null;
 
     var sqlQueryConcejos = 'SELECT Concejo FROM '+SFusionTable.TABLE_ID+' GROUP BY Concejo';
@@ -162,7 +160,7 @@ angular.module('wca.controllers',[])
     var FotosPanoramio = new panoramio.PhotoWidget('divPanoramio', rectanguloBusqueda, null);
     FotosPanoramio.setPosition(0);
 
-    $rootScope.mostrarLupa = false;
+    //$rootScope.mostrarLupa = false;
     $scope.fotos = FotosPanoramio;
     $scope.nextPhoto = function(){
       if (hayFotoSiguiente())
@@ -204,7 +202,7 @@ angular.module('wca.controllers',[])
 
     //TODO: poner todo esto dentro del evento ionicview.afterenter?
     $scope.rowid = $stateParams.rowid;
-    $rootScope.mostrarLupa = false;
+    //$rootScope.mostrarLupa = false;
     SLoader.show('Cargando...');
 
     if(!$rootScope.items || !$scope.rowid){
@@ -293,7 +291,7 @@ angular.module('wca.controllers',[])
 // =====================================================================================================
 .controller('StreetViewCtrl', function($scope, SMapa, $stateParams, $rootScope, SPopup){
 
-  $rootScope.mostrarLupa = false;
+  //$rootScope.mostrarLupa = false;
 
   if(!$rootScope.cam) {
     SPopup.show('Error', 'Datos insuficientes. Probar otra opción de menú');
@@ -320,8 +318,9 @@ angular.module('wca.controllers',[])
                                       $state, $rootScope, SPopup){
 
   SLoader.showWithBackdrop('Cargando datos...');
+  //$rootScope.mostrarLupa = false;
 
-  // Obtiene itemMeteo ------------------------------------------------------------------------------------------------
+    // Obtiene itemMeteo ------------------------------------------------------------------------------------------------
   $scope.itemMeteo = new ItemMeteo(TablaMeteo.getItemById($stateParams.id_item_meteo));
 
   // inicializaciones -------------------------------------------------------------------------------------------------
@@ -450,7 +449,7 @@ angular.module('wca.controllers',[])
 // ====================================================================================================================
 .controller('MeteoCtrl', function($scope, $rootScope, SFusionTable, SPopup, TablaMeteo, SLoader){
 
-  $rootScope.mostrarLupa = false;
+  //$rootScope.mostrarLupa = false;
   var showError = function(status){
     SPopup.show(
       'Error', ' MeteoCtrl: Compruebe conexión de red. Estado: '+status );
@@ -479,17 +478,19 @@ angular.module('wca.controllers',[])
 })
 // ====================================================================================================================
 .controller('ImgViewerCtrl', function($scope, $stateParams, ItemMeteo, TablaMeteo){
+    //$rootScope.mostrarLupa = false;
     $scope.itemMeteo = new ItemMeteo( TablaMeteo.getItemById($stateParams.id_item_meteo) );
     $scope.$on('$ionicView.afterEnter', function(){
       document.getElementById('imgContainer').style.background = 'none';
     });
 })
 // ====================================================================================================================
-  .controller('PorCategoriaCtrl', function($scope, $window, $sce, SLoader){
+  .controller('PorCategoriaCtrl', function($scope, $window, $sce, SLoader, $rootScope){
 
     SLoader.showWithBackdrop();
+    //$rootScope.mostrarLupa = false;
 
-     //Calculo de dimensiones de ventana al redimensionar
+    //Calculo de dimensiones de ventana al redimensionar
     $scope.calculateDimensions = function(gesture) {
       $scope.dev_width = $window.innerWidth;
       $scope.dev_height = $window.innerHeight;
@@ -531,9 +532,10 @@ angular.module('wca.controllers',[])
 
   })
 // ====================================================================================================================
-  .controller('PorConcejoCtrl', function($scope, $window, $sce, SLoader){
+  .controller('PorConcejoCtrl', function($scope, $window, $sce, SLoader, $rootScope){
 
     SLoader.showWithBackdrop();
+    //$rootScope.mostrarLupa = false;
 
     //Calculo de dimensiones de ventana al redimensionar
     $scope.calculateDimensions = function(gesture) {
@@ -579,25 +581,27 @@ angular.module('wca.controllers',[])
   })
 // ====================================================================================================================
   .controller('ListadoCtrl', function($scope, $stateParams, SLoader, $rootScope, $ionicFilterBar,
-                                   SFusionTable, $filter, $ionicScrollDelegate, SPopup, SCategorias){
+                                   SFusionTable, $filter, $ionicScrollDelegate, SPopup, SCategorias, $ionicNavBarDelegate){
 
     SLoader.show();
     var concejo = $stateParams.concejo;
     var idCategoria = $stateParams.idCategoria;
 
-    //TODO: revisar esto. hacer un servicio para no usar rootscope?
-    $rootScope.mostrarLupa = true;
+    $scope.$on('$ionicView.afterEnter', function(){
+      $rootScope.mostrarLupa = true;
+    })
 
     function esSubcadena(idCategoria, urlCategoria) {
       return (urlCategoria.indexOf('categoria='+idCategoria) > -1);
     }
 
-    //TODO: cachear las imagenes
     var sqlQuery = 'SELECT Lugar,Concejo,Imagen,Categoria,rowid,latitud,longitud FROM '+ SFusionTable.TABLE_ID;
     SFusionTable.getRemoteData(sqlQuery).success(function(data){
-
       //console.log('data', data);
-
+      if(data.error){
+        console.error(data);
+        SLoader.hide();
+      }
       // -------------------------------------------------------------------------------------------------------------
       // FILTRO 1: filtra las cams por parametros de url: concejo y categoria
       // -------------------------------------------------------------------------------------------------------------
@@ -623,15 +627,15 @@ angular.module('wca.controllers',[])
       $rootScope.idCategoria = idCategoria;
 
       if(!idCategoria || idCategoria == ''){
-        $scope.tituloVista = 'Lista completa'
+        $rootScope.tituloVista = 'Lista completa'
       } else {
-        $scope.tituloVista = SCategorias.idCategoria_a_nombre(idCategoria);
+        $rootScope.tituloVista = SCategorias.idCategoria_a_nombre(idCategoria);
       }
 
       // -------------------------------------------------------------------------------------------------------------
       // FILTRO 2: filtra las cams segun una cadena de texto que haya introducido el usuario
       // -------------------------------------------------------------------------------------------------------------
-      // este filtro se aplica sobre los datos previamente filtrados por url
+      // este filtro se aplica sobre los datos previamente filtrados por parametros url
       //TODO: Habría que mejorar la búsqueda para que fuera menos estricta. Por ejemplo, si se introduce "puerto llanes" no se
       //encuentra "Puerto de Llanes"
 
@@ -661,9 +665,12 @@ angular.module('wca.controllers',[])
 
     }).error(function(data, status) {
       $ionicLoading.hide();
-      SPopup.show("Error", "Fallo obteniendo datos de cámaras<br>SFusionTable.getRemoteData(): "+status)
+      SPopup.show("Error", "Fallo obteniendo datos de cámaras<br>SFusionTable.getRemoteData(): "+status);
     });
 
+    $scope.$on('$ionicView.beforeLeave', function(){
+      $rootScope.mostrarLupa = false;
+    })
   })
 // ====================================================================================================================
 ; // FIN
