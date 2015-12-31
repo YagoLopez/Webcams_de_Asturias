@@ -6,7 +6,7 @@
       "projectTypeName": "com.intel.xdk.projecttype.jsapp",
       "src": "",
       "projectGuid": "5026b907-8667-4c9e-a1ed-6f06fd4b87b6",
-      "lastModifiedDate": 1451353870181,
+      "lastModifiedDate": 1451570052614,
       "creationDate": 1450749850707
     },
     "sourceDirectory": "www",
@@ -27,44 +27,7 @@
       }
     },
     "libraries": [],
-    "cordovaPlugins": [
-      {
-        "version": "1.1.0",
-        "sourceLocation": "",
-        "selectedState": "Included",
-        "name": "Device",
-        "originType": "cordova.io",
-        "id": "cordova-plugin-device",
-        "origin": "cordova-plugin-device",
-        "data": {},
-        "paramvals": {},
-        "permissions": {},
-        "dependsOn": [],
-        "dependedBy": [],
-        "topLevel": true,
-        "checksum": "1eae5d64",
-        "gitref": "",
-        "description": "Cordova Device Plugin"
-      },
-      {
-        "version": "3.0.0",
-        "sourceLocation": "",
-        "selectedState": "Included",
-        "name": "Splashscreen",
-        "originType": "cordova.io",
-        "id": "cordova-plugin-splashscreen",
-        "origin": "cordova-plugin-splashscreen",
-        "data": {},
-        "paramvals": {},
-        "permissions": {},
-        "dependsOn": [],
-        "dependedBy": [],
-        "topLevel": true,
-        "checksum": "3a611d61",
-        "gitref": "",
-        "description": "Cordova Splashscreen Plugin"
-      }
-    ],
+    "cordovaPlugins": [],
     "serviceMethods": [],
     "buildConfigurations": {
       "Android": {
@@ -75,9 +38,9 @@
           "android-minSdkVersion": "14",
           "android-targetSdkVersion": "19",
           "android-installLocation": "auto",
-          "Fullscreen": true,
+          "Fullscreen": false,
           "Orientation": "portrait",
-          "android-signed": false
+          "android-signed": true
         },
         "isActive_": false,
         "appName_": "wca",
@@ -112,10 +75,11 @@
           "android-targetSdkVersion": "19",
           "android-installLocation": "auto",
           "Orientation": "portrait",
-          "android-signed": true
+          "android-signed": true,
+          "Fullscreen": false
         },
         "isActive_": true,
-        "appName_": "wca.crosswlk..animations.nodebug",
+        "appName_": "wca.crosswlk.",
         "appID_": "com.yagolopez.webcamsasturias",
         "appAccess_": {
           "mode": "whitelist",
@@ -193,7 +157,7 @@
         "runtime_": "W3C",
         "name_": "WebApp",
         "preferences_": {},
-        "isActive_": false,
+        "isActive_": true,
         "appName_": "webcams_asturias2",
         "appID_": "not.yet.specified",
         "appAccess_": {
@@ -237,7 +201,7 @@
         "runtime_": "W3C on Chrome OS",
         "name_": "Chrome",
         "preferences_": {},
-        "isActive_": false,
+        "isActive_": true,
         "appName_": "webcams_asturias2",
         "appID_": "not.yet.specified",
         "appAccess_": {

@@ -1,3 +1,4 @@
+//TODO: intentar acceder a bbdd en el controlador del estado app para cargar los datos siempre que se inicie la app
 //todo: hacer icono y Splash screen
 //TODO: usar native trnsitions
 //TODO: revisar las dependencias que se pasan a los controladores
@@ -7,6 +8,7 @@
 //TODO: podria ser mejor arrojar una excepcion en vez de llamaar a SPopup cada vez que hay un error. Ya se encarga el
 //servicio de excepciones de capturar la excepcion y mostrar un popup. De esta forma está más centralizado el tratamiento
 //de errores
+
 
 angular.module('wca.controllers',[])
 
@@ -181,11 +183,16 @@ angular.module('wca.controllers',[])
 })
 // ====================================================================================================================
 .controller('DetalleCtrl', function($scope, $stateParams, $ionicModal, SMapa, SClima, $filter, $rootScope,
-                                    SPopup, SWikipedia, $ionicSlideBoxDelegate, $ionicPopover, Cam, SLoader, $compile){
+                                    $ionicFilterBar, SPopup, SWikipedia, $ionicPopover,Cam, SLoader, $compile){
 
-    //TODO: poner todo esto dentro del evento ionicview.afterenter?
+    // init
     $scope.rowid = $stateParams.rowid;
     SLoader.show('Cargando...');
+/*    var filterBar = $('ion-filter-bar');
+    filterBar.hide();
+    $scope.$on('$ionicView.beforeLeave', function(){
+      filterBar.show();
+    })*/
 
     if(!$rootScope.items || !$scope.rowid){
       SLoader.hide();
@@ -554,31 +561,42 @@ angular.module('wca.controllers',[])
   })
 // ====================================================================================================================
   .controller('ListadoCtrl', function($scope, $stateParams, SLoader, $rootScope, $ionicFilterBar,
-                                   SFusionTable, $filter, $ionicScrollDelegate, SPopup, SCategorias, $ionicNavBarDelegate){
+                                   SFusionTable, $filter, $ionicScrollDelegate, SPopup, SCategorias, $ionicHistory) {
 
+/*
+  $scope.$on('ionicView.beforeEnter', function(){
+      //si existe filter bar, es cancelada
+      if($rootScope.filterBarInstance){
+        console.log('$rootScope.filterbarinstance',$rootScope.filterBarInstance);
+        console.log('$ionicfilterbar', $ionicFilterBar);
+        $rootScope.filterBarInstance();
+      }
+  });
+*/
     SLoader.show();
+    $ionicHistory.clearCache();
     var concejo = $stateParams.concejo;
     var idCategoria = $stateParams.idCategoria;
-
-    $scope.$on('$ionicView.afterEnter', function(){
-      $rootScope.mostrarLupa = true;
-    })
+    var camsFiltradasPorUrl;
 
     function esSubcadena(idCategoria, urlCategoria) {
-      return (urlCategoria.indexOf('categoria='+idCategoria) > -1);
+      return (urlCategoria.indexOf('categoria=' + idCategoria) > -1);
     }
 
     var sqlQuery = 'SELECT Lugar,Concejo,Imagen,Categoria,rowid,latitud,longitud FROM '+ SFusionTable.TABLE_ID;
-    SFusionTable.getRemoteData(sqlQuery).success(function(data){
+    SFusionTable.getRemoteData(sqlQuery).success(function(data) {
+
+
       //console.log('data', data);
-      if(data.error){
+      if (data.error) {
         console.error(data);
         SLoader.hide();
       }
+
       // -------------------------------------------------------------------------------------------------------------
       // FILTRO 1: filtra las cams por parametros de url: concejo y categoria
       // -------------------------------------------------------------------------------------------------------------
-      var camsFiltradasPorUrl = $filter('filter')(data.rows, function(cam){
+      camsFiltradasPorUrl = $filter('filter')(data.rows, function (cam) {
         if (concejo && idCategoria) {
           // cam[1]: concejo de camara, cam[3]: url categoria (no id de categoria, no confundir)
           return (cam[1].toLowerCase() == concejo.toLowerCase() && esSubcadena(idCategoria, cam[3]));
@@ -587,63 +605,103 @@ angular.module('wca.controllers',[])
             return cam[1].toLowerCase() == concejo.toLowerCase();
           if (idCategoria)
             return esSubcadena(idCategoria, cam[3]);
-          if(!concejo && !idCategoria)
+          if (!concejo && !idCategoria)
             return data.rows;
         }
       });
+      //si existe filter bar, cancelarla
+      if($rootScope.filterBarInstance){
+        //console.log('$rootScope.filterbarinstance',$rootScope.filterBarInstance);
+        //console.log('$ionicfilterbar', $ionicFilterBar);
+        $rootScope.filterBarInstance();
+        console.log('cancelada filter bar. $rootScope.items:', $rootScope.items);
+      }
 
       // Inicialmente items contiene las cams filtradas solo por parametros de url
       $rootScope.items = camsFiltradasPorUrl;
-      //console.log('rootscope.items', $rootScope.items);
+      console.log('$rootScope.items filtrados por parametros url:', $rootScope.items);
+      console.log('concejo', concejo);
+      console.log('idcategoria', idCategoria);
+
       // Despues de filtrar, guardar parametros en scope. Se hace asi para que el filtrado sea mas eficiente
       $rootScope.concejo = concejo;
       $rootScope.idCategoria = idCategoria;
 
-      if(!idCategoria || idCategoria == ''){
+      if (!idCategoria || idCategoria == '') {
         $rootScope.tituloVista = 'Todas'
       } else {
         $rootScope.tituloVista = SCategorias.idCategoria_a_nombre(idCategoria);
       }
 
       // -------------------------------------------------------------------------------------------------------------
-      // FILTRO 2: filtra las cams segun una cadena de texto que haya introducido el usuario
+      // FILTRO 2: filtra las cams segun una cadena de texto que haya introducido el usuario en la barra de busqueda
       // -------------------------------------------------------------------------------------------------------------
       // este filtro se aplica sobre los datos previamente filtrados por parametros url
       //TODO: Habría que mejorar la búsqueda para que fuera menos estricta. Por ejemplo, si se introduce "puerto llanes" no se
       //encuentra "Puerto de Llanes"
-
       $rootScope.showFilterBar = function () {
         $rootScope.filterBarInstance = $ionicFilterBar.show({
           items: $rootScope.items,
           update: function (filteredItems, filteredText) {
+            //console.log('rootscope.items', $rootScope.items);
             $rootScope.items = filteredItems;
             $ionicScrollDelegate.scrollTop(false);
           },
           cancelText: 'Cancelar',
           //done: function(){
-          //  $ionicSideMenuDelegate.canDragContent(false);
-          //  console.log('no se puede abrir el menu');
-          //
           //},
           //cancel: function(){
-          // destruye fileter bar
-          //$rootScope.filterBarInstance();
-          //console.log('filter bar destroyed');
           //},
-          cancelOnStateChange: true
+          cancelOnStateChange: false
         });
       };
 
       SLoader.hide();
+
+
 
     }).error(function(data, status) {
       $ionicLoading.hide();
       SPopup.show("Error", "Fallo obteniendo datos de cámaras<br>SFusionTable.getRemoteData(): "+status);
     });
 
-    $scope.$on('$ionicView.beforeLeave', function(){
+    //$scope.$on('$ionicView.afterEnter', function(){
+      $rootScope.mostrarLupa = true;
+      $('ion-filter-bar').show();
+/*
+      // -------------------------------------------------------------------------------------------------------------
+      // FILTRO 2: filtra las cams segun una cadena de texto que haya introducido el usuario en la barra de busqueda
+      // -------------------------------------------------------------------------------------------------------------
+      // este filtro se aplica sobre los datos previamente filtrados por parametros url
+      //TODO: Habría que mejorar la búsqueda para que fuera menos estricta. Por ejemplo, si se introduce "puerto llanes" no se
+      //encuentra "Puerto de Llanes"
+      $rootScope.showFilterBar = function () {
+        $rootScope.filterBarInstance = $ionicFilterBar.show({
+          items: $rootScope.items,
+          update: function (filteredItems, filteredText) {
+            //console.log('rootscope.items', $rootScope.items);
+            $rootScope.items = filteredItems;
+            $ionicScrollDelegate.scrollTop(false);
+          },
+          cancelText: 'Cancelar',
+          //done: function(){
+          //},
+          //cancel: function(){
+          //  console.log('cancelando fillter barr', camsFiltradasPorUrl);
+          //  $rootScope.items = camsFiltradasPorUrl;
+          //},
+          cancelOnStateChange: false
+        });
+      };
+*/
+    //})
+
+
+  $scope.$on('$ionicView.beforeLeave', function(){
       $rootScope.mostrarLupa = false;
-    })
+    $('ion-filter-bar').hide();
+  })
+
   })
 // ====================================================================================================================
 ; // FIN

@@ -1,11 +1,5 @@
-<!--TODO: añadir geolocalicacion y busqueda de camaras cercanas-->
-<!--TODO: Hacer disclaimer-->
 <ion-view view-title="Listado" cache-view="true">
   <style type="text/css">
-    #btnMosaico{
-      padding:0;
-      border:0;
-    }
     .item-icon-right{
       min-height: 0;
       padding-left: 80px;
@@ -14,7 +8,6 @@
       margin-top:10px;
       margin-left: 10px;
     }
-
     #imWC {
       height: 64px;
       width: 72px;
@@ -22,13 +15,8 @@
     }
   </style>
 
-  <ion-nav-buttons side="right">
-    <a id="btnMosaico" class="button button-icon icon ion-grid"
-            href="#/app/mosaico?concejo={{ concejo }}&idCategoria={{ idCategoria }}"></a>
-  </ion-nav-buttons>
-
-  <ion-header-bar class="bar-subheader bar-stable">
-    <h1 class="title">{{tituloVista}}</h1>
+  <ion-header-bar class="bar bar-stable">
+    <h1 class="title">Buscar</h1>
   </ion-header-bar>
 
   <ion-content class="animated fadeIn">
@@ -53,8 +41,8 @@
       </a>
     </div>
 
-  <br/>
-  <br/>
+    <br/>
+    <br/>
 
   </ion-content>
 </ion-view>

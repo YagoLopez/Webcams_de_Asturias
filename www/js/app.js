@@ -1,8 +1,7 @@
 // url completa para consultar fusion table. Usar como plantilla
 //var url_api = "https://www.googleapis.com/fusiontables/v2/query?sql=SELECT%20*%20FROM%201gX5maFbqFyRziZiUYlpOBYhcC1v9lGkKqCXvZREF&key=AIzaSyBsdouSTimjrC2xHmbGgOt8VfbLBWc9Gps";
 
-angular.module('wca', ['ionic', 'wca.controllers', 'wca.services',
-  'jett.ionic.filter.bar'])
+angular.module('wca', ['ionic', 'wca.controllers', 'wca.services', 'jett.ionic.filter.bar'])
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
@@ -204,6 +203,18 @@ angular.module('wca', ['ionic', 'wca.controllers', 'wca.services',
           'menuContent': {
             templateUrl: 'templates/mosaico.html',
             controller: 'ListadoCtrl'
+          }
+        }
+      })
+// -------------------------------------------------------------------------------------------------------------------
+      .state('app.buscar', {
+        url: '/buscar',
+        cache: true
+        ,
+        views: {
+          'menuContent': {
+            templateUrl: 'templates/buscar.html',
+            controller: 'BuscarCtrl'
           }
         }
       })
