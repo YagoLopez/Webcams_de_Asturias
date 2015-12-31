@@ -52,7 +52,7 @@ angular.module('wca', ['ionic', 'wca.controllers', 'wca.services',
   .state('app', {
     url: '/app',
     abstract: true,
-    templateUrl: 'templates/menu.html'
+    templateUrl: 'templates/menu.html',
   })
 // -------------------------------------------------------------------------------------------------------------------
   .state('app.mapa', {
@@ -198,7 +198,8 @@ angular.module('wca', ['ionic', 'wca.controllers', 'wca.services',
 // -------------------------------------------------------------------------------------------------------------------
       .state('app.mosaico', {
         url: '/mosaico?concejo&idCategoria',
-        cache: false,
+        cache: true
+        ,
         views: {
           'menuContent': {
             templateUrl: 'templates/mosaico.html',

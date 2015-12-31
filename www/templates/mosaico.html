@@ -1,4 +1,4 @@
-<ion-view>
+<ion-view cache-view="true">
   <ion-nav-title>{{tituloVista}}</ion-nav-title>
   <ion-header-bar class="bar-subheader bar-stable">
     <h1 class="title" style="text-align: center">Mosaico</h1>
@@ -21,21 +21,21 @@
 
         <ion-item class="col col-33" ng-if="$index < items.length">
           <a href="#/app/detalle/{{ items[$index][4] }}" class="item itemCam">
-          <img ng-src="{{ items[$index][2] }}" fallback-src="img/imgFail.png" width="100%"/>
+          <!--<img ng-src="{{ items[$index][2] }}" fallback-src="img/imgFail.png" width="100%"/>-->
           <div class="txt">{{ items[$index][0] }}</div>
           </a>
         </ion-item>
 
         <ion-item class="col col-33" ng-if="$index+1 < items.length" ng-click="showModal($index+1)">
           <a href="#/app/detalle/{{ items[$index+1][4] }}" class="item itemCam">
-          <img ng-src="{{ items[$index+1][2] }}" fallback-src="img/imgFail.png" width="100%" />
+          <!--<img ng-src="{{ items[$index+1][2] }}" fallback-src="img/imgFail.png" width="100%" />-->
           <div class="txt">{{ items[$index+1][0] }}</div>
           </a>
         </ion-item>
 
         <ion-item class="col col-33" ng-if="$index+2 < items.length" ng-click="showModal($index+2)">
           <a href="#/app/detalle/{{ items[$index+2][4] }}" class="item itemCam">
-          <img ng-src="{{ items[$index+2][2] }}" fallback-src="img/imgFail.png" width="100%" />
+          <!--<img ng-src="{{ items[$index+2][2] }}" fallback-src="img/imgFail.png" width="100%" />-->
           <div class="txt">{{ items[$index+2][0] }}</div>
           </a>
         </ion-item>
