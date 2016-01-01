@@ -207,18 +207,6 @@ angular.module('wca', ['ionic', 'wca.controllers', 'wca.services', 'jett.ionic.f
         }
       })
 // -------------------------------------------------------------------------------------------------------------------
-      .state('app.buscar', {
-        url: '/buscar',
-        cache: true
-        ,
-        views: {
-          'menuContent': {
-            templateUrl: 'templates/buscar.html',
-            controller: 'BuscarCtrl'
-          }
-        }
-      })
-// -------------------------------------------------------------------------------------------------------------------
 
 ; // fin de estados
 

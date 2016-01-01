@@ -155,9 +155,6 @@ angular.module('wca.controllers',[])
       if (hayFotoAnterior())
         FotosPanoramio.setPosition( FotosPanoramio.getPosition()-1 );
     }
-
-  //TODO: avisar cuando no hay fotos panoramio
-
     // DIALOGO MODAL ----------------------------------------------------------------------------------------------
     $ionicModal.fromTemplateUrl('templates/modal-panoramio.html', {
       scope: $scope,
@@ -188,11 +185,6 @@ angular.module('wca.controllers',[])
     // init
     $scope.rowid = $stateParams.rowid;
     SLoader.show('Cargando...');
-/*    var filterBar = $('ion-filter-bar');
-    filterBar.hide();
-    $scope.$on('$ionicView.beforeLeave', function(){
-      filterBar.show();
-    })*/
 
     if(!$rootScope.items || !$scope.rowid){
       SLoader.hide();
@@ -469,7 +461,7 @@ angular.module('wca.controllers',[])
     });
 })
 // ====================================================================================================================
-  .controller('PorCategoriaCtrl', function($scope, $window, $sce, SLoader, $rootScope){
+.controller('PorCategoriaCtrl', function($scope, $window, $sce, SLoader, $rootScope){
 
     SLoader.showWithBackdrop();
     //Calculo de dimensiones de ventana al redimensionar
@@ -514,7 +506,7 @@ angular.module('wca.controllers',[])
 
   })
 // ====================================================================================================================
-  .controller('PorConcejoCtrl', function($scope, $window, $sce, SLoader, $rootScope){
+.controller('PorConcejoCtrl', function($scope, $window, $sce, SLoader, $rootScope){
 
     SLoader.showWithBackdrop();
     //Calculo de dimensiones de ventana al redimensionar
@@ -560,19 +552,9 @@ angular.module('wca.controllers',[])
     }
   })
 // ====================================================================================================================
-  .controller('ListadoCtrl', function($scope, $stateParams, SLoader, $rootScope, $ionicFilterBar,
+.controller('ListadoCtrl', function($scope, $stateParams, SLoader, $rootScope, $ionicFilterBar,
                                    SFusionTable, $filter, $ionicScrollDelegate, SPopup, SCategorias, $ionicHistory) {
 
-/*
-  $scope.$on('ionicView.beforeEnter', function(){
-      //si existe filter bar, es cancelada
-      if($rootScope.filterBarInstance){
-        console.log('$rootScope.filterbarinstance',$rootScope.filterBarInstance);
-        console.log('$ionicfilterbar', $ionicFilterBar);
-        $rootScope.filterBarInstance();
-      }
-  });
-*/
     SLoader.show();
     $ionicHistory.clearCache();
     var concejo = $stateParams.concejo;
@@ -586,13 +568,10 @@ angular.module('wca.controllers',[])
     var sqlQuery = 'SELECT Lugar,Concejo,Imagen,Categoria,rowid,latitud,longitud FROM '+ SFusionTable.TABLE_ID;
     SFusionTable.getRemoteData(sqlQuery).success(function(data) {
 
-
-      //console.log('data', data);
       if (data.error) {
         console.error(data);
         SLoader.hide();
       }
-
       // -------------------------------------------------------------------------------------------------------------
       // FILTRO 1: filtra las cams por parametros de url: concejo y categoria
       // -------------------------------------------------------------------------------------------------------------
@@ -609,30 +588,16 @@ angular.module('wca.controllers',[])
             return data.rows;
         }
       });
-      //si existe filter bar, cancelarla
-      if($rootScope.filterBarInstance){
-        //console.log('$rootScope.filterbarinstance',$rootScope.filterBarInstance);
-        //console.log('$ionicfilterbar', $ionicFilterBar);
-        $rootScope.filterBarInstance();
-        console.log('cancelada filter bar. $rootScope.items:', $rootScope.items);
-      }
-
       // Inicialmente items contiene las cams filtradas solo por parametros de url
       $rootScope.items = camsFiltradasPorUrl;
-      console.log('$rootScope.items filtrados por parametros url:', $rootScope.items);
-      console.log('concejo', concejo);
-      console.log('idcategoria', idCategoria);
-
       // Despues de filtrar, guardar parametros en scope. Se hace asi para que el filtrado sea mas eficiente
       $rootScope.concejo = concejo;
       $rootScope.idCategoria = idCategoria;
-
       if (!idCategoria || idCategoria == '') {
         $rootScope.tituloVista = 'Todas'
       } else {
         $rootScope.tituloVista = SCategorias.idCategoria_a_nombre(idCategoria);
       }
-
       // -------------------------------------------------------------------------------------------------------------
       // FILTRO 2: filtra las cams segun una cadena de texto que haya introducido el usuario en la barra de busqueda
       // -------------------------------------------------------------------------------------------------------------
@@ -657,8 +622,6 @@ angular.module('wca.controllers',[])
       };
 
       SLoader.hide();
-
-
 
     }).error(function(data, status) {
       SLoader.hide();
@@ -668,88 +631,7 @@ angular.module('wca.controllers',[])
     $scope.$on('$ionicView.afterEnter', function(){
       $rootScope.mostrarLupa = true;
       $('ion-filter-bar').show();
-/*
-      // -------------------------------------------------------------------------------------------------------------
-      // FILTRO 2: filtra las cams segun una cadena de texto que haya introducido el usuario en la barra de busqueda
-      // -------------------------------------------------------------------------------------------------------------
-      // este filtro se aplica sobre los datos previamente filtrados por parametros url
-      //TODO: Habría que mejorar la búsqueda para que fuera menos estricta. Por ejemplo, si se introduce "puerto llanes" no se
-      //encuentra "Puerto de Llanes"
-      $rootScope.showFilterBar = function () {
-        $rootScope.filterBarInstance = $ionicFilterBar.show({
-          items: $rootScope.items,
-          update: function (filteredItems, filteredText) {
-            //console.log('rootscope.items', $rootScope.items);
-            $rootScope.items = filteredItems;
-            $ionicScrollDelegate.scrollTop(false);
-          },
-          cancelText: 'Cancelar',
-          //done: function(){
-          //},
-          //cancel: function(){
-          //  console.log('cancelando fillter barr', camsFiltradasPorUrl);
-          //  $rootScope.items = camsFiltradasPorUrl;
-          //},
-          cancelOnStateChange: false
-        });
-      };
-*/
     })
-
-
-  $scope.$on('$ionicView.beforeLeave', function(){
-      $rootScope.mostrarLupa = false;
-    $('ion-filter-bar').hide();
-  })
-
-  })
-// ====================================================================================================================
-  .controller('BuscarCtrl', function($scope, SLoader, $rootScope, $ionicFilterBar,
-                                      SFusionTable, $ionicScrollDelegate, SPopup) {
-
-    if($rootScope.items){
-      console.log('rootscope.item', $rootScope.items);
-    } else {
-      console.log('no hay rootscope.items');
-    }
-
-
-    var sqlQuery = 'SELECT Lugar,Concejo,Imagen,Categoria,rowid,latitud,longitud FROM '+ SFusionTable.TABLE_ID;
-    SFusionTable.getRemoteData(sqlQuery).success(function(data) {
-
-      if (data.error) {
-        console.error(data);
-        SLoader.hide();
-      }
-      // Inicialmente items contiene las cams filtradas solo por parametros de url
-      $rootScope.items = data.rows;
-      SLoader.hide();
-
-    }).error(function(data, status) {
-      SLoader.hide();
-      SPopup.show("Error", "Fallo obteniendo datos de cámaras<br>SFusionTable.getRemoteData(): "+status);
-    });
-
-    $rootScope.mostrarLupa = true;
-    $('ion-filter-bar').show();
-
-    $rootScope.showFilterBar = function () {
-      $rootScope.filterBarInstance = $ionicFilterBar.show({
-        items: $rootScope.items,
-        update: function (filteredItems, filteredText) {
-          //console.log('rootscope.items', $rootScope.items);
-          $rootScope.items = filteredItems;
-          $ionicScrollDelegate.scrollTop(false);
-        },
-        cancelText: 'Cancelar',
-        //done: function(){
-        //},
-        //cancel: function(){
-        //},
-        cancelOnStateChange: false
-      });
-    };
-    $rootScope.showFilterBar();
 
     $scope.$on('$ionicView.beforeLeave', function(){
       $rootScope.mostrarLupa = false;

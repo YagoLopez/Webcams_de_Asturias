@@ -5,7 +5,8 @@
   </ion-nav-buttons>
 
   <ion-header-bar class="bar-subheader bar-stable">
-    <h1 class="title" style="text-align: center">{{tituloVista}}</h1>
+    <h1 class="title" style="text-align: center">{{ ::tituloVista }}</h1>
+    <span class="badge badge-calm icon-badge">{{ items.length }}</span>
   </ion-header-bar>
 
   <ion-content class="animated fadeIn">
@@ -18,6 +19,13 @@
       .itemCam {
         padding: 0;
       }
+/*
+      .icon-badge {
+        font-size: x-small;
+        vertical-align: sub;
+        margin-top: 5px;
+      }
+*/
     </style>
     <div class="grid">
       <div class="row" ng-repeat="cam in items track by cam[4]"
