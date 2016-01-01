@@ -207,7 +207,6 @@ angular.module('wca', ['ionic', 'wca.controllers', 'wca.services', 'jett.ionic.f
         }
       })
 // -------------------------------------------------------------------------------------------------------------------
-
 ; // fin de estados
 
   // if none of the above states are matched, use this as the fallback

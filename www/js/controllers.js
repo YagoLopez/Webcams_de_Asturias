@@ -552,11 +552,12 @@ angular.module('wca.controllers',[])
     }
   })
 // ====================================================================================================================
-.controller('ListadoCtrl', function($scope, $stateParams, SLoader, $rootScope, $ionicFilterBar,
-                                   SFusionTable, $filter, $ionicScrollDelegate, SPopup, SCategorias, $ionicHistory) {
+.controller('ListadoCtrl', function($scope, $stateParams, $rootScope, $ionicFilterBar,
+                                   SFusionTable, $filter, $ionicScrollDelegate, SCategorias, $ionicHistory) {
 
-    SLoader.show();
-    $ionicHistory.clearCache();
+    $scope.$on('$ionicView.beforeEnter', function(){
+      $ionicHistory.clearCache();
+    });
     var concejo = $stateParams.concejo;
     var idCategoria = $stateParams.idCategoria;
     var camsFiltradasPorUrl;
@@ -564,13 +565,12 @@ angular.module('wca.controllers',[])
     function esSubcadena(idCategoria, urlCategoria) {
       return (urlCategoria.indexOf('categoria=' + idCategoria) > -1);
     }
-
     var sqlQuery = 'SELECT Lugar,Concejo,Imagen,Categoria,rowid,latitud,longitud FROM '+ SFusionTable.TABLE_ID;
     SFusionTable.getRemoteData(sqlQuery).success(function(data) {
 
       if (data.error) {
         console.error(data);
-        SLoader.hide();
+        $scope.error = 'Error consulta sql: '+data;
       }
       // -------------------------------------------------------------------------------------------------------------
       // FILTRO 1: filtra las cams por parametros de url: concejo y categoria
@@ -621,16 +621,21 @@ angular.module('wca.controllers',[])
         });
       };
 
-      SLoader.hide();
+      //SLoader.hide();
 
     }).error(function(data, status) {
-      SLoader.hide();
-      SPopup.show("Error", "Fallo obteniendo datos de cámaras<br>SFusionTable.getRemoteData(): "+status);
+      $scope.error = "Error obteniendo datos de webcams. ListadoCtrl.SFusionTable.getRemoteData(): "+status+
+          '. Posibles causas: (1) No conexión datos. (2) Fallo servidor remoto';
     });
 
     $scope.$on('$ionicView.afterEnter', function(){
       $rootScope.mostrarLupa = true;
       $('ion-filter-bar').show();
+      //if (!idCategoria || idCategoria == '') {
+      //  $rootScope.tituloVista = 'Todas'
+      //} else {
+      //  $rootScope.tituloVista = SCategorias.idCategoria_a_nombre(idCategoria);
+      //}
     })
 
     $scope.$on('$ionicView.beforeLeave', function(){
