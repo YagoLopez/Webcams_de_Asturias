@@ -6,7 +6,7 @@
       "projectTypeName": "com.intel.xdk.projecttype.jsapp",
       "src": "",
       "projectGuid": "5026b907-8667-4c9e-a1ed-6f06fd4b87b6",
-      "lastModifiedDate": 1451615977148,
+      "lastModifiedDate": 1451763443741,
       "creationDate": 1450749850707
     },
     "sourceDirectory": "www",
@@ -27,7 +27,26 @@
       }
     },
     "libraries": [],
-    "cordovaPlugins": [],
+    "cordovaPlugins": [
+      {
+        "id": "cordova-plugin-splashscreen",
+        "name": "Splashscreen",
+        "version": "2.1.0",
+        "originType": "cordova.io",
+        "origin": "cordova-plugin-splashscreen",
+        "gitref": "",
+        "paramvals": {},
+        "sourceLocation": "plugins/cordova-plugin-splashscreen",
+        "selectedState": "Included",
+        "checksum": "170efb68",
+        "dependsOn": [],
+        "topLevel": true,
+        "permissions": {},
+        "description": "Cordova Splashscreen Plugin",
+        "data": {},
+        "dependedBy": []
+      }
+    ],
     "serviceMethods": [],
     "buildConfigurations": {
       "Android": {
@@ -74,12 +93,12 @@
           "android-minSdkVersion": "14",
           "android-targetSdkVersion": "19",
           "android-installLocation": "auto",
-          "Orientation": "portrait",
+          "Orientation": "default",
           "android-signed": true,
           "Fullscreen": false
         },
         "isActive_": true,
-        "appName_": "wca.crosswlk.",
+        "appName_": "Webcams de Asturias",
         "appID_": "com.yagolopez.webcamsasturias",
         "appAccess_": {
           "mode": "whitelist",
@@ -91,16 +110,71 @@
           ],
           "navigation": []
         },
-        "icons_": [],
-        "splashes_": [],
+        "icons_": [
+          {
+            "relPath": "res/mipmap-mdpi48/ic_launcher.png",
+            "density": "mdpi",
+            "height": 48,
+            "width": 48
+          },
+          {
+            "relPath": "res/mipmap-hdpi72/ic_launcher72.png",
+            "density": "hdpi",
+            "height": 72,
+            "width": 72
+          },
+          {
+            "relPath": "res/mipmap-xhdpi96/ic_launcher.png",
+            "density": "xhdpi",
+            "height": 96,
+            "width": 96
+          }
+        ],
+        "splashes_": [
+          {
+            "relPath": "res/splash/drawable-port-mdpi-screen320x480.png",
+            "density": "ldpi",
+            "height": 426,
+            "width": 320,
+            "orientation": "portrait"
+          },
+          {
+            "relPath": "res/splash/drawable-port-hdpi-screen480x800.png",
+            "density": "hdpi",
+            "height": 640,
+            "width": 480,
+            "orientation": "portrait"
+          },
+          {
+            "relPath": "res/splash/drawable-port-xhdpi-screen720x1280.png",
+            "density": "xhdpi",
+            "height": 960,
+            "width": 720,
+            "orientation": "portrait"
+          },
+          {
+            "relPath": "res/splash/drawable-land-mdpi-screen480x320.png",
+            "density": "mdpi",
+            "height": 320,
+            "width": 470,
+            "orientation": "landscape"
+          },
+          {
+            "relPath": "res/splash/drawable-port-xxhdpi-screen960x1600.png",
+            "density": "xhdpi",
+            "height": 720,
+            "width": 960,
+            "orientation": "landscape"
+          }
+        ],
         "addlPermissions_": "",
         "excludedLibraries_": "",
         "appVersion_": "1.0.0",
         "appVersionCode_": "1",
         "crosswalkVersion_": "15",
         "cordovaCLIVersion_": "5.1.1",
-        "appDescription_": "fasfasd",
-        "appAuthor_": "asfasdfa"
+        "appDescription_": "Imágenes en tiempo real de cámaras web de Asturias",
+        "appAuthor_": "Yago López - email:yago.lopez@gmail.com"
       },
       "iOS": {
         "platform_": "ios",

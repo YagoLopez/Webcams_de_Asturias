@@ -9,7 +9,6 @@
 //servicio de excepciones de capturar la excepcion y mostrar un popup. De esta forma está más centralizado el tratamiento
 //de errores
 
-
 angular.module('wca.controllers',[])
 
 // ====================================================================================================================
@@ -457,7 +456,7 @@ angular.module('wca.controllers',[])
 .controller('ImgViewerCtrl', function($scope, $stateParams, ItemMeteo, TablaMeteo){
     $scope.itemMeteo = new ItemMeteo( TablaMeteo.getItemById($stateParams.id_item_meteo) );
     $scope.$on('$ionicView.afterEnter', function(){
-      document.getElementById('imgContainer').style.background = 'none';
+      document.getElementById('imgMeteo').style.background = 'none';
     });
 })
 // ====================================================================================================================
@@ -553,11 +552,9 @@ angular.module('wca.controllers',[])
   })
 // ====================================================================================================================
 .controller('ListadoCtrl', function($scope, $stateParams, $rootScope, $ionicFilterBar,
-                                   SFusionTable, $filter, $ionicScrollDelegate, SCategorias, $ionicHistory) {
+                                   SFusionTable, $filter, $ionicScrollDelegate, SCategorias, $ionicHistory, SLoader) {
 
-    $scope.$on('$ionicView.beforeEnter', function(){
-      $ionicHistory.clearCache();
-    });
+    SLoader.show();
     var concejo = $stateParams.concejo;
     var idCategoria = $stateParams.idCategoria;
     var camsFiltradasPorUrl;
@@ -565,12 +562,16 @@ angular.module('wca.controllers',[])
     function esSubcadena(idCategoria, urlCategoria) {
       return (urlCategoria.indexOf('categoria=' + idCategoria) > -1);
     }
+    //$scope.$on('$ionicView.beforeEnter', function(){
+      $ionicHistory.clearCache();
+    //});
     var sqlQuery = 'SELECT Lugar,Concejo,Imagen,Categoria,rowid,latitud,longitud FROM '+ SFusionTable.TABLE_ID;
     SFusionTable.getRemoteData(sqlQuery).success(function(data) {
 
       if (data.error) {
         console.error(data);
-        $scope.error = 'Error consulta sql: '+data;
+        $scope.error = 'Error consulta sql. '+data;
+        SLoader.hide();
       }
       // -------------------------------------------------------------------------------------------------------------
       // FILTRO 1: filtra las cams por parametros de url: concejo y categoria
@@ -620,22 +621,16 @@ angular.module('wca.controllers',[])
           cancelOnStateChange: false
         });
       };
-
-      //SLoader.hide();
-
+      SLoader.hide();
     }).error(function(data, status) {
       $scope.error = "Error obteniendo datos de webcams. ListadoCtrl.SFusionTable.getRemoteData(): "+status+
           '. Posibles causas: (1) No conexión datos. (2) Fallo servidor remoto';
+      SLoader.hide();
     });
 
     $scope.$on('$ionicView.afterEnter', function(){
       $rootScope.mostrarLupa = true;
       $('ion-filter-bar').show();
-      //if (!idCategoria || idCategoria == '') {
-      //  $rootScope.tituloVista = 'Todas'
-      //} else {
-      //  $rootScope.tituloVista = SCategorias.idCategoria_a_nombre(idCategoria);
-      //}
     })
 
     $scope.$on('$ionicView.beforeLeave', function(){
