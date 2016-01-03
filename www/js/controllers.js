@@ -169,7 +169,8 @@ angular.module('wca.controllers',[])
         $scope.urlAutor = FotosPanoramio.getPhoto().getOwnerUrl();
         $scope.modal.show();
       } else
-        console.log('showModal(): no se han encontrado fotos panoramio');
+        SPopup.show('Error', 'Fallo al conectar con el servidor de fotos de Panoramio');
+        console.error('PanoramioCtrl.showModal(): Fallo al conectar con el servidor de fotos de Panoramio');
     }
     $scope.closeModal = function () {
       $scope.modal.hide();
@@ -295,9 +296,11 @@ angular.module('wca.controllers',[])
 .controller('GifPlayerCtrl', function($scope, $window, $interval, $stateParams, TablaMeteo, ItemMeteo, SLoader,
                                       $state, $rootScope, SPopup){
 
-  SLoader.showWithBackdrop('Cargando datos...');
+  SLoader.showWithBackdrop('Cargando datos<br/><br/>Espere un momento, por favor...<br/><br/>' +
+    '(La obtención de datos del servidor remoto y su procesamiento se puede prolongar varios segundos ' +
+    'dependiendo del ancho de banda disponible y del hardware del dispositivo)');
 
-    // Obtiene itemMeteo ------------------------------------------------------------------------------------------------
+  // Obtiene itemMeteo ------------------------------------------------------------------------------------------------
   $scope.itemMeteo = new ItemMeteo(TablaMeteo.getItemById($stateParams.id_item_meteo));
 
   // inicializaciones -------------------------------------------------------------------------------------------------
@@ -319,109 +322,120 @@ angular.module('wca.controllers',[])
     }
   };// killtimer
 
-  // Evento ionicView.afterEnter --------------------------------------------------------------------------------------
   $scope.$on('$ionicView.afterEnter', function(){
-      // Constructor de gif en base a parametros ----------------------------------------------------------------------
-      var gifAnimado = new SuperGif({
-        gif: document.getElementById('gif'),
-        loop_mode: 0,
-        draw_while_loading: 1
-        //max_width: $scope.dev_width
-      });
-      // Carga gif animado remoto y lo descompone en fotogramas para procesarlo ---------------------------------------
-      gifAnimado.load(function(){
-        $scope.totalFrames = gifAnimado.get_length();
-        $scope.currentFrame = gifAnimado.get_current_frame();
-        $scope.gifAnimado = gifAnimado;
-        $scope.$apply();
-        SLoader.hide();
-      });
-      var rangeSlider = document.getElementById('levelRange');
-      // pan-zoom ---------------------------------------------------------------------------------------------------
-      $('.jsgif > canvas').panzoom({
-        $zoomIn: $('.zoom-in'),
-        $zoomOut: $('.zoom-out'),
-        $zoomRange: $('.zoom-range'),
-        $reset: $('.reset'),
-        contain: 'invert',
-        minScale: 1,
-        //startTransform: 'scale(0.5)'
-      }).panzoom('zoom');
-      $('.jsgif > canvas').panzoom('zoom', 1.0, { silent: true });
-      // player controls ----------------------------------------------------------------------------------------------
-      $scope.playPause = function(){
-        if ($scope.isGifPlaying) {
-          $scope.pause();
-        } else {
-          $scope.play();
-        }
-      };
-      $scope.play = function(){
-        killTimer();
-        $scope.isGifPlaying = true;
-        gifAnimado.play();
-        sondearPosicion();
-      };
-      $scope.pause= function(){
-        killTimer();
-        $scope.isGifPlaying = false;
-        gifAnimado.pause();
+    // Instanciación de gif en base a parametros ----------------------------------------------------------------------
+    var gifAnimado = new SuperGif({
+      gif: document.getElementById('gif'),
+      loop_mode: 0,
+      draw_while_loading: 1
+      //max_width: $scope.dev_width
+    });
+    // Carga gif animado remoto y lo descompone en fotogramas para procesarlo ---------------------------------------
+    gifAnimado.load(function(){
+      $scope.totalFrames = gifAnimado.get_length();
+      $scope.currentFrame = gifAnimado.get_current_frame();
+      $scope.gifAnimado = gifAnimado;
+      $scope.$apply();
+      SLoader.hide();
+    });
+    var rangeSlider = document.getElementById('levelRange');
+    // pan-zoom ---------------------------------------------------------------------------------------------------
+    $('.jsgif > canvas').panzoom({
+      $zoomIn: $('.zoom-in'),
+      $zoomOut: $('.zoom-out'),
+      $zoomRange: $('.zoom-range'),
+      $reset: $('.reset'),
+      contain: 'invert',
+      minScale: 1,
+      //startTransform: 'scale(0.5)'
+    }).panzoom('zoom');
+    $('.jsgif > canvas').panzoom('zoom', 1.0, { silent: true });
+    // player controls ----------------------------------------------------------------------------------------------
+    $scope.playPause = function(){
+      if ($scope.isGifPlaying) {
+        $scope.pause();
+      } else {
+        $scope.play();
       }
-      $scope.restart= function(){
-        killTimer();
-        $scope.isGifPlaying = false;
-        gifAnimado.pause();
-        gifAnimado.move_to(0);
-        rangeSlider.value = 0;
-        //$scope.currentFrame = gifAnimado.get_current_frame();
-        $scope.currentFrame = 0;
-      }
-      $scope.forward= function(){
-        killTimer();
-        $scope.isGifPlaying = false;
-        gifAnimado.pause();
-        gifAnimado.move_relative(1);
-        rangeSlider.value = gifAnimado.get_current_frame();
-        $scope.currentFrame = gifAnimado.get_current_frame();
-      }
-      $scope.backward= function(){
-        killTimer();
-        $scope.isGifPlaying = false;
-        gifAnimado.pause();
-        gifAnimado.move_relative(-1);
-        rangeSlider.value = gifAnimado.get_current_frame();
-        $scope.currentFrame = gifAnimado.get_current_frame();
-      }
-      $scope.end= function(){
-        killTimer();
-        var posicionFinal = gifAnimado.get_length();
-        gifAnimado.pause();
-        gifAnimado.move_to(posicionFinal - 1);
-        rangeSlider.value = gifAnimado.get_current_frame();
-        $scope.currentFrame = gifAnimado.get_current_frame();
-      }
-      var sondearPosicion = function(){
-        timer = $interval( function(){
-          rangeSlider.value = gifAnimado.get_current_frame();
-          $scope.currentFrame = gifAnimado.get_current_frame();
-          //console.log('current frame', $scope.currentFrame);
-        }, 50); // fin interval
-      };// sondear posicion
-      $scope.irPosicion = function(posicion){
-        gifAnimado.move_to(posicion);
-        //console.log('currentFrame', $scope.currentFrame);
-        //console.log('valor', posicion);
-      };//irposicion
-      // player controls ----------------------------------------------------------------------------------------------
+    };
+    $scope.play = function(){
+      killTimer();
+      $scope.isGifPlaying = true;
+      gifAnimado.play();
+      sondearPosicion();
+    };
+    $scope.pause= function(){
+      killTimer();
+      $scope.isGifPlaying = false;
+      gifAnimado.pause();
+    }
+    $scope.restart= function(){
+      killTimer();
+      //$scope.isGifPlaying = false;
+      gifAnimado.pause();
+      gifAnimado.move_to(0);
+      rangeSlider.value = 0;
+      //$scope.currentFrame = gifAnimado.get_current_frame();
+      $scope.currentFrame = 0;
+    }
+    $scope.forward= function(){
+      killTimer();
+      //$scope.isGifPlaying = false;
+      gifAnimado.pause();
+      gifAnimado.move_relative(1);
+      rangeSlider.value = gifAnimado.get_current_frame();
+      $scope.currentFrame = gifAnimado.get_current_frame();
+    }
+    $scope.backward= function(){
+      killTimer();
+      //$scope.isGifPlaying = false;
+      gifAnimado.pause();
+      gifAnimado.move_relative(-1);
+      rangeSlider.value = gifAnimado.get_current_frame();
+      $scope.currentFrame = gifAnimado.get_current_frame();
+    }
+    $scope.end= function(){
+      killTimer();
+      //var posicionFinal = gifAnimado.get_length();
+      //gifAnimado.pause();
+      //gifAnimado.move_to(gifAnimado.get_length() - 1);
+      //rangeSlider.value = gifAnimado.get_current_frame();
+      //$scope.currentFrame = gifAnimado.get_current_frame();
 
-    }); // scope.on
+      var posicionFinal = gifAnimado.get_length()-1;
+      gifAnimado.pause();
+      gifAnimado.move_to(posicionFinal);
+      rangeSlider.value = posicionFinal;
+      $scope.currentFrame = posicionFinal;
+
+    }
+    var sondearPosicion = function(){
+      timer = $interval( function(){
+        //rangeSlider.value = gifAnimado.get_current_frame();
+        //$scope.currentFrame = gifAnimado.get_current_frame();
+
+        var currentFrame = gifAnimado.get_current_frame();
+        rangeSlider.value = currentFrame;
+        $scope.currentFrame = currentFrame;
+
+        //console.log('current frame', $scope.currentFrame);
+      }, 50); // fin interval
+    };// sondear posicion
+    $scope.irPosicion = function(posicion){
+      gifAnimado.move_to(posicion);
+      //console.log('currentFrame', $scope.currentFrame);
+      //console.log('valor', posicion);
+    };//irposicion
+    // player controls ----------------------------------------------------------------------------------------------
+
+  }); // on ionicView.afterEnter
 
   // Evento destroy ---------------------------------------------------------------------------------------------------
   $scope.$on("$destroy",function(){
       //console.log('ondestroy -> pause animation');
       window.clearTimeout();
       $scope.pause();
-    });
+  });
 
 })
 // ====================================================================================================================
@@ -433,7 +447,7 @@ angular.module('wca.controllers',[])
   };
   var queryString = 'SELECT * FROM '+TablaMeteo.FUSION_TABLE_ID;
 
-  SLoader.show();
+  SLoader.show('Cargando datos...');
 
   SFusionTable.getRemoteData(queryString).success(
     function(data){

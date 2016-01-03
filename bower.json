@@ -3,6 +3,6 @@
   "private": "true",
   "devDependencies": {},
   "dependencies": {
-    "ionic": "1.2.1"
+    "ionic": "1.2.3"
   }
 }

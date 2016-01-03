@@ -31,7 +31,8 @@
   <div class="card">
     <!-- range slider ---------------------------------------------------------------------------------------->
     <label class="range range-assertive" style="padding: 0 3%;" ng-click="pause()" on-touch="pause()">
-    <input id="levelRange" type="range" min="0" max="{{ gifAnimado.get_length()-1 }}"
+    <!--<input id="levelRange" type="range" min="0" max="{{ gifAnimado.get_length()-1 }}"-->
+      <input id="levelRange" type="range" min="0" max="{{ totalFrames - 1 }}"
            value="{{ currentFrame }}" ng-model="currentFrame" ng-change="irPosicion(currentFrame)"
            style="margin:0"/>
     </label>
@@ -67,9 +68,9 @@
     </table>
     <!-- Leyenda --------------------------------------------------------------------------------------------->
     <div style="width: 100%;text-align:center;padding-bottom:2px">
-      <!--<span style="font-size:small;">Zoom</span><br>-->
       <div>Fotograma: <b style="color:red">
-        {{ gifAnimado.get_current_frame()+1 }}</b> de {{ ::gifAnimado.get_length() }}
+        <!--{{ gifAnimado.get_current_frame()+1 }}</b> de {{ ::gifAnimado.get_length() }}-->
+        {{ gifAnimado.get_current_frame() + 1 }}</b> de {{ ::totalFrames }}
       </div>
     </div>
     <!-- fin leyenda ------------------------------------------------------------------------------------------>
