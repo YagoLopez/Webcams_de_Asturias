@@ -373,7 +373,8 @@ angular.module('wca.controllers',[])
         gifAnimado.pause();
         gifAnimado.move_to(0);
         rangeSlider.value = 0;
-        $scope.currentFrame = gifAnimado.get_current_frame();
+        //$scope.currentFrame = gifAnimado.get_current_frame();
+        $scope.currentFrame = 0;
       }
       $scope.forward= function(){
         killTimer();
