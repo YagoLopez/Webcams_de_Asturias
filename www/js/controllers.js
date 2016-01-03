@@ -168,9 +168,10 @@ angular.module('wca.controllers',[])
         $scope.autor = FotosPanoramio.getPhoto().getOwnerName();
         $scope.urlAutor = FotosPanoramio.getPhoto().getOwnerUrl();
         $scope.modal.show();
-      } else
+      } else {
         SPopup.show('Error', 'Fallo al conectar con el servidor de fotos de Panoramio');
         console.error('PanoramioCtrl.showModal(): Fallo al conectar con el servidor de fotos de Panoramio');
+      }
     }
     $scope.closeModal = function () {
       $scope.modal.hide();
@@ -442,8 +443,7 @@ angular.module('wca.controllers',[])
 .controller('MeteoCtrl', function($scope, $rootScope, SFusionTable, SPopup, TablaMeteo, SLoader){
 
   var showError = function(status){
-    SPopup.show(
-      'Error', ' MeteoCtrl: Compruebe conexión de red. Estado: '+status );
+    SPopup.show('Error', ' MeteoCtrl: Compruebe conexión de red. Estado: '+status );
   };
   var queryString = 'SELECT * FROM '+TablaMeteo.FUSION_TABLE_ID;
 
