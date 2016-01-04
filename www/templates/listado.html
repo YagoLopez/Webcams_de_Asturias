@@ -35,7 +35,7 @@
     <span class="badge badge-calm icon-badge">{{ items.length }}</span>
   </ion-header-bar>
 
-  <ion-content class="animated fadeIn">
+  <ion-content>
     <div id="listadoContainer">
       <a class="item item-thumbnail-left item-icon-right" ng-repeat="cam in items track by cam[4]"
          href="#/app/detalle/{{ items[$index][4] }}">
