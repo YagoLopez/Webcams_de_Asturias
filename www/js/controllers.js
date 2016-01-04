@@ -447,7 +447,9 @@ angular.module('wca.controllers',[])
   };
   var queryString = 'SELECT * FROM '+TablaMeteo.FUSION_TABLE_ID;
 
-  SLoader.show('Cargando datos...');
+  $scope.$on('$ionicView.beforeEnter', function () {
+    SLoader.show('Cargando datos...');
+  })
 
   SFusionTable.getRemoteData(queryString).success(
     function(data){
