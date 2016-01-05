@@ -479,7 +479,9 @@ angular.module('wca.controllers',[])
 // ====================================================================================================================
 .controller('PorCategoriaCtrl', function($scope, $window, $sce, SLoader, $rootScope){
 
-    SLoader.showWithBackdrop();
+    $scope.$on('$ionicView.beforeEnter', function () {
+      SLoader.showWithBackdrop();
+    });
     //Calculo de dimensiones de ventana al redimensionar
     $scope.calculateDimensions = function(gesture) {
       $scope.dev_width = $window.innerWidth;
