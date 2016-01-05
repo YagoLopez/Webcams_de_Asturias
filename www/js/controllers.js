@@ -428,7 +428,7 @@ angular.module('wca.controllers',[])
       //console.log('valor', posicion);
     };//irposicion
     // player controls ----------------------------------------------------------------------------------------------
-
+    SLoader.hide();
   }); // on ionicView.afterEnter
 
   // Evento destroy ---------------------------------------------------------------------------------------------------
