@@ -572,9 +572,9 @@
         };
 
         var doLoadError = function (originOfError) {
-            alert('Error: no se han podido cargar imagenes remotas. Esta aplicación está pensada para ser utilizada' +
-              'desde un teléfono móvil. Para evitar este error tenrá que cambiar las opciones de seguridad' +
-              'del navegador para permitir la descarga de información remota desde un dominio externo');
+            alert('Error: no se han podido cargar imagenes remotas. Esta funcionlidad está pensada para ser utilizada ' +
+              'desde un teléfono móvil. Para evitar este error, tenrá que cambiar las opciones de seguridad ' +
+              'del navegador y permitir la descarga de información desde un dominio externo');
             var drawError = function () {
                 ctx.fillStyle = 'black';
                 ctx.fillRect(0, 0, options.c_w ? options.c_w : hdr.width, options.c_h ? options.c_h : hdr.height);
