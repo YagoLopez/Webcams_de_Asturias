@@ -5,9 +5,9 @@
       "type": "Import",
       "projectTypeName": "com.intel.xdk.projecttype.jsapp",
       "src": "",
-      "projectGuid": "5026b907-8667-4c9e-a1ed-6f06fd4b87b6",
-      "lastModifiedDate": 1451763443741,
-      "creationDate": 1450749850707
+      "projectGuid": "889f184c-92d4-480a-a7b9-501d3d1c2173",
+      "lastModifiedDate": 1452048419673,
+      "creationDate": 1452047964842
     },
     "sourceDirectory": "www",
     "cordovaPluginsDirectory": "plugins",
@@ -56,13 +56,39 @@
         "preferences_": {
           "android-minSdkVersion": "14",
           "android-targetSdkVersion": "19",
-          "android-installLocation": "auto",
-          "Fullscreen": false,
-          "Orientation": "portrait",
-          "android-signed": true
+          "android-installLocation": "auto"
         },
         "isActive_": false,
-        "appName_": "wca",
+        "appName_": "WebcamsAsturias",
+        "appID_": "not.yet.specified",
+        "appAccess_": {
+          "mode": "legacy",
+          "network": [
+            "*"
+          ],
+          "intents": [],
+          "navigation": []
+        },
+        "icons_": [],
+        "splashes_": [],
+        "addlPermissions_": "",
+        "excludedLibraries_": "",
+        "appVersion_": "0.0.1",
+        "appVersionCode_": "1",
+        "crosswalkVersion_": "14",
+        "cordovaCLIVersion_": "5.1.1"
+      },
+      "Android-Crosswalk": {
+        "platform_": "android",
+        "runtime_": "Crosswalk with Cordova 3.x",
+        "name_": "Android-Crosswalk",
+        "preferences_": {
+          "android-minSdkVersion": "14",
+          "android-targetSdkVersion": "19",
+          "android-installLocation": "auto"
+        },
+        "isActive_": true,
+        "appName_": "Webcams de Asturias",
         "appID_": "not.yet.specified",
         "appAccess_": {
           "mode": "whitelist",
@@ -78,103 +104,11 @@
         "splashes_": [],
         "addlPermissions_": "",
         "excludedLibraries_": "",
-        "appVersion_": "0.0.1",
-        "appVersionCode_": "1",
-        "crosswalkVersion_": "14",
-        "cordovaCLIVersion_": "5.1.1",
-        "appDescription_": "laskfakls",
-        "appAuthor_": "slfksldk"
-      },
-      "Android-Crosswalk": {
-        "platform_": "android",
-        "runtime_": "Crosswalk with Cordova 3.x",
-        "name_": "Android-Crosswalk",
-        "preferences_": {
-          "android-minSdkVersion": "14",
-          "android-targetSdkVersion": "19",
-          "android-installLocation": "auto",
-          "Orientation": "default",
-          "android-signed": true,
-          "Fullscreen": false
-        },
-        "isActive_": true,
-        "appName_": "Webcams de Asturias",
-        "appID_": "com.yagolopez.webcamsasturias",
-        "appAccess_": {
-          "mode": "whitelist",
-          "network": [
-            "*"
-          ],
-          "intents": [
-            "http://*"
-          ],
-          "navigation": []
-        },
-        "icons_": [
-          {
-            "relPath": "res/mipmap-mdpi48/ic_launcher.png",
-            "density": "mdpi",
-            "height": 48,
-            "width": 48
-          },
-          {
-            "relPath": "res/mipmap-hdpi72/ic_launcher72.png",
-            "density": "hdpi",
-            "height": 72,
-            "width": 72
-          },
-          {
-            "relPath": "res/mipmap-xhdpi96/ic_launcher.png",
-            "density": "xhdpi",
-            "height": 96,
-            "width": 96
-          }
-        ],
-        "splashes_": [
-          {
-            "relPath": "res/splash/drawable-port-mdpi-screen320x480.png",
-            "density": "ldpi",
-            "height": 426,
-            "width": 320,
-            "orientation": "portrait"
-          },
-          {
-            "relPath": "res/splash/drawable-port-hdpi-screen480x800.png",
-            "density": "hdpi",
-            "height": 640,
-            "width": 480,
-            "orientation": "portrait"
-          },
-          {
-            "relPath": "res/splash/drawable-port-xhdpi-screen720x1280.png",
-            "density": "xhdpi",
-            "height": 960,
-            "width": 720,
-            "orientation": "portrait"
-          },
-          {
-            "relPath": "res/splash/drawable-land-mdpi-screen480x320.png",
-            "density": "mdpi",
-            "height": 320,
-            "width": 470,
-            "orientation": "landscape"
-          },
-          {
-            "relPath": "res/splash/drawable-port-xxhdpi-screen960x1600.png",
-            "density": "xhdpi",
-            "height": 720,
-            "width": 960,
-            "orientation": "landscape"
-          }
-        ],
-        "addlPermissions_": "",
-        "excludedLibraries_": "",
         "appVersion_": "1.0.0",
         "appVersionCode_": "1",
         "crosswalkVersion_": "15",
         "cordovaCLIVersion_": "5.1.1",
-        "appDescription_": "Imágenes en tiempo real de cámaras web de Asturias",
-        "appAuthor_": "Yago López - email:yago.lopez@gmail.com"
+        "appDescription_": ""
       },
       "iOS": {
         "platform_": "ios",
@@ -185,7 +119,7 @@
           "ios-configuration": "adhoc"
         },
         "isActive_": false,
-        "appName_": "webcams_asturias2",
+        "appName_": "WebcamsAsturias",
         "appID_": "not.yet.specified",
         "appAccess_": {
           "mode": "legacy",
@@ -209,7 +143,7 @@
         "name_": "Windows8",
         "preferences_": {},
         "isActive_": false,
-        "appName_": "webcams_asturias2",
+        "appName_": "WebcamsAsturias",
         "appID_": "not.yet.specified",
         "appAccess_": {
           "mode": "legacy",
@@ -232,7 +166,7 @@
         "name_": "WebApp",
         "preferences_": {},
         "isActive_": false,
-        "appName_": "webcams_asturias2",
+        "appName_": "WebcamsAsturias",
         "appID_": "not.yet.specified",
         "appAccess_": {
           "mode": "legacy",
@@ -254,7 +188,7 @@
         "name_": "Firefox",
         "preferences_": {},
         "isActive_": false,
-        "appName_": "webcams_asturias2",
+        "appName_": "WebcamsAsturias",
         "appID_": "not.yet.specified",
         "appAccess_": {
           "mode": "legacy",
@@ -276,7 +210,7 @@
         "name_": "Chrome",
         "preferences_": {},
         "isActive_": false,
-        "appName_": "webcams_asturias2",
+        "appName_": "WebcamsAsturias",
         "appID_": "not.yet.specified",
         "appAccess_": {
           "mode": "legacy",
@@ -298,7 +232,7 @@
         "name_": "Facebook",
         "preferences_": {},
         "isActive_": false,
-        "appName_": "webcams_asturias2",
+        "appName_": "WebcamsAsturias",
         "appID_": "not.yet.specified",
         "appAccess_": {
           "mode": "legacy",
@@ -320,7 +254,7 @@
         "name_": "WP81",
         "preferences_": {},
         "isActive_": true,
-        "appName_": "webcams_asturias2",
+        "appName_": "WebcamsAsturias",
         "appID_": "not.yet.specified",
         "appAccess_": {
           "mode": "legacy",

@@ -297,9 +297,7 @@ angular.module('wca.controllers',[])
 .controller('GifPlayerCtrl', function($scope, $window, $interval, $stateParams, TablaMeteo, ItemMeteo, SLoader,
                                       $state, $rootScope, SPopup){
 
-  SLoader.showWithBackdrop('Cargando datos<br/><br/>Espere un momento, por favor...<br/><br/>' +
-    '(La obtención de datos del servidor remoto y su procesamiento pude tardar varios segundos ' +
-    'dependiendo del ancho de banda y del hardware disponible)');
+  SLoader.showWithBackdrop('Cargando datos...');
 
   // Obtiene itemMeteo ------------------------------------------------------------------------------------------------
   $scope.itemMeteo = new ItemMeteo(TablaMeteo.getItemById($stateParams.id_item_meteo));
@@ -428,7 +426,6 @@ angular.module('wca.controllers',[])
       //console.log('valor', posicion);
     };//irposicion
     // player controls ----------------------------------------------------------------------------------------------
-    SLoader.hide();
   }); // on ionicView.afterEnter
 
   // Evento destroy ---------------------------------------------------------------------------------------------------

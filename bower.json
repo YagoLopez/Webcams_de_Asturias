@@ -1,8 +1,6 @@
 {
-  "name": "Webcams_de_Asturias",
-  "private": "true",
-  "devDependencies": {},
-  "dependencies": {
-    "ionic": "1.2.3"
-  }
+    "name": "Webcams_de_Asturias",
+    "private": "true",
+    "devDependencies": {},
+    "dependencies": {}
 }

@@ -4,19 +4,13 @@
 <!--To change the contents of this file, see the documentation on the intelxdk.config.additions.xml file.-->
 <intelxdk:version value="1.0"/>
 <intelxdk:cordova-cli version="5.1.1"/>
-<name>wca</name>
-<description>laskfakls</description>
-<author>slfksldk</author>
+<name>WebcamsAsturias</name>
 <content src="index.html"/>
 <access origin="*"/>
-<allow-intent href="http://*"/>
 <intelxdk:plugin intelxdk:name="Splashscreen" intelxdk:value="cordova-plugin-splashscreen" intelxdk:version="2.1.0" intelxdk:checksum="170efb68"/>
-<intelxdk:plugin intelxdk:name="Cordova Network Whitelist Plugin" intelxdk:value="cordova-plugin-whitelist" intelxdk:version="1.1.0"/>
+<intelxdk:plugin intelxdk:name="Cordova Legacy Whitelist Plugin" intelxdk:value="cordova-plugin-legacy-whitelist" intelxdk:version="1.1.0"/>
 <preference name="android-minSdkVersion" value="14"/>
 <preference name="android-targetSdkVersion" value="19"/>
 <preference name="android-installLocation" value="auto"/>
-<preference name="Fullscreen" value="false"/>
-<preference name="Orientation" value="portrait"/>
-<preference name="android-signed" value="true"/>
 <!--creationInfo:{"src":"","projectTypeName":"com.intel.xdk.projecttype.jsapp"}-->
 <preference name="debuggable" value="false"/></widget>

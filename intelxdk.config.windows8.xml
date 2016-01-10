@@ -4,7 +4,7 @@
 <!--To change the contents of this file, see the documentation on the intelxdk.config.additions.xml file.-->
 <intelxdk:version value="1.0"/>
 <intelxdk:cordova-cli version="5.1.1"/>
-<name>webcams_asturias2</name>
+<name>WebcamsAsturias</name>
 <content src="index.html"/>
 <access origin="*"/>
 <intelxdk:plugin intelxdk:name="Splashscreen" intelxdk:value="cordova-plugin-splashscreen" intelxdk:version="2.1.0" intelxdk:checksum="170efb68"/>
