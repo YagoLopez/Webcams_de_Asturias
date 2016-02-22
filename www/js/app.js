@@ -18,9 +18,6 @@ angular.module('wca', ['ionic', 'wca.controllers', 'wca.services', 'jett.ionic.f
     }
     ionic.Platform.isFullScreen = true;
   });
-  //console = console || {};
-  //console.log = function(){};
-  //console.warn = function(){};
 })
 
 .config(function($stateProvider, $urlRouterProvider, $compileProvider, $ionicConfigProvider,
@@ -51,7 +48,7 @@ angular.module('wca', ['ionic', 'wca.controllers', 'wca.services', 'jett.ionic.f
   .state('app', {
     url: '/app',
     abstract: true,
-    templateUrl: 'templates/menu.html',
+    templateUrl: 'templates/menu.html'
   })
 // -------------------------------------------------------------------------------------------------------------------
   .state('app.mapa', {
@@ -237,7 +234,7 @@ angular.module('wca', ['ionic', 'wca.controllers', 'wca.services', 'jett.ionic.f
     }
   }}])
 // -------------------------------------------------------------------------------------------------------------------
-  .directive('imageonload', function() {
+.directive('imageonload', function() {
     return {
       restrict: 'A',
       link: function(scope, element, attrs) {

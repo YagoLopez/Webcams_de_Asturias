@@ -12,7 +12,7 @@
 angular.module('wca.controllers',[])
 
 // ====================================================================================================================
-.controller('MapaCtrl', function($scope, $stateParams, SMapa, $rootScope){
+.controller('MapaCtrl', function($scope, SMapa, $rootScope){
 
   $scope.$on('$ionicView.afterEnter', function() {
     var mapa = SMapa.crear(document.getElementById('mapa'));
@@ -57,7 +57,7 @@ angular.module('wca.controllers',[])
 
 })
 // ====================================================================================================================
-.controller('MapaGlobalCtrl', function($scope, $rootScope, SMapa, SFusionTable, SPopup, SCategorias){
+.controller('MapaGlobalCtrl', function($scope, SMapa, SFusionTable, SPopup, SCategorias){
     var layer = null;
     var mapa = null;
     var zoomLevel = 7;
@@ -122,7 +122,7 @@ angular.module('wca.controllers',[])
 
 })
 // ====================================================================================================================
-.controller('PanoramioCtrl', function($scope, $stateParams, SMapa, $ionicModal, $rootScope, SPopup){
+.controller('PanoramioCtrl', function($scope, $ionicModal, $rootScope, SPopup){
 
     if(!$rootScope.cam){
       SPopup.show('Error', 'Faltan datos. Probar otra opción de Menú');
@@ -180,8 +180,8 @@ angular.module('wca.controllers',[])
 
 })
 // ====================================================================================================================
-.controller('DetalleCtrl', function($scope, $stateParams, $ionicModal, SMapa, SClima, $filter, $rootScope,
-                                    $ionicFilterBar, SPopup, SWikipedia, $ionicPopover,Cam, SLoader, $compile){
+.controller('DetalleCtrl', function($scope, $stateParams, $ionicModal, SClima, $filter, $rootScope,
+                                    SPopup, SWikipedia, $ionicPopover, Cam, SLoader){
 
     // init
     $scope.rowid = $stateParams.rowid;
@@ -271,7 +271,7 @@ angular.module('wca.controllers',[])
 
   })
 // =====================================================================================================
-.controller('StreetViewCtrl', function($scope, SMapa, $stateParams, $rootScope, SPopup){
+.controller('StreetViewCtrl', function($scope, SMapa, $rootScope, SPopup){
 
   if(!$rootScope.cam) {
     SPopup.show('Error', 'Datos insuficientes. Probar otra opción de menú');
@@ -294,8 +294,7 @@ angular.module('wca.controllers',[])
 
 })
 // ====================================================================================================================
-.controller('GifPlayerCtrl', function($scope, $window, $interval, $stateParams, TablaMeteo, ItemMeteo, SLoader,
-                                      $state, $rootScope, SPopup){
+.controller('GifPlayerCtrl', function($scope, $interval, $stateParams, TablaMeteo, ItemMeteo, SLoader, SPopup){
 
   SLoader.showWithBackdrop('Cargando datos...');
 
@@ -437,7 +436,7 @@ angular.module('wca.controllers',[])
 
 })
 // ====================================================================================================================
-.controller('MeteoCtrl', function($scope, $rootScope, SFusionTable, SPopup, TablaMeteo, SLoader){
+.controller('MeteoCtrl', function($scope, SFusionTable, SPopup, TablaMeteo, SLoader){
 
   var showError = function(status){
     SPopup.show('Error', ' MeteoCtrl: Compruebe conexión de red. Estado: '+status );
@@ -472,7 +471,7 @@ angular.module('wca.controllers',[])
     });
 })
 // ====================================================================================================================
-.controller('PorCategoriaCtrl', function($scope, $window, $sce, SLoader, $rootScope){
+.controller('PorCategoriaCtrl', function($scope, $window, $sce, SLoader){
 
     $scope.$on('$ionicView.beforeEnter', function () {
       SLoader.showWithBackdrop();
@@ -519,7 +518,7 @@ angular.module('wca.controllers',[])
 
   })
 // ====================================================================================================================
-.controller('PorConcejoCtrl', function($scope, $window, $sce, SLoader, $rootScope){
+.controller('PorConcejoCtrl', function($scope, $window, $sce, SLoader){
 
     SLoader.showWithBackdrop();
     //Calculo de dimensiones de ventana al redimensionar
