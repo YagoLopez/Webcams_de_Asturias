@@ -5,9 +5,9 @@
       "type": "Import",
       "projectTypeName": "com.intel.xdk.projecttype.jsapp",
       "src": "",
-      "projectGuid": "889f184c-92d4-480a-a7b9-501d3d1c2173",
-      "lastModifiedDate": 1452048419673,
-      "creationDate": 1452047964842
+      "projectGuid": "36367035-c488-4c06-987d-8dfd768ab031",
+      "lastModifiedDate": 1456188583218,
+      "creationDate": 1456187882817
     },
     "sourceDirectory": "www",
     "cordovaPluginsDirectory": "plugins",
@@ -19,6 +19,13 @@
     "projectFiles": {},
     "projectDirectories": {
       "xdk": {
+        "settings": {
+          "project": {
+            "XDK-generated": "true"
+          }
+        }
+      },
+      "www/xdk": {
         "settings": {
           "project": {
             "XDK-generated": "true"
@@ -45,6 +52,24 @@
         "description": "Cordova Splashscreen Plugin",
         "data": {},
         "dependedBy": []
+      },
+      {
+        "version": "1.1.0",
+        "sourceLocation": "",
+        "selectedState": "Included",
+        "name": "Device",
+        "originType": "cordova.io",
+        "id": "cordova-plugin-device",
+        "origin": "cordova-plugin-device",
+        "data": {},
+        "paramvals": {},
+        "permissions": {},
+        "dependsOn": [],
+        "dependedBy": [],
+        "topLevel": true,
+        "checksum": "1eae5d64",
+        "gitref": "",
+        "description": "Cordova Device Plugin"
       }
     ],
     "serviceMethods": [],
@@ -59,7 +84,7 @@
           "android-installLocation": "auto"
         },
         "isActive_": false,
-        "appName_": "WebcamsAsturias",
+        "appName_": "WCA",
         "appID_": "not.yet.specified",
         "appAccess_": {
           "mode": "legacy",
@@ -89,7 +114,7 @@
         },
         "isActive_": true,
         "appName_": "Webcams de Asturias",
-        "appID_": "not.yet.specified",
+        "appID_": "com.yagolopez.webcamsdeasturias",
         "appAccess_": {
           "mode": "whitelist",
           "network": [
@@ -100,15 +125,98 @@
           ],
           "navigation": []
         },
-        "icons_": [],
-        "splashes_": [],
+        "icons_": [
+          {
+            "relPath": "res/36x36.png",
+            "density": "ldpi",
+            "height": 36,
+            "width": 36
+          },
+          {
+            "relPath": "res/48x48.png",
+            "density": "mdpi",
+            "height": 48,
+            "width": 48
+          },
+          {
+            "relPath": "res/72x72.png",
+            "density": "hdpi",
+            "height": 72,
+            "width": 72
+          },
+          {
+            "relPath": "res/96x96.png",
+            "density": "xhdpi",
+            "height": 96,
+            "width": 96
+          }
+        ],
+        "splashes_": [
+          {
+            "relPath": "res/320x426.png",
+            "density": "ldpi",
+            "height": 426,
+            "width": 320,
+            "orientation": "portrait"
+          },
+          {
+            "relPath": "res/320x470.png",
+            "density": "mdpi",
+            "height": 470,
+            "width": 320,
+            "orientation": "portrait"
+          },
+          {
+            "relPath": "res/480x640.png",
+            "density": "hdpi",
+            "height": 640,
+            "width": 480,
+            "orientation": "portrait"
+          },
+          {
+            "relPath": "res/720x960.png",
+            "density": "xhdpi",
+            "height": 960,
+            "width": 720,
+            "orientation": "portrait"
+          },
+          {
+            "relPath": "res/426x320.png",
+            "density": "ldpi",
+            "height": 320,
+            "width": 426,
+            "orientation": "landscape"
+          },
+          {
+            "relPath": "res/470x320.png",
+            "density": "mdpi",
+            "height": 320,
+            "width": 470,
+            "orientation": "landscape"
+          },
+          {
+            "relPath": "res/640x480.png",
+            "density": "hdpi",
+            "height": 480,
+            "width": 640,
+            "orientation": "landscape"
+          },
+          {
+            "relPath": "res/960x720.png",
+            "density": "xhdpi",
+            "height": 720,
+            "width": 960,
+            "orientation": "landscape"
+          }
+        ],
         "addlPermissions_": "",
         "excludedLibraries_": "",
         "appVersion_": "1.0.0",
         "appVersionCode_": "1",
         "crosswalkVersion_": "15",
         "cordovaCLIVersion_": "5.1.1",
-        "appDescription_": ""
+        "appDescription_": "",
+        "appAuthor_": "Yago Lopez"
       },
       "iOS": {
         "platform_": "ios",
@@ -119,7 +227,7 @@
           "ios-configuration": "adhoc"
         },
         "isActive_": false,
-        "appName_": "WebcamsAsturias",
+        "appName_": "WCA",
         "appID_": "not.yet.specified",
         "appAccess_": {
           "mode": "legacy",
@@ -143,7 +251,7 @@
         "name_": "Windows8",
         "preferences_": {},
         "isActive_": false,
-        "appName_": "WebcamsAsturias",
+        "appName_": "WCA",
         "appID_": "not.yet.specified",
         "appAccess_": {
           "mode": "legacy",
@@ -166,7 +274,7 @@
         "name_": "WebApp",
         "preferences_": {},
         "isActive_": false,
-        "appName_": "WebcamsAsturias",
+        "appName_": "WCA",
         "appID_": "not.yet.specified",
         "appAccess_": {
           "mode": "legacy",
@@ -188,7 +296,7 @@
         "name_": "Firefox",
         "preferences_": {},
         "isActive_": false,
-        "appName_": "WebcamsAsturias",
+        "appName_": "WCA",
         "appID_": "not.yet.specified",
         "appAccess_": {
           "mode": "legacy",
@@ -210,7 +318,7 @@
         "name_": "Chrome",
         "preferences_": {},
         "isActive_": false,
-        "appName_": "WebcamsAsturias",
+        "appName_": "WCA",
         "appID_": "not.yet.specified",
         "appAccess_": {
           "mode": "legacy",
@@ -232,7 +340,7 @@
         "name_": "Facebook",
         "preferences_": {},
         "isActive_": false,
-        "appName_": "WebcamsAsturias",
+        "appName_": "WCA",
         "appID_": "not.yet.specified",
         "appAccess_": {
           "mode": "legacy",
@@ -254,7 +362,7 @@
         "name_": "WP81",
         "preferences_": {},
         "isActive_": true,
-        "appName_": "WebcamsAsturias",
+        "appName_": "WCA",
         "appID_": "not.yet.specified",
         "appAccess_": {
           "mode": "legacy",

@@ -208,6 +208,13 @@ angular.module('wca.services',[])
 })
 // ====================================================================================================================
   .factory('ItemMeteo', function(){
+    //var urlProxy = 'http://www.idangero.us/framework7/plugins/feeds/demo/proxy.php?url=';
+    var urlProxy = 'http://cors.io/?u=';
+    //var urlProxy = 'http://query.yahooapis.com/v1/public/yql?q=select * from html where url=';
+    //var urlProxy = 'http://dontfilter.us/browse.php?&f=norefer&u=';
+    //var urlProxy = 'http://proxy2974.my-addr.org/myaddrproxy.php/';
+    //http/www.sat24.com/image.ashx?country=sp&type=loop&sat=vis
+
     function ItemMeteo(arr){
       if(arr){
         this.id = arr[0][0];
@@ -216,7 +223,9 @@ angular.module('wca.services',[])
         this.nombre = arr[0][3];
         this.espectro = arr[0][4];
         this.fuente = arr[0][5];
-        this.url = arr[0][6];
+        //this.url = arr[0][6];
+        this.url = urlProxy + (arr[0][6]);
+        console.log('url item meteo', this.url);
         this.idCategoria= arr[0][7];
         this.tipoImagen= arr[0][8];
         this.urlFuente = arr[0][9];
