@@ -6,6 +6,22 @@ Aplicación móvil que muestra Imágenes de cámaras web situadas en el Principa
 
 Esta aplicación permite visualizar las imágenes en tiempo real de 118 web cams situadas a lo largo del Principado de Asturias.
 
+[VER ONLINE](http://yagolopez.github.io/Webcams_de_Asturias/iframe/iframe.html)
+
+Tecnologías empleadas:
+ 
+- Ionic Framework (Interfaz de usuario, Arquitectura MVVC y Two way data binding)
+- Apache Cordova/PhoneGap (Acceso a API de móvil mediante Javascript)
+- Intel Crosswalk Runtime (Compilación cruzada a Android e IOS)
+ 
+Probado en:
+ 
+- Chrome (últimas versiones)
+- Microsoft Edge
+- Internet Explorer (últimas versiones)
+- Android
+- IOS (emulador)
+
 ---
 (English)
 
