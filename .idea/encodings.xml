@@ -2,8 +2,8 @@
 <project version="4">
   <component name="Encoding">
     <file url="file://$PROJECT_DIR$/bower.json" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/index.html" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/ionic.project.backup2" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/main.html" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/package.json" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/scss/ionic.app.scss" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/www/css/style.css" charset="UTF-8" />
