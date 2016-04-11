@@ -33,7 +33,7 @@ También se ofrecen datos estadísticos, como la agrupación de cámaras web por
 
 <h1>Tecnologías empleadas</h1>
  
-- Ionic Framework (Interfaz de usuario, Arquitectura MVVC y Two way data binding)
+- Ionic Framework (Interfaz de usuario, Arquitectura MVVM y Two way data binding)
 - Apache Cordova/PhoneGap (Acceso a API de móvil mediante Javascript)
 - Intel Crosswalk Runtime (Compilación cruzada a Android e IOS)
  
