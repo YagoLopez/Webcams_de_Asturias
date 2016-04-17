@@ -209,7 +209,6 @@ angular.module('wca.services',[])
   .factory('ItemMeteo', function(){
 
     var urlProxy = 'https://script.google.com/macros/s/AKfycbyX6ViYZ2IuHEurQXJ--t_UOqRTyQZ9yGeSeLcbiM7ZSVcTujTw/exec?url=';
-    //var urlProxy = 'https://script.google.com/macros/s/AKfycbw_iv0yLEdrTuuBEHE3qPGdKqQuBH1ki1oQBnfd_PGC/dev?url=';
     //var urlProxy = 'http://www.whateverorigin.org/get?url='
     //var urlProxy = 'http://anyorigin.com/get?url=';
     //var urlProxy = 'https://script.google.com/macros/s/AKfycbzbxXfwkEe-op96laMIgQKzmmncEvL-fUAl2fZ7618/exec?url=';

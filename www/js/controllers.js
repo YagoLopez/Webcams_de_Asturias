@@ -301,7 +301,6 @@ angular.module('wca.controllers',[])
     // Obtiene itemMeteo ------------------------------------------------------------------------------------------------
 
     $scope.itemMeteo = new ItemMeteo(TablaMeteo.getItemById($stateParams.id_item_meteo));
-    console.log('itemmeteo.url', ItemMeteo);
 
     // inicializaciones -------------------------------------------------------------------------------------------------
 
@@ -348,7 +347,6 @@ angular.module('wca.controllers',[])
       dataType: 'jsonp',
       cache: true,
       success: function(resp) {
-        console.log('resp', resp);
         // ====== Cración de gifAnimado ===============================================//
         gifAnimado = new SuperGif({
           gif: document.getElementById('gif'),
@@ -378,7 +376,7 @@ angular.module('wca.controllers',[])
         })
       },
       error: function(error) {
-        console.log(error.message);
+        console.error( error.message );
         SLoader.hide();
       }
     });
