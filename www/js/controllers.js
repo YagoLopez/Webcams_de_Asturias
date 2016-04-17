@@ -296,11 +296,12 @@ angular.module('wca.controllers',[])
 // ====================================================================================================================
 .controller('GifPlayerCtrl', function($scope, $interval, $stateParams, TablaMeteo, ItemMeteo, SLoader, SPopup){
 
-    SLoader.showWithBackdrop('Cargando datos...');
+    SLoader.showWithBackdrop('El proceso puede tardar. Espere, por favor...');
 
     // Obtiene itemMeteo ------------------------------------------------------------------------------------------------
 
     $scope.itemMeteo = new ItemMeteo(TablaMeteo.getItemById($stateParams.id_item_meteo));
+    console.log('itemmeteo.url', ItemMeteo);
 
     // inicializaciones -------------------------------------------------------------------------------------------------
 
@@ -312,9 +313,6 @@ angular.module('wca.controllers',[])
       SPopup.show('Error', 'Datos insuficientes. Posibles causas: (1) No conexión de datos. (2) Fallo servidor remoto. Probar otra opción de menú');
       return;
     };
-
-    // Detencion de timer -----------------------------------------------------------------------------------------------
-
     var killTimer = function(){
       if(angular.isDefined(timer))
       {
@@ -323,7 +321,6 @@ angular.module('wca.controllers',[])
         $scope.isGifPlaying = false;
       }
     };
-
     var gifAnimado = null;
     var urlImg = 'http://sat24.mobi/Image/satir/europa/sp';
     var convertDataURIToBinary = function(dataURI) {
@@ -339,6 +336,9 @@ angular.module('wca.controllers',[])
       return array;
     };
 
+    // Peticion AJAX  para obtener datos de imagenes remotas en formato base64 -------------------------------------------
+
+    // Por usar un proxy remoto no compatible con angular hay que usar $.ajax de JQuery
     $.ajax({
       type: 'GET',
       url: $scope.itemMeteo.url,
@@ -348,16 +348,20 @@ angular.module('wca.controllers',[])
       dataType: 'jsonp',
       cache: true,
       success: function(resp) {
+        console.log('resp', resp);
+        // ====== Cración de gifAnimado ===============================================//
         gifAnimado = new SuperGif({
           gif: document.getElementById('gif'),
           loop_mode: 0,
           draw_while_loading: 1
         });
+        // ====== Carga datos resultantes de peticion ajax en gifAnimado ===============//
         gifAnimado.load_raw( convertDataURIToBinary(resp.image_data), function () {
           $scope.totalFrames = gifAnimado.get_length();
           $scope.currentFrame = gifAnimado.get_current_frame();
           $scope.gifAnimado = gifAnimado;
 
+          // ========= PanZoom ==========================================================//
           $('.jsgif > canvas').panzoom({
             $zoomIn: $('.zoom-in'),
             $zoomOut: $('.zoom-out'),
@@ -369,7 +373,7 @@ angular.module('wca.controllers',[])
           }).panzoom('zoom');
           $('.jsgif > canvas').panzoom('zoom', 1.0, { silent: true });
 
-          $scope.$apply();
+          //$scope.$apply();
           SLoader.hide();
         })
       },
@@ -382,7 +386,6 @@ angular.module('wca.controllers',[])
     // player controls ----------------------------------------------------------------------------------------------
 
     var rangeSlider = document.getElementById('levelRange');
-
     $scope.playPause = function(){
       if ($scope.isGifPlaying) {
         $scope.pause();
@@ -444,7 +447,7 @@ angular.module('wca.controllers',[])
   // Evento destroy ---------------------------------------------------------------------------------------------------
 
   $scope.$on("$destroy",function(){
-      window.clearTimeout();
+      window.clearTimeout(0);
       $scope.pause();
   });
 

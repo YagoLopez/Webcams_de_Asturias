@@ -1,4 +1,5 @@
-<!--TODO: probar a usar la directiva awesome-slider en lugar del range slider de ionic-->
+<!--TODO: probar la directiva awesome-slider en lugar del range slider de ionic-->
+<!--todo: menu superior derecho con icono de interrogacion para ayuda. Interaccion con las imágenes-->
 <ion-view view-title="{{ ::itemMeteo.categoria }}" xmlns:rel="http://www.w3.org/1999/xhtml">
   <ion-content>
     <style>
@@ -7,7 +8,6 @@
       }
       div.jsgif {
         width:100%;
-        /*height: 100%;*/
       }
       .btnTransparente {
         background-color:transparent;
@@ -24,12 +24,8 @@
     </style>
 
     <!-- imagen ------------------------------------------------------------------------------------------------ -->
-    <!--<img crossorigin="anonymous" id="gif" rel:animated_src="{{ itemMeteo.url }}" rel:auto_play="0"-->
-         <!--rel:fps="500" style="width:100%;" ng-click="playPause()"/>-->
-
-      <img id="gif" src="img/19.gif" rel:animated_src="{{ image_data }}" rel:auto_play="0"
-           rel:fps="700" ng-click="playPause()" width="100%"/>
-
+    <img id="gif" src="img/19.gif" rel:animated_src="{{ image_data }}" rel:auto_play="0"
+         rel:fps="700" ng-click="playPause()" width="100%"/>
     <!-- fin imagen -------------------------------------------------------------------------------------------- -->
 
   <div class="card">
@@ -83,10 +79,10 @@
     <table id="zoomControls">
       <tr>
         <td>
-          <a class="button btnTransparente zoom-in"><i class="ion-ios-plus-outline" style=""></i></a>
+          <a class="button btnTransparente zoom-out"><i class="ion-ios-minus-outline"></i></a>
         </td>
         <td>
-          <a class="button btnTransparente zoom-out"><i class="ion-ios-minus-outline"></i></a>
+          <a class="button btnTransparente zoom-in"><i class="ion-ios-plus-outline" style=""></i></a>
         </td>
         <td style="vertical-align: middle;">
           <input type="range" class="zoom-range" min="0.4" max="5" step="0.05"/>
@@ -107,8 +103,10 @@
       <div class="item item-text-wrap" style="font-size:small">
         <div><span style="color:green">&#187; Nombre:</span> {{ ::itemMeteo.nombre}}</div>
         <div><span style="color:green">&#187; Espectro:</span> {{ ::itemMeteo.espectro}}</div>
-        <div><span style="color:green">&#187; Fuente:</span> <a href="{{ ::itemMeteo.urlFuente }}" target="_blank">
-          {{ ::itemMeteo.fuente}}</a>
+        <div><span style="color:green">&#187; Fuente:</span>
+          <a ng-href="{{ ::itemMeteo.urlFuente }}" target="_blank">
+          {{ ::itemMeteo.fuente}}
+          </a>
         </div>
         <div><span style="color:green">&#187; Descripción:</span> {{ ::itemMeteo.descripcion }}</div>
       </div>
