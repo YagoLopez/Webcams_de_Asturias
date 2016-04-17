@@ -204,12 +204,16 @@ angular.module('wca.services',[])
   };//getItemById
 
   return service;
-
 })
 // ====================================================================================================================
   .factory('ItemMeteo', function(){
+
+    var urlProxy = 'https://script.google.com/macros/s/AKfycbw_iv0yLEdrTuuBEHE3qPGdKqQuBH1ki1oQBnfd_PGC/dev?url=';
+    //var urlProxy = 'http://www.whateverorigin.org/get?url='
+    //var urlProxy = 'http://anyorigin.com/get?url=';
+    //var urlProxy = 'https://script.google.com/macros/s/AKfycbzbxXfwkEe-op96laMIgQKzmmncEvL-fUAl2fZ7618/exec?url=';
+    //var urlProxy = 'http://cors.io/?u=';
     //var urlProxy = 'http://www.idangero.us/framework7/plugins/feeds/demo/proxy.php?url=';
-    var urlProxy = 'http://cors.io/?u=';
     //var urlProxy = 'http://query.yahooapis.com/v1/public/yql?q=select * from html where url=';
     //var urlProxy = 'http://dontfilter.us/browse.php?&f=norefer&u=';
     //var urlProxy = 'http://proxy2974.my-addr.org/myaddrproxy.php/';
@@ -222,9 +226,8 @@ angular.module('wca.services',[])
         this.nombre = arr[0][3];
         this.espectro = arr[0][4];
         this.fuente = arr[0][5];
-        //this.url = arr[0][6];
         this.urlNoProxy = arr[0][6];
-        this.url = urlProxy + (arr[0][6]);
+        this.url = urlProxy + (arr[0][6])+ '&callback=jsonpCallback';
         console.log('url item meteo con proxy', this.url);
         console.log('url item meteo sin proxy', this.urlNoProxy);
         this.idCategoria= arr[0][7];

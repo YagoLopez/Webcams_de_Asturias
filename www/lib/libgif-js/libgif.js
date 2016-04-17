@@ -63,7 +63,6 @@
 
 */
 
-
 (function (root, factory) {
     if (typeof define === 'function' && define.amd) {
         define([], factory);
@@ -572,7 +571,7 @@
         };
 
         var doLoadError = function (originOfError) {
-            alert('Error: no se han podido descargar las imágenes remotas. '+originOfError);
+            alert('Error: no se han podido descargar las imágenes remotas. Origen del error: '+originOfError);
             var drawError = function () {
                 ctx.fillStyle = 'black';
                 ctx.fillRect(0, 0, options.c_w ? options.c_w : hdr.width, options.c_h ? options.c_h : hdr.height);
