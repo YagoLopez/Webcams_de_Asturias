@@ -228,8 +228,8 @@ angular.module('wca.services',[])
         this.fuente = arr[0][5];
         this.urlNoProxy = arr[0][6];
         this.url = urlProxy + (arr[0][6])+ '&callback=jsonpCallback';
-        console.log('url item meteo con proxy', this.url);
-        console.log('url item meteo sin proxy', this.urlNoProxy);
+        //console.log('url item meteo con proxy', this.url);
+        //console.log('url item meteo sin proxy', this.urlNoProxy);
         this.idCategoria= arr[0][7];
         this.tipoImagen= arr[0][8];
         this.urlFuente = arr[0][9];

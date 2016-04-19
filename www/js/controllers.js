@@ -296,7 +296,7 @@ angular.module('wca.controllers',[])
 // ====================================================================================================================
 .controller('GifPlayerCtrl', function($scope, $interval, $stateParams, TablaMeteo, ItemMeteo, SLoader, SPopup){
 
-    SLoader.showWithBackdrop('El proceso puede tardar. Espere, por favor...');
+    SLoader.showWithBackdrop('Cargando...');
 
     // Obtiene itemMeteo ------------------------------------------------------------------------------------------------
 
@@ -309,7 +309,8 @@ angular.module('wca.controllers',[])
     var timer = null;
     if(angular.equals({}, $scope.itemMeteo)){
       SLoader.hide();
-      SPopup.show('Error', 'Datos insuficientes. Posibles causas: (1) No conexión de datos. (2) Fallo servidor remoto. Probar otra opción de menú');
+      SPopup.show('Error', 'Datos insuficientes. Posibles causas: ' +
+        '(1) No conexión de datos. (2) Fallo servidor remoto. Probar otra opción de menú');
       return;
     };
     var killTimer = function(){
@@ -458,7 +459,7 @@ angular.module('wca.controllers',[])
   };
   var queryString = 'SELECT * FROM '+TablaMeteo.FUSION_TABLE_ID;
 
-  SLoader.show('Cargando datos...');
+  SLoader.show('Cargando...');
 
   SFusionTable.getRemoteData(queryString).success(
     function(data){
