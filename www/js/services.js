@@ -211,7 +211,6 @@ angular.module('wca.services',[])
     var urlProxy = 'https://script.google.com/macros/s/AKfycbyX6ViYZ2IuHEurQXJ--t_UOqRTyQZ9yGeSeLcbiM7ZSVcTujTw/exec?url=';
     //var urlProxy = 'http://www.whateverorigin.org/get?url='
     //var urlProxy = 'http://anyorigin.com/get?url=';
-    //var urlProxy = 'https://script.google.com/macros/s/AKfycbzbxXfwkEe-op96laMIgQKzmmncEvL-fUAl2fZ7618/exec?url=';
     //var urlProxy = 'http://cors.io/?u=';
     //var urlProxy = 'http://www.idangero.us/framework7/plugins/feeds/demo/proxy.php?url=';
     //var urlProxy = 'http://query.yahooapis.com/v1/public/yql?q=select * from html where url=';
@@ -228,8 +227,6 @@ angular.module('wca.services',[])
         this.fuente = arr[0][5];
         this.urlNoProxy = arr[0][6];
         this.url = urlProxy + (arr[0][6])+ '&callback=jsonpCallback';
-        //console.log('url item meteo con proxy', this.url);
-        //console.log('url item meteo sin proxy', this.urlNoProxy);
         this.idCategoria= arr[0][7];
         this.tipoImagen= arr[0][8];
         this.urlFuente = arr[0][9];

@@ -8,6 +8,7 @@
 //TODO: podria ser mejor arrojar una excepcion en vez de llamaar a SPopup cada vez que hay un error. Ya se encarga el
 //servicio de excepciones de capturar la excepcion y mostrar un popup. De esta forma está más centralizado el tratamiento
 //de errores
+//TODO: añadir favoritos
 
 angular.module('wca.controllers',[])
 
@@ -457,7 +458,7 @@ angular.module('wca.controllers',[])
   var showError = function(status){
     SPopup.show('Error', ' MeteoCtrl: Compruebe conexión de red. Estado: '+status );
   };
-  var queryString = 'SELECT * FROM '+TablaMeteo.FUSION_TABLE_ID;
+  var queryString = 'SELECT * FROM '+TablaMeteo.FUSION_TABLE_ID+' ORDER BY id ASC';
 
   SLoader.show('Cargando...');
 
@@ -465,7 +466,7 @@ angular.module('wca.controllers',[])
     function(data){
       if(!data.rows){
         SLoader.hide();
-        showError('No data');
+        showError('Respuesta nula');
         return;
       }
       TablaMeteo.setData(data.rows);
@@ -473,10 +474,10 @@ angular.module('wca.controllers',[])
         return TablaMeteo.getItemsByCategoriaId(idCategoria);
       }
       SLoader.hide();
-    }//success
+    }
   ).error(function(status){
     SLoader.hide();
-  });//error
+  });
 
 })
 // ====================================================================================================================

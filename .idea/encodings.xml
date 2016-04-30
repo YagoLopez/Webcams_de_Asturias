@@ -5,12 +5,7 @@
     <file url="file://$PROJECT_DIR$/package.json" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/scss/ionic.app.scss" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/www/css/style.css" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/www/js-backup/app.js" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/www/js-backup/controllers-backup.js" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/www/js-backup/controllers.js" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/www/js-backup/services.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/www/js/app.js" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/www/js/controllers-backup.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/www/js/controllers.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/www/js/services.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/www/lib/ionic-filter-bar/dist/ionic.filter.bar.css" charset="UTF-8" />
