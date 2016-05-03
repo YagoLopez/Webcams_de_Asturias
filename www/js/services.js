@@ -208,13 +208,9 @@ angular.module('wca.services',[])
 // ====================================================================================================================
   .factory('ItemMeteo', function(){
 
-    var urlProxy = 'http://www.lakdsfjlaksd.com'
-    //var urlProxy = 'https://script.google.com/macros/s/AKfycbyX6ViYZ2IuHEurQXJ--t_UOqRTyQZ9yGeSeLcbiM7ZSVcTujTw/exec?url=';
+    var urlProxy = 'https://script.google.com/macros/s/AKfycbyX6ViYZ2IuHEurQXJ--t_UOqRTyQZ9yGeSeLcbiM7ZSVcTujTw/exec?url=';
     //var urlProxy = 'http://www.whateverorigin.org/get?url='
     //var urlProxy = 'http://anyorigin.com/get?url=';
-    //var urlProxy = 'http://cors.io/?u=';
-    //var urlProxy = 'http://www.idangero.us/framework7/plugins/feeds/demo/proxy.php?url=';
-    //var urlProxy = 'http://query.yahooapis.com/v1/public/yql?q=select * from html where url=';
     //var urlProxy = 'http://dontfilter.us/browse.php?&f=norefer&u=';
     //var urlProxy = 'http://proxy2974.my-addr.org/myaddrproxy.php/';
 
