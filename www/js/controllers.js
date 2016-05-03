@@ -380,6 +380,7 @@ angular.module('wca.controllers',[])
       error: function(error) {
         console.error( error.message );
         SLoader.hide();
+        SPopup.show('Error de red', 'Comprobar conexión');
       }
     });
 
