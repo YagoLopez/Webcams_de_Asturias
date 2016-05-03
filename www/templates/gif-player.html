@@ -30,8 +30,7 @@
 
   <div class="card">
     <!-- range slider -------------------------------------------------------------------------------------- -->
-    <!--<label class="range range-assertive" style="padding: 0 3%;" ng-click="pause()" on-touch="pause()">-->
-    <label class="range range-assertive" style="padding: 0 3%;" ng-click="pause()">
+    <label class="range range-assertive" style="padding: 0 3%;" ng-click="pause()" on-touch="pause()">
       <input id="levelRange" type="range" min="0" max="{{ totalFrames - 1 }}"
            value="{{ currentFrame }}" ng-model="currentFrame" ng-change="irPosicion(currentFrame)"
            style="margin:0"/>
