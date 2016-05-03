@@ -344,64 +344,7 @@ angular.module('wca.controllers',[])
 
 
 
-    var rangeSlider = document.getElementById('levelRange');
-    $scope.playPause = function(){
-      if ($scope.isGifPlaying) {
-        $scope.pause();
-      } else {
-        $scope.play();
-      }
-    };
-    $scope.pause= function(){
-      killTimer();
-      $scope.isGifPlaying = false;
-      gifAnimado.pause();
-    };
-    $scope.play = function(){
-      killTimer();
-      $scope.isGifPlaying = true;
-      gifAnimado.play();
-      sondearPosicion();
-    };
-    $scope.restart= function(){
-      killTimer();
-      gifAnimado.pause();
-      gifAnimado.move_to(0);
-      rangeSlider.value = 0;
-      $scope.currentFrame = 0;
-    };
-    $scope.forward= function(){
-      killTimer();
-      gifAnimado.pause();
-      gifAnimado.move_relative(1);
-      rangeSlider.value = gifAnimado.get_current_frame();
-      $scope.currentFrame = gifAnimado.get_current_frame();
-    };
-    $scope.backward= function(){
-      killTimer();
-      gifAnimado.pause();
-      gifAnimado.move_relative(-1);
-      rangeSlider.value = gifAnimado.get_current_frame();
-      $scope.currentFrame = gifAnimado.get_current_frame();
-    };
-    $scope.end= function(){
-      killTimer();
-      var posicionFinal = gifAnimado.get_length()-1;
-      gifAnimado.pause();
-      gifAnimado.move_to(posicionFinal);
-      rangeSlider.value = posicionFinal;
-      $scope.currentFrame = posicionFinal;
-    };
-    var sondearPosicion = function(){
-      timer = $interval( function(){
-        var currentFrame = gifAnimado.get_current_frame();
-        rangeSlider.value = currentFrame;
-        $scope.currentFrame = currentFrame;
-      }, 50);
-    };
-    $scope.irPosicion = function(posicion){
-      gifAnimado.move_to(posicion);
-    };
+
 
 
 
@@ -435,6 +378,87 @@ angular.module('wca.controllers',[])
           $scope.totalFrames = gifAnimado.get_length();
           $scope.currentFrame = gifAnimado.get_current_frame();
           $scope.gifAnimado = gifAnimado;
+
+
+
+
+
+
+
+
+          var rangeSlider = document.getElementById('levelRange');
+          $scope.playPause = function(){
+            if ($scope.isGifPlaying) {
+              $scope.pause();
+            } else {
+              $scope.play();
+            }
+          };
+          $scope.pause= function(){
+            killTimer();
+            $scope.isGifPlaying = false;
+            gifAnimado.pause();
+          };
+          $scope.play = function(){
+            killTimer();
+            $scope.isGifPlaying = true;
+            gifAnimado.play();
+            sondearPosicion();
+          };
+          $scope.restart= function(){
+            killTimer();
+            gifAnimado.pause();
+            gifAnimado.move_to(0);
+            rangeSlider.value = 0;
+            $scope.currentFrame = 0;
+          };
+          $scope.forward= function(){
+            killTimer();
+            gifAnimado.pause();
+            gifAnimado.move_relative(1);
+            rangeSlider.value = gifAnimado.get_current_frame();
+            $scope.currentFrame = gifAnimado.get_current_frame();
+          };
+          $scope.backward= function(){
+            killTimer();
+            gifAnimado.pause();
+            gifAnimado.move_relative(-1);
+            rangeSlider.value = gifAnimado.get_current_frame();
+            $scope.currentFrame = gifAnimado.get_current_frame();
+          };
+          $scope.end= function(){
+            killTimer();
+            var posicionFinal = gifAnimado.get_length()-1;
+            gifAnimado.pause();
+            gifAnimado.move_to(posicionFinal);
+            rangeSlider.value = posicionFinal;
+            $scope.currentFrame = posicionFinal;
+          };
+          var sondearPosicion = function(){
+            timer = $interval( function(){
+              var currentFrame = gifAnimado.get_current_frame();
+              rangeSlider.value = currentFrame;
+              $scope.currentFrame = currentFrame;
+            }, 50);
+          };
+          $scope.irPosicion = function(posicion){
+            gifAnimado.move_to(posicion);
+          };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
           // ========= PanZoom ==========================================================//
           $('.jsgif > canvas').panzoom({
