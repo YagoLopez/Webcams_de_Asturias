@@ -7,8 +7,8 @@ angular.module('wca.services',[])
     var API_KEY = 'AIzaSyBsdouSTimjrC2xHmbGgOt8VfbLBWc9Gps';
     var TABLE_ID = '1gX5maFbqFyRziZiUYlpOBYhcC1v9lGkKqCXvZREF';
 
-    var getRemoteData = function( sql_query_string ) {
-      var url = API_ENDPOINT+ '?sql=' +sql_query_string+ '&key=' +API_KEY+'&callback=JSON_CALLBACK';
+    var getRemoteData = function( sqlQueryString ) {
+      var url = API_ENDPOINT+ '?sql=' +sqlQueryString+ '&key=' +API_KEY+ '&callback=JSON_CALLBACK';
       //console.log('url', url);
       return $http.jsonp( encodeURI(url), {cache: true} );
     };
@@ -29,7 +29,7 @@ angular.module('wca.services',[])
   .factory('SMapa', function(SFusionTable, SPopup){
 
     var OVIEDO = {lat: 43.3667, lng: -5.8333}; // centro de mapa vista global
-    var RADIO_BUSQUEDA = 500; // radio de búsqueda de StreetView en metros a partir latLng
+    var RADIO_BUSQUEDA = 500; // radio de búsqueda en metros de panorama StreetView a partir de coordenadas de cam
 
     var hallaLatLng = function (domElement, lugar, concejo, fn){
       var request = {
@@ -41,7 +41,7 @@ angular.module('wca.services',[])
       var placesService = new google.maps.places.PlacesService(domElement);
 
       placesService.textSearch(request, callback);
-      function callback(results, status ) {
+      function callback(results, status) {
         if (status == google.maps.places.PlacesServiceStatus.OK) {
           //console.log('results[0]', results[0]);
           fn(results[0].geometry.location);
@@ -50,7 +50,7 @@ angular.module('wca.services',[])
           console.error('SMapa.hallaLatLng(): no se han podido hallar coordenadas');
         }
       }
-    };// hallaLatLng
+    };
 
     var creaStreetView = function(domElement, locationLatLng){
       return new google.maps.StreetViewPanorama( domElement, {
@@ -67,7 +67,7 @@ angular.module('wca.services',[])
         mapTypeId: google.maps.MapTypeId.HYBRID
       });
       return mapa;
-    }; // crear()
+    };
 
     var creaFusionTableLayer = function(filtroMarkers){
       var query = { select: 'col7', from: SFusionTable.TABLE_ID, where: filtroMarkers };
@@ -78,7 +78,7 @@ angular.module('wca.services',[])
         options: options
       });
       return layer;
-    }; // creaFusionTableLayer()
+    };
 
     var creaMarker = function(posicionLatLng, mapa, titulo){
       var marker = new google.maps.Marker({
@@ -178,32 +178,32 @@ angular.module('wca.services',[])
 // ====================================================================================================================
   .factory('TablaMeteo', function($filter){
 
-  var service = {};
-  var meteoData = null;
+    var service = {};
+    var meteoData = null;
 
-  service.FUSION_TABLE_ID = '1Y_vt2nTVFSYHpMuwe0u60bQzp4FlLtc33A8qd2_x';
+    service.FUSION_TABLE_ID = '1Y_vt2nTVFSYHpMuwe0u60bQzp4FlLtc33A8qd2_x';
 
-  service.getData = function(){
-    return meteoData;
-  };
+    service.getData = function(){
+      return meteoData;
+    };
 
-  service.setData = function(data){
-    meteoData = data;
-  };
+    service.setData = function(data){
+      meteoData = data;
+    };
 
-  service.getItemsByCategoriaId = function(idCategoria) {
-    return $filter('filter')(meteoData, function (item) {
-      return (item[7] == idCategoria);
-    }, true);
-  };//getItemsByCategoriaId
+    service.getItemsByCategoriaId = function(idCategoria) {
+      return $filter('filter')(meteoData, function (item) {
+        return (item[7] == idCategoria);
+      }, true);
+    };
 
-  service.getItemById = function(idItem) {
-    return $filter('filter')(meteoData, function (item) {
-      return (item[0] == idItem);
-    }, true);
-  };//getItemById
+    service.getItemById = function(idItem) {
+      return $filter('filter')(meteoData, function (item) {
+        return (item[0] == idItem);
+      }, true);
+    };
 
-  return service;
+    return service;
 })
 // ====================================================================================================================
   .factory('ItemMeteo', function(){
@@ -262,11 +262,11 @@ angular.module('wca.services',[])
 })
 // ====================================================================================================================
   .factory('$exceptionHandler', function($injector) {
-  return function(exception, cause) {
-    var SPopup = $injector.get('SPopup');
-    console.error(exception);
-    SPopup.show('Error', 'Detalles: '+exception.message);
-  };
+    return function(exception, cause) {
+      var SPopup = $injector.get('SPopup');
+      console.error(exception);
+      SPopup.show('Error', 'Detalles: '+exception.message);
+    };
 })
 // ====================================================================================================================
   .factory('Cam', function(SCategorias){
@@ -285,7 +285,7 @@ angular.module('wca.services',[])
   })
 // ====================================================================================================================
   .factory('SCategorias', function(){
-    var nombreCategoria;
+    var nombreCategoria = null;
     var urlBaseCategoria = 'http://webcamsdeasturias.com/interior.php?categoria=';
 
     var url_a_nombre = function(urlCategoria){

@@ -69,7 +69,7 @@ angular.module('wca.controllers',[])
     SFusionTable.getRemoteData(sqlQueryConcejos).success(function(data){
       $scope.concejos = data.rows;
     }).error(function(status){
-      SPopup.show('Error', 'Fallo cargando lista concejos. El servidor no respondió: '+status);
+      SPopup.show('Error', 'Fallo cargando lista concejos. '+status);
     });
 
     var sqlQueryCategorias = 'SELECT Categoria FROM '+SFusionTable.TABLE_ID+' GROUP BY Categoria';
@@ -93,7 +93,7 @@ angular.module('wca.controllers',[])
       layer.setMap(mapa);
       mapa.setCenter(SMapa.OVIEDO);
       mapa.setZoom(zoomLevel);
-    }; // concejo escogido
+    };
 
     $scope.categoriaEscogida = function(categoria){
       $scope.checked = 'cat';
@@ -104,7 +104,7 @@ angular.module('wca.controllers',[])
       layer.setMap(mapa);
       mapa.setCenter(SMapa.OVIEDO);
       mapa.setZoom(zoomLevel);
-    }; // categoria escogida
+    };
 
     $scope.mostrarTodos = function(){
       $scope.checked = null;
@@ -126,7 +126,7 @@ angular.module('wca.controllers',[])
 .controller('PanoramioCtrl', function($scope, $ionicModal, $rootScope, SPopup){
 
     if(!$rootScope.cam){
-      SPopup.show('Error', 'Faltan datos. Probar otra opción de Menú');
+      SPopup.show('Error', 'No hay datos de webcam. Probar otra opción de Menú');
       return;
     }
     var lat = $rootScope.cam.lat;
@@ -197,9 +197,8 @@ angular.module('wca.controllers',[])
     var datosCam = $filter('filter')($rootScope.items, function(cam) {
       return cam[4] == $scope.rowid;
     });
-    //TODO: es cam singleton??? Si no lo es hacerlo asi
+
     $rootScope.cam = new Cam(datosCam);
-    //console.log('rootscope.cam', $rootScope.cam);
 
     // CLIMA ---------------------------------------------------------------------------------------------------------
     var div = document.getElementById('void');
@@ -232,9 +231,9 @@ angular.module('wca.controllers',[])
           $scope.wikipediaCredits = '<br>Fuente: <a href="http://org.wikipedia.es" target="_blank">Wikipedia</a>';
         }
       }).error(function(status){
-        $scope.infoConcejo = 'No se ha podido obtener información remota: '+status;
+        $scope.infoConcejo = 'No se ha podido obtener información de Wikipedia: '+status;
       });
-    }//getInfo
+    }
     // DIALOGO MODAL -------------------------------------------------------------------------------------------------
     $ionicModal.fromTemplateUrl('templates/modal-detalle.html', {
       scope: $scope,
@@ -275,7 +274,7 @@ angular.module('wca.controllers',[])
 .controller('StreetViewCtrl', function($scope, SMapa, $rootScope, SPopup){
 
   if(!$rootScope.cam) {
-    SPopup.show('Error', 'Datos insuficientes. Probar otra opción de menú');
+    SPopup.show('Error', 'No hay datos de webcam. Probar otra opción de menú');
     return;
   }
   var coords = {lat: $rootScope.cam.lat, lng: $rootScope.cam.lng};
@@ -311,19 +310,18 @@ angular.module('wca.controllers',[])
     if(angular.equals({}, $scope.itemMeteo)){
       SLoader.hide();
       SPopup.show('Error', 'Datos insuficientes. Posibles causas: ' +
-        '(1) No conexión de datos. (2) Fallo servidor remoto. Probar otra opción de menú');
+        '(1) No conexión de datos. (2) Fallo de red.');
       return;
     };
     var killTimer = function(){
-      if(angular.isDefined(timer))
-      {
+      if(angular.isDefined(timer)) {
         $interval.cancel(timer);
         timer = undefined;
         $scope.isGifPlaying = false;
       }
     };
     var gifAnimado = null;
-    var urlImg = 'http://sat24.mobi/Image/satir/europa/sp';
+    //var urlImg = 'http://sat24.mobi/Image/satir/europa/sp';
     var convertDataURIToBinary = function(dataURI) {
       var BASE64_MARKER = ';base64,';
       var base64Index = dataURI.indexOf(BASE64_MARKER) + BASE64_MARKER.length;
@@ -498,8 +496,6 @@ angular.module('wca.controllers',[])
     $scope.calculateDimensions = function(gesture) {
       $scope.dev_width = $window.innerWidth;
       $scope.dev_height = $window.innerHeight;
-      //console.log('dev_width', $scope.dev_width);
-      //console.log('dev_height', $scope.dev_height);
     }
     angular.element($window).bind('resize', function(){
       $scope.$apply(function() {
@@ -539,12 +535,9 @@ angular.module('wca.controllers',[])
 .controller('PorConcejoCtrl', function($scope, $window, $sce, SLoader){
 
     SLoader.showWithBackdrop();
-    //Calculo de dimensiones de ventana al redimensionar
     $scope.calculateDimensions = function(gesture) {
       $scope.dev_width = $window.innerWidth;
       $scope.dev_height = $window.innerHeight;
-      //console.log('dev_width', $scope.dev_width);
-      //console.log('dev_height', $scope.dev_height);
     }
     angular.element($window).bind('resize', function(){
       $scope.$apply(function() {
@@ -588,7 +581,7 @@ angular.module('wca.controllers',[])
     SLoader.show();
     var concejo = $stateParams.concejo;
     var idCategoria = $stateParams.idCategoria;
-    var camsFiltradasPorUrl;
+    var camsFiltradasPorUrl = null;
 
     function esSubcadena(idCategoria, urlCategoria) {
       return (urlCategoria.indexOf('categoria=' + idCategoria) > -1);
@@ -601,7 +594,7 @@ angular.module('wca.controllers',[])
 
       if (data.error) {
         console.error(data);
-        $scope.error = 'Error consulta sql. '+data;
+        $scope.error = 'Error al obtener datos de webcams. '+data;
         SLoader.hide();
       }
       // -------------------------------------------------------------------------------------------------------------
@@ -645,17 +638,15 @@ angular.module('wca.controllers',[])
             $ionicScrollDelegate.scrollTop(false);
           },
           cancelText: 'Cancelar',
-          //done: function(){
-          //},
-          //cancel: function(){
-          //},
+          //done: function(){},
+          //cancel: function(){},
           cancelOnStateChange: false
         });
       };
       SLoader.hide();
     }).error(function(data, status) {
       $scope.error = "Error obteniendo datos de webcams. ListadoCtrl.SFusionTable.getRemoteData(): "+status+
-          '. Posibles causas: (1) No conexión datos. (2) Fallo servidor remoto';
+          '. Posibles causas: (1) No conexión datos. (2) Fallo de red';
       SLoader.hide();
     });
 

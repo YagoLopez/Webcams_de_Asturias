@@ -2,6 +2,7 @@
 
   <!-- Side Menu Content ------------------------------------------------------------------------------------------ -->
   <ion-side-menu-content drag-content="true">
+
     <ion-nav-bar class="bar-positive sombraInferior">
       <ion-nav-back-button class="button-icon ion-android-arrow-back">
       </ion-nav-back-button>
@@ -14,17 +15,19 @@
                 ng-click="showFilterBar()">
         </button>
       </ion-nav-buttons>
-      </ion-nav-bar>
+    </ion-nav-bar>
+
     <ion-nav-view name="menuContent"></ion-nav-view>
+
   </ion-side-menu-content>
   <!-- Fin Side Menu Content -------------------------------------------------------------------------------------- -->
+
   <!-- Side Menu -------------------------------------------------------------------------------------------------- -->
-  <ion-side-menu side="left">
+  <ion-side-menu side="left" expose-aside-when="large">
 
     <ion-header-bar class="bar-royal" style="height:100px;display:block;background: url(img/bckgrnd6.jpg);">
       <h1 class="title"></h1>
     </ion-header-bar>
-
     <!--
     - Ids de Categorias -
     1 poblaciones/Zonas Urbanas
@@ -33,7 +36,6 @@
     5 Ríos
     7 playas
     -->
-
     <ion-content style="top: 100px;">
       <style>
         #menuaapp > div > ion-item {border-style:none;cursor: pointer}
@@ -79,9 +81,9 @@
         </ion-item>
       </ion-list>
       <br/>
-      <div style="font-size:x-small;text-align: center">
+      <div style="font-size:small;text-align: center">
         Desarrollado por<br/>
-        <a href="mailto:yago.lopez@gmail.com">Yago López</a>
+        <a href="https://yagolopez.github.io">Yago López</a>
       </div>
     </ion-content>
 
