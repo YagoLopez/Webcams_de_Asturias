@@ -33,16 +33,16 @@ angular.module('wca.services',[])
 
     var OVIEDO = {lat: 43.3667, lng: -5.8333}; // centro de mapa vista global
     var RADIO_BUSQUEDA = 500; // radio de búsqueda en metros de panorama StreetView a partir de coordenadas de cam
+    var placesService = null, request = null;
 
     var hallaLatLng = function (domElement, lugar, concejo, fn){
-      var request = {
+      request = {
         //location: OVIEDO,
         //radius: '1',
         query: "'"+lugar+", "+concejo+", Asturias, España'",
         lenguage: 'es'
       };
-      var placesService = new google.maps.places.PlacesService(domElement);
-
+      placesService = new google.maps.places.PlacesService(domElement);
       placesService.textSearch(request, callback);
       function callback(results, status) {
         if (status == google.maps.places.PlacesServiceStatus.OK) {
