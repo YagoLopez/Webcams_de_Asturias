@@ -1,3 +1,6 @@
+// url completa para consultar fusion table. Usar como plantilla
+//var url_api = "https://www.googleapis.com/fusiontables/v2/query?sql=SELECT%20*%20FROM%201gX5maFbqFyRziZiUYlpOBYhcC1v9lGkKqCXvZREF&key=AIzaSyBsdouSTimjrC2xHmbGgOt8VfbLBWc9Gps";
+
 angular.module('wca.services',[])
 
 // ====================================================================================================================
@@ -46,7 +49,7 @@ angular.module('wca.services',[])
           //console.log('results[0]', results[0]);
           fn(results[0].geometry.location);
         } else {
-          SPopup.show('Error', 'No se han podido hallar coordenadas->hallaLatLng(): '+status);
+          SPopup.show('Error', 'No se han podido hallar coordenadas para panorama StreetView');
           console.error('SMapa.hallaLatLng(): no se han podido hallar coordenadas');
         }
       }

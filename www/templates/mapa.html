@@ -1,23 +1,29 @@
 <!--TODO: poner búsqueda en google places de sitios de interes cercanos a la cámara-->
-<!--TODO: poner en l inforiwindow de google mps enlces streetview y fotos de pnormio-->
 <ion-view view-title="Mapa" cache-view="false">
   <ion-content class="animated fadeIn">
-
     <style>
       .scroll {
         height: 100%;
       }
-      #mapa{background: transparent url(img/c.png) no-repeat center center;}
+      #mapa{
+        background: transparent url(img/c.png) no-repeat center center;
+        width: 100%;
+        height: 70%;
+      }
+      .texto-pie {
+        text-align: center;
+        font-size: x-small;
+      }
     </style>
 
-    <div id="mapa" data-tap-disabled="true" style="width: 100%; height: 60%"></div>
+    <div id="mapa" data-tap-disabled="true"></div>
 
     <div class="card">
       <div class="item item-text-wrap">{{ ::cam.lugar }}</div>
       <div class="item item-text-wrap">Concejo: {{ ::cam.concejo }}</div>
     </div>
 
-    <div style="text-align:center;font-size:x-small;">
+    <div class="texto-pie">
       [ Doble toque o pinza, para aumentar ]<br/>
       [ Arrastrar, para desplazarse ]
     </div>

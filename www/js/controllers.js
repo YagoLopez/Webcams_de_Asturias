@@ -1,38 +1,39 @@
-//TODO: intentar acceder a bbdd en el controlador del estado app para cargar los datos siempre que se inicie la app
 //todo: hacer icono y Splash screen
-//TODO: usar native trnsitions
+//TODO: usar native transitions
 //TODO: revisar las dependencias que se pasan a los controladores
-//TODO: recordar que el codigo que se encuentra en el evento ionicView.afterEnter se ejecuta siempre. Probar a quitar la cache de las vistas que usan este icono a ver que pasa
 //TODO: hacer perfilado en chrome mobile, ver como se comporta la memoria y el procesador al ejecutar la app
 //TODO: hacer zoom en mapa global cuando se escoja filtro por concejo. Usar coordenadas lat lng
 //TODO: podria ser mejor arrojar una excepcion en vez de llamaar a SPopup cada vez que hay un error. Ya se encarga el
-//servicio de excepciones de capturar la excepcion y mostrar un popup. De esta forma está más centralizado el tratamiento
-//de errores
+//TODO: servicio de excepciones de capturar la excepcion y mostrar un popup. De esta forma está más centralizado el tratamiento
+//TODO: de errores
 //TODO: añadir favoritos
+//TODO: cancelar loaders si hay errores con parametro timeout
 
 angular.module('wca.controllers',[])
 
 // ====================================================================================================================
-.controller('MapaCtrl', function($scope, SMapa, $rootScope){
+.controller('MapaCtrl', function($scope, SMapa, $rootScope, $location){
 
   $scope.$on('$ionicView.afterEnter', function() {
-    var mapa = SMapa.crear(document.getElementById('mapa'));
-    var layer = SMapa.creaFusionTableLayer().setMap(mapa);
-    var posicion = {lat: $rootScope.cam.lat, lng: $rootScope.cam.lng};
+    //var mapa = SMapa.crear(document.getElementById('mapa'));
+    //var layer = SMapa.creaFusionTableLayer().setMap(mapa);
+    var posicion = null;
 
     if(!$rootScope.cam){
-      mapa.setCenter(SMapa.OVIEDO);
-      mapa.setZoom(8);
+      $location.path( "#/" );
+      return;
     } else {
-        SMapa.creaMarker(posicion, mapa);
-        mapa.setCenter(posicion);
-        mapa.setZoom(13);
-    }// else
-  }); // $scope.on
+      var mapa = SMapa.crear(document.getElementById('mapa'));
+      var layer = SMapa.creaFusionTableLayer().setMap(mapa);
+      posicion = {lat: $rootScope.cam.lat, lng: $rootScope.cam.lng};
+      SMapa.creaMarker(posicion, mapa);
+      mapa.setCenter(posicion);
+      mapa.setZoom(13);
+    }
+  });
 
   // Geolocalizacion --------------------------------------------------------------------------------------------------
-  /* ---------------------------------------------------------
-  // Try HTML5 geolocation
+  /*
       if (navigator.geolocation) {
         console.log("Device supports Geolocation");
         navigator.geolocation.getCurrentPosition(function(position) {
@@ -59,29 +60,27 @@ angular.module('wca.controllers',[])
 })
 // ====================================================================================================================
 .controller('MapaGlobalCtrl', function($scope, SMapa, SFusionTable, SPopup, SCategorias){
-    var layer = null;
-    var mapa = null;
-    var zoomLevel = 7;
-    $scope.checked = null;
 
+    var layer = null; mapa = null; zoomLevel = 7;
     var sqlQueryConcejos = 'SELECT Concejo FROM '+SFusionTable.TABLE_ID+' GROUP BY Concejo';
+    var sqlQueryCategorias = 'SELECT Categoria FROM '+SFusionTable.TABLE_ID+' GROUP BY Categoria';
+    $scope.checked = null;
 
     SFusionTable.getRemoteData(sqlQueryConcejos).success(function(data){
       $scope.concejos = data.rows;
     }).error(function(status){
-      SPopup.show('Error', 'Fallo cargando lista concejos. '+status);
+      console.error('MapaGlobalCtrl.getRemoteData() status:', status);
     });
 
-    var sqlQueryCategorias = 'SELECT Categoria FROM '+SFusionTable.TABLE_ID+' GROUP BY Categoria';
     SFusionTable.getRemoteData(sqlQueryCategorias).success(function(data){
       $scope.categorias = data.rows;
     }).error(function(status){
-      SPopup.show('Error', 'Fallo cargando lista categorias: '+status);
+      console.error('MapaGlobalCtrl.getRemoteData() status:', status);
     });
 
     $scope.urlCategoria_a_nombre = function(url){
       return SCategorias.url_a_nombre(url);
-    }
+    };
 
     $scope.concejoEscogido = function(concejo){
       $scope.checked = 'con';
@@ -123,74 +122,75 @@ angular.module('wca.controllers',[])
 
 })
 // ====================================================================================================================
-.controller('PanoramioCtrl', function($scope, $ionicModal, $rootScope, SPopup){
+.controller('PanoramioCtrl', function($scope, $ionicModal, $rootScope, SPopup, $location){
 
-    if(!$rootScope.cam){
-      SPopup.show('Error', 'No hay datos de webcam. Probar otra opción de Menú');
-      return;
-    }
-    var lat = $rootScope.cam.lat;
-    var lng = $rootScope.cam.lng;
-    var OFFSET = 0.002;
-    var hayFotoSiguiente = function(){
-      return !FotosPanoramio.getAtEnd();
-    }
-    var hayFotoAnterior = function(){
-      return !FotosPanoramio.getAtStart();
-    }
-    var rectanguloBusqueda = { 'rect': {
-      'sw': {'lat': lat-OFFSET, 'lng': lng-OFFSET},
-      'ne': {'lat': lat+OFFSET, 'lng': lng+OFFSET}
-    }};
-    var divCreditos = document.getElementById('divCreditos');
-    var FotosPanoramio = new panoramio.PhotoWidget('divPanoramio', rectanguloBusqueda, null);
-    FotosPanoramio.setPosition(0);
+  if(!$rootScope.cam) {
+    $location.path( "#/" );
+    return;
+  };
 
-    $scope.fotos = FotosPanoramio;
-    $scope.nextPhoto = function(){
-      if (hayFotoSiguiente())
-        FotosPanoramio.setPosition( FotosPanoramio.getPosition()+1 );
+  var lat = $rootScope.cam.lat;
+  var lng = $rootScope.cam.lng;
+  var OFFSET = 0.002;
+  var divCreditos = null; FotosPanoramio = null;
+
+  var hayFotoSiguiente = function(){
+    return !FotosPanoramio.getAtEnd();
+  };
+  var hayFotoAnterior = function(){
+    return !FotosPanoramio.getAtStart();
+  };
+  var rectanguloBusqueda = { 'rect': {
+    'sw': {'lat': lat-OFFSET, 'lng': lng-OFFSET},
+    'ne': {'lat': lat+OFFSET, 'lng': lng+OFFSET}
+  }};
+  divCreditos = document.getElementById('divCreditos');
+  FotosPanoramio = new panoramio.PhotoWidget('divPanoramio', rectanguloBusqueda, null);
+  FotosPanoramio.setPosition(0);
+
+  $scope.fotos = FotosPanoramio;
+  $scope.nextPhoto = function(){
+    if (hayFotoSiguiente())
+      FotosPanoramio.setPosition( FotosPanoramio.getPosition()+1 );
+  }
+  $scope.prevPhoto = function(){
+    if (hayFotoAnterior())
+      FotosPanoramio.setPosition( FotosPanoramio.getPosition()-1 );
+  }
+  // DIALOGO MODAL ----------------------------------------------------------------------------------------------
+  $ionicModal.fromTemplateUrl('templates/modal-panoramio.html', {
+    scope: $scope,
+    animation: 'scale-in'
+  }).then(function(modal) {
+    $scope.modal = modal;
+  });
+  $scope.showModal= function (){
+    if(FotosPanoramio.getPhoto()){
+      $scope.urlImg = FotosPanoramio.getPhoto().Ya[0].url;
+      $scope.titulo = FotosPanoramio.getPhoto().getPhotoTitle();
+      $scope.autor = FotosPanoramio.getPhoto().getOwnerName();
+      $scope.urlAutor = FotosPanoramio.getPhoto().getOwnerUrl();
+      $scope.modal.show();
+    } else {
+      SPopup.show('Error', 'Fallo al conectar con el servidor de fotos de Panoramio');
+      console.error('PanoramioCtrl.showModal(): Fallo al conectar con el servidor de fotos de Panoramio');
     }
-    $scope.prevPhoto = function(){
-      if (hayFotoAnterior())
-        FotosPanoramio.setPosition( FotosPanoramio.getPosition()-1 );
-    }
-    // DIALOGO MODAL ----------------------------------------------------------------------------------------------
-    $ionicModal.fromTemplateUrl('templates/modal-panoramio.html', {
-      scope: $scope,
-      animation: 'scale-in'
-    }).then(function(modal) {
-      $scope.modal = modal;
-    });
-    $scope.showModal= function (){
-      if(FotosPanoramio.getPhoto()){
-        $scope.urlImg = FotosPanoramio.getPhoto().Ya[0].url;
-        $scope.titulo = FotosPanoramio.getPhoto().getPhotoTitle();
-        $scope.autor = FotosPanoramio.getPhoto().getOwnerName();
-        $scope.urlAutor = FotosPanoramio.getPhoto().getOwnerUrl();
-        $scope.modal.show();
-      } else {
-        SPopup.show('Error', 'Fallo al conectar con el servidor de fotos de Panoramio');
-        console.error('PanoramioCtrl.showModal(): Fallo al conectar con el servidor de fotos de Panoramio');
-      }
-    }
-    $scope.closeModal = function () {
-      $scope.modal.hide();
-    };
-    // FIN DIALOGO MODAL ----------------------------------------------------------------------------------------------
+  }
+  $scope.closeModal = function () {
+    $scope.modal.hide();
+  };
+  // FIN DIALOGO MODAL ----------------------------------------------------------------------------------------------
 
 })
 // ====================================================================================================================
 .controller('DetalleCtrl', function($scope, $stateParams, $ionicModal, SClima, $filter, $rootScope,
-                                    SPopup, SWikipedia, $ionicPopover, Cam, SLoader){
+                                    SPopup, SWikipedia, $ionicPopover, Cam, SLoader, $location){
 
     // init
     $scope.rowid = $stateParams.rowid;
     SLoader.show('Cargando...');
-
     if(!$rootScope.items || !$scope.rowid){
-      SLoader.hide();
-      SPopup.show('Aviso', 'No hay datos de cámara. Escoger otra opción de menú');
+      $location.path('#/');
       return;
     };
 
@@ -201,7 +201,6 @@ angular.module('wca.controllers',[])
     $rootScope.cam = new Cam(datosCam);
 
     // CLIMA ---------------------------------------------------------------------------------------------------------
-    var div = document.getElementById('void');
     SClima.getData( $rootScope.cam.lat, $rootScope.cam.lng ).success(function(climadata){
       if(climadata.weather){
         $scope.descripcion = climadata.weather[0].description;
@@ -219,7 +218,8 @@ angular.module('wca.controllers',[])
         $scope.descripcion = 'No se ha podido obtener infromación meteorológica'
       }
     }).error(function(status){
-      SPopup.show('Error', 'SClima.getData(): '+status)
+      SPopup.show('Error', 'Posibles causas: (1) No conexión datos (2) Fallo de red. Comprobar conexión');
+      console.error('SClima.getData(): ', status);
     });
     // WIKIPEDIA -----------------------------------------------------------------------------------------------------
     $scope.infoConcejo = 'Cargando...'
@@ -255,10 +255,10 @@ angular.module('wca.controllers',[])
     });
     // IMG RELOAD -------------------------------------------------------------------------------------------------
     $scope.reloadImg = function(){
-      $rootScope.cam.imagen = $rootScope.cam.imagen + '#' + new Date().getTime();
       SLoader.show('Recargando imagen...');
       setTimeout(function(){
         $scope.$apply(function(){
+          $rootScope.cam.imagen = $rootScope.cam.imagen + '#' + new Date().getTime();
           SLoader.hide();
         })
       }, 500);
@@ -270,13 +270,14 @@ angular.module('wca.controllers',[])
     }
 
   })
-// =====================================================================================================
-.controller('StreetViewCtrl', function($scope, SMapa, $rootScope, SPopup){
+// ====================================================================================================================
+.controller('StreetViewCtrl', function($scope, SMapa, $rootScope, SPopup, $location){
 
   if(!$rootScope.cam) {
-    SPopup.show('Error', 'No hay datos de webcam. Probar otra opción de menú');
+    $location.path( "#/" );
     return;
   }
+
   var coords = {lat: $rootScope.cam.lat, lng: $rootScope.cam.lng};
 
   $scope.$on('$ionicView.afterEnter', function() {
@@ -290,11 +291,11 @@ angular.module('wca.controllers',[])
             'getPanoramaByLocation(): '+status);
         }
       })
-  })//$scope.on
+  })
 
 })
 // ====================================================================================================================
-.controller('GifPlayerCtrl', function($scope, $interval, $stateParams, TablaMeteo, ItemMeteo, SLoader, SPopup){
+.controller('GifPlayerCtrl', function($scope, $interval, $stateParams, TablaMeteo, ItemMeteo, SLoader, SPopup, $location){
 
     SLoader.showWithBackdrop('Cargando...');
 
@@ -309,8 +310,7 @@ angular.module('wca.controllers',[])
     var timer = null;
     if(angular.equals({}, $scope.itemMeteo)){
       SLoader.hide();
-      SPopup.show('Error', 'Datos insuficientes. Posibles causas: ' +
-        '(1) No conexión de datos. (2) Fallo de red.');
+      $location.path( '#/' );
       return;
     };
     var killTimer = function(){
@@ -321,7 +321,6 @@ angular.module('wca.controllers',[])
       }
     };
     var gifAnimado = null;
-    //var urlImg = 'http://sat24.mobi/Image/satir/europa/sp';
     var convertDataURIToBinary = function(dataURI) {
       var BASE64_MARKER = ';base64,';
       var base64Index = dataURI.indexOf(BASE64_MARKER) + BASE64_MARKER.length;
@@ -432,7 +431,6 @@ angular.module('wca.controllers',[])
           }).panzoom('zoom');
           $('.jsgif > canvas').panzoom('zoom', 1.0, { silent: true });
 
-          //$scope.$apply();
           SLoader.hide();
         })
       },
@@ -440,6 +438,7 @@ angular.module('wca.controllers',[])
         console.error( error.message );
         SLoader.hide();
         SPopup.show('Error de red', 'Comprobar conexión');
+        $location.path(' #/' );
       }
     });
 
@@ -480,11 +479,17 @@ angular.module('wca.controllers',[])
 
 })
 // ====================================================================================================================
-.controller('ImgViewerCtrl', function($scope, $stateParams, ItemMeteo, TablaMeteo){
-    $scope.itemMeteo = new ItemMeteo( TablaMeteo.getItemById($stateParams.id_item_meteo) );
-    $scope.$on('$ionicView.afterEnter', function(){
-      document.getElementById('imgMeteo').style.background = 'none';
-    });
+.controller('ImgViewerCtrl', function($scope, $stateParams, ItemMeteo, TablaMeteo, $location){
+
+  $scope.itemMeteo = new ItemMeteo( TablaMeteo.getItemById($stateParams.id_item_meteo) );
+
+  if(angular.equals({}, $scope.itemMeteo)){
+    $location.path('#/');
+    return;
+  };
+  $scope.$on('$ionicView.afterEnter', function(){
+    document.getElementById('imgMeteo').style.background = 'none';
+  });
 })
 // ====================================================================================================================
 .controller('PorCategoriaCtrl', function($scope, $window, $sce, SLoader){
@@ -646,7 +651,7 @@ angular.module('wca.controllers',[])
       SLoader.hide();
     }).error(function(data, status) {
       $scope.error = "Error obteniendo datos de webcams. ListadoCtrl.SFusionTable.getRemoteData(): "+status+
-          '. Posibles causas: (1) No conexión datos. (2) Fallo de red';
+          '. Posibles causas: (1) No conexión datos. (2) Fallo de red. Comprobar conexión';
       SLoader.hide();
     });
 
