@@ -15,6 +15,12 @@
       width: 35px;
       vertical-align: middle;
     }
+    @media (min-width: 720px) {
+      #cam-imagen {
+        width: 90%;
+        margin: 32px auto;
+      }
+    }
   </style>
 
   <ion-header-bar align-title="center">
@@ -27,10 +33,10 @@
       </button>
   </ion-header-bar>
 
-  <!-- overflow-scroll=false para permitir scrolling con javascript de ionic. permite hacer zoom en imagen -->
+  <!-- overflow-scroll=false para permitir scrolling con javascript de ionic. Permite hacer zoom en imagen -->
   <!-- locking=false para permitir srcroll simultaneo en ejes x,y. apropiado para hacer zoom -->
   <ion-scroll id="imgCamContainer" zooming="true" direction="xy" locking="false" overflow-scroll="false">
-    <img ng-src="{{ cam.imagen }}"/>
+    <img id="cam-imagen" ng-src="{{ cam.imagen }}"/>
     <div>{{ ::cam.lugar }}<br>Concejo: {{ ::cam.concejo }}</div>
   </ion-scroll>
 

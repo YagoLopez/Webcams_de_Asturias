@@ -1,33 +1,41 @@
 <!--TODO: pasar todos los nombres de dominio a IPs para optimizar tiempos de carga-->
 <ion-view view-title="Detalles">
+
+  <style>
+    .card {
+      padding-top: 1px;
+      padding-bottom: 1px;
+      margin-right:4%;
+      margin-left:4%;
+    }
+    .modal{ /* full screen */
+      top: 0 ;
+      bottom: 0 ;
+      left: 0 ;
+      right: 0 ;
+      width: 100% ;
+    }
+    .tabs-color-positive{
+      border-bottom: 1px solid;
+    }
+    .imgLoader{
+      background: transparent url(img/c.png) no-repeat center center;
+      cursor: pointer;
+    }
+    @media (min-width: 720px) {
+      .card {
+        width: 75%;
+        margin: 32px auto;
+      }
+    }
+  </style>
+
   <ion-nav-buttons side="secondary">
     <button class="button button-icon icon ion-android-more-vertical" ng-click="popover.show($event)">
     </button>
   </ion-nav-buttons>
 
   <ion-content class="animated fadeIn">
-    <style>
-      .card {
-        padding-top: 1px;
-        padding-bottom: 1px;
-        margin-right:4%;
-        margin-left:4%;
-      }
-      .modal{ /* full screen */
-        top: 0 ;
-        bottom: 0 ;
-        left: 0 ;
-        right: 0 ;
-        width: 100% ;
-      }
-      .tabs-color-positive{
-        border-bottom: 1px solid;
-      }
-      .imgLoader{
-        background: transparent url(img/c.png) no-repeat center center;
-        cursor: pointer;
-      }
-    </style>
     <!-- Card ====================================================================================================== -->
     <div class="list card">
       <div class="item item-image" style="height:100%; width:100%">
@@ -48,23 +56,18 @@
         <div class="row">
           <div class="col">
             <button class="button button-calm" ng-click="showModal()" style="width:100%">
-              <i class="icon ion-arrow-expand"></i>
-              Ampliar
+              <i class="icon ion-arrow-expand"></i> Ampliar
             </button>
           </div>
           <div class="col">
             <button class="button button-calm" ng-click="reloadImg()" style="width:100%">
-              <i class="icon ion-refresh"></i>
-              Recargar
+              <i class="icon ion-refresh"></i> Recargar
             </button>
           </div>
         </div>
       </div>
       <!-- fin botones ============================================================================================= -->
-
     </div>
-    <!-- Fin Card ================================================================================================== -->
-
     <!-- Card ====================================================================================================== -->
     <div class="card">
 
@@ -102,9 +105,7 @@
       </div>
       <div class="item-body" style="width: 100%; overflow-y: scroll; height: 300px;"
            ng-class="{active:active}" ng-show="page === 'second'">
-        <div>
-          {{ infoConcejo }}
-        </div>
+        <div>{{ infoConcejo }}</div>
         <div ng-bind-html="wikipediaCredits"></div>
       </div>
     </div>

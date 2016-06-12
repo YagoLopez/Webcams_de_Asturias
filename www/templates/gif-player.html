@@ -1,6 +1,5 @@
 <!--TODO: probar la directiva awesome-slider en lugar del range slider de ionic-->
 <!--todo: menu superior derecho con icono de interrogacion para ayuda. Interaccion con las imágenes-->
-<!--todo: revisar los estilos inline que quedan-->
 <ion-view view-title="{{ ::itemMeteo.categoria }}" xmlns:rel="http://www.w3.org/1999/xhtml">
   <ion-content>
     <style>
@@ -22,97 +21,110 @@
       table {
         margin: 0 auto;
       }
+      @media (min-width: 720px) {
+  /*
+        div.jsgif > canvas{
+          width: 75%;
+          margin: 32px auto;
+        }
+  */
+        .card{
+          width: 80%;
+          margin: 32px auto;
+        }
+      }
     </style>
 
     <!-- imagen ------------------------------------------------------------------------------------------------ -->
-    <img id="gif" src="img/loader/6.gif" rel:animated_src="{{ image_data }}" rel:auto_play="0"
-         rel:fps="700" ng-click="playPause()" width="100%"/>
+    <img id="gif" src="img/loader/6.gif" rel:animated_src="{{ image_data }}"
+         rel:auto_play="0" rel:fps="700" ng-click="playPause()" width="100%"/>
     <!-- fin imagen -------------------------------------------------------------------------------------------- -->
 
-  <div class="card">
-    <!-- range slider -------------------------------------------------------------------------------------- -->
-    <label class="range range-assertive" style="padding: 0 3%;" ng-click="pause()" on-touch="pause()">
-      <input id="levelRange" type="range" min="0" max="{{ totalFrames - 1 }}"
-           value="{{ currentFrame }}" ng-model="currentFrame" ng-change="irPosicion(currentFrame)"
-           style="margin:0"/>
-    </label>
-    <!-- botones control------------------------------------------------------------------------------------ -->
-    <table id="playControls">
-      <tr>
-        <td>
-          <a class="button" ng-click="playPause()" ng-class="{'button-positive': isGifPlaying}">
-            <i class="ion-ios-play-outline"></i>
-          </a>
-        </td>
-        <td>
-          <a class="button" ng-click="backward()">
-            <i class="ion-ios-rewind-outline"></i>
-          </a>
-        </td>
-        <td>
-          <a class="button" ng-click="forward()">
-            <i class="ion-ios-fastforward-outline"></i>
-          </a>
-        </td>
-        <td>
-          <a class="button" ng-click="restart()">
-            <i class="ion-ios-skipbackward-outline"></i>
-          </a>
-        </td>
-        <td>
-          <a class="button" ng-click="end()">
-            <i class="ion-ios-skipforward-outline"></i>
-          </a>
-        </td>
-      </tr>
-    </table>
-    <!-- Leyenda ------------------------------------------------------------------------------------------- -->
-    <div style="width: 100%;text-align:center;padding-bottom:2px">
-      <div>Fotograma: <b style="color:red">
-        {{ gifAnimado.get_current_frame() + 1 }}</b> de {{ ::totalFrames }}
-      </div>
-    </div>
-    <!-- fin leyenda ---------------------------------------------------------------------------------------- -->
-  </div>
-
-  <div class="card">
-    <!-- zoom ---------------------------------------------------------------------------------------------- -->
-    <table id="zoomControls">
-      <tr>
-        <td>
-          <a class="button btnTransparente zoom-out"><i class="ion-ios-minus-outline"></i></a>
-        </td>
-        <td>
-          <a class="button btnTransparente zoom-in"><i class="ion-ios-plus-outline" style=""></i></a>
-        </td>
-        <td style="vertical-align: middle;">
-          <input type="range" class="zoom-range" min="0.4" max="5" step="0.05"/>
-        </td>
-        <td>
-          <a class="button btnTransparente reset"><i class="ion-arrow-expand" style="color:lightgray"></i></a>
-        </td>
-      </tr>
-    </table>
-    <!-- zoom ---------------------------------------------------------------------------------------------- -->
-  </div>
-
-  <div class="card">
-      <!-- detalles ------------------------------------------------------------------------------------------- -->
-      <div class="item item-divider" style="font-size:small">
-        Detalles:
-      </div>
-      <div class="item item-text-wrap" style="font-size:small">
-        <div><span style="color:green">&#187; Nombre:</span> {{ ::itemMeteo.nombre}}</div>
-        <div><span style="color:green">&#187; Espectro:</span> {{ ::itemMeteo.espectro}}</div>
-        <div><span style="color:green">&#187; Fuente:</span>
-          <a ng-href="{{ ::itemMeteo.urlFuente }}" target="_blank">
-          {{ ::itemMeteo.fuente}}
-          </a>
+    <div class="card">
+      <!-- range slider -------------------------------------------------------------------------------------- -->
+      <label class="range range-assertive" style="padding: 0 3%;" ng-click="pause()" on-touch="pause()">
+        <input id="levelRange" type="range" min="0" max="{{ totalFrames - 1 }}"
+             value="{{ currentFrame }}" ng-model="currentFrame" ng-change="irPosicion(currentFrame)"
+             style="margin:0"/>
+      </label>
+      <!-- botones control------------------------------------------------------------------------------------ -->
+      <table id="playControls">
+        <tr>
+          <td>
+            <a class="button" ng-click="playPause()" ng-class="{'button-positive': isGifPlaying}">
+              <i ng-if="isGifPlaying" class="ion-pause"></i>
+              <i ng-if=" ! isGifPlaying" class="ion-ios-play-outline"></i>
+            </a>
+          </td>
+          <td>
+            <a class="button" ng-click="backward()">
+              <i class="ion-ios-rewind-outline"></i>
+            </a>
+          </td>
+          <td>
+            <a class="button" ng-click="forward()">
+              <i class="ion-ios-fastforward-outline"></i>
+            </a>
+          </td>
+          <td>
+            <a class="button" ng-click="restart()">
+              <i class="ion-ios-skipbackward-outline"></i>
+            </a>
+          </td>
+          <td>
+            <a class="button" ng-click="end()">
+              <i class="ion-ios-skipforward-outline"></i>
+            </a>
+          </td>
+        </tr>
+      </table>
+      <!-- Leyenda ------------------------------------------------------------------------------------------- -->
+      <div style="width: 100%;text-align:center;padding-bottom:2px">
+        <div>Fotograma: <b style="color:red">
+          {{ gifAnimado.get_current_frame() + 1 }}</b> de {{ ::totalFrames }}
         </div>
-        <div><span style="color:green">&#187; Descripción:</span> {{ ::itemMeteo.descripcion }}</div>
       </div>
-      <!-- fin detalles --------------------------------------------------------------------------------------- -->
+      <!-- fin leyenda ---------------------------------------------------------------------------------------- -->
     </div>
+
+    <div class="card">
+      <!-- zoom ---------------------------------------------------------------------------------------------- -->
+      <table id="zoomControls">
+        <tr>
+          <td>
+            <a class="button btnTransparente zoom-out"><i class="ion-ios-minus-outline"></i></a>
+          </td>
+          <td>
+            <a class="button btnTransparente zoom-in"><i class="ion-ios-plus-outline" style=""></i></a>
+          </td>
+          <td style="vertical-align: middle;">
+            <input type="range" class="zoom-range" min="0.4" max="5" step="0.05"/>
+          </td>
+          <td>
+            <a class="button btnTransparente reset"><i class="ion-arrow-expand" style="color:lightgray"></i></a>
+          </td>
+        </tr>
+      </table>
+      <!-- zoom ---------------------------------------------------------------------------------------------- -->
+    </div>
+
+    <div class="card">
+        <!-- detalles ------------------------------------------------------------------------------------------- -->
+        <div class="item item-divider" style="font-size:small">
+          Detalles:
+        </div>
+        <div class="item item-text-wrap" style="font-size:small">
+          <div><span style="color:green">&#187; Nombre:</span> {{ ::itemMeteo.nombre}}</div>
+          <div><span style="color:green">&#187; Espectro:</span> {{ ::itemMeteo.espectro}}</div>
+          <div><span style="color:green">&#187; Fuente:</span>
+            <a ng-href="{{ ::itemMeteo.urlFuente }}" target="_blank">
+            {{ ::itemMeteo.fuente}}
+            </a>
+          </div>
+          <div><span style="color:green">&#187; Descripción:</span> {{ ::itemMeteo.descripcion }}</div>
+        </div>
+        <!-- fin detalles --------------------------------------------------------------------------------------- -->
+      </div>
 
   </ion-content>
 </ion-view>

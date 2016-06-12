@@ -14,6 +14,12 @@
       width: 35px;
       vertical-align: middle;
     }
+    @media (min-width: 720px) {
+      #img-panoramio {
+        width: 90%;
+        margin: 32px auto;
+      }
+    }
   </style>
 
   <ion-header-bar align-title="center">
@@ -21,16 +27,15 @@
       Zoom <img ng-src="img/pinch1.png"/>
     </div>
     <button class="button button-clear pull-right" ng-click="closeModal()">
-      Cerrar
-      <i class="icon icon-right ion-android-close"></i>
+      Cerrar <i class="icon icon-right ion-android-close"></i>
     </button>
   </ion-header-bar>
 
   <ion-content overflow-scroll="false">
     <ion-scroll id="imgPanoramioContainer" zooming="true" direction="xy" locking="false" overflow-scroll="false">
-      <img ng-src="{{ urlImg }}"/>
+      <img id="img-panoramio" ng-src="{{ urlImg }}"/>
       <div style="font-size:small">
-        <div>{{ titulo}}</div>
+        <div>{{ titulo }}</div>
         <div>Autor: <a href="{{ urlAutor }}" target="_blank">{{ autor }}</a></div>
       </div>
     </ion-scroll>
