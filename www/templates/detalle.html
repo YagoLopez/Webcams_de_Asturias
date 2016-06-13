@@ -1,5 +1,5 @@
 <!--TODO: pasar todos los nombres de dominio a IPs para optimizar tiempos de carga-->
-<ion-view view-title="Detalles">
+<ion-view view-title="{{ ::cam.lugar }}">
 
   <style>
     .card {
@@ -27,6 +27,9 @@
         width: 75%;
         margin: 32px auto;
       }
+      #contenido-detalle{
+        background-color:ghostwhite;
+      }
     }
   </style>
 
@@ -35,7 +38,7 @@
     </button>
   </ion-nav-buttons>
 
-  <ion-content class="animated fadeIn">
+  <ion-content id="contenido-detalle" class="animated fadeIn">
     <!-- Card ====================================================================================================== -->
     <div class="list card">
       <div class="item item-image" style="height:100%; width:100%">

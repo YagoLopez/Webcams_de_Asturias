@@ -1,4 +1,25 @@
 <ion-view cache-view="true" view-title="Mosaico">
+  <style type="text/css">
+    .txt {
+      font-size: xx-small;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .itemCam {
+      padding: 0;
+    }
+    @media (min-width: 720px) {
+      div.grid {
+        width: 90%;
+        margin: 32px auto;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+      }
+      #contenido-mosaico{
+        background-color:ghostwhite;
+      }
+    }
+  </style>
+
   <ion-nav-buttons side="left">
     <button class="button button-icon button-clear ion-navicon" menu-toggle="left">
     </button>
@@ -9,17 +30,8 @@
     <span class="badge badge-calm icon-badge">{{ items.length }}</span>
   </ion-header-bar>
 
-  <ion-content>
-    <style type="text/css">
-      .txt {
-        font-size: xx-small;
-        overflow: hidden;
-        text-overflow: ellipsis;
-      }
-      .itemCam {
-        padding: 0;
-      }
-    </style>
+  <ion-content id="contenido-mosaico">
+
     <div class="grid">
       <div class="row" ng-repeat="cam in items track by cam[4]"
            ng-if="$index % 3 === 0" style="padding:0; margin:0;">
