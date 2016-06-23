@@ -251,8 +251,6 @@ angular.module('wca.controllers',[])
       scope: $scope,
     }).then(function(popover) {
       $scope.popover = popover;
-      console.log('scope', $scope);
-      console.log('rootscope', $rootScope);
     });
     // IMG RELOAD ------------------------------------------------------------------------------------------------------
     $scope.reloadImg = function(){
