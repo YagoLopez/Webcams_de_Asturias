@@ -25,19 +25,16 @@
 
   <ion-header-bar align-title="center">
     <div class="title">
-      Zoom <img ng-src="img/pinch1.png"/>
+      Predicción <img ng-src="img/pinch1.png"/>
     </div>
-      <button class="button button-clear pull-right" ng-click="modalDetalle.hide()">
-        Cerrar
-        <i class="icon icon-right ion-android-close"></i>
+      <button class="button button-clear pull-right" ng-click="modalPrediccion.hide()">
+        Cerrar <i class="icon icon-right ion-android-close"></i>
       </button>
   </ion-header-bar>
 
   <!-- overflow-scroll=false para permitir scrolling con javascript de ionic. Permite hacer zoom en imagen -->
   <!-- locking=false para permitir srcroll simultaneo en ejes x,y. apropiado para hacer zoom -->
   <ion-scroll id="imgCamContainer" zooming="true" direction="xy" locking="false" overflow-scroll="false">
-    <img id="cam-imagen" ng-src="{{ cam.imagen }}"/>
-    <div style="padding-bottom: 20px">{{ ::cam.lugar }}<br>Concejo: {{ ::cam.concejo }}</div>
+    <img src="https://www.meteoblue.com/meteogram-web?lon={{ $root.cam.lng }}&lat={{ $root.cam.lat }}&lang=en&look=CELSIUS,KILOMETER_PER_HOUR">
   </ion-scroll>
-
 </ion-modal-view>

@@ -110,13 +110,13 @@ app.config(function($stateProvider, $urlRouterProvider, $compileProvider, $ionic
     }
   });
 // -------------------------------------------------------------------------------------------------------------------
-  $stateProvider.state('app.img-viewer', {
-    url: '/img-viewer/:id_item_meteo',
+  $stateProvider.state('app.meteo-detalle', {
+    url: '/meteo-detalle/:id_item_meteo',
     cache: false,
     views: {
       'menuContent': {
-        templateUrl: 'templates/img-viewer.html',
-        controller: 'ImgViewerCtrl'
+        templateUrl: 'templates/meteo-detalle.html',
+        controller: 'MeteoDetalleCtrl'
       }
     }
   });
@@ -181,6 +181,17 @@ app.config(function($stateProvider, $urlRouterProvider, $compileProvider, $ionic
       'menuContent': {
         templateUrl: 'templates/mosaico.html',
         controller: 'ListadoCtrl'
+      }
+    }
+  });
+// -------------------------------------------------------------------------------------------------------------------
+  $stateProvider.state('app.viento', {
+    url: '/viento',
+    cache: true,
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/viento.html',
+        controller: 'VientoCtrl'
       }
     }
   });

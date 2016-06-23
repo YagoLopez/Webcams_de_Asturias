@@ -36,15 +36,13 @@
     </div>
   </ion-header-bar>
 
-  <ion-content overflow-scroll="false">
+  <ion-content overflow-scroll="true">
     <ion-scroll id="imgMeteo" zooming="true" direction="xy" locking="false" overflow-scroll="false">
       <img ng-src="{{ ::itemMeteo.urlNoProxy }}" width="100%"/>
     </ion-scroll>
     <!-- card ====================================================================================================== -->
     <div class="card">
-      <div class="item item-divider">
-        Detalles:
-      </div>
+      <div class="item item-divider">Detalles:</div>
       <div class="item item-text-wrap small-text">
         <div><span class="green">&#187; Nombre:</span> {{ ::itemMeteo.nombre }}</div>
         <div><span class="green">&#187; Fuente:</span> <a href="{{ ::itemMeteo.urlFuente }}" target="_blank">

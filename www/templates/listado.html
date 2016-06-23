@@ -1,6 +1,7 @@
 <!--TODO: añadir geolocalicacion y busqueda de camaras cercanas-->
 <!--TODO: Hacer disclaimer-->
 <ion-view view-title="Listado" cache-view="true">
+
   <style type="text/css">
     #btnMosaico{
       padding:0;
@@ -33,6 +34,19 @@
         background-color:ghostwhite;
       }
     }
+    .imgLoader{
+      background: transparent url('../img/c.png') no-repeat center center;
+      cursor: pointer;
+    }
+
+    .error {
+      text-align: center;
+      color: red;
+    }
+
+    .color-blue {
+      color: #387ef5;
+    }
   </style>
 
   <ion-nav-buttons side="right">
@@ -41,15 +55,19 @@
   </ion-nav-buttons>
 
   <ion-header-bar class="bar-subheader bar-stable">
-    <h1 class="title" style="">{{ tituloVista }}</h1>
+    <h1 class="title">{{ tituloVista }}</h1>
     <span class="badge badge-calm icon-badge">{{ items.length }}</span>
   </ion-header-bar>
 
   <ion-content id="contenido-listado">
+
     <div id="listadoContainer">
-      <a class="item item-thumbnail-left item-icon-right" ng-repeat="cam in items track by cam[4]"
-         href="#/app/detalle/{{ items[$index][4] }}">
-        <img id="imWC" ng-src="{{ cam[2] }}" fallback-src="img/imgFail.png"/>
+
+      <div class="error">{{ ::error }}</div>
+
+      <a class="item item-thumbnail-left item-icon-right"
+         ng-repeat="cam in items track by cam[4]" href="#/app/detalle/{{ items[$index][4] }}">
+        <img id="imWC" ng-src="{{ cam[2] }}" fallback-src="img/imgFail.png" class="imgLoader"/>
         <div class="textoItem">
           <p>
             <span class="resalteListado"><b>&#187; </b></span>
@@ -60,15 +78,14 @@
             <span class="textoListado">Concejo: {{ cam[1] }}</span>
           </p>
         </div>
+        <i class="icon ion-android-exit color-blue"></i>
         <!-- DEBUG INFO -->
         <!--<p>Categoría: {{cam[3]}}</p>-->
         <!--<p>indice: {{$index}}</p>-->
         <!--<p>ROWID: {{cam[4]}}</p>-->
         <!-- /DEBUG INFO -->
-        <i class="icon ion-android-exit" style="color: #387ef5;"></i>
       </a>
     </div>
-  <div>{{::error}}</div>
   <br/>
   <br/>
 

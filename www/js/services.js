@@ -12,8 +12,7 @@ angular.module('wca.services',[])
 
     var getRemoteData = function( sqlQueryString ) {
       var url = API_ENDPOINT+ '?sql=' +sqlQueryString+ '&key=' +API_KEY+ '&callback=JSON_CALLBACK';
-      //console.log('url', url);
-      return $http.jsonp( encodeURI(url), {cache: true} );
+      return $http.jsonp( encodeURI(url), {cache: true});
     };
 
     var getLocalData = function(path_fichero){
@@ -179,7 +178,7 @@ angular.module('wca.services',[])
     };
   })
 // ====================================================================================================================
-  .factory('TablaMeteo', function($filter){
+  .factory('ItemsMeteo', function($filter){
 
     var service = {};
     var meteoData = null;
@@ -315,5 +314,9 @@ angular.module('wca.services',[])
     }
   })
 // ====================================================================================================================
+  .constant('STRINGS', {
+    IMG_ERROR: 'Error. No se han podido obtener imágenes de webcams por razones ajenas ' +
+    'a la aplicación. Posibles causas: 1) Sin conexión de datos. 2) Fallo de servidor remoto'
+  })
 
 ; // FIN

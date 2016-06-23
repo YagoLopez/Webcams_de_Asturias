@@ -30,26 +30,24 @@
         ´Península Ibérica
       </ion-item>
       <ion-item ng-repeat="item in getItemsByCategoriaId(1)" class="item item-icon-right" href="#/app/gif-player/{{item[0]}}">
-        {{ ::item[3] }}
-        <i class="icon ion-ios-arrow-right"></i>
+        {{ ::item[3] }} <i class="icon ion-ios-arrow-right"></i>
       </ion-item>
       <!------------------------------------------------------------------------------------------------------------ -->
       <ion-item class="item-divider">
-        <img ng-src="img/eu.png" class="vertAlign"/>
-        Europa
+        <img ng-src="img/eu.png" class="vertAlign"/> Europa
       </ion-item>
       <ion-item ng-repeat="item in getItemsByCategoriaId(2)" class="item item-icon-right" href="#/app/gif-player/{{item[0]}}">
-        {{ ::item[3] }}
-        <i class="icon ion-ios-arrow-right"></i>
+        {{ ::item[3] }} <i class="icon ion-ios-arrow-right"></i>
       </ion-item>
       <!------------------------------------------------------------------------------------------------------------ -->
       <ion-item class="item-divider">
-        <img ng-src="img/map3.png" class="vertAlign mapas"/>
-        Mapas
+        <img ng-src="img/map3.png" class="vertAlign mapas"/> Mapas
       </ion-item>
-      <ion-item ng-repeat="item in getItemsByCategoriaId(3)" class="item item-icon-right" href="#/app/img-viewer/{{item[0]}}">
-        {{ ::item[3] }}
-        <i class="icon ion-ios-arrow-right"></i>
+      <ion-item ng-repeat="item in getItemsByCategoriaId(3)" class="item item-icon-right" href="#/app/meteo-detalle/{{item[0]}}">
+        {{ ::item[3] }} <i class="icon ion-ios-arrow-right"></i>
+      </ion-item>
+      <ion-item class="item item-icon-right" href="#/app/viento">
+        Viento <i class="icon ion-ios-arrow-right"></i>
       </ion-item>
       <!------------------------------------------------------------------------------------------------------------ -->
     </ion-list>

@@ -1,13 +1,11 @@
 //todo: hacer icono y Splash screen
 //TODO: usar native transitions
-//TODO: revisar las dependencias que se pasan a los controladores
 //TODO: hacer perfilado en chrome mobile, ver como se comporta la memoria y el procesador al ejecutar la app
 //TODO: hacer zoom en mapa global cuando se escoja filtro por concejo. Usar coordenadas lat lng
 //TODO: podria ser mejor arrojar una excepcion en vez de llamaar a SPopup cada vez que hay un error. Ya se encarga el
 //TODO: servicio de excepciones de capturar la excepcion y mostrar un popup. De esta forma está más centralizado el tratamiento
 //TODO: de errores
 //TODO: añadir favoritos
-//TODO: cancelar loaders si hay errores con parametro timeout
 
 angular.module('wca.controllers',[])
 
@@ -188,7 +186,7 @@ angular.module('wca.controllers',[])
 
     // init
     $scope.rowid = $stateParams.rowid;
-    SLoader.show('Cargando...');
+    SLoader.showWithBackdrop('Cargando...');
     if(!$rootScope.items || !$scope.rowid){
       $location.path('#/');
       return;
@@ -234,26 +232,29 @@ angular.module('wca.controllers',[])
         $scope.infoConcejo = 'No se ha podido obtener información de Wikipedia: '+status;
       });
     }
-    // DIALOGO MODAL -------------------------------------------------------------------------------------------------
+    // DIALOGO MODAL DETALLE -------------------------------------------------------------------------------------------
     $ionicModal.fromTemplateUrl('templates/modal-detalle.html', {
       scope: $scope,
       animation: 'scale-in'
     }).then(function(modal) {
-      $scope.modal = modal;
+      $scope.modalDetalle = modal;
     });
-    $scope.showModal= function (){
-      $scope.modal.show();
-    }
-    $scope.closeModal = function () {
-      $scope.modal.hide();
-    };
-    // POPOVER -------------------------------------------------------------------------------------------------
+    // DIALOGO MODAL PREDICCION ----------------------------------------------------------------------------------------
+    $ionicModal.fromTemplateUrl('templates/modal-meteoblue.html', {
+      scope: $scope,
+      animation: 'scale-in'
+    }).then(function(modal) {
+      $scope.modalPrediccion = modal;
+    });
+    // POPOVER MENU ----------------------------------------------------------------------------------------------------
     $ionicPopover.fromTemplateUrl('templates/popover.html', {
       scope: $scope,
     }).then(function(popover) {
       $scope.popover = popover;
+      console.log('scope', $scope);
+      console.log('rootscope', $rootScope);
     });
-    // IMG RELOAD -------------------------------------------------------------------------------------------------
+    // IMG RELOAD ------------------------------------------------------------------------------------------------------
     $scope.reloadImg = function(){
       SLoader.show('Recargando imagen...');
       setTimeout(function(){
@@ -295,13 +296,13 @@ angular.module('wca.controllers',[])
 
 })
 // ====================================================================================================================
-.controller('GifPlayerCtrl', function($scope, $interval, $stateParams, TablaMeteo, ItemMeteo, SLoader, SPopup, $location){
+.controller('GifPlayerCtrl', function($scope, $interval, $stateParams, ItemsMeteo, ItemMeteo, SLoader, SPopup, $location){
 
     SLoader.showWithBackdrop('Cargando...');
 
     // Obtiene itemMeteo ------------------------------------------------------------------------------------------------
 
-    $scope.itemMeteo = new ItemMeteo(TablaMeteo.getItemById($stateParams.id_item_meteo));
+    $scope.itemMeteo = new ItemMeteo(ItemsMeteo.getItemById($stateParams.id_item_meteo));
 
     // inicializaciones -------------------------------------------------------------------------------------------------
 
@@ -451,14 +452,14 @@ angular.module('wca.controllers',[])
 
 })
 // ====================================================================================================================
-.controller('MeteoCtrl', function($scope, SFusionTable, SPopup, TablaMeteo, SLoader){
+.controller('MeteoCtrl', function($scope, SFusionTable, SPopup, ItemsMeteo, SLoader){
 
   var showError = function(status){
     SPopup.show('Error', ' MeteoCtrl: Compruebe conexión de red. Estado: '+status );
   };
-  var queryString = 'SELECT * FROM '+TablaMeteo.FUSION_TABLE_ID+' ORDER BY id ASC';
+  var queryString = 'SELECT * FROM '+ItemsMeteo.FUSION_TABLE_ID+' ORDER BY id ASC';
 
-  SLoader.show('Cargando...');
+  SLoader.showWithBackdrop('Cargando...');
 
   SFusionTable.getRemoteData(queryString).success(
     function(data){
@@ -467,9 +468,9 @@ angular.module('wca.controllers',[])
         showError('Respuesta nula');
         return;
       }
-      TablaMeteo.setData(data.rows);
+      ItemsMeteo.setData(data.rows);
       $scope.getItemsByCategoriaId = function(idCategoria){
-        return TablaMeteo.getItemsByCategoriaId(idCategoria);
+        return ItemsMeteo.getItemsByCategoriaId(idCategoria);
       }
       SLoader.hide();
     }
@@ -479,9 +480,9 @@ angular.module('wca.controllers',[])
 
 })
 // ====================================================================================================================
-.controller('ImgViewerCtrl', function($scope, $stateParams, ItemMeteo, TablaMeteo, $location){
+.controller('MeteoDetalleCtrl', function($scope, $stateParams, ItemMeteo, ItemsMeteo, $location){
 
-  $scope.itemMeteo = new ItemMeteo( TablaMeteo.getItemById($stateParams.id_item_meteo) );
+  $scope.itemMeteo = new ItemMeteo( ItemsMeteo.getItemById($stateParams.id_item_meteo) );
 
   if(angular.equals({}, $scope.itemMeteo)){
     $location.path('#/');
@@ -580,26 +581,32 @@ angular.module('wca.controllers',[])
     }
   })
 // ====================================================================================================================
-.controller('ListadoCtrl', function($scope, $stateParams, $rootScope, $ionicFilterBar,
+.controller('ListadoCtrl', function($scope, $stateParams, $rootScope, $ionicFilterBar, STRINGS,
                                    SFusionTable, $filter, $ionicScrollDelegate, SCategorias, $ionicHistory, SLoader) {
 
-    SLoader.show();
+    SLoader.showWithBackdrop('Cargando...');
     var concejo = $stateParams.concejo;
     var idCategoria = $stateParams.idCategoria;
     var camsFiltradasPorUrl = null;
 
+    $scope.imgError = function () {
+      $scope.error = STRINGS.IMG_ERROR;
+      $scope.$apply();
+    };
+
     function esSubcadena(idCategoria, urlCategoria) {
       return (urlCategoria.indexOf('categoria=' + idCategoria) > -1);
     }
-    //$scope.$on('$ionicView.beforeEnter', function(){
-      $ionicHistory.clearCache();
-    //});
-    var sqlQuery = 'SELECT Lugar,Concejo,Imagen,Categoria,rowid,latitud,longitud FROM '+ SFusionTable.TABLE_ID;
+
+    $ionicHistory.clearCache();
+
+  var sqlQuery = 'SELECT Lugar,Concejo,Imagen,Categoria,rowid,latitud,longitud FROM '+ SFusionTable.TABLE_ID;
     SFusionTable.getRemoteData(sqlQuery).success(function(data) {
 
       if (data.error) {
         console.error(data);
-        $scope.error = 'Error al obtener datos de webcams. '+data;
+        //$scope.error = 'Error al obtener datos de webcams. '+data;
+        $scope.imgError();
         SLoader.hide();
       }
       // -------------------------------------------------------------------------------------------------------------
@@ -650,8 +657,7 @@ angular.module('wca.controllers',[])
       };
       SLoader.hide();
     }).error(function(data, status) {
-      $scope.error = "Error obteniendo datos de webcams. ListadoCtrl.SFusionTable.getRemoteData(): "+status+
-          '. Posibles causas: (1) No conexión datos. (2) Fallo de red. Comprobar conexión';
+      $scope.imgError();
       SLoader.hide();
     });
 
@@ -665,6 +671,35 @@ angular.module('wca.controllers',[])
       $('ion-filter-bar').hide();
     })
 
+
   })
 // ====================================================================================================================
-; // FIN
+  .controller('VientoCtrl', function($scope){
+
+
+    $scope.$on('$ionicView.afterEnter', function(){
+      console.log('viento ctrl');
+      var windytyInit = {
+        // Required: API key
+        key: 'PsL-At-XpsPTZexBwUkO7Mx5I',
+
+        // Optional: Initial state of the map
+        lat: 50.4,
+        lon: 14.3,
+        zoom: 5
+      };
+
+      // Required: Windyty main function is called after
+      // initialization of API
+      //
+      // @map is instance of Leaflet maps
+      //
+      function windytyMain(map) {
+        var popup = L.popup()
+          .setLatLng([50.4, 14.3])
+          .setContent("Hello World")
+          .openOn( map );
+      }
+    });
+  })
+;

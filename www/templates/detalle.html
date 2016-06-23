@@ -19,7 +19,7 @@
       border-bottom: 1px solid;
     }
     .imgLoader{
-      background: transparent url(img/c.png) no-repeat center center;
+      background: transparent url('../img/c.png') no-repeat center center;
       cursor: pointer;
     }
     @media (min-width: 720px) {
@@ -31,6 +31,71 @@
         background-color:ghostwhite;
       }
     }
+
+    .cam-img {
+      height: 100%;
+      width: 100%;
+    }
+
+    .full-width {
+      width: 100%;
+    }
+
+    .fnt-small {
+      font-size: small;
+    }
+
+    .txt-meteo {
+      font-size: smaller;
+    }
+
+    .div-info {
+      width: 100%;
+      overflow-y: scroll;
+      height: 300px;
+    }
+
+    .div-lugar {
+      font-size: small;
+      padding-top: 8px;
+      padding-bottom: 8px;
+      text-align: center;
+    }
+
+    .i-item {
+      color: #387ef5;
+      font-size: medium;
+    }
+
+    .div-btns {
+      padding: 0;
+      text-align: center;
+    }
+
+    .td-desc {
+      padding-left: 15px;
+      vertical-align: middle;
+      padding-bottom: 10px;
+    }
+    .tab-active {
+      font-weight: bold;
+      background: #6495ed;
+      color: white !important;
+    }
+
+    .tabs-bar {
+      background: white;
+    }
+
+    .predicc {
+      text-align: center;
+      padding-top: 15px;
+      padding-bottom: 15px;
+    }
+
+    .btn-width {
+      width: 50%;
+    }
   </style>
 
   <ion-nav-buttons side="secondary">
@@ -41,29 +106,25 @@
   <ion-content id="contenido-detalle" class="animated fadeIn">
     <!-- Card ====================================================================================================== -->
     <div class="list card">
-      <div class="item item-image" style="height:100%; width:100%">
+      <div class="item item-image cam-img">
         <img ng-src="{{ cam.imagen }}" fallback-src="img/imgFail.png" class="imgLoader"
-             imageonload="imgLoaded()" on-touch="showModal()"/>
+             imageonload="imgLoaded()" on-touch="modalDetalle.show()"/>
       </div>
-      <div class="item item-body" style="font-size:small;padding-top:8px;padding-bottom:8px;text-align:center">
-        {{ ::cam.lugar }}<br>
-      </div>
-      <div class="item item-body" style="font-size: small">
-          <i class="icon ion-ios-checkmark-outline" style="color:#387ef5;font-size:medium;"></i>
-          Concejo: {{ ::cam.concejo }}<br>
-          <i class="icon ion-ios-checkmark-outline" style="color:#387ef5;font-size:medium;"></i>
-          Categoría: {{ ::cam.categoria }}
+      <div class="item item-body div-lugar">{{ ::cam.lugar }}<br></div>
+      <div class="item item-body fnt-small">
+        <i class="icon ion-ios-checkmark-outline i-item"></i> Concejo: {{ ::cam.concejo }}<br>
+        <i class="icon ion-ios-checkmark-outline i-item"></i> Categoría: {{ ::cam.categoria }}
       </div>
       <!-- botones ================================================================================================= -->
-      <div class="item item-text-wrap" style="padding:0;text-align:center">
+      <div class="item item-text-wrap div-btns">
         <div class="row">
           <div class="col">
-            <button class="button button-calm" ng-click="showModal()" style="width:100%">
+            <button class="button button-calm full-width" ng-click="modalDetalle.show()">
               <i class="icon ion-arrow-expand"></i> Ampliar
             </button>
           </div>
           <div class="col">
-            <button class="button button-calm" ng-click="reloadImg()" style="width:100%">
+            <button class="button button-calm full-width" ng-click="reloadImg()">
               <i class="icon ion-refresh"></i> Recargar
             </button>
           </div>
@@ -71,48 +132,53 @@
       </div>
       <!-- fin botones ============================================================================================= -->
     </div>
-    <!-- Card ====================================================================================================== -->
+    <!-- Tabs ====================================================================================================== -->
     <div class="card">
 
-      <div class="item item-divider tabs tabs-icon-left tabs-color-positive">
-        <a class="tab-item" ng-click="page='first'" ng-class="{active:page === 'first'}" style="font-size:small">
-          <i class="icon ion-ios-partlysunny"></i>
-          Meteorología
+      <div class="item item-divider tabs tabs-icon-left tabs-color-positive tabs-bar">
+        <a class="tab-item fnt-small" ng-click="page='first'" ng-class="{'tab-active':page === 'first'}">
+          <i class="icon ion-ios-partlysunny"></i> Meteorología
         </a>
-        <a class="tab-item" ng-click="page='second';getInfo()" ng-class="{active:page === 'second'}" style="font-size:small">
-          <i class="icon ion-document-text"></i>
-          Información
+        <a class="tab-item fnt-small" ng-click="page='second';getInfo()" ng-class="{'tab-active':page === 'second'}">
+          <i class="icon ion-document-text"></i> Información
         </a>
       </div>
 
       <div ng-init="page='first'"></div>
 
       <div class="item" ng-show="page === 'first'">
-        <div style="font-size:smaller">
+        <div class="txt-meteo">
           <table>
             <tr>
               <td><img ng-src="{{::iconoUrl}}"/></td>
-              <td style="padding-left:15px;vertical-align: middle;padding-bottom:10px;">
+              <td class="td-desc">
                 Estado actual: {{::descripcion}}
               </td>
             </tr>
           </table>
-          &#187; Temperatura: {{::temp}} ºC<br>
-          &#187; Presión atmosférica: {{::presion}} HPa<br>
-          &#187; Humedad relativa: {{::humedad}} %<br>
-          &#187; Nubosidad: {{::nubosidad}} %<br>
-          &#187; Velocidad del viento: {{::velocidadViento}} m/s<br>
-          &#187; Dirección del viento: {{::direccionViento}}º<br>
-          <br>Fuente: <a href="http://www.openweathermap.com" target="_blank">OpenWeatherMap.com</a>
+          &bullet; Temperatura: {{::temp}} ºC<br>
+          &bullet; Presión atmosférica: {{::presion}} HPa<br>
+          &bullet; Humedad relativa: {{::humedad}} %<br>
+          &bullet; Nubosidad: {{::nubosidad}} %<br>
+          &bullet; Velocidad del viento: {{::velocidadViento}} m/s<br>
+          &bullet; Dirección del viento: {{::direccionViento}}º<br>
+          <div class="predicc">
+            <button class="button button-calm button-outline btn-width" ng-click="modalPrediccion.show()">
+              <i class="icon ion-android-open"></i> Predicción
+            </button>
+          </div>
+          Fuentes: <a href="http://www.openweathermap.com" target="_blank">OpenWeatherMap.com</a> -
+          <a href="http://www.meteoblue.com" target="_blank">Meteoblue</a>
+
         </div>
       </div>
-      <div class="item-body" style="width: 100%; overflow-y: scroll; height: 300px;"
+      <div class="item-body div-info"
            ng-class="{active:active}" ng-show="page === 'second'">
         <div>{{ infoConcejo }}</div>
         <div ng-bind-html="wikipediaCredits"></div>
       </div>
     </div>
-    <!-- Fin Card ================================================================================================== -->
+    <!-- Fin Tabs ================================================================================================== -->
 
   </ion-content>
 </ion-view>

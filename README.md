@@ -1,5 +1,7 @@
-[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/YagoLopez/webcams_de_asturias/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
-<br/>
+![Status](https://img.shields.io/badge/status-ok-green.svg) ![Maintenance](https://img.shields.io/maintenance/yes/2016.svg?maxAge=2592000) ![License](https://img.shields.io/dub/l/vibe-d.svg?maxAge=2592000)
+
+
+
 # Webcams de Asturias
 <p><i>(Español)</i></p>
 
@@ -7,7 +9,8 @@
 
 Esta aplicación permite visualizar las imágenes en tiempo real de 118 web cams situadas a lo largo del Principado de Asturias.
 
-<p><a href="http://yagolopez.github.io/Webcams_de_Asturias/iframe/iframe.html" target="_blank">VERSIÓN WEB ONLINE</a></p>
+<p><a href="http://yagolopez.github.io/Webcams_de_Asturias/iframe/iframe.html" target="_blank">VERSIÓN WEB</a></p>
+<p><a href="http://yagolopez.github.io/Webcams_de_Asturias/www/#/" target="_blank">VERSIÓN MOBILE</a></p>
 
 Las cámaras están agrupadas según las siguientes categorías:
 
@@ -32,13 +35,15 @@ Como valor añadido se pueden consultar diversas informaciones meteorológicas, 
 También se ofrecen datos estadísticos, como la agrupación de cámaras web por concejo, categoría, distribución geográfica, etc.
 
 <h1>Tecnologías empleadas</h1>
- 
-- Ionic Framework (Interfaz de usuario, Arquitectura MVVM y Two way data binding)
+
+- Ionic Framework (Interfaz de usuario)
+- AngularJS (Arquitectura MVVM y Two way data binding en cliente)
+- Datos: Google Fusion Tables
 - Apache Cordova/PhoneGap (Acceso a API de móvil mediante Javascript)
 - Intel Crosswalk Runtime (Compilación cruzada a Android e IOS)
- 
+
 Probado en:
- 
+
 - Chrome (últimas versiones)
 - Microsoft Edge
 - Internet Explorer (últimas versiones)
