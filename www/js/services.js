@@ -316,8 +316,11 @@ angular.module('wca.services',[])
   })
 // ====================================================================================================================
   .constant('STRINGS', {
-    IMG_ERROR: 'Error. No se han podido obtener imágenes de webcams por razones ajenas ' +
-    'a la aplicación. Posibles causas: 1) Sin conexión de datos. 2) Fallo de servidor remoto'
+    CAUSAS: ' Posibles causas: 1) Sin conexión de datos. 2) Fallo de servidor remoto',
+    IMG_ERROR: 'Error. No se han podido obtener imágenes de webcams por razones ajenas a la aplicación.' + this.CAUSAS,
+    METEO_ERROR: 'No se ha podido obtener información meteorológica.' + this.CAUSAS,
+    WIKIP_ERROR: 'No se ha podido obtener información de Wikipedia.' + this.CAUSAS,
+    RECARGANDO_IMG: 'Recargando imagen...'
   })
 
 ; // FIN

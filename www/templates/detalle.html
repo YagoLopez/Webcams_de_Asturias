@@ -79,14 +79,8 @@
     }
     .tab-active {
       font-weight: bold;
-      /*background: aliceblue;*/
       color: cornflowerblue !important;
       text-decoration: underline;
-
-      /*border-style: solid;*/
-      /*border-width: thin;*/
-      /*border-radius: 4px;*/
-
     }
 
     .tabs-bar {
@@ -120,8 +114,8 @@
         <img ng-src="{{ cam.imagen }}" fallback-src="img/imgFail.png" class="imgLoader"
              imageonload="imgLoaded()" on-touch="modalDetalle.show()"/>
       </div>
-      <div class="item item-body div-lugar">{{ ::cam.lugar }}<br></div>
       <div class="item item-body fnt-small">
+        <i class="icon ion-ios-checkmark-outline i-item"></i> Lugar: {{ ::cam.lugar }}<br>
         <i class="icon ion-ios-checkmark-outline i-item"></i> Concejo: {{ ::cam.concejo }}<br>
         <i class="icon ion-ios-checkmark-outline i-item"></i> Categoría: {{ ::cam.categoria }}
       </div>

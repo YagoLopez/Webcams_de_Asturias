@@ -182,7 +182,7 @@ angular.module('wca.controllers',[])
 })
 // ====================================================================================================================
 .controller('DetalleCtrl', function($scope, $stateParams, $ionicModal, SClima, $filter, $rootScope,
-                                    SPopup, SWikipedia, $ionicPopover, Cam, SLoader, $location){
+                                    SPopup, SWikipedia, $ionicPopover, Cam, SLoader, $location, STRINGS){
 
     // init
     $scope.rowid = $stateParams.rowid;
@@ -213,10 +213,10 @@ angular.module('wca.controllers',[])
         //url icono: http://openweathermap.org/img/w/10n.png
         $scope.iconoUrl = 'http://openweathermap.org/img/w/'+climadata.weather[0].icon+'.png' ;
       } else {
-        $scope.descripcion = 'No se ha podido obtener infromación meteorológica'
+        $scope.descripcion = STRINGS.METEO_ERROR;
       }
     }).error(function(status){
-      SPopup.show('Error', 'Posibles causas: (1) No conexión datos (2) Fallo de red. Comprobar conexión');
+      $scope.descripcion = STRINGS.METEO_ERROR;
       console.error('SClima.getData(): ', status);
     });
     // WIKIPEDIA -----------------------------------------------------------------------------------------------------
@@ -229,7 +229,8 @@ angular.module('wca.controllers',[])
           $scope.wikipediaCredits = '<br>Fuente: <a href="http://org.wikipedia.es" target="_blank">Wikipedia</a>';
         }
       }).error(function(status){
-        $scope.infoConcejo = 'No se ha podido obtener información de Wikipedia: '+status;
+        $scope.infoConcejo = STRINGS.WIKIP_ERROR;
+        console.error('SWikipedia.info()', status)
       });
     }
     // DIALOGO MODAL DETALLE -------------------------------------------------------------------------------------------

@@ -1,6 +1,6 @@
 {
-    "name": "Webcams_de_Asturias",
-    "private": "true",
-    "devDependencies": {},
-    "dependencies": {}
+  "name": "Webcams_de_Asturias",
+  "private": "true",
+  "devDependencies": {},
+  "dependencies": {}
 }
