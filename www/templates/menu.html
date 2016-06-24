@@ -1,5 +1,11 @@
 <ion-side-menus enable-menu-with-back-views="false">
 
+  <style>
+    #menuaapp > div > ion-item {border-style:none;cursor: pointer}
+    #menuaapp > div > ion-item > a {padding:12px;}
+    .textTop{vertical-align:text-top;}
+  </style>
+
   <!-- Side Menu Content ------------------------------------------------------------------------------------------ -->
   <ion-side-menu-content drag-content="true">
 
@@ -25,7 +31,7 @@
   <!-- Side Menu -------------------------------------------------------------------------------------------------- -->
   <ion-side-menu side="left" expose-aside-when="large">
 
-    <ion-header-bar class="bar-royal" style="height:100px;display:block;background: url('../img/bckgrnd6.jpg');">
+    <ion-header-bar class="bar-royal" style="height:100px;display:block;background: url('/www/img/bckgrnd6.jpg');">
       <h1 class="title"></h1>
     </ion-header-bar>
     <!--
@@ -37,11 +43,6 @@
     7 playas
     -->
     <ion-content style="top: 110px;">
-      <style>
-        #menuaapp > div > ion-item {border-style:none;cursor: pointer}
-        #menuaapp > div > ion-item > a {padding:12px;}
-        .textTop{vertical-align:text-top;}
-      </style>
       <ion-list id="menuaapp" class="pad-top-10">
         <ion-item menu-close ui-sref="app.listado({idCategoria:7})">
           <i class="icon icon-left ion-ios-sunny textTop" style="font-size:25px"></i>&nbsp;
