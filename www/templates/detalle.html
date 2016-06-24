@@ -79,8 +79,14 @@
     }
     .tab-active {
       font-weight: bold;
-      background: #6495ed;
-      color: white !important;
+      /*background: aliceblue;*/
+      color: cornflowerblue !important;
+      text-decoration: underline;
+
+      /*border-style: solid;*/
+      /*border-width: thin;*/
+      /*border-radius: 4px;*/
+
     }
 
     .tabs-bar {
@@ -95,6 +101,10 @@
 
     .btn-width {
       width: 50%;
+    }
+
+    .pie {
+      text-align: center;
     }
   </style>
 
@@ -167,9 +177,10 @@
               <i class="icon ion-android-open"></i> Predicción
             </button>
           </div>
-          Fuentes: <a href="http://www.openweathermap.com" target="_blank">OpenWeatherMap.com</a> -
-          <a href="http://www.meteoblue.com" target="_blank">Meteoblue</a>
-
+          <div class="pie">
+            Fuentes: <a href="http://www.openweathermap.com" target="_blank">OpenWeatherMap.com</a> -
+            <a href="http://www.meteoblue.com" target="_blank">Meteoblue</a>
+          </div>
         </div>
       </div>
       <div class="item-body div-info"

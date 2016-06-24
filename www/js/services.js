@@ -123,8 +123,9 @@ angular.module('wca.services',[])
 
   })
 // ====================================================================================================================
-  .factory('SPopup', function($ionicPopup){
+  .factory('SPopup', function($ionicPopup, SLoader){
     var show = function(titulo, msg) {
+      SLoader.hide();
       $ionicPopup.alert({
         title: titulo,
         template: msg

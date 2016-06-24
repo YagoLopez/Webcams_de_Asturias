@@ -9,8 +9,8 @@
 
 Esta aplicación permite visualizar las imágenes en tiempo real de 118 web cams situadas a lo largo del Principado de Asturias.
 
-<p><a href="http://yagolopez.github.io/Webcams_de_Asturias/iframe/iframe.html" target="_blank">VERSIÓN WEB</a></p>
-<p><a href="http://yagolopez.github.io/Webcams_de_Asturias/www/#/" target="_blank">VERSIÓN MOBILE</a></p>
+<div><a href="http://yagolopez.github.io/Webcams_de_Asturias/iframe/iframe.html" target="_blank">-VERSIÓN WEB</a></div>
+<div><a href="http://yagolopez.github.io/Webcams_de_Asturias/www/#/" target="_blank">VERSIÓN MOBILE</a></div>
 
 Las cámaras están agrupadas según las siguientes categorías:
 
