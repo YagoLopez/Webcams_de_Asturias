@@ -19,6 +19,7 @@
       height: 64px;
       width: 72px;
       top: 6px;
+      background: transparent url(img/clock-32x32-3.png) no-repeat center center;
     }
     .icon-badge {
       vertical-align: sub;
@@ -34,10 +35,12 @@
         background-color:ghostwhite;
       }
     }
+/*
     .imgLoader{
-      background: transparent url(img/c.png) no-repeat center center;
+      background: transparent url(img/clock-32x32-3.png) no-repeat center center;
       cursor: pointer;
     }
+*/
 
     .error {
       text-align: center;
@@ -62,15 +65,13 @@
   <ion-content id="contenido-listado">
 
     <div id="listadoContainer">
-
       <div class="error">{{ ::error }}</div>
-
       <a class="item item-thumbnail-left item-icon-right"
          ng-repeat="cam in items track by cam[4]" href="#/app/detalle/{{ items[$index][4] }}">
-        <img id="imWC" ng-src="{{ cam[2] }}" fallback-src="img/imgFail.png" class="imgLoader"/>
+        <img id="imWC" ng-src="{{ cam[2] }}" fallback-src="img/imgFail.png"/>
         <div class="textoItem">
           <p>
-            <span class="resalteListado"><b>&#187; </b></span>
+            <span class="resalteListado"><b>&bullet; </b></span>
             <span class="textoListado">{{ cam[0] }}</span>
           </p>
           <p>

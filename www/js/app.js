@@ -26,7 +26,6 @@ app.config(function($stateProvider, $urlRouterProvider, $compileProvider, $ionic
     $ionicConfigProvider.navBar.alignTitle('center');
     $httpProvider.useApplyAsync(true);
 
-
 // Estados ------------------------------------------------------------------------------------------------------------
 
   $stateProvider.state('app', {

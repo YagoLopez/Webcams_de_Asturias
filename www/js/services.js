@@ -1,32 +1,8 @@
 // url completa para consultar fusion table. Usar como plantilla
-//var url_api = "https://www.googleapis.com/fusiontables/v2/query?sql=SELECT%20*%20FROM%201gX5maFbqFyRziZiUYlpOBYhcC1v9lGkKqCXvZREF&key=AIzaSyBsdouSTimjrC2xHmbGgOt8VfbLBWc9Gps";
+// https://www.googleapis.com/fusiontables/v2/query?sql=SELECT%20*%20FROM%201gX5maFbqFyRziZiUYlpOBYhcC1v9lGkKqCXvZREF&key=AIzaSyBsdouSTimjrC2xHmbGgOt8VfbLBWc9Gps
 
 angular.module('wca.services',[])
-
 // ====================================================================================================================
-/*  .factory('SFusionTable', function($http){
-
-    var API_ENDPOINT = 'https://www.googleapis.com/fusiontables/v2/query';
-    var API_KEY = 'AIzaSyBsdouSTimjrC2xHmbGgOt8VfbLBWc9Gps';
-    var TABLE_ID = '1gX5maFbqFyRziZiUYlpOBYhcC1v9lGkKqCXvZREF';
-
-    var getRemoteData = function( sqlQueryString ) {
-      var url = API_ENDPOINT+ '?sql=' +sqlQueryString+ '&key=' +API_KEY+ '&callback=JSON_CALLBACK';
-      return $http.jsonp( encodeURI(url), {cache: true} );
-    };
-
-    var getLocalData = function(path_fichero){
-      return $http.get(path_fichero);
-    };
-
-    return {
-      API_ENDPOINT: API_ENDPOINT,
-      API_KEY: API_KEY,
-      TABLE_ID: TABLE_ID,
-      getRemoteData: getRemoteData,
-      getLocalData: getLocalData
-    }
-  })*/
   .service('SFusionTable', function($http){
 
     var API_ENDPOINT = 'https://www.googleapis.com/fusiontables/v2/query';
@@ -126,103 +102,83 @@ angular.module('wca.services',[])
     }
   })
 // ====================================================================================================================
-  .factory('SClima', function($http){
+  .service('SClima', function($http){
 
-    var getData = function(lat, lng){
-      return $http.get(
-        'http://api.openweathermap.org/data/2.5/weather?lat='+lat+'&lon='+lng+
-        '&appid=b7514b5aaf43d023c350462fd57a1791&lang=es&units=metric', {cache:true});
+    this.getData = function(lat, lng){
+      return $http.get( 'http://api.openweathermap.org/data/2.5/weather?lat='+lat+'&lon='+lng+
+        '&appid=b7514b5aaf43d023c350462fd57a1791&lang=es&units=metric', {cache:true} );
     };
-    return {
-      getData: getData
-    }
-
   })
 // ====================================================================================================================
-  .factory('SPopup', function($ionicPopup, SLoader){
-    var show = function(titulo, msg) {
+  .service('SPopup', function($ionicPopup, SLoader){
+    this.show = function(titulo, msg) {
       SLoader.hide();
-      $ionicPopup.alert({
-        title: titulo,
-        template: msg
-      });
+      $ionicPopup.alert({ title: titulo, template: msg });
     };
-    return { show: show };
   })
 // ====================================================================================================================
-  .factory('SWikipedia', function($http){
+  .service('SWikipedia', function($http){
 
-    var info = function(termino){
+    this.info = function(termino){
       return $http.jsonp('https://es.wikipedia.org/w/api.php?'+
         'action=query&prop=extracts|info&exintro&titles='+termino+
         '&format=json&explaintext&redirects&inprop=url&indexpageids&callback=JSON_CALLBACK', {cache: true});
     };
 
-    var infoRelacionada = function(termino){
+    this.infoRelacionada = function(termino){
       return $http.get('https://es.wikipedia.org/w/api.php?'+
         'action=query&list=search&srsearch='+termino+'&utf8=&format=json', {cache: true});
     };
 
     // respuesta formato xml
-    var infoLatLngGeonames = function(lat, lng){
+    this.infoLatLngGeonames = function(lat, lng){
       return $http.get('http://api.geonames.org/findNearbyWikipedia?'+
         'lat='+lat+'&lng='+lng+'&username=yagolopez&lang=es', {cache: true});
     };
 
-    var infoLatLngWikipedia = function(lat, lng, radioBusqueda){
+    this.infoLatLngWikipedia = function(lat, lng, radioBusqueda){
       var url = 'https://es.wikipedia.org/w/api.php?action=query&list=geosearch&gsradius='+radioBusqueda+
         '&gscoord='+lat+'|'+lng+'&format=json&callback=JSON_CALLBACK';
       return $http.jsonp(url, {cache: true});
     };
 
-    var infoAmpliada = function (termino){
+    this.infoAmpliada = function (termino){
       return $http.get('https://es.wikipedia.org/w/api.php?format=json&action=query&prop=revisions&titles='+termino+
         '&rvprop=content&rvsection=0&rvparse');
     };
 
     // bueno para lugares concretos con descripción breve
-    var openSearch = function(termino){
+    this.openSearch = function(termino){
       return $http.jsonp('https://es.wikipedia.org/w/api.php?action=opensearch&'+
         'search='+termino+'&callback=JSON_CALLBACK', {cache: true});
     };
-
-    return {
-      info: info,
-      infoRelacionada: infoRelacionada,
-      infoLatLngGeonames: infoLatLngGeonames,
-      infoAmpliada: infoAmpliada,
-      infoLatLngWikipedia: infoLatLngWikipedia
-    };
   })
 // ====================================================================================================================
-  .factory('ItemsMeteo', function($filter){
+  .service('ItemsMeteo', function($filter){
 
-    var service = {};
     var meteoData = null;
 
-    service.FUSION_TABLE_ID = '1Y_vt2nTVFSYHpMuwe0u60bQzp4FlLtc33A8qd2_x';
+    this.FUSION_TABLE_ID = '1Y_vt2nTVFSYHpMuwe0u60bQzp4FlLtc33A8qd2_x';
 
-    service.getData = function(){
+    this.getData = function(){
       return meteoData;
     };
 
-    service.setData = function(data){
+    this.setData = function(data){
       meteoData = data;
     };
 
-    service.getItemsByCategoriaId = function(idCategoria) {
+    this.getItemsByCategoriaId = function(idCategoria) {
       return $filter('filter')(meteoData, function (item) {
         return (item[7] == idCategoria);
       }, true);
     };
 
-    service.getItemById = function(idItem) {
+    this.getItemById = function(idItem) {
       return $filter('filter')(meteoData, function (item) {
         return (item[0] == idItem);
       }, true);
     };
-
-    return service;
 })
 // ====================================================================================================================
   .factory('ItemMeteo', function(){
@@ -251,33 +207,27 @@ angular.module('wca.services',[])
     return ItemMeteo;
   })
 // ====================================================================================================================
-  .factory('SLoader', function($ionicLoading){
+  .service('SLoader', function($ionicLoading){
     var spinnerIco = "<ion-spinner icon='lines' class='spinner-calm'></ion-spinner><br/>";
     var contenidoLoader = "Cargando datos...";
 
-    var show = function(texto){
+    this.show = function(texto){
       if(texto){
         contenidoLoader = texto;
       }
       $ionicLoading.show({template: contenidoLoader, noBackdrop: true, hideOnStateChange: true, duration: 60*1000 });
     };
 
-    var showWithBackdrop = function(texto){
+    this.showWithBackdrop = function(texto){
       if(texto){
         contenidoLoader = texto;
       }
       $ionicLoading.show({template: contenidoLoader, noBackdrop: false, hideOnStateChange: true, duration: 60*1000});
     };
 
-    var hide = function(){
+    this.hide = function(){
       $ionicLoading.hide();
     };
-
-    return {
-      show: show,
-      showWithBackdrop: showWithBackdrop,
-      hide: hide
-    }
 })
 // ====================================================================================================================
   .factory('$exceptionHandler', function($injector) {
@@ -303,11 +253,11 @@ angular.module('wca.services',[])
     return Cam;
   })
 // ====================================================================================================================
-  .factory('SCategorias', function(){
+  .service('SCategorias', function(){
     var nombreCategoria = null;
     var urlBaseCategoria = 'http://webcamsdeasturias.com/interior.php?categoria=';
 
-    var url_a_nombre = function(urlCategoria){
+    this.url_a_nombre = function(urlCategoria){
       if (urlCategoria === urlBaseCategoria+'1')
         nombreCategoria = 'Poblaciones';
       if (urlCategoria === urlBaseCategoria+'2')
@@ -321,14 +271,9 @@ angular.module('wca.services',[])
     return nombreCategoria;
     };
 
-    var idCategoria_a_nombre = function(idCategoria){
-      return url_a_nombre(urlBaseCategoria+idCategoria);
+    this.idCategoria_a_nombre = function(idCategoria){
+      return this.url_a_nombre(urlBaseCategoria+idCategoria);
     };
-
-    return {
-      url_a_nombre: url_a_nombre,
-      idCategoria_a_nombre: idCategoria_a_nombre
-    }
   })
 // ====================================================================================================================
   .constant('STRINGS', {

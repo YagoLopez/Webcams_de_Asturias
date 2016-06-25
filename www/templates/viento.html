@@ -1,88 +1,28 @@
 <ion-view view-title="Viento">
-  <ion-content>
-    viento
-    <script>
-/*      var windytyInit = {
-        // Required: API key
-        key: 'PsL-At-XpsPTZexBwUkO7Mx5I',
-
-        // Optional: Initial state of the map
-        lat: 50.4,
-        lon: 14.3,
-        zoom: 5
-      };
-
-      // Required: Windyty main function is called after
-      // initialization of API
-      //
-      // @map is instance of Leaflet maps
-      //
-      function windytyMain(map) {
-        var popup = L.popup()
-          .setLatLng([50.4, 14.3])
-          .setContent("Hello World")
-          .openOn( map );
-      }*/
-    </script>
-    <!--<div id="windyty"></div>-->
-
-
-
-
-
-    <div id="windyty-container">
-      <div id="windyty"></div>
-
-      <div class="windyty-content">
-        <script type="text/javascript">
-
-          var windytyInit = {
-            // Required: API key
-            key: 'PsL-At-XpsPTZexBwUkO7Mx5I',
-
-            // Optional: Initial state of the map
-            lat: 50.4,
-            lon: 14.3,
-            zoom: 5
-          };
-
-          // Required: Windyty main function is called after
-          // initialization of API
-          //
-          // @map is instance of Leaflet maps
-          //
-          function windytyMain(map) {
-            var popup = L.popup()
-              .setLatLng([50.4, 14.3])
-              .setContent("Hello World")
-              .openOn( map );
-          }
-
-        </script>
-      </div>
-
-    </div>
-
-    <div id="example">
-
-      <div id="readme">
-
-        <p>Windyty requires Leaflet library, version 0.7.5 or 0.7.7. Load the library at the begining of your script, for example by using this HTML code <code>&lt;script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.5/leaflet.js"&gt;&lt;/script&gt;</code></p>
-
-        <p>Your application must contain <code>&lt;div id="windyty"&gt;&lt;/div&gt;</code> in a place, where  you want to position Windyty map in your HTML code. Use CSS to position Windyty div as you wish.</p>
-
-        <p>In your javascript code define <code>windytyInit</code> object containing mandatory API key and optional start-up values and <code>windytyMain( map )</code> function, that will be called after initialization of Windyty API. Your application code should be inside <code>windytyMain( map )</code> function. </p>
-
-        <p>Load Windtyty API by placing following HTML code at the end of your page: <code>&lt;script async defer src="http://api.windyty.com/v2.0/boot.js"&gt;&lt;/script&gt;</code></p>
-
-        <p>After initailizing, Windyty API introduces global object <code>W</code>.</p>
-
-        <p>You can use well documented <a href="http://leafletjs.com/">Leaflet API</a> to do <strong>anything with Windyty map</strong>, including enormous number of <a href="http://leafletjs.com/plugins.html">Leaflet plugins</a>. Leaflet map will be initialized in Windyty code and instance of Leaflet map will be provided to <code>windytyMain( map )</code> function as the first argument. Leaflet uses global object <code>L</code>,</p>
-      </div>
-
-    </div>
-
-
-    <script async defer src="http://api.windyty.com/v2.1/boot.js"></script>
+  <style type="text/css">
+    #mapaviento {
+      width: 100%;
+      height: 90%;
+      background: transparent url(img/clock-32x32-3.png) no-repeat center center;
+    }
+    @media (min-width: 720px) {
+      #mapaviento {
+        width: 75%;
+        /*height: 80%;*/
+        padding-top: 50px;
+        margin: auto;
+        /*margin: 32px auto;*/
+      }
+    }
+    .content{
+      text-align: center;
+      background: aliceblue;
+    }
+  </style>
+  <ion-content class="content">
+    <iframe id="mapaviento" ng-src="https://embed.windyty.com/?40.4,-3.7,5,metric.wind.km/h"
+            scrolling="no" marginwidth="0" marginheight="0" allowfullscreen frameborder="0"
+            iframe-onload="cargaFrameTerminada()">
+    </iframe>
   </ion-content>
 </ion-view>
