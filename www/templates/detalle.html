@@ -1,4 +1,4 @@
-<!--TODO: pasar todos los nombres de dominio a IPs para optimizar tiempos de carga-->
+<!--TODO: pasar todos los nombres de dominio a IPs para reducir latencia-->
 <ion-view view-title="{{ ::cam.lugar }}">
 
   <style>
@@ -65,6 +65,8 @@
     .i-item {
       color: #387ef5;
       font-size: medium;
+      margin-right: 5px;
+      vertical-align: middle;
     }
 
     .div-btns {
@@ -93,12 +95,25 @@
       padding-bottom: 15px;
     }
 
-    .btn-width {
+    .btn-style {
       width: 50%;
+      font-size: inherit;
     }
 
     .pie {
       text-align: center;
+    }
+
+    .ico-meteo {
+      vertical-align: middle;
+    }
+
+    .estado-meteo {
+      white-space: normal;
+    }
+
+    .meteo-data {
+      padding: 10px;
     }
   </style>
 
@@ -115,9 +130,9 @@
              imageonload="imgLoaded()" on-touch="modalDetalle.show()"/>
       </div>
       <div class="item item-body fnt-small">
-        <i class="icon ion-ios-checkmark-outline i-item"></i> Lugar: {{ ::cam.lugar }}<br>
-        <i class="icon ion-ios-checkmark-outline i-item"></i> Concejo: {{ ::cam.concejo }}<br>
-        <i class="icon ion-ios-checkmark-outline i-item"></i> Categoría: {{ ::cam.categoria }}
+        <i class="icon ion-checkmark-circled i-item"></i> Lugar: {{ ::cam.lugar }}<br>
+        <i class="icon ion-checkmark-circled i-item"></i> Concejo: {{ ::cam.concejo }}<br>
+        <i class="icon ion-checkmark-circled i-item"></i> Categoría: {{ ::cam.categoria }}
       </div>
       <!-- botones ================================================================================================= -->
       <div class="item item-text-wrap div-btns">
@@ -152,22 +167,20 @@
 
       <div class="item" ng-show="page === 'first'">
         <div class="txt-meteo">
-          <table>
-            <tr>
-              <td><img ng-src="{{::iconoUrl}}"/></td>
-              <td class="td-desc">
-                Estado actual: {{::descripcion}}
-              </td>
-            </tr>
-          </table>
-          &bullet; Temperatura: {{::temp}} ºC<br>
-          &bullet; Presión atmosférica: {{::presion}} HPa<br>
-          &bullet; Humedad relativa: {{::humedad}} %<br>
-          &bullet; Nubosidad: {{::nubosidad}} %<br>
-          &bullet; Velocidad del viento: {{::velocidadViento}} m/s<br>
-          &bullet; Dirección del viento: {{::direccionViento}}º<br>
+          <div>
+            <span><img ng-src="{{ ::iconoUrl }}" class="ico-meteo"/></span>
+            <span class="estado-meteo">Estado actual: {{ descripcion }}</span>
+          </div>
+          <div class="meteo-data">
+            &bullet; Temperatura: {{::temp}} ºC<br>
+            &bullet; Presión atmosférica: {{::presion}} HPa<br>
+            &bullet; Humedad relativa: {{::humedad}} %<br>
+            &bullet; Nubosidad: {{::nubosidad}} %<br>
+            &bullet; Velocidad del viento: {{::velocidadViento}} m/s<br>
+            &bullet; Dirección del viento: {{::direccionViento}}º<br>
+          </div>
           <div class="predicc">
-            <button class="button button-calm button-outline btn-width" ng-click="modalPrediccion.show()">
+            <button class="button button-calm button-outline btn-style" ng-click="modalPrediccion.show()">
               <i class="icon ion-android-open"></i> Predicción
             </button>
           </div>
@@ -177,8 +190,7 @@
           </div>
         </div>
       </div>
-      <div class="item-body div-info"
-           ng-class="{active:active}" ng-show="page === 'second'">
+      <div class="item-body div-info" ng-class="{active:active}" ng-show="page === 'second'">
         <div>{{ infoConcejo }}</div>
         <div ng-bind-html="wikipediaCredits"></div>
       </div>

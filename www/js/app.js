@@ -3,27 +3,28 @@ var app = angular.module('wca', ['ionic', 'wca.controllers', 'wca.services', 'je
 
 // Configuracion ======================================================================================================
 app.config(function($stateProvider, $urlRouterProvider, $compileProvider, $ionicConfigProvider,
-                 $ionicFilterBarConfigProvider, $logProvider) {
+                 $ionicFilterBarConfigProvider, $logProvider, $httpProvider) {
 
     // enable/disable debug info
     $compileProvider.debugInfoEnabled(false);
-    // remove back button text completely
+    // remove back button text totally
     $ionicConfigProvider.backButton.previousTitleText(false).text(' ');
     // enable/disable native scroll
     if (!ionic.Platform.isIOS()) {
       $ionicConfigProvider.scrolling.jsScrolling(false);
     }
+    // filterbar config
     $ionicFilterBarConfigProvider.placeholder('Buscar');
     $ionicFilterBarConfigProvider.transition('vertical');
     // num templates to prefetch
-    $ionicConfigProvider.templates.maxPrefetch();
+    $ionicConfigProvider.templates.maxPrefetch(2);
     // disable angular log system
     $logProvider.debugEnabled(false);
-    $compileProvider.debugInfoEnabled(false);
-    // desactivar transiciones de estado
+    // disable state transitions
     $ionicConfigProvider.views.transition('none');
     // nav bar title position for all platforms
     $ionicConfigProvider.navBar.alignTitle('center');
+    $httpProvider.useApplyAsync(true);
 
 
 // Estados ------------------------------------------------------------------------------------------------------------
@@ -198,7 +199,6 @@ app.config(function($stateProvider, $urlRouterProvider, $compileProvider, $ionic
   });
 // -------------------------------------------------------------------------------------------------------------------
 
-  // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('app/listado?idCategoria=7');
 
 })

@@ -4,7 +4,7 @@
 angular.module('wca.services',[])
 
 // ====================================================================================================================
-  .factory('SFusionTable', function($http){
+/*  .factory('SFusionTable', function($http){
 
     var API_ENDPOINT = 'https://www.googleapis.com/fusiontables/v2/query';
     var API_KEY = 'AIzaSyBsdouSTimjrC2xHmbGgOt8VfbLBWc9Gps';
@@ -12,7 +12,7 @@ angular.module('wca.services',[])
 
     var getRemoteData = function( sqlQueryString ) {
       var url = API_ENDPOINT+ '?sql=' +sqlQueryString+ '&key=' +API_KEY+ '&callback=JSON_CALLBACK';
-      return $http.jsonp( encodeURI(url), {cache: true});
+      return $http.jsonp( encodeURI(url), {cache: true} );
     };
 
     var getLocalData = function(path_fichero){
@@ -26,6 +26,22 @@ angular.module('wca.services',[])
       getRemoteData: getRemoteData,
       getLocalData: getLocalData
     }
+  })*/
+  .service('SFusionTable', function($http){
+
+    var API_ENDPOINT = 'https://www.googleapis.com/fusiontables/v2/query';
+    var API_KEY = 'AIzaSyBsdouSTimjrC2xHmbGgOt8VfbLBWc9Gps';
+
+    this.TABLE_ID = '1gX5maFbqFyRziZiUYlpOBYhcC1v9lGkKqCXvZREF';
+
+    this.getRemoteData = function( sqlQueryString ) {
+      var url = API_ENDPOINT+ '?sql=' +sqlQueryString+ '&key=' +API_KEY+ '&callback=JSON_CALLBACK';
+      return $http.jsonp( encodeURI(url), {cache: true} );
+    };
+
+    this.getLocalData = function(path_fichero){
+      return $http.get(path_fichero);
+    };
   })
 // ====================================================================================================================
   .factory('SMapa', function(SFusionTable, SPopup){
@@ -316,10 +332,8 @@ angular.module('wca.services',[])
   })
 // ====================================================================================================================
   .constant('STRINGS', {
-    CAUSAS: ' Posibles causas: 1) Sin conexión de datos. 2) Fallo de servidor remoto',
-    IMG_ERROR: 'Error. No se han podido obtener imágenes de webcams por razones ajenas a la aplicación.' + this.CAUSAS,
-    METEO_ERROR: 'No se ha podido obtener información meteorológica.' + this.CAUSAS,
-    WIKIP_ERROR: 'No se ha podido obtener información de Wikipedia.' + this.CAUSAS,
+    ERROR: 'Error. No se han podido obtener datos remotos. Posibles causas: ' +
+      '1) Sin conexión de datos. 2) Fallo de servidor remoto',
     RECARGANDO_IMG: 'Recargando imagen...'
   })
 

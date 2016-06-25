@@ -186,6 +186,7 @@ angular.module('wca.controllers',[])
 
     // init
     $scope.rowid = $stateParams.rowid;
+    $scope.descripcion = ' (Obteniendo datos del servidor...)'
     SLoader.showWithBackdrop('Cargando...');
     if(!$rootScope.items || !$scope.rowid){
       $location.path('#/');
@@ -213,10 +214,10 @@ angular.module('wca.controllers',[])
         //url icono: http://openweathermap.org/img/w/10n.png
         $scope.iconoUrl = 'http://openweathermap.org/img/w/'+climadata.weather[0].icon+'.png' ;
       } else {
-        $scope.descripcion = STRINGS.METEO_ERROR;
+        $scope.descripcion = STRINGS.ERROR;
       }
     }).error(function(status){
-      $scope.descripcion = STRINGS.METEO_ERROR;
+      $scope.descripcion = STRINGS.ERROR;
       console.error('SClima.getData(): ', status);
     });
     // WIKIPEDIA -----------------------------------------------------------------------------------------------------
@@ -229,7 +230,7 @@ angular.module('wca.controllers',[])
           $scope.wikipediaCredits = '<br>Fuente: <a href="http://org.wikipedia.es" target="_blank">Wikipedia</a>';
         }
       }).error(function(status){
-        $scope.infoConcejo = STRINGS.WIKIP_ERROR;
+        $scope.infoConcejo = STRINGS.ERROR;
         console.error('SWikipedia.info()', status)
       });
     }
@@ -589,7 +590,7 @@ angular.module('wca.controllers',[])
     var camsFiltradasPorUrl = null;
 
     $scope.imgError = function () {
-      $scope.error = STRINGS.IMG_ERROR;
+      $scope.error = STRINGS.ERROR;
       $scope.$apply();
     };
 
@@ -604,7 +605,6 @@ angular.module('wca.controllers',[])
 
       if (data.error) {
         console.error(data);
-        //$scope.error = 'Error al obtener datos de webcams. '+data;
         $scope.imgError();
         SLoader.hide();
       }
