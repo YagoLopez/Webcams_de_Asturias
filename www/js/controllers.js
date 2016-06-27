@@ -539,6 +539,8 @@ angular.module('wca.controllers',[])
 // ====================================================================================================================
 .controller('PorConcejoCtrl', function($scope, $window, $sce, SLoader){
 
+    var height = '300';
+    $scope.endLoad = false;
     SLoader.showWithBackdrop();
     $scope.calculateDimensions = function(gesture) {
       $scope.dev_width = $window.innerWidth;
@@ -558,8 +560,7 @@ angular.module('wca.controllers',[])
       'gco_useFirstColumnAsDomain=true&gco_isStacked=false&gco_booleanRole=certainty&' +
       'gco_hAxis=%7B%22useFormatFromData%22%3Atrue%2C+%22minValue%22%3Anull%2C+%22maxValue%22%3Anull%2C+%22viewWindow%22%3Anull%2C+%22viewWindowMode%22%3Anull%2C+%22slantedText%22%3Atrue%2C+%22slantedTextAngle%22%3A90%7D' +
       '&gco_legend=none&gco_title=&gco_series=%7B%220%22%3A%7B%22targetAxisIndex%22%3A0%7D%7D&' +
-      'width=' + $scope.dev_width +'&height=' + $scope.dev_height/2;
-
+      'width=' + ($scope.dev_width-($scope.dev_height/4)) +'&height=' + height;
 
     var urlCamsConcejo = 'https://www.google.com/fusiontables/embedviz?containerId=googft-gviz-canvas&' +
       'q=select+col3%3E%3E0%2C+count()+from+13UohUM23CESgCHVm8LZdhEQOieWzd96oImsgc1qH+group+by+col3%3E%3E0+order+by+col3%3E%3E0+asc+limit+100&' +
@@ -569,7 +570,7 @@ angular.module('wca.controllers',[])
       'gco_hAxis=%7B%22useFormatFromData%22%3Atrue%2C+%22minValue%22%3Anull%2C+%22maxValue%22%3Anull%2C+%22viewWindow%22%3Anull%2C+%22viewWindowMode%22%3Anull%2C+%22title%22%3A%22%22%2C+%22slantedText%22%3Atrue%2C+%22slantedTextAngle%22%3A90%7D&' +
       'gco_legend=none&gco_title=&gco_domainAxis=%7B%22direction%22%3A1%7D&' +
       'gco_series=%7B%220%22%3A%7B%22targetAxisIndex%22%3A0%2C+%22errorBars%22%3A%7B%22errorType%22%3A%22none%22%7D%7D%7D&' +
-      'width=' + $scope.dev_width +'&height=' + $scope.dev_height/2;
+      'width=' + ($scope.dev_width-($scope.dev_height/4)) +'&height=' + height;
 
 
     $scope.urlConcejosMasCams = $sce.trustAsResourceUrl(urlConcejosMasCams);
@@ -577,6 +578,7 @@ angular.module('wca.controllers',[])
 
     $scope.cargaFrameTerminada = function(){
       SLoader.hide();
+      $scope.endLoad = true;
     }
   })
 // ====================================================================================================================

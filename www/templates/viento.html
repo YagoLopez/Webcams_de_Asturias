@@ -18,11 +18,19 @@
       text-align: center;
       background: aliceblue;
     }
+
+    .fuente {
+      padding: 10px;
+      text-align: center;
+      width: 100%;
+      margin: auto;
+    }
   </style>
   <ion-content class="content">
     <iframe id="mapaviento" ng-src="https://embed.windyty.com/?40.4,-3.7,5,metric.wind.km/h"
             scrolling="no" marginwidth="0" marginheight="0" allowfullscreen frameborder="0"
             iframe-onload="cargaFrameTerminada()">
     </iframe>
+    <div class="fuente">Fuente: <a href="http://www.windyty.com" target="_blank">windyty.com</a></div>
   </ion-content>
 </ion-view>

@@ -20,16 +20,15 @@ angular.module('wca.services',[])
     };
   })
 // ====================================================================================================================
-  .factory('SMapa', function(SFusionTable, SPopup){
+  .service('SMapa', function(SFusionTable, SPopup){
 
-    var OVIEDO = {lat: 43.3667, lng: -5.8333}; // centro de mapa vista global
-    var RADIO_BUSQUEDA = 500; // radio de búsqueda en metros de panorama StreetView a partir de coordenadas de cam
     var placesService = null, request = null;
 
-    var hallaLatLng = function (domElement, lugar, concejo, fn){
+    this.OVIEDO = {lat: 43.3667, lng: -5.8333}; // centro de mapa vista global
+    this.RADIO_BUSQUEDA = 500; // radio de búsqueda en metros de panorama StreetView a partir de coordenadas de cam
+
+    this.hallaLatLng = function (domElement, lugar, concejo, fn){
       request = {
-        //location: OVIEDO,
-        //radius: '1',
         query: "'"+lugar+", "+concejo+", Asturias, España'",
         lenguage: 'es'
       };
@@ -46,7 +45,7 @@ angular.module('wca.services',[])
       }
     };
 
-    var creaStreetView = function(domElement, locationLatLng){
+    this.creaStreetView = function(domElement, locationLatLng){
       return new google.maps.StreetViewPanorama( domElement, {
         pov: {heading: 0, pitch: 0},
         position: locationLatLng,
@@ -54,7 +53,7 @@ angular.module('wca.services',[])
       });
     };
 
-    var crear = function (domElement){
+    this.crear = function (domElement){
       var mapa = new google.maps.Map(domElement,  {
         mapTypeControl: true,
         mapTypeControlOptions: { style: google.maps.MapTypeControlStyle.DROPDOWN_MENU },
@@ -63,7 +62,7 @@ angular.module('wca.services',[])
       return mapa;
     };
 
-    var creaFusionTableLayer = function(filtroMarkers){
+    this.creaFusionTableLayer = function(filtroMarkers){
       var query = { select: 'col7', from: SFusionTable.TABLE_ID, where: filtroMarkers };
       var options = { styleId: 6, templateId: 8 };
       var layer = new google.maps.FusionTablesLayer({
@@ -74,32 +73,22 @@ angular.module('wca.services',[])
       return layer;
     };
 
-    var creaMarker = function(posicionLatLng, mapa, titulo){
+    this.creaMarker = function(posicionLatLng, mapa, titulo){
       var marker = new google.maps.Marker({
         position: posicionLatLng,
         map: mapa,
         title: titulo,
-        icon: 'https://storage.googleapis.com/support-kms-prod/SNP_2752125_en_v0'
+        icon: 'img/red-marker.png'
+        //icon: 'https://storage.googleapis.com/support-kms-prod/SNP_2752125_en_v0'
         //animation: google.maps.Animation.DROP
       });
     };
 
-    var onMapLoaded = function(mapa, loader){
+    this.onMapLoaded = function(mapa, loader){
       google.maps.event.addListenerOnce(mapa, 'idle', function(){
         loader.hide();
       });
     };
-
-    return {
-      OVIEDO: OVIEDO,
-      RADIO_BUSQUEDA: RADIO_BUSQUEDA,
-      hallaLatLng: hallaLatLng,
-      creaStreetView: creaStreetView,
-      crear: crear,
-      creaFusionTableLayer: creaFusionTableLayer,
-      creaMarker: creaMarker,
-      onMapLoaded: onMapLoaded
-    }
   })
 // ====================================================================================================================
   .service('SClima', function($http){
