@@ -40,8 +40,8 @@
       <div class="row" ng-repeat="cam in items track by cam[4]" ng-if="$index % 3 === 0" style="padding:0; margin:0;">
 
         <ion-item class="col col-33" ng-if="$index < items.length">
-          <a href="#/app/detalle/{{ items[$index][4] }}" class="item itemCam">
-            <img ng-src="{{ items[$index][2] }}" fallback-src="img/imgFail.png" width="100%" class="imgLoader"/>
+          <a href="#/app/detalle/{{ items[$index][4] }}" class="item itemCam imgLoader">
+            <img ng-src="{{ items[$index][2] }}" fallback-src="img/imgFail.png" width="100%"/>
             <div class="txt">{{ items[$index][0] }}</div>
           </a>
         </ion-item>

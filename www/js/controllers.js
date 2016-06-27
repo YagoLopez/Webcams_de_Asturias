@@ -186,7 +186,7 @@ angular.module('wca.controllers',[])
     // init
     $scope.rowid = $stateParams.rowid;
     $scope.descripcion = ' (Obteniendo datos del servidor...)'
-    SLoader.showWithBackdrop('Cargando...');
+    SLoader.show('Cargando...');
     if(!$rootScope.items || !$scope.rowid){
       $location.path('#/');
       return;
@@ -458,7 +458,7 @@ angular.module('wca.controllers',[])
   };
   var queryString = 'SELECT * FROM '+ItemsMeteo.FUSION_TABLE_ID+' ORDER BY id ASC';
 
-  SLoader.showWithBackdrop('Cargando...');
+  SLoader.show('Cargando...');
 
   SFusionTable.getRemoteData(queryString).success(
     function(data){
@@ -495,7 +495,7 @@ angular.module('wca.controllers',[])
 .controller('PorCategoriaCtrl', function($scope, $window, $sce, SLoader){
 
     $scope.$on('$ionicView.beforeEnter', function () {
-      SLoader.showWithBackdrop();
+      SLoader.show('Cargando...');
     });
     //Calculo de dimensiones de ventana al redimensionar
     $scope.calculateDimensions = function(gesture) {
@@ -541,7 +541,7 @@ angular.module('wca.controllers',[])
 
     var height = '300';
     $scope.endLoad = false;
-    SLoader.showWithBackdrop();
+    SLoader.show('Cargando...');
     $scope.calculateDimensions = function(gesture) {
       $scope.dev_width = $window.innerWidth;
       $scope.dev_height = $window.innerHeight;
@@ -585,7 +585,7 @@ angular.module('wca.controllers',[])
 .controller('ListadoCtrl', function($scope, $stateParams, $rootScope, $ionicFilterBar, STRINGS,
                                    SFusionTable, $filter, $ionicScrollDelegate, SCategorias, $ionicHistory, SLoader) {
 
-    SLoader.showWithBackdrop('Cargando...');
+    SLoader.show('Cargando...');
     var concejo = $stateParams.concejo;
     var idCategoria = $stateParams.idCategoria;
     var camsFiltradasPorUrl = null;
@@ -676,34 +676,7 @@ angular.module('wca.controllers',[])
 // ====================================================================================================================
 .controller('VientoCtrl', function($scope, SLoader){
 
-/*
-  $scope.$on('$ionicView.afterEnter', function(){
-    console.log('viento ctrl');
-    var windytyInit = {
-      // Required: API key
-      key: 'PsL-At-XpsPTZexBwUkO7Mx5I',
-
-      // Optional: Initial state of the map
-      lat: 50.4,
-      lon: 14.3,
-      zoom: 5
-    };
-
-    // Required: Windyty main function is called after
-    // initialization of API
-    //
-    // @map is instance of Leaflet maps
-    //
-    function windytyMain(map) {
-      var popup = L.popup()
-        .setLatLng([50.4, 14.3])
-        .setContent("Hello World")
-        .openOn( map );
-    }
-  });
-*/
-
-  SLoader.showWithBackdrop();
+  SLoader.show('Cargando...');
 
   $scope.cargaFrameTerminada = function(){
     SLoader.hide();
