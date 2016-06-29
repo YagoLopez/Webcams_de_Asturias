@@ -458,7 +458,7 @@ angular.module('wca.controllers',[])
   };
   var queryString = 'SELECT * FROM '+ItemsMeteo.FUSION_TABLE_ID+' ORDER BY id ASC';
 
-  SLoader.show('Cargando...');
+  SLoader.showWithBackdrop('Cargando...');
 
   SFusionTable.getRemoteData(queryString).success(
     function(data){
