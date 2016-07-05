@@ -3,39 +3,27 @@
   <style type="text/css">
     iframe {
       width: 100%;
-      /*width: 400px;*/
-      height: 320px;
+      height: 100%;
       background: transparent url(img/clock-32x32-3.png) no-repeat center center;
     }
     .no-bg{
       background: none;
-    }
-
-    .iframe-container {
-      width: 100%;
-      display: block;
-      text-align: center;
-      margin: auto;
     }
   </style>
   <ion-content class="animated fadeIn">
     <div class="item item-divider">
       Concejos con más cámaras
     </div>
-    <div class="iframe-container">
-      <iframe ng-src="{{ ::urlConcejosMasCams }}" scrolling="no" marginwidth="0" marginheight="0"
-              frameborder="0" allowfullscreen iframe-onload="cargaFrameTerminada()" ng-class="{'no-bg': endLoad}">
-      </iframe>
-    </div>
+    <iframe ng-src="{{ ::urlConcejosMasCams }}" scrolling="yes" marginwidth="0" marginheight="0"
+            frameborder="0" allowfullscreen iframe-onload="cargaFrameTerminada()">
+    </iframe>
 
     <div class="item item-divider">
       Nº webcams por concejo
     </div>
-    <div class="iframe-container">
-      <iframe ng-src="{{ ::urlCamsConcejo }}" scrolling="no" marginwidth="0" marginheight="0"
-              frameborder="0" allowfullscreen iframe-onload="cargaFrameTerminada()" ng-class="{'no-bg': endLoad}">
-      </iframe>
-    </div>
+    <iframe ng-src="{{ ::urlCamsConcejo }}" scrolling="yes" marginwidth="0" marginheight="0"
+            frameborder="0" allowfullscreen iframe-onload="cargaFrameTerminada()">
+    </iframe>
 
     <div style="text-align:center" class="padding">Toque en sectores del diagrama para información específica</div>
 
