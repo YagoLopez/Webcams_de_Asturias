@@ -25,8 +25,7 @@
   </style>
 
   <ion-nav-buttons side="left">
-    <button class="button button-icon button-clear ion-navicon" menu-toggle="left">
-    </button>
+    <button ng-if="screenWidth < 760" class="button button-icon button-clear ion-navicon" menu-toggle="left"></button>
   </ion-nav-buttons>
 
   <ion-header-bar class="bar-subheader bar-stable">

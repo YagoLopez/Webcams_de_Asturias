@@ -202,9 +202,18 @@ app.config(function($stateProvider, $urlRouterProvider, $compileProvider, $ionic
 
 })
 // Inicializaciones ===================================================================================================
-app.run(function($ionicPlatform) {
-  $ionicPlatform.ready(function() {
+app.run(function($ionicPlatform, $rootScope, $window) {
 
+    // halla anchura de pantalla para dibujar condicionalmente menu button en ion-nav-bar en 'menu.html'
+    ionic.on('resize', function(){
+      $rootScope.$apply(function(){
+        $rootScope.screenWidth = $window.innerWidth;
+        // console.log('resize event', $rootScope.screenWidth);
+      })
+    })
+    $rootScope.screenWidth = $window.innerWidth;
+
+  $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
     if (window.cordova && window.cordova.plugins.Keyboard) {

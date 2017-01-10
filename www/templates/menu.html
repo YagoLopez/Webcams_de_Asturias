@@ -9,12 +9,11 @@
   <!-- Side Menu Content ------------------------------------------------------------------------------------------ -->
   <ion-side-menu-content drag-content="true">
 
-    <ion-nav-bar class="bar-positive sombraInferior">
-      <ion-nav-back-button class="button-icon ion-android-arrow-back">
-      </ion-nav-back-button>
+    <!--usar aqui clase 'sombraInferior' para poner sombra inferior en la barra de títulos-->
+    <ion-nav-bar class="bar-positive">
+      <ion-nav-back-button class="button-icon ion-android-arrow-back"></ion-nav-back-button>
       <ion-nav-buttons side="left">
-        <button class="button button-icon button-clear ion-navicon" menu-toggle="left">
-        </button>
+        <button ng-if="screenWidth < 760" class="button button-icon button-clear ion-navicon" menu-toggle="left"></button>
       </ion-nav-buttons>
       <ion-nav-buttons side="secondary">
         <button ng-if="mostrarLupa" class="button button-icon icon ion-ios-search-strong"

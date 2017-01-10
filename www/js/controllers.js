@@ -9,6 +9,98 @@
 
 angular.module('wca.controllers',[])
 // ====================================================================================================================
+.controller('ListadoCtrl', function($scope, $stateParams, $rootScope, $ionicFilterBar, STRINGS, $window,
+                                   SFusionTable, $filter, $ionicScrollDelegate, SCategorias, $ionicHistory, SLoader) {
+
+    SLoader.show('Cargando...');
+    var concejo = $stateParams.concejo;
+    var idCategoria = $stateParams.idCategoria;
+    var camsFiltradasPorUrl = null;
+
+    $scope.imgError = function () {
+      $scope.error = STRINGS.ERROR;
+      $scope.$apply();
+    };
+
+    function esSubcadena(idCategoria, urlCategoria) {
+      return (urlCategoria.indexOf('categoria=' + idCategoria) > -1);
+    }
+
+    $ionicHistory.clearCache();
+
+  var sqlQuery = 'SELECT Lugar,Concejo,Imagen,Categoria,rowid,latitud,longitud FROM '+ SFusionTable.TABLE_ID;
+    SFusionTable.getRemoteData(sqlQuery).success(function(data) {
+
+      if (data.error) {
+        console.error(data);
+        $scope.imgError();
+        SLoader.hide();
+      }
+      // -------------------------------------------------------------------------------------------------------------
+      // FILTRO 1: filtra las cams por parametros de url: concejo y categoria
+      // -------------------------------------------------------------------------------------------------------------
+      camsFiltradasPorUrl = $filter('filter')(data.rows, function (cam) {
+        if (concejo && idCategoria) {
+          // cam[1]: concejo de camara, cam[3]: url categoria (no id de categoria, no confundir)
+          return (cam[1].toLowerCase() == concejo.toLowerCase() && esSubcadena(idCategoria, cam[3]));
+        } else {
+          if (concejo)
+            return cam[1].toLowerCase() == concejo.toLowerCase();
+          if (idCategoria)
+            return esSubcadena(idCategoria, cam[3]);
+          if (!concejo && !idCategoria)
+            return data.rows;
+        }
+      });
+      // Inicialmente items contiene las cams filtradas solo por parametros de url
+      $rootScope.items = camsFiltradasPorUrl;
+      // Despues de filtrar, guardar parametros en scope. Se hace asi para que el filtrado sea mas eficiente
+      $rootScope.concejo = concejo;
+      $rootScope.idCategoria = idCategoria;
+      if (!idCategoria || idCategoria == '') {
+        $rootScope.tituloVista = 'Todas'
+      } else {
+        $rootScope.tituloVista = SCategorias.idCategoria_a_nombre(idCategoria);
+      }
+      // -------------------------------------------------------------------------------------------------------------
+      // FILTRO 2: filtra las cams segun una cadena de texto que haya introducido el usuario en la barra de busqueda
+      // -------------------------------------------------------------------------------------------------------------
+      // este filtro se aplica sobre los datos previamente filtrados por parametros url
+      //TODO: Habría que mejorar la búsqueda para que fuera menos estricta. Por ejemplo, si se introduce "puerto llanes" no se
+      //encuentra "Puerto de Llanes"
+      $rootScope.showFilterBar = function () {
+        $rootScope.filterBarInstance = $ionicFilterBar.show({
+          items: $rootScope.items,
+          update: function (filteredItems, filteredText) {
+            //console.log('rootscope.items', $rootScope.items);
+            $rootScope.items = filteredItems;
+            $ionicScrollDelegate.scrollTop(false);
+          },
+          cancelText: 'Cancelar',
+          //done: function(){},
+          //cancel: function(){},
+          cancelOnStateChange: false
+        });
+      };
+      SLoader.hide();
+    }).error(function(data, status) {
+      $scope.imgError();
+      SLoader.hide();
+    });
+
+    $scope.$on('$ionicView.afterEnter', function(){
+      $rootScope.mostrarLupa = true;
+      $('ion-filter-bar').show();
+    })
+
+    $scope.$on('$ionicView.beforeLeave', function(){
+      $rootScope.mostrarLupa = false;
+      $('ion-filter-bar').hide();
+    })
+
+
+  })
+// ====================================================================================================================
 .controller('MapaCtrl', function($scope, SMapa, $rootScope, $location){
 
   $scope.$on('$ionicView.afterEnter', function() {
@@ -116,67 +208,6 @@ angular.module('wca.controllers',[])
 
     mapa = SMapa.crear(document.getElementById('mapaglobal'));
     $scope.mostrarTodos(); // por defecto
-
-})
-// ====================================================================================================================
-.controller('PanoramioCtrl', function($scope, $ionicModal, $rootScope, SPopup, $location){
-
-  if(!$rootScope.cam) {
-    $location.path( "#/" );
-    return;
-  };
-
-  var lat = $rootScope.cam.lat;
-  var lng = $rootScope.cam.lng;
-  var OFFSET = 0.002;
-  var divCreditos = null; FotosPanoramio = null;
-
-  var hayFotoSiguiente = function(){
-    return !FotosPanoramio.getAtEnd();
-  };
-  var hayFotoAnterior = function(){
-    return !FotosPanoramio.getAtStart();
-  };
-  var rectanguloBusqueda = { 'rect': {
-    'sw': {'lat': lat-OFFSET, 'lng': lng-OFFSET},
-    'ne': {'lat': lat+OFFSET, 'lng': lng+OFFSET}
-  }};
-  divCreditos = document.getElementById('divCreditos');
-  FotosPanoramio = new panoramio.PhotoWidget('divPanoramio', rectanguloBusqueda, null);
-  FotosPanoramio.setPosition(0);
-
-  $scope.fotos = FotosPanoramio;
-  $scope.nextPhoto = function(){
-    if (hayFotoSiguiente())
-      FotosPanoramio.setPosition( FotosPanoramio.getPosition()+1 );
-  }
-  $scope.prevPhoto = function(){
-    if (hayFotoAnterior())
-      FotosPanoramio.setPosition( FotosPanoramio.getPosition()-1 );
-  }
-  // DIALOGO MODAL ----------------------------------------------------------------------------------------------
-  $ionicModal.fromTemplateUrl('templates/modal-panoramio.html', {
-    scope: $scope,
-    animation: 'scale-in'
-  }).then(function(modal) {
-    $scope.modal = modal;
-  });
-  $scope.showModal= function (){
-    if(FotosPanoramio.getPhoto()){
-      $scope.urlImg = FotosPanoramio.getPhoto().Ya[0].url;
-      $scope.titulo = FotosPanoramio.getPhoto().getPhotoTitle();
-      $scope.autor = FotosPanoramio.getPhoto().getOwnerName();
-      $scope.urlAutor = FotosPanoramio.getPhoto().getOwnerUrl();
-      $scope.modal.show();
-    } else {
-      SPopup.show('Error', 'Fallo al conectar con el servidor de fotos de Panoramio');
-      console.error('PanoramioCtrl.showModal(): Fallo al conectar con el servidor de fotos de Panoramio');
-    }
-  }
-  $scope.closeModal = function () {
-    $scope.modal.hide();
-  };
-  // FIN DIALOGO MODAL ----------------------------------------------------------------------------------------------
 
 })
 // ====================================================================================================================
@@ -297,7 +328,7 @@ angular.module('wca.controllers',[])
 // ====================================================================================================================
 .controller('GifPlayerCtrl', function($scope, $interval, $stateParams, ItemsMeteo, ItemMeteo, SLoader, SPopup, $location){
 
-    SLoader.showWithBackdrop('Cargando...');
+    SLoader.showWithBackdrop('Cargando...<br/>(El proceso puede tardar)');
 
     // Obtiene itemMeteo ------------------------------------------------------------------------------------------------
 
@@ -495,7 +526,7 @@ angular.module('wca.controllers',[])
 .controller('PorCategoriaCtrl', function($scope, $window, $sce, SLoader){
 
     $scope.$on('$ionicView.beforeEnter', function () {
-      SLoader.show('Cargando...');
+      SLoader.showWithBackdrop('Cargando...');
     });
     //Calculo de dimensiones de ventana al redimensionar
     $scope.calculateDimensions = function(gesture) {
@@ -541,7 +572,7 @@ angular.module('wca.controllers',[])
 
     var iframeHeigth = 525;
     $scope.endLoad = false;
-    SLoader.show('Cargando...');
+    SLoader.showWithBackdrop('Cargando...');
     $scope.calculateDimensions = function(gesture) {
       $scope.dev_width = $window.innerWidth;
       $scope.dev_height = $window.innerHeight;
@@ -581,98 +612,6 @@ angular.module('wca.controllers',[])
     }
   })
 // ====================================================================================================================
-.controller('ListadoCtrl', function($scope, $stateParams, $rootScope, $ionicFilterBar, STRINGS,
-                                   SFusionTable, $filter, $ionicScrollDelegate, SCategorias, $ionicHistory, SLoader) {
-
-    SLoader.show('Cargando...');
-    var concejo = $stateParams.concejo;
-    var idCategoria = $stateParams.idCategoria;
-    var camsFiltradasPorUrl = null;
-
-    $scope.imgError = function () {
-      $scope.error = STRINGS.ERROR;
-      $scope.$apply();
-    };
-
-    function esSubcadena(idCategoria, urlCategoria) {
-      return (urlCategoria.indexOf('categoria=' + idCategoria) > -1);
-    }
-
-    $ionicHistory.clearCache();
-
-  var sqlQuery = 'SELECT Lugar,Concejo,Imagen,Categoria,rowid,latitud,longitud FROM '+ SFusionTable.TABLE_ID;
-    SFusionTable.getRemoteData(sqlQuery).success(function(data) {
-
-      if (data.error) {
-        console.error(data);
-        $scope.imgError();
-        SLoader.hide();
-      }
-      // -------------------------------------------------------------------------------------------------------------
-      // FILTRO 1: filtra las cams por parametros de url: concejo y categoria
-      // -------------------------------------------------------------------------------------------------------------
-      camsFiltradasPorUrl = $filter('filter')(data.rows, function (cam) {
-        if (concejo && idCategoria) {
-          // cam[1]: concejo de camara, cam[3]: url categoria (no id de categoria, no confundir)
-          return (cam[1].toLowerCase() == concejo.toLowerCase() && esSubcadena(idCategoria, cam[3]));
-        } else {
-          if (concejo)
-            return cam[1].toLowerCase() == concejo.toLowerCase();
-          if (idCategoria)
-            return esSubcadena(idCategoria, cam[3]);
-          if (!concejo && !idCategoria)
-            return data.rows;
-        }
-      });
-      // Inicialmente items contiene las cams filtradas solo por parametros de url
-      $rootScope.items = camsFiltradasPorUrl;
-      // Despues de filtrar, guardar parametros en scope. Se hace asi para que el filtrado sea mas eficiente
-      $rootScope.concejo = concejo;
-      $rootScope.idCategoria = idCategoria;
-      if (!idCategoria || idCategoria == '') {
-        $rootScope.tituloVista = 'Todas'
-      } else {
-        $rootScope.tituloVista = SCategorias.idCategoria_a_nombre(idCategoria);
-      }
-      // -------------------------------------------------------------------------------------------------------------
-      // FILTRO 2: filtra las cams segun una cadena de texto que haya introducido el usuario en la barra de busqueda
-      // -------------------------------------------------------------------------------------------------------------
-      // este filtro se aplica sobre los datos previamente filtrados por parametros url
-      //TODO: Habría que mejorar la búsqueda para que fuera menos estricta. Por ejemplo, si se introduce "puerto llanes" no se
-      //encuentra "Puerto de Llanes"
-      $rootScope.showFilterBar = function () {
-        $rootScope.filterBarInstance = $ionicFilterBar.show({
-          items: $rootScope.items,
-          update: function (filteredItems, filteredText) {
-            //console.log('rootscope.items', $rootScope.items);
-            $rootScope.items = filteredItems;
-            $ionicScrollDelegate.scrollTop(false);
-          },
-          cancelText: 'Cancelar',
-          //done: function(){},
-          //cancel: function(){},
-          cancelOnStateChange: false
-        });
-      };
-      SLoader.hide();
-    }).error(function(data, status) {
-      $scope.imgError();
-      SLoader.hide();
-    });
-
-    $scope.$on('$ionicView.afterEnter', function(){
-      $rootScope.mostrarLupa = true;
-      $('ion-filter-bar').show();
-    })
-
-    $scope.$on('$ionicView.beforeLeave', function(){
-      $rootScope.mostrarLupa = false;
-      $('ion-filter-bar').hide();
-    })
-
-
-  })
-// ====================================================================================================================
 .controller('VientoCtrl', function($scope, SLoader){
 
   SLoader.show('Cargando...');
@@ -682,3 +621,66 @@ angular.module('wca.controllers',[])
   }
 
 });
+// ====================================================================================================================
+/*
+.controller('PanoramioCtrl', function($scope, $ionicModal, $rootScope, SPopup, $location){
+
+  if(!$rootScope.cam) {
+    $location.path( "#/" );
+    return;
+  };
+
+  var lat = $rootScope.cam.lat;
+  var lng = $rootScope.cam.lng;
+  var OFFSET = 0.002;
+  var divCreditos = null; FotosPanoramio = null;
+
+  var hayFotoSiguiente = function(){
+    return !FotosPanoramio.getAtEnd();
+  };
+  var hayFotoAnterior = function(){
+    return !FotosPanoramio.getAtStart();
+  };
+  var rectanguloBusqueda = { 'rect': {
+    'sw': {'lat': lat-OFFSET, 'lng': lng-OFFSET},
+    'ne': {'lat': lat+OFFSET, 'lng': lng+OFFSET}
+  }};
+  divCreditos = document.getElementById('divCreditos');
+  FotosPanoramio = new panoramio.PhotoWidget('divPanoramio', rectanguloBusqueda, null);
+  FotosPanoramio.setPosition(0);
+
+  $scope.fotos = FotosPanoramio;
+  $scope.nextPhoto = function(){
+    if (hayFotoSiguiente())
+      FotosPanoramio.setPosition( FotosPanoramio.getPosition()+1 );
+  }
+  $scope.prevPhoto = function(){
+    if (hayFotoAnterior())
+      FotosPanoramio.setPosition( FotosPanoramio.getPosition()-1 );
+  }
+  // DIALOGO MODAL ----------------------------------------------------------------------------------------------
+  $ionicModal.fromTemplateUrl('templates/modal-panoramio.html', {
+    scope: $scope,
+    animation: 'scale-in'
+  }).then(function(modal) {
+    $scope.modal = modal;
+  });
+  $scope.showModal= function (){
+    if(FotosPanoramio.getPhoto()){
+      $scope.urlImg = FotosPanoramio.getPhoto().Ya[0].url;
+      $scope.titulo = FotosPanoramio.getPhoto().getPhotoTitle();
+      $scope.autor = FotosPanoramio.getPhoto().getOwnerName();
+      $scope.urlAutor = FotosPanoramio.getPhoto().getOwnerUrl();
+      $scope.modal.show();
+    } else {
+      SPopup.show('Error', 'Fallo al conectar con el servidor de fotos de Panoramio');
+      console.error('PanoramioCtrl.showModal(): Fallo al conectar con el servidor de fotos de Panoramio');
+    }
+  }
+  $scope.closeModal = function () {
+    $scope.modal.hide();
+  };
+  // FIN DIALOGO MODAL ----------------------------------------------------------------------------------------------
+
+})
+*/
