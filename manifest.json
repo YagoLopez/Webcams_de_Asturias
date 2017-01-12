@@ -1,0 +1,15 @@
+{
+  "short_name": "WCA",
+  "name": "Webcams de Asturias",
+  "icons": [
+    {
+      "src": "www/res/145x145.png",
+      "sizes": "145x145",
+      "type": "image/png"
+    }
+  ],
+  "start_url": "index.html",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#2196F3"
+}

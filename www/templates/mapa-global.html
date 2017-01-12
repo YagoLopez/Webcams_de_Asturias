@@ -23,7 +23,6 @@
 
   <ion-content>
 
-
     <div id="mapaglobal" data-tap-disabled="true" style=""></div>
 
     <div id="responsive-container">
@@ -36,10 +35,9 @@
         <label class="item item-input item-select" style="width:100%;font-size:small">
           <i class="icon ion-android-checkbox-outline" ng-show="checked==='con'" style="color:#007aff"></i>&nbsp;
           Concejo:
-          <select id="selectConcejo" style="color: #387ef5" ng-model="concejo" ng-change="concejoEscogido(concejo);">
-            <option ng-repeat="concejo in concejos">
-              {{ ::concejo[0] }}
-            </option>
+          <select id="selectConcejo" style="color: #387ef5" ng-model="concejo" ng-change="concejoEscogido(concejo);"
+          >
+            <option ng-repeat="concejo in concejos">{{ ::concejo[0] }}</option>
           </select>
         </label>
       </div>

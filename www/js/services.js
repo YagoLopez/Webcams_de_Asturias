@@ -22,6 +22,11 @@ angular.module('wca.services',[])
 // ====================================================================================================================
 .service('SMapa', function(SFusionTable, SPopup){
 
+  if (typeof google === 'undefined'){
+    window.location = 'index.html';
+    return;
+  }
+
   var placesService = null, request = null;
 
   this.OVIEDO = {lat: 43.3667, lng: -5.8333}; // centro de mapa vista global

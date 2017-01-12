@@ -209,6 +209,11 @@ angular.module('wca.controllers',[])
     mapa = SMapa.crear(document.getElementById('mapaglobal'));
     $scope.mostrarTodos(); // por defecto
 
+    $scope.selectClick = function (e) {
+      console.log('select click');
+      e.preventDefault();
+    }
+
 })
 // ====================================================================================================================
 .controller('DetalleCtrl', function($scope, $stateParams, $ionicModal, SClima, $filter, $rootScope,
@@ -328,7 +333,7 @@ angular.module('wca.controllers',[])
 // ====================================================================================================================
 .controller('GifPlayerCtrl', function($scope, $interval, $stateParams, ItemsMeteo, ItemMeteo, SLoader, SPopup, $location){
 
-    SLoader.showWithBackdrop('Cargando...<br/>(El proceso puede tardar)');
+    SLoader.showWithBackdrop('Cargando...<br/>El proceso puede tardar');
 
     // Obtiene itemMeteo ------------------------------------------------------------------------------------------------
 
@@ -456,12 +461,14 @@ angular.module('wca.controllers',[])
             $zoomOut: $('.zoom-out'),
             $zoomRange: $('.zoom-range'),
             $reset: $('.reset'),
-            contain: 'invert',
             minScale: 1,
-            //startTransform: 'scale(0.5)'
-          }).panzoom('zoom');
-          $('.jsgif > canvas').panzoom('zoom', 1.0, { silent: true });
-
+            maxScale: 4,
+            increment: 0.5,
+            rangeStep: 0.1,
+            duration: 200,
+            contain: 'invert'
+          });
+          
           SLoader.hide();
         })
       },
@@ -614,7 +621,7 @@ angular.module('wca.controllers',[])
 // ====================================================================================================================
 .controller('VientoCtrl', function($scope, SLoader){
 
-  SLoader.show('Cargando...');
+  SLoader.showWithBackdrop('Cargando...');
 
   $scope.cargaFrameTerminada = function(){
     SLoader.hide();

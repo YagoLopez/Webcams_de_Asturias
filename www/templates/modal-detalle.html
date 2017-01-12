@@ -27,13 +27,12 @@
     <div class="title">
       Zoom <img src="img/pinch1.png"/>
     </div>
-      <button class="button button-clear pull-right" ng-click="modalDetalle.hide()">
-        Cerrar
-        <i class="icon icon-right ion-android-close"></i>
+      <button class="button pull-right" ng-click="modalDetalle.hide()">
+        <i class="icon icon-right ion-ios-close-outline"></i>
       </button>
   </ion-header-bar>
 
-  <!-- overflow-scroll=false para permitir scrolling con javascript de ionic. Permite hacer zoom en imagen -->
+  <!-- overflow-scroll=false para permitir scrolling con javascript. Permite hacer zoom en imagen -->
   <!-- locking=false para permitir srcroll simultaneo en ejes x,y. apropiado para hacer zoom -->
   <ion-scroll id="imgCamContainer" zooming="true" direction="xy" locking="false" overflow-scroll="false">
     <img id="cam-imagen" ng-src="{{ cam.imagen }}"/>

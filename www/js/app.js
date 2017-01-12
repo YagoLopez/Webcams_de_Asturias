@@ -204,14 +204,14 @@ app.config(function($stateProvider, $urlRouterProvider, $compileProvider, $ionic
 // Inicializaciones ===================================================================================================
 app.run(function($ionicPlatform, $rootScope, $window) {
 
-    // halla anchura de pantalla para dibujar condicionalmente menu button en ion-nav-bar en 'menu.html'
-    ionic.on('resize', function(){
-      $rootScope.$apply(function(){
-        $rootScope.screenWidth = $window.innerWidth;
-        // console.log('resize event', $rootScope.screenWidth);
-      })
+  // halla anchura de pantalla para dibujar condicionalmente menu button en ion-nav-bar en 'menu.html'
+  ionic.on('resize', function(){
+    $rootScope.$apply(function(){
+      $rootScope.screenWidth = $window.innerWidth;
+      // console.log('resize event', $rootScope.screenWidth);
     })
-    $rootScope.screenWidth = $window.innerWidth;
+  })
+  $rootScope.screenWidth = $window.innerWidth;
 
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
@@ -222,9 +222,9 @@ app.run(function($ionicPlatform, $rootScope, $window) {
     }
     if (window.StatusBar) {
       // org.apache.cordova.statusbar required
-      StatusBar.styleDefault();
+      // StatusBar.styleDefault();
+      // ionic.Platform.isFullScreen = true;
     }
-    ionic.Platform.isFullScreen = true;
   });
 })
 
