@@ -30,7 +30,7 @@
       </button>
   </ion-header-bar>
 
-  <!-- overflow-scroll=false para permitir scrolling con javascript de ionic. Permite hacer zoom en imagen -->
+  <!-- overflow-scroll=false para permitir scrolling. Permite hacer zoom en imagen -->
   <!-- locking=false para permitir srcroll simultaneo en ejes x,y. apropiado para hacer zoom -->
   <ion-scroll id="imgCamContainer" zooming="true" direction="xy" locking="false" overflow-scroll="false">
     <img src="https://www.meteoblue.com/meteogram-web?lon={{ $root.cam.lng }}&lat={{ $root.cam.lat }}&lang=en&look=CELSIUS,KILOMETER_PER_HOUR">

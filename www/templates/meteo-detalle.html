@@ -11,9 +11,6 @@
       width: 35px;
       vertical-align: middle;
     }
-    .centered {
-      text-align: center;
-    }
     .small-text {
       font-size: small;
     }
@@ -28,30 +25,32 @@
         margin: 32px auto;
       }
     }
+    .hide-scrollbars{
+      overflow-x: hidden !important;
+      overflow-y: hidden !important;
+    }
   </style>
 
-  <ion-header-bar class="bar-subheader bar-stable">
-    <div class="centered">
-      <span>Zoom </span><img src="img/pinch1.png"/>
-    </div>
-  </ion-header-bar>
+  <ion-nav-bar class="bar-positive">
+    <ion-nav-back-button class="button-icon ion-android-arrow-back"></ion-nav-back-button>
+  </ion-nav-bar>
 
   <ion-content overflow-scroll="true">
-    <ion-scroll id="imgMeteo" zooming="true" direction="xy" locking="false" overflow-scroll="false">
+
+    <ion-scroll id="imgMeteo" zooming="true" direction="xy" locking="false" overflow-scroll="false" class="hide-scrollbars">
       <img ng-src="{{ ::itemMeteo.urlNoProxy }}" width="100%"/>
     </ion-scroll>
-    <!-- card ====================================================================================================== -->
     <div class="card">
       <div class="item item-divider">Detalles:</div>
       <div class="item item-text-wrap small-text">
-        <div><span class="green">&#187; Nombre:</span> {{ ::itemMeteo.nombre }}</div>
-        <div><span class="green">&#187; Fuente:</span> <a href="{{ ::itemMeteo.urlFuente }}" target="_blank">
+        <div><span class="green">&bullet; Nombre:</span> {{ ::itemMeteo.nombre }}</div>
+        <div><span class="green">&bullet; Fuente:</span> <a href="{{ ::itemMeteo.urlFuente }}" target="_blank">
           {{ ::itemMeteo.fuente }}</a>
         </div>
-        <div><span class="green">&#187; Tipo imagen:</span> {{ ::itemMeteo.tipoImagen }}</div>
-        <div><span class="green">&#187; Descripción:</span> {{ ::itemMeteo.descripcion }}</div>
+        <div><span class="green">&bullet; Tipo imagen:</span> {{ ::itemMeteo.tipoImagen }}</div>
+        <div><span class="green">&bullet; Descripción:</span> {{ ::itemMeteo.descripcion }}</div>
       </div>
     </div>
-    <!-- /card ===================================================================================================== -->
+
   </ion-content>
 </ion-view>

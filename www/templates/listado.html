@@ -1,5 +1,4 @@
 <!--TODO: añadir geolocalicacion y busqueda de camaras cercanas-->
-<!--TODO: Hacer disclaimer-->
 <ion-view view-title="Listado" cache-view="true">
 
   <style type="text/css">
@@ -44,18 +43,20 @@
     }
   </style>
 
+  <ion-nav-buttons side="left">
+    <button ng-if="screenWidth < 760" class="button button-icon button-clear ion-navicon" menu-toggle="left"></button>
+  </ion-nav-buttons>
   <ion-nav-buttons side="right">
     <a id="btnMosaico" class="button button-icon icon ion-grid"
-            href="#/app/mosaico?concejo={{ concejo }}&idCategoria={{ idCategoria }}"></a>
+       href="#/app/mosaico?concejo={{ concejo }}&idCategoria={{ idCategoria }}"></a>
+    <button class="button button-icon icon ion-ios-search-strong" ng-click="showFilterBar()"></button>
   </ion-nav-buttons>
-
   <ion-header-bar class="bar-subheader bar-stable">
     <h1 class="title">{{ tituloVista }}</h1>
     <span class="badge badge-calm icon-badge">{{ items.length }}</span>
   </ion-header-bar>
 
   <ion-content id="contenido-listado">
-
     <div id="listadoContainer">
       <div class="error">{{ ::error }}</div>
       <a class="item item-thumbnail-left item-icon-right"
@@ -71,7 +72,6 @@
             <span class="textoListado">Concejo: {{ cam[1] }}</span>
           </p>
         </div>
-        <!--<i class="icon ion-android-exit color-blue"></i>-->
         <i class="icon ion-ios-arrow-right"></i>
         <!-- DEBUG INFO -->
         <!--<p>Categoría: {{cam[3]}}</p>-->
@@ -82,6 +82,5 @@
     </div>
   <br/>
   <br/>
-
   </ion-content>
 </ion-view>

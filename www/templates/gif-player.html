@@ -1,44 +1,43 @@
 <!--todo: arreglar estilos inline-->
 <!--todo: posibilidad de usar la directiva awesome-slider en lugar del range slider de ionic-->
 <!--todo: menu superior derecho con icono de interrogacion para ayuda. Interaccion con las imágenes-->
-<ion-view view-title="{{ ::itemMeteo.categoria }}" xmlns:rel="http://www.w3.org/1999/xhtml">
+<ion-view view-title="{{ ::itemMeteo.categoria }}">
+  <style>
+    div.jsgif > canvas{
+      width:100%;
+    }
+    div.jsgif {
+      width:100%;
+      top: -3px;
+    }
+    .btnTransparente {
+      background-color:transparent;
+    }
+    #playControls > tbody > tr > td > a > i {
+      font-size: 35px;
+    }
+    #zoomControls > tbody > tr > td > a > i {
+      font-size: 30px;
+    }
+    table {
+      margin: 0 auto;
+    }
+    @media (min-width: 720px) {
+      .card{
+        width: 80%;
+        margin: 32px auto;
+      }
+    }
+    .zoom-label{
+      vertical-align: middle; padding-bottom: 7px; padding-right: 10px;
+    }
+  </style>
+
+  <ion-nav-bar class="bar-positive">
+    <ion-nav-back-button class="button-icon ion-android-arrow-back"></ion-nav-back-button>
+  </ion-nav-bar>
+
   <ion-content>
-    <style>
-      div.jsgif > canvas{
-        width:100%;
-      }
-      div.jsgif {
-        width:100%;
-        top: -3px;
-      }
-      .btnTransparente {
-        background-color:transparent;
-      }
-      #playControls > tbody > tr > td > a > i {
-        font-size: 35px;
-      }
-      #zoomControls > tbody > tr > td > a > i {
-        font-size: 30px;
-      }
-      table {
-        margin: 0 auto;
-      }
-      @media (min-width: 720px) {
-  /*
-        div.jsgif > canvas{
-          width: 75%;
-          margin: 32px auto;
-        }
-  */
-        .card{
-          width: 80%;
-          margin: 32px auto;
-        }
-      }
-      .zoom-label{
-        vertical-align: middle; padding-bottom: 7px; padding-right: 10px;
-      }
-    </style>
 
     <!-- imagen ------------------------------------------------------------------------------------------------ -->
     <img id="gif" src="/www/img/loader/6.gif" rel:animated_src="{{ image_data }}"
@@ -114,11 +113,11 @@
         <div class="item item-divider" style="font-size:small">Detalles:</div>
         <div class="item item-text-wrap" style="font-size:small">
           <div><span style="color:green">&bullet; Nombre:</span> {{ ::itemMeteo.nombre}}</div>
-          <div><span style="color:green">&bullet; Descripción:</span> {{ ::itemMeteo.descripcion }}</div>
           <div>
             <span style="color:green">&bullet; Fuente:</span>
-              <a ng-href="{{ ::itemMeteo.urlFuente }}" target="_blank">{{ ::itemMeteo.fuente}}</a>
-            </div>
+            <a ng-href="{{ ::itemMeteo.urlFuente }}" target="_blank">{{ ::itemMeteo.fuente}}</a>
+          </div>
+          <div><span style="color:green">&bullet; Descripción:</span> {{ ::itemMeteo.descripcion }}</div>
         </div>
       </div>
      <!-- fin detalles --------------------------------------------------------------------------------------- -->

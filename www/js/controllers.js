@@ -9,24 +9,24 @@
 
 angular.module('wca.controllers',[])
 // ====================================================================================================================
-.controller('ListadoCtrl', function($scope, $stateParams, $rootScope, $ionicFilterBar, STRINGS, $window,
-                                   SFusionTable, $filter, $ionicScrollDelegate, SCategorias, $ionicHistory, SLoader) {
+.controller('ListadoCtrl', function($scope, $stateParams, $rootScope, $ionicFilterBar, STRINGS,
+             SFusionTable, $filter, $ionicScrollDelegate, SCategorias, $ionicHistory, SLoader) {
 
-    SLoader.show('Cargando...');
-    var concejo = $stateParams.concejo;
-    var idCategoria = $stateParams.idCategoria;
-    var camsFiltradasPorUrl = null;
+  SLoader.show('Cargando...');
+  var concejo = $stateParams.concejo;
+  var idCategoria = $stateParams.idCategoria;
+  var camsFiltradasPorUrl = null;
 
-    $scope.imgError = function () {
-      $scope.error = STRINGS.ERROR;
-      $scope.$apply();
-    };
+  $scope.imgError = function () {
+    $scope.error = STRINGS.ERROR;
+    $scope.$apply();
+  };
 
-    function esSubcadena(idCategoria, urlCategoria) {
-      return (urlCategoria.indexOf('categoria=' + idCategoria) > -1);
-    }
+  function esSubcadena(idCategoria, urlCategoria) {
+    return (urlCategoria.indexOf('categoria=' + idCategoria) > -1);
+  }
 
-    $ionicHistory.clearCache();
+  $ionicHistory.clearCache();
 
   var sqlQuery = 'SELECT Lugar,Concejo,Imagen,Categoria,rowid,latitud,longitud FROM '+ SFusionTable.TABLE_ID;
     SFusionTable.getRemoteData(sqlQuery).success(function(data) {
@@ -66,8 +66,8 @@ angular.module('wca.controllers',[])
       // FILTRO 2: filtra las cams segun una cadena de texto que haya introducido el usuario en la barra de busqueda
       // -------------------------------------------------------------------------------------------------------------
       // este filtro se aplica sobre los datos previamente filtrados por parametros url
-      //TODO: Habría que mejorar la búsqueda para que fuera menos estricta. Por ejemplo, si se introduce "puerto llanes" no se
-      //encuentra "Puerto de Llanes"
+      // TODO: Habría que mejorar la búsqueda para que fuera menos estricta. Por ejemplo, si se introduce "puerto llanes" no se
+      // encuentra "Puerto de Llanes"
       $rootScope.showFilterBar = function () {
         $rootScope.filterBarInstance = $ionicFilterBar.show({
           items: $rootScope.items,
@@ -79,7 +79,7 @@ angular.module('wca.controllers',[])
           cancelText: 'Cancelar',
           //done: function(){},
           //cancel: function(){},
-          cancelOnStateChange: false
+          cancelOnStateChange: true
         });
       };
       SLoader.hide();
@@ -89,16 +89,11 @@ angular.module('wca.controllers',[])
     });
 
     $scope.$on('$ionicView.afterEnter', function(){
-      $rootScope.mostrarLupa = true;
-      $('ion-filter-bar').show();
+      $rootScope.tituloVista = SCategorias.idCategoria_a_nombre(idCategoria);
+      $rootScope.concejo = concejo;
+      $rootScope.idCategoria = idCategoria;
+      $rootScope.items = camsFiltradasPorUrl;
     })
-
-    $scope.$on('$ionicView.beforeLeave', function(){
-      $rootScope.mostrarLupa = false;
-      $('ion-filter-bar').hide();
-    })
-
-
   })
 // ====================================================================================================================
 .controller('MapaCtrl', function($scope, SMapa, $rootScope, $location){
@@ -217,7 +212,7 @@ angular.module('wca.controllers',[])
 })
 // ====================================================================================================================
 .controller('DetalleCtrl', function($scope, $stateParams, $ionicModal, SClima, $filter, $rootScope,
-                                    SPopup, SWikipedia, $ionicPopover, Cam, SLoader, $location, STRINGS){
+             SPopup, SWikipedia, $ionicPopover, Cam, SLoader, $location, STRINGS){
 
     // init
     $scope.rowid = $stateParams.rowid;
@@ -331,161 +326,163 @@ angular.module('wca.controllers',[])
 
 })
 // ====================================================================================================================
-.controller('GifPlayerCtrl', function($scope, $interval, $stateParams, ItemsMeteo, ItemMeteo, SLoader, SPopup, $location){
+.controller('GifPlayerCtrl', function($scope, $interval, $stateParams, ItemsMeteo, ItemMeteo, SLoader,
+             SPopup, $location){
 
-    SLoader.showWithBackdrop('Cargando...<br/>El proceso puede tardar');
+  SLoader.showWithBackdrop('Cargando...<br/>El proceso puede tardar');
 
-    // Obtiene itemMeteo ------------------------------------------------------------------------------------------------
+  // Obtiene itemMeteo ------------------------------------------------------------------------------------------------
 
-    $scope.itemMeteo = new ItemMeteo(ItemsMeteo.getItemById($stateParams.id_item_meteo));
+  $scope.itemMeteo = new ItemMeteo(ItemsMeteo.getItemById($stateParams.id_item_meteo));
 
-    // inicializaciones -------------------------------------------------------------------------------------------------
+  // inicializaciones -------------------------------------------------------------------------------------------------
 
-    $scope.currentFrame = 0;
-    $scope.isGifPlaying = false;
-    var timer = null;
-    if(angular.equals({}, $scope.itemMeteo)){
-      SLoader.hide();
-      $location.path( '#/' );
-      return;
-    };
-    var killTimer = function(){
-      if(angular.isDefined(timer)) {
-        $interval.cancel(timer);
-        timer = undefined;
-        $scope.isGifPlaying = false;
-      }
-    };
-    var gifAnimado = null;
-    var convertDataURIToBinary = function(dataURI) {
-      var BASE64_MARKER = ';base64,';
-      var base64Index = dataURI.indexOf(BASE64_MARKER) + BASE64_MARKER.length;
-      var base64 = dataURI.substring(base64Index);
-      var raw = window.atob(base64);
-      var rawLength = raw.length;
-      var array = new Uint8Array(new ArrayBuffer(rawLength));
-      for(i = 0; i < rawLength; i++) {
-        array[i] = raw.charCodeAt(i);
-      }
-      return array;
-    };
+  $scope.currentFrame = 0;
+  $scope.isGifPlaying = false;
+  var timer = null;
+  if(angular.equals({}, $scope.itemMeteo)){
+    SLoader.hide();
+    $location.path( '#/' );
+    return;
+  };
+  var killTimer = function(){
+    if(angular.isDefined(timer)) {
+      $interval.cancel(timer);
+      timer = undefined;
+      $scope.isGifPlaying = false;
+    }
+  };
+  var gifAnimado = null;
+  var convertDataURIToBinary = function(dataURI) {
+    var BASE64_MARKER = ';base64,';
+    var base64Index = dataURI.indexOf(BASE64_MARKER) + BASE64_MARKER.length;
+    var base64 = dataURI.substring(base64Index);
+    var raw = window.atob(base64);
+    var rawLength = raw.length;
+    var array = new Uint8Array(new ArrayBuffer(rawLength));
+    for(i = 0; i < rawLength; i++) {
+      array[i] = raw.charCodeAt(i);
+    }
+    return array;
+  };
 
-    // Peticion AJAX  para obtener datos de imagenes remotas en formato base64 ----------------------------------------
-    // Por usar un proxy remoto no compatible con angular hay que usar $.ajax de JQuery
+  // Peticion AJAX  para obtener datos de imagenes remotas en formato base64 ----------------------------------------
+  // Por usar un proxy remoto no compatible con angular, hay que usar $.ajax de JQuery
 
-    $.ajax({
-      type: 'GET',
-      url: $scope.itemMeteo.url,
-      async: true,
-      jsonpCallback: 'jsonpCallback',
-      contentType: 'application/json',
-      dataType: 'jsonp',
-      cache: true,
-      success: function(resp) {
+  $.ajax({
+    type: 'GET',
+    url: $scope.itemMeteo.url,
+    async: true,
+    jsonpCallback: 'jsonpCallback',
+    contentType: 'application/json',
+    dataType: 'jsonp',
+    cache: true,
+    success: function(resp) {
 
-        // ====== Cración de gifAnimado ===============================================//
-        gifAnimado = new SuperGif({
-          gif: document.getElementById('gif'),
-          loop_mode: 0,
-          draw_while_loading: 1
-        });
-        // ====== Carga datos resultantes de peticion ajax en gifAnimado ===============//
-        gifAnimado.load_raw( convertDataURIToBinary(resp.image_data), function () {
-          $scope.totalFrames = gifAnimado.get_length();
+      // ====== Cración de gifAnimado ===============================================
+      gifAnimado = new SuperGif({
+        gif: document.getElementById('gif'),
+        loop_mode: 0,
+        draw_while_loading: 1
+      });
+      // ====== Carga datos resultantes de peticion ajax en gifAnimado ===============
+      gifAnimado.load_raw( convertDataURIToBinary(resp.image_data), function () {
+        $scope.totalFrames = gifAnimado.get_length();
+        $scope.currentFrame = gifAnimado.get_current_frame();
+        $scope.gifAnimado = gifAnimado;
+
+        // player controls
+        var rangeSlider = document.getElementById('levelRange');
+        $scope.playPause = function(){
+          if ($scope.isGifPlaying) {
+            $scope.pause();
+          } else {
+            $scope.play();
+          }
+        };
+        $scope.pause= function(){
+          killTimer();
+          $scope.isGifPlaying = false;
+          gifAnimado.pause();
+        };
+        $scope.play = function(){
+          killTimer();
+          $scope.isGifPlaying = true;
+          gifAnimado.play();
+          sondearPosicion();
+        };
+        $scope.restart= function(){
+          killTimer();
+          gifAnimado.pause();
+          gifAnimado.move_to(0);
+          rangeSlider.value = 0;
+          $scope.currentFrame = 0;
+        };
+        $scope.forward= function(){
+          killTimer();
+          gifAnimado.pause();
+          gifAnimado.move_relative(1);
+          rangeSlider.value = gifAnimado.get_current_frame();
           $scope.currentFrame = gifAnimado.get_current_frame();
-          $scope.gifAnimado = gifAnimado;
+        };
+        $scope.backward= function(){
+          killTimer();
+          gifAnimado.pause();
+          gifAnimado.move_relative(-1);
+          rangeSlider.value = gifAnimado.get_current_frame();
+          $scope.currentFrame = gifAnimado.get_current_frame();
+        };
+        $scope.end= function(){
+          killTimer();
+          var posicionFinal = gifAnimado.get_length()-1;
+          gifAnimado.pause();
+          gifAnimado.move_to(posicionFinal);
+          rangeSlider.value = posicionFinal;
+          $scope.currentFrame = posicionFinal;
+        };
+        var sondearPosicion = function(){
+          timer = $interval( function(){
+            var currentFrame = gifAnimado.get_current_frame();
+            rangeSlider.value = currentFrame;
+            $scope.currentFrame = currentFrame;
+          }, 50);
+        };
+        $scope.irPosicion = function(posicion){
+          gifAnimado.move_to(posicion);
+        };
 
-          // player controls
-          var rangeSlider = document.getElementById('levelRange');
-          $scope.playPause = function(){
-            if ($scope.isGifPlaying) {
-              $scope.pause();
-            } else {
-              $scope.play();
-            }
-          };
-          $scope.pause= function(){
-            killTimer();
-            $scope.isGifPlaying = false;
-            gifAnimado.pause();
-          };
-          $scope.play = function(){
-            killTimer();
-            $scope.isGifPlaying = true;
-            gifAnimado.play();
-            sondearPosicion();
-          };
-          $scope.restart= function(){
-            killTimer();
-            gifAnimado.pause();
-            gifAnimado.move_to(0);
-            rangeSlider.value = 0;
-            $scope.currentFrame = 0;
-          };
-          $scope.forward= function(){
-            killTimer();
-            gifAnimado.pause();
-            gifAnimado.move_relative(1);
-            rangeSlider.value = gifAnimado.get_current_frame();
-            $scope.currentFrame = gifAnimado.get_current_frame();
-          };
-          $scope.backward= function(){
-            killTimer();
-            gifAnimado.pause();
-            gifAnimado.move_relative(-1);
-            rangeSlider.value = gifAnimado.get_current_frame();
-            $scope.currentFrame = gifAnimado.get_current_frame();
-          };
-          $scope.end= function(){
-            killTimer();
-            var posicionFinal = gifAnimado.get_length()-1;
-            gifAnimado.pause();
-            gifAnimado.move_to(posicionFinal);
-            rangeSlider.value = posicionFinal;
-            $scope.currentFrame = posicionFinal;
-          };
-          var sondearPosicion = function(){
-            timer = $interval( function(){
-              var currentFrame = gifAnimado.get_current_frame();
-              rangeSlider.value = currentFrame;
-              $scope.currentFrame = currentFrame;
-            }, 50);
-          };
-          $scope.irPosicion = function(posicion){
-            gifAnimado.move_to(posicion);
-          };
+        // PanZoom --------------------------------------------------------------------
+        $('.jsgif > canvas').panzoom({
+          $zoomIn: $('.zoom-in'),
+          $zoomOut: $('.zoom-out'),
+          $zoomRange: $('.zoom-range'),
+          $reset: $('.reset'),
+          minScale: 1,
+          maxScale: 4,
+          increment: 0.5,
+          rangeStep: 0.1,
+          duration: 200,
+          contain: 'invert'
+        });
+        // Fin PanZoom ----------------------------------------------------------------
 
-          // ========= PanZoom ==========================================================//
-          $('.jsgif > canvas').panzoom({
-            $zoomIn: $('.zoom-in'),
-            $zoomOut: $('.zoom-out'),
-            $zoomRange: $('.zoom-range'),
-            $reset: $('.reset'),
-            minScale: 1,
-            maxScale: 4,
-            increment: 0.5,
-            rangeStep: 0.1,
-            duration: 200,
-            contain: 'invert'
-          });
-          
-          SLoader.hide();
-        })
-      },
-      error: function(error) {
-        console.error( error.message );
         SLoader.hide();
-        SPopup.show('Error de red', 'Comprobar conexión');
-        $location.path(' #/' );
-      }
-    });
+      })
+    },
+    error: function(error) {
+      console.error( error.message );
+      SLoader.hide();
+      SPopup.show('Error de red', 'Comprobar conexión');
+      $location.path(' #/' );
+    }
+  })
 
   // Evento destroy ---------------------------------------------------------------------------------------------------
-
   $scope.$on("$destroy",function(){
       window.clearTimeout(0);
       $scope.pause();
-  });
+  })
+  // Fin evento destroy -----------------------------------------------------------------------------------------------
 
 })
 // ====================================================================================================================
@@ -629,65 +626,3 @@ angular.module('wca.controllers',[])
 
 });
 // ====================================================================================================================
-/*
-.controller('PanoramioCtrl', function($scope, $ionicModal, $rootScope, SPopup, $location){
-
-  if(!$rootScope.cam) {
-    $location.path( "#/" );
-    return;
-  };
-
-  var lat = $rootScope.cam.lat;
-  var lng = $rootScope.cam.lng;
-  var OFFSET = 0.002;
-  var divCreditos = null; FotosPanoramio = null;
-
-  var hayFotoSiguiente = function(){
-    return !FotosPanoramio.getAtEnd();
-  };
-  var hayFotoAnterior = function(){
-    return !FotosPanoramio.getAtStart();
-  };
-  var rectanguloBusqueda = { 'rect': {
-    'sw': {'lat': lat-OFFSET, 'lng': lng-OFFSET},
-    'ne': {'lat': lat+OFFSET, 'lng': lng+OFFSET}
-  }};
-  divCreditos = document.getElementById('divCreditos');
-  FotosPanoramio = new panoramio.PhotoWidget('divPanoramio', rectanguloBusqueda, null);
-  FotosPanoramio.setPosition(0);
-
-  $scope.fotos = FotosPanoramio;
-  $scope.nextPhoto = function(){
-    if (hayFotoSiguiente())
-      FotosPanoramio.setPosition( FotosPanoramio.getPosition()+1 );
-  }
-  $scope.prevPhoto = function(){
-    if (hayFotoAnterior())
-      FotosPanoramio.setPosition( FotosPanoramio.getPosition()-1 );
-  }
-  // DIALOGO MODAL ----------------------------------------------------------------------------------------------
-  $ionicModal.fromTemplateUrl('templates/modal-panoramio.html', {
-    scope: $scope,
-    animation: 'scale-in'
-  }).then(function(modal) {
-    $scope.modal = modal;
-  });
-  $scope.showModal= function (){
-    if(FotosPanoramio.getPhoto()){
-      $scope.urlImg = FotosPanoramio.getPhoto().Ya[0].url;
-      $scope.titulo = FotosPanoramio.getPhoto().getPhotoTitle();
-      $scope.autor = FotosPanoramio.getPhoto().getOwnerName();
-      $scope.urlAutor = FotosPanoramio.getPhoto().getOwnerUrl();
-      $scope.modal.show();
-    } else {
-      SPopup.show('Error', 'Fallo al conectar con el servidor de fotos de Panoramio');
-      console.error('PanoramioCtrl.showModal(): Fallo al conectar con el servidor de fotos de Panoramio');
-    }
-  }
-  $scope.closeModal = function () {
-    $scope.modal.hide();
-  };
-  // FIN DIALOGO MODAL ----------------------------------------------------------------------------------------------
-
-})
-*/
