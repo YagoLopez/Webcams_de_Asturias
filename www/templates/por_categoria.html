@@ -1,28 +1,34 @@
 <ion-view view-title="Categorías">
-  <style type="text/css">
+  <style type="text/css" scoped>
     iframe {
       width: 95%;
       height: 275px;
       background: transparent url('/www/img/clock-32x32-3.png') no-repeat center center;
     }
+    .pie-diagrama{
+      text-align: center;
+    }
+    .font-small{
+      font-size: small;
+    }
   </style>
 
   <ion-content id="contenido-graficos">
-    <div class="item item-divider" style="font-size:small">
+    <div class="item item-divider font-small">
       Webcams por categoría (Sectores)
     </div>
     <iframe id="iframeGraficoSectores" ng-src="{{ ::urlGraficoSectores }}" scrolling="no" marginwidth="0" marginheight="0"
             frameborder="0" allowfullscreen iframe-onload="cargaFrameTerminada()">
     </iframe>
 
-    <div class="item item-divider" style="font-size:small">
+    <div class="item item-divider font-small">
       Webcams por categoría (Barras)
     </div>
     <iframe id="iframeGraficoBarras" ng-src="{{ ::urlGraficoBarras }}" scrolling="no" marginheight="0" marginwidth="0"
             frameborder="0" allowfullscreen iframe-onload="cargaFrameTerminada()">
     </iframe>
 
-    <div style="text-align:center" class="padding">Toque en sectores del diagrama para información específica</div>
+    <div class="padding pie-diagrama">Toque en sectores del diagrama para información específica</div>
 
   </ion-content>
 </ion-view>

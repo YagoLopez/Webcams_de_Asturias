@@ -1,31 +1,28 @@
 <!--TODO: usar aqui el scroll nativo a ver si se puede hacer scroll-->
 <ion-view view-title="Concejos">
-  <style type="text/css">
+  <style type="text/css" scoped>
     iframe {
       width: 100%;
       height: 100%;
-      background: transparent url(img/clock-32x32-3.png) no-repeat center center;
+      background: transparent url('/www/img/clock-32x32-3.png') no-repeat center center;
     }
-    .no-bg{
-      background: none;
+    .pie-diagrama{
+      text-align: center;
     }
   </style>
   <ion-content>
-    <div class="item item-divider">
-      Concejos con más cámaras
-    </div>
+
+    <div class="item item-divider">Concejos con más cámaras</div>
     <iframe ng-src="{{ ::urlConcejosMasCams }}" scrolling="yes" marginwidth="0" marginheight="0"
             frameborder="0" allowfullscreen iframe-onload="cargaFrameTerminada()">
     </iframe>
 
-    <div class="item item-divider">
-      Nº webcams por concejo
-    </div>
+    <div class="item item-divider">Nº webcams por concejo</div>
     <iframe ng-src="{{ ::urlCamsConcejo }}" scrolling="yes" marginwidth="0" marginheight="0"
             frameborder="0" allowfullscreen iframe-onload="cargaFrameTerminada()">
     </iframe>
 
-    <div style="text-align:center" class="padding">Toque en sectores del diagrama para información específica</div>
+    <div class="padding pie-diagrama">Toque/click en sectores del diagrama para información específica</div>
 
   </ion-content>
 </ion-view>
