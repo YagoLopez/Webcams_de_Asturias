@@ -3,7 +3,8 @@
     iframe {
       width: 95%;
       height: 275px;
-      background: transparent url('www/img/clock-32x32-3.png') no-repeat center center;
+      /*noinspection CssUnknownTarget*/
+      background: transparent url('img/clock-32x32-3.png') no-repeat center center;
     }
     .pie-diagrama{
       text-align: center;
@@ -12,6 +13,10 @@
       font-size: small;
     }
   </style>
+
+  <ion-nav-bar class="bar-positive">
+    <ion-nav-back-button class="button-icon ion-android-arrow-back"></ion-nav-back-button>
+  </ion-nav-bar>
 
   <ion-content id="contenido-graficos">
     <div class="item item-divider font-small">
