@@ -1,5 +1,5 @@
-<ion-view cache-view="true" view-title="Mosaico">
-  <style type="text/css">
+<ion-view view-title="Mosaico" cache-view="true">
+  <style type="text/css" scoped>
     .txt {
       font-size: xx-small;
       overflow: hidden;
@@ -25,7 +25,7 @@
   </style>
 
   <ion-nav-bar class="bar-positive">
-    <h1 class="title" style="text-align: center">{{ tituloVista }}</h1>
+    <h1 class="title">{{ tituloVista }}</h1>
     <span class="badge badge-calm icon-badge">{{ items.length }}</span>
     <ion-nav-back-button class="button-icon ion-android-arrow-back"></ion-nav-back-button>
     <ion-nav-buttons side="left">
