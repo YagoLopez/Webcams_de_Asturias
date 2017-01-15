@@ -67,17 +67,6 @@ app.config(function($stateProvider, $urlRouterProvider, $compileProvider, $ionic
     }
   });
 // -------------------------------------------------------------------------------------------------------------------
-  $stateProvider.state('app.panoramio', {
-    url: '/panoramio',
-    cache:false,
-    views: {
-      'menuContent': {
-        templateUrl: 'templates/panoramio.html',
-        controller: 'PanoramioCtrl'
-      }
-    }
-  });
-// -------------------------------------------------------------------------------------------------------------------
   $stateProvider.state('app.detalle', {
     url: '/detalle/:rowid',
     cache: true,
