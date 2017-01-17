@@ -203,16 +203,16 @@ angular.module('wca.controllers',[])
       document.getElementById('selectCategoria').selectedIndex = -1;
     };
 
-    // mapa = SMapa.crear(document.getElementById('mapaglobal'));
-    // $scope.mostrarTodos(); // por defecto
+    mapa = SMapa.crear(document.getElementById('mapaglobal'));
+    $scope.mostrarTodos(); // por defecto
 
     // activa manualmente el ciclo de deteccion de cambios de angular (digest cycle) para evaluar javascript externo
     // (en este caso google maps)
-    setTimeout(function () {
-      mapa = SMapa.crear(document.getElementById('mapaglobal'));
-      $scope.mostrarTodos(); // por defecto
-
-    }, 0);
+    // setTimeout(function () {
+    //   mapa = SMapa.crear(document.getElementById('mapaglobal'));
+    //   $scope.mostrarTodos(); // por defecto
+    //
+    // }, 0);
 
     $scope.selectClick = function (e) {
       console.log('select click');
@@ -222,7 +222,7 @@ angular.module('wca.controllers',[])
 })
 // ====================================================================================================================
 .controller('DetalleCtrl', function($scope, $stateParams, $ionicModal, SClima, $filter, $rootScope,
-             SPopup, SWikipedia, $ionicPopover, Cam, SLoader, $location, STRINGS){
+             SPopup, SWikipedia, $ionicPopover, Cam, SLoader, $location, STRINGS, $ionicPlatform){
 
     // init
     $scope.rowid = $stateParams.rowid;
@@ -310,12 +310,13 @@ angular.module('wca.controllers',[])
       SLoader.hide();
     }
 
-    // cierra ventanas modales al navegar hacia atras, por si no se cierra el dialogo mediante boton (util en movil)
+    // cierra ventanas modales al navegar hacia atras (util en movil)
     $scope.$on('$ionicView.beforeLeave', function (event, data) {
         $scope.modalDetalle.hide();
         $scope.modalPrediccion.hide();
     })
-  })
+
+})
 // ====================================================================================================================
 .controller('StreetViewCtrl', function($scope, SMapa, $rootScope, SPopup, $location){
 

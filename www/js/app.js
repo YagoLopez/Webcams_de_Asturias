@@ -215,5 +215,6 @@ app.run(function($ionicPlatform, $rootScope, $window) {
       // ionic.Platform.isFullScreen = true;
     }
   });
+  
 })
 
