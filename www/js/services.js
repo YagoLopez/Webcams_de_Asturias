@@ -29,8 +29,8 @@ angular.module('wca.services',[])
 
   var placesService = null, request = null;
 
-  this.OVIEDO = {lat: 43.3667, lng: -5.8333}; // centro de mapa vista global
-  this.RADIO_BUSQUEDA = 500; // radio de búsqueda en metros de panorama StreetView a partir de coordenadas de cam
+  this.OVIEDO = {lat: 43.4667, lng: -5.8333}; // centro de mapa vista global
+  this.RADIO_BUSQUEDA = 500; // radio de búsqueda de panorama StreetView a partir de coordenadas de cam (metros)
 
   this.hallaLatLng = function (domElement, lugar, concejo, fn){
     request = {
@@ -41,7 +41,7 @@ angular.module('wca.services',[])
     placesService.textSearch(request, callback);
     function callback(results, status) {
       if (status == google.maps.places.PlacesServiceStatus.OK) {
-        //console.log('results[0]', results[0]);
+        //console.log('Resultados de busqueda street view results[0]', results[0]);
         fn(results[0].geometry.location);
       } else {
         SPopup.show('Error', 'No se han podido hallar coordenadas para panorama StreetView');

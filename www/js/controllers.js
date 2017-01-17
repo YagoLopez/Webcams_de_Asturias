@@ -179,9 +179,10 @@ angular.module('wca.controllers',[])
     };
 
     $scope.categoriaEscogida = function(categoria){
+      var filtroCategoria = null;
       $scope.checked = 'cat';
       categoria = categoria.replace(/(\r\n|\n|\r)/gm,'').trim();
-      var filtroCategoria = 'Categoria=\'' + categoria + '\'';
+      filtroCategoria = 'Categoria=\'' + categoria + '\'';
       layer.setMap(null); // borra layer antigua si la hubiera
       layer = SMapa.creaFusionTableLayer(filtroCategoria);
       layer.setMap(mapa);
@@ -191,8 +192,9 @@ angular.module('wca.controllers',[])
 
     $scope.mostrarTodos = function(){
       $scope.checked = null;
-      if(layer)
+      if(layer){
         layer.setMap(null);
+      }
       layer = SMapa.creaFusionTableLayer();
       layer.setMap(mapa);
       mapa.setCenter(SMapa.OVIEDO);
@@ -201,8 +203,16 @@ angular.module('wca.controllers',[])
       document.getElementById('selectCategoria').selectedIndex = -1;
     };
 
-    mapa = SMapa.crear(document.getElementById('mapaglobal'));
-    $scope.mostrarTodos(); // por defecto
+    // mapa = SMapa.crear(document.getElementById('mapaglobal'));
+    // $scope.mostrarTodos(); // por defecto
+
+    // activa manualmente el ciclo de deteccion de cambios de angular (digest cycle) para evaluar javascript externo
+    // (en este caso google maps)
+    setTimeout(function () {
+      mapa = SMapa.crear(document.getElementById('mapaglobal'));
+      $scope.mostrarTodos(); // por defecto
+
+    }, 0);
 
     $scope.selectClick = function (e) {
       console.log('select click');
@@ -262,7 +272,7 @@ angular.module('wca.controllers',[])
       }).error(function(status){
         $scope.infoConcejo = STRINGS.ERROR;
         console.error('SWikipedia.info()', status)
-      });
+      })
     }
     // DIALOGO MODAL DETALLE -------------------------------------------------------------------------------------------
     $ionicModal.fromTemplateUrl('templates/modal-detalle.html', {
@@ -300,6 +310,11 @@ angular.module('wca.controllers',[])
       SLoader.hide();
     }
 
+    // cierra ventanas modales al navegar hacia atras, por si no se cierra el dialogo mediante boton (util en movil)
+    $scope.$on('$ionicView.beforeLeave', function (event, data) {
+        $scope.modalDetalle.hide();
+        $scope.modalPrediccion.hide();
+    })
   })
 // ====================================================================================================================
 .controller('StreetViewCtrl', function($scope, SMapa, $rootScope, SPopup, $location){
