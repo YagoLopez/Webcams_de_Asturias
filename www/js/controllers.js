@@ -12,6 +12,7 @@ angular.module('wca.controllers',[])
 .controller('ListadoCtrl', function($scope, $stateParams, $rootScope, $ionicFilterBar, STRINGS,
              SFusionTable, $filter, $ionicScrollDelegate, SCategorias, $ionicHistory, SLoader) {
 
+  // init --------------------------------------------------------------------------------------------------------------
   SLoader.show('Cargando...');
   var concejo = $stateParams.concejo;
   var idCategoria = $stateParams.idCategoria;
@@ -22,11 +23,14 @@ angular.module('wca.controllers',[])
     $scope.$apply();
   };
 
+  // todo: usar this
   function esSubcadena(idCategoria, urlCategoria) {
     return (urlCategoria.indexOf('categoria=' + idCategoria) > -1);
-  }
+  };
 
   $ionicHistory.clearCache();
+
+  // fin init ----------------------------------------------------------------------------------------------------------
 
   var sqlQuery = 'SELECT Lugar,Concejo,Imagen,Categoria,rowid,latitud,longitud FROM '+ SFusionTable.TABLE_ID;
     SFusionTable.getRemoteData(sqlQuery).success(function(data) {
@@ -39,46 +43,36 @@ angular.module('wca.controllers',[])
       // -------------------------------------------------------------------------------------------------------------
       // FILTRO 1: filtra las cams por parametros de url: concejo y categoria
       // -------------------------------------------------------------------------------------------------------------
-      camsFiltradasPorUrl = $filter('filter')(data.rows, function (cam) {
-        if (concejo && idCategoria) {
-          // cam[1]: concejo de camara, cam[3]: url categoria (no id de categoria, no confundir)
-          return (cam[1].toLowerCase() == concejo.toLowerCase() && esSubcadena(idCategoria, cam[3]));
-        } else {
-          if (concejo)
-            return cam[1].toLowerCase() == concejo.toLowerCase();
-          if (idCategoria)
-            return esSubcadena(idCategoria, cam[3]);
-          if (!concejo && !idCategoria)
-            return data.rows;
-        }
-      });
-      // Inicialmente items contiene las cams filtradas solo por parametros de url
-      $rootScope.items = camsFiltradasPorUrl;
-      // Despues de filtrar, guardar parametros en scope. Se hace asi para que el filtrado sea mas eficiente
-      $rootScope.concejo = concejo;
-      $rootScope.idCategoria = idCategoria;
-      if (!idCategoria || idCategoria == '') {
-        $rootScope.tituloVista = 'Todas'
-      } else {
-        $rootScope.tituloVista = SCategorias.idCategoria_a_nombre(idCategoria);
-      }
+        $rootScope.items = $filter('filter')(data.rows, function (cam) {
+          if (concejo && idCategoria) {
+            // cam[1]: concejo de camara, cam[3]: url categoria (no id de categoria, no confundir)
+            return (cam[1].toLowerCase() == concejo.toLowerCase() && esSubcadena(idCategoria, cam[3]));
+          } else {
+            if (concejo)
+              return cam[1].toLowerCase() == concejo.toLowerCase();
+            if (idCategoria)
+              return esSubcadena(idCategoria, cam[3]);
+            if (!concejo && !idCategoria)
+              return data.rows;
+          }
+        });
       // -------------------------------------------------------------------------------------------------------------
       // FILTRO 2: filtra las cams segun una cadena de texto que haya introducido el usuario en la barra de busqueda
       // -------------------------------------------------------------------------------------------------------------
-      // este filtro se aplica sobre los datos previamente filtrados por parametros url
-      // TODO: Habría que mejorar la búsqueda para que fuera menos estricta. Por ejemplo, si se introduce "puerto llanes" no se
-      // encuentra "Puerto de Llanes"
+      // Este filtro se aplica sobre los datos previamente filtrados por parametros url (filtro 1)
+
+      // TODO: Habría que mejorar la búsqueda para que fuera menos estricta. Por ejemplo, si se introduce "puerto
+               // llanes" no se encuentra "Puerto de Llanes"
       $rootScope.showFilterBar = function () {
         $rootScope.filterBarInstance = $ionicFilterBar.show({
           items: $rootScope.items,
           update: function (filteredItems, filteredText) {
-            //console.log('rootscope.items', $rootScope.items);
             $rootScope.items = filteredItems;
             $ionicScrollDelegate.scrollTop(false);
           },
           cancelText: 'Cancelar',
-          //done: function(){},
-          //cancel: function(){},
+          done: null,
+          cancel: null,
           cancelOnStateChange: true
         });
       };
@@ -88,13 +82,16 @@ angular.module('wca.controllers',[])
       SLoader.hide();
     });
 
-    $scope.$on('$ionicView.afterEnter', function(){
+  $scope.$on('$ionicView.afterEnter', function(){
+    $rootScope.concejo = concejo;
+    $rootScope.idCategoria = idCategoria;
+    if (!idCategoria || idCategoria === '') {
+      $rootScope.tituloVista = 'Todas'
+    } else {
       $rootScope.tituloVista = SCategorias.idCategoria_a_nombre(idCategoria);
-      $rootScope.concejo = concejo;
-      $rootScope.idCategoria = idCategoria;
-      $rootScope.items = camsFiltradasPorUrl;
-    })
-  })
+    }
+  });
+})
 // ====================================================================================================================
 .controller('MapaCtrl', function($scope, SMapa, $rootScope, $location){
 
@@ -203,21 +200,20 @@ angular.module('wca.controllers',[])
       document.getElementById('selectCategoria').selectedIndex = -1;
     };
 
-    mapa = SMapa.crear(document.getElementById('mapaglobal'));
-    $scope.mostrarTodos(); // por defecto
+    // mapa = SMapa.crear(document.getElementById('mapaglobal'));
+    // $scope.mostrarTodos(); // por defecto
 
     // activa manualmente el ciclo de deteccion de cambios de angular (digest cycle) para evaluar javascript externo
     // (en este caso google maps)
-    // setTimeout(function () {
-    //   mapa = SMapa.crear(document.getElementById('mapaglobal'));
-    //   $scope.mostrarTodos(); // por defecto
-    //
-    // }, 0);
+    setTimeout(function () {
+      mapa = SMapa.crear(document.getElementById('mapaglobal'));
+      $scope.mostrarTodos(); // por defecto
+    }, 0);
 
-    $scope.selectClick = function (e) {
-      console.log('select click');
-      e.preventDefault();
-    }
+    // $scope.selectClick = function (e) {
+    //   console.log('select click');
+    //   e.preventDefault();
+    // }
 
 })
 // ====================================================================================================================
@@ -229,7 +225,7 @@ angular.module('wca.controllers',[])
     $scope.descripcion = ' (Obteniendo datos del servidor...)'
     SLoader.show('Cargando...');
     if(!$rootScope.items || !$scope.rowid){
-      $location.path('#/');
+      $location.path('#/'); // si no hay lista de items (cams) redirigir a root y abortar
       return;
     };
 

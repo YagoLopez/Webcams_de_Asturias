@@ -4,6 +4,8 @@
 <!--todo: hide address bar. se deberia poder hacer con meta name=viewpoart content=minimal-ui, pero no se puede-->
 <!--todo: ahora no funciona el gesto de pinch en las animaciones de gif-lib-->
 <!--todo: añadir estilos css a barra de scroll de menu para mejorar apariencia-->
+<!--todo: mejorar lo de recargar imagen-->
+
 <!doctype html>
 <html>
 <head>
@@ -41,9 +43,9 @@
 <body ng-app="wca">
   <ion-nav-view></ion-nav-view>
   <script src="lib/jquery/jquery.3.1.1.min.js"></script>
-  <script src="lib/jquery/jquery.panzoom.3.2.2.js"></script>
+  <script async src="lib/jquery/jquery.panzoom.3.2.2.js"></script>
   <script async src="lib/libgif-js/libgif.js"></script>
-  <script src="//maps.googleapis.com/maps/api/js?key=AIzaSyB16sGmIekuGIvYOfNoW9T44377IU2d2Es"></script>
+  <script async src="//maps.googleapis.com/maps/api/js?key=AIzaSyB16sGmIekuGIvYOfNoW9T44377IU2d2Es"></script>
   <script async src="lib/leafleft.js"></script>
 </body>
 </html>

@@ -193,7 +193,7 @@ app.config(function($stateProvider, $urlRouterProvider, $compileProvider, $ionic
 // Inicializaciones ===================================================================================================
 app.run(function($ionicPlatform, $rootScope, $window) {
 
-  // halla anchura de pantalla para dibujar condicionalmente menu button en ion-nav-bar en 'menu.html'
+  // halla anchura de pantalla para dibujar o no menu-button en ion-nav-bar (en 'menu.html')
   ionic.on('resize', function(){
     $rootScope.$apply(function(){
       $rootScope.screenWidth = $window.innerWidth;
@@ -209,12 +209,11 @@ app.run(function($ionicPlatform, $rootScope, $window) {
       cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
       cordova.plugins.Keyboard.disableScroll(true);
     }
-    if (window.StatusBar) {
-      // org.apache.cordova.statusbar required
-      // StatusBar.styleDefault();
-      // ionic.Platform.isFullScreen = true;
-    }
+    // if (window.StatusBar) {
+    //   org.apache.cordova.statusbar required
+    //   StatusBar.styleDefault();
+    //   ionic.Platform.isFullScreen = true;
+    // }
   });
-  
 })
 
