@@ -21,6 +21,10 @@
       width: 35px;
       vertical-align: middle;
     }
+    .info-img {
+      display: block;
+      padding-bottom: 25px;
+    }
     @media (min-width: 720px) {
       #cam-imagen {
         width: 90%;
@@ -42,7 +46,7 @@
   <!-- locking=false para permitir srcroll simultaneo en ejes x,y. apropiado para hacer zoom -->
   <ion-scroll id="imgCamContainer" zooming="true" direction="xy" locking="false" overflow-scroll="false">
     <img id="cam-imagen" ng-src="{{ cam.imagen }}"/>
-    <div style="padding-bottom: 20px">{{ ::cam.lugar }}<br>Concejo: {{ ::cam.concejo }}</div>
+    <div class="info-img">{{ ::cam.lugar }}<br>Concejo: {{ ::cam.concejo }}</div>
   </ion-scroll>
 
 </ion-modal-view>
