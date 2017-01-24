@@ -1,4 +1,3 @@
-<!--TODO: pasar todos los nombres de dominio a IPs para reducir latencia-->
 <ion-view view-title="{{ ::cam.lugar }}">
 
   <style scoped>
@@ -6,16 +5,12 @@
       padding-top: 1px;
       padding-bottom: 1px;
       margin-right:4%;
-      margin-left:4%;
-    }
-    .tabs-color-positive{
-      border-bottom: 1px solid;
-    }
+      margin-left:4%;}
+    .tabs-color-positive{border-bottom: 1px solid;}
     .imgLoader{
       /*noinspection CssUnknownTarget*/
       background: transparent url(img/clock-32x32-3.png) no-repeat center center;
-      cursor: pointer;
-    }
+      cursor: pointer;}
     @media (min-width: 720px) {
       .card {
         width: 75%;
@@ -25,71 +20,44 @@
         background-color:ghostwhite;
       }
     }
-    .cam-img {
-      height: 100%;
-      width: 100%;
-    }
-    .full-width {
-      width: 100%;
-    }
-    .fnt-small {
-      font-size: small;
-    }
-    .txt-meteo {
-      font-size: smaller;
-    }
+    .cam-img {height: 100%;width: 100%;}
+    .full-width {width: 100%;}
+    .fnt-small {font-size: small;}
+    .txt-meteo {font-size: smaller;}
     .div-info {
       width: 100%;
       overflow-y: scroll;
-      height: 300px;
-    }
+      height: 300px;}
     .i-item {
       color: #387ef5;
       font-size: medium;
       margin-right: 5px;
-      vertical-align: middle;
-    }
+      vertical-align: middle;}
     .div-btns {
       padding: 0;
-      text-align: center;
-    }
+      text-align: center;}
     .td-desc {
       padding-left: 15px;
       vertical-align: middle;
-      padding-bottom: 10px;
-    }
+      padding-bottom: 10px;}
     .tab-active {
       font-weight: bold;
       color: cornflowerblue !important;
-      text-decoration: underline;
-    }
-    .tabs-bar {
-      background: white;
-    }
+      text-decoration: underline;}
+    .tabs-bar {background: white;}
     .predicc {
       text-align: center;
       padding-top: 15px;
-      padding-bottom: 15px;
-    }
+      padding-bottom: 15px;}
     .predicc-label{
-      padding: 6px;
-    }
+      padding: 6px;}
     .btn-style {
       width: 50%;
-      font-size: inherit;
-    }
-    .pie {
-      text-align: center;
-    }
-    .ico-meteo {
-      vertical-align: middle;
-    }
-    .estado-meteo {
-      white-space: normal;
-    }
-    .meteo-data {
-      padding: 10px;
-    }
+      font-size: inherit;}
+    .pie {text-align: center;}
+    .ico-meteo {vertical-align: middle;}
+    .estado-meteo {white-space: normal;}
+    .meteo-data {padding: 10px;}
   </style>
 
   <ion-nav-bar class="bar-positive">
@@ -103,7 +71,7 @@
     <!-- Card ------------------------------------------------------------------------------------------------------ -->
     <div class="list card">
       <div class="item item-image cam-img">
-        <img ng-src="{{ cam.imagen }}" fallback-src="img/imgFail.png" class="imgLoader"
+        <img ng-src="{{ ::cam.imagen }}" fallback-src="img/imgFail.png" class="imgLoader"
              imageonload="imgLoaded()" on-touch="modalDetalle.show()"/>
       </div>
       <div class="item item-body fnt-small">
@@ -157,14 +125,11 @@
             &bullet; Dirección del viento: {{::direccionViento}}º<br>
           </div>
           <div class="predicc">
-            <button class="button button-calm btn-style" ng-click="modalPrediccion.show()">
+            <button class="button button-calm btn-style" ng-click="showModalPrediction()">
               <i class="icon ion-android-open"></i><span class="predicc-label">Predicción</span>
             </button>
           </div>
-          <div class="pie">
-            Fuentes: <a href="http://www.openweathermap.com" target="_blank">OpenWeatherMap.com</a> -
-            <a href="http://www.meteoblue.com" target="_blank">Meteoblue</a>
-          </div>
+          <div class="pie">Fuente: <a href="http://www.openweathermap.com" target="_blank">OpenWeatherMap.com</a></div>
         </div>
       </div>
       <div class="item-body div-info" ng-class="{active:active}" ng-show="page === 'second'">

@@ -220,15 +220,16 @@ angular.module('wca.controllers',[])
              SPopup, SWikipedia, $ionicPopover, Cam, SLoader, $location, STRINGS, $ionicPlatform){
 
   // INIT --------------------------------------------------------------------------------------------------------------
+  var datosCam;
   $scope.rowid = $stateParams.rowid;
   $scope.descripcion = ' (Obteniendo datos del servidor...)'
   SLoader.show('Cargando...');
   if(!$rootScope.items || !$scope.rowid){
     $location.path('#/'); // si no hay lista de items (cams) redirigir a root y abortar
     return;
-  };
+  }
 
-  var datosCam = $filter('filter')($rootScope.items, function(cam) {
+  datosCam = $filter('filter')($rootScope.items, function(cam) {
     return cam[4] == $scope.rowid;
   });
 
@@ -256,7 +257,7 @@ angular.module('wca.controllers',[])
     console.error('SClima.getData(): ', status);
   });
   // WIKIPEDIA ---------------------------------------------------------------------------------------------------------
-  $scope.infoConcejo = 'Cargando...'
+  $scope.infoConcejo = 'Cargando...';
   $scope.getInfo = function(){
     SWikipedia.info($rootScope.cam.concejo).success(function(data){
       var pageid = data.query.pageids[0];
@@ -268,7 +269,7 @@ angular.module('wca.controllers',[])
       $scope.infoConcejo = STRINGS.ERROR;
       console.error('SWikipedia.info()', status)
     })
-  }
+  };
   // DIALOGO MODAL DETALLE ---------------------------------------------------------------------------------------------
   $ionicModal.fromTemplateUrl('templates/modal-detalle.html', {
     scope: $scope,
@@ -283,9 +284,15 @@ angular.module('wca.controllers',[])
   }).then(function(modal) {
     $scope.modalPrediccion = modal;
   });
+  $scope.showModalPrediction = function () {
+    $scope.modalPrediccion.show();
+    $scope.urlMeteoblue = 'https://www.meteoblue.com/meteogram-web?' +
+      'lon=' + $rootScope.cam.lng + '&lat=' + $rootScope.cam.lat + '&lang=en&look=CELSIUS,KILOMETER_PER_HOUR';
+      console.warn($scope.urlMeteoblue);
+  };
   // POPOVER MENU ------------------------------------------------------------------------------------------------------
   $ionicPopover.fromTemplateUrl('templates/popover.html', {
-    scope: $scope,
+    scope: $scope
   }).then(function(popover) {
     $scope.popover = popover;
   });
@@ -298,12 +305,12 @@ angular.module('wca.controllers',[])
         SLoader.hide();
       })
     }, 500);
-  }
+  };
   // FIN IMG RELOAD ----------------------------------------------------------------------------------------------------
 
   $scope.imgLoaded = function(){
     SLoader.hide();
-  }
+  };
 
   // cierra ventanas modales al navegar hacia atras (util en movil)
   $scope.$on('$ionicView.beforeLeave', function (event, data) {

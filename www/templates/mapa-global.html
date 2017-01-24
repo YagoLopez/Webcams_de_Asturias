@@ -32,16 +32,6 @@
       </div>
 
       <div class="list item-input-inset">
-        <label class="item item-input item-select" style="width:100%;font-size:small">
-          <i class="icon ion-android-checkbox-outline" ng-show="checked==='con'" style="color:#007aff"></i>&nbsp;
-          Concejo:
-          <select id="selectConcejo" style="color: #387ef5" ng-model="concejo" ng-change="concejoEscogido(concejo)">
-            <option ng-repeat="concejo in concejos">{{ ::concejo[0] }}</option>
-          </select>
-        </label>
-      </div>
-
-      <div class="list item-input-inset">
         <label class="item item-input item-select" style="width:100%; font-size:small">
           <i class="icon ion-android-checkbox-outline" ng-show="checked==='cat'" style="color:#007aff"></i>&nbsp;
           Categoría:
@@ -49,6 +39,16 @@
             <option ng-repeat="categoria in categorias" value="{{ categoria[0] }}">
               {{ urlCategoria_a_nombre( categoria[0] )}}
             </option>
+          </select>
+        </label>
+      </div>
+
+      <div class="list item-input-inset">
+        <label class="item item-input item-select" style="width:100%;font-size:small">
+          <i class="icon ion-android-checkbox-outline" ng-show="checked==='con'" style="color:#007aff"></i>&nbsp;
+          Concejo:
+          <select id="selectConcejo" style="color: #387ef5" ng-model="concejo" ng-change="concejoEscogido(concejo)">
+            <option ng-repeat="concejo in concejos">{{ ::concejo[0] }}</option>
           </select>
         </label>
       </div>
