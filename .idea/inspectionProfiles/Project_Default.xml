@@ -55,9 +55,10 @@
     <inspection_tool class="HtmlUnknownAttribute" enabled="true" level="WARNING" enabled_by_default="true">
       <option name="myValues">
         <value>
-          <list size="2">
+          <list size="3">
             <item index="0" class="java.lang.String" itemvalue="rel:animated_src" />
             <item index="1" class="java.lang.String" itemvalue="rel:auto_play" />
+            <item index="2" class="java.lang.String" itemvalue="ng-src" />
           </list>
         </value>
       </option>
@@ -116,6 +117,9 @@
     <inspection_tool class="PlatformDetectionJS" enabled="true" level="WARNING" enabled_by_default="true" />
     <inspection_tool class="RedundantTypeConversion" enabled="false" level="WARNING" enabled_by_default="false">
       <option name="CHECK_ANY" value="false" />
+    </inspection_tool>
+    <inspection_tool class="RequiredAttributes" enabled="true" level="WARNING" enabled_by_default="true">
+      <option name="myAdditionalRequiredHtmlAttributes" value="src" />
     </inspection_tool>
     <inspection_tool class="ReuseOfLocalVariableJS" enabled="true" level="WARNING" enabled_by_default="true" />
     <inspection_tool class="SassScssResolvedByNameOnly" enabled="false" level="WEAK WARNING" enabled_by_default="false" />

@@ -10,15 +10,15 @@
       width: 35px; vertical-align: middle;}
     ion-header-bar > div > img {
       width: 35px; vertical-align: middle;}
-    .pie-predicc{
-      padding-top: 20px; padding-bottom: 50px; text-align: center; display: block;}
     .img-meteoblue{
       display: block; /*noinspection CssUnknownTarget*/
-      background: transparent url(img/clock-32x32-3.png) no-repeat center center;}
+      background: url('img/clock-32x32-3.png') no-repeat center center;}
   </style>
 
   <ion-header-bar align-title="center">
-    <div class="title">Predicción <img src="img/pinch1.png"/></div>
+    <div class="title">Predicción
+      <!--suppress HtmlUnknownTarget -->
+      <img src="img/pinch1.png"/></div>
       <button class="button pull-right" ng-click="modalPrediccion.hide()">
         <i class="icon icon-right ion-ios-close-outline"></i>
       </button>
@@ -27,8 +27,6 @@
   <!-- overflow-scroll=false para permitir scrolling. Permite hacer zoom en imagen -->
   <!-- locking=false para permitir srcroll simultaneo en ejes x,y. apropiado para hacer zoom -->
   <ion-scroll id="imgCamContainer" zooming="true" direction="xy" locking="false" overflow-scroll="false">
-    <!--suppress CssUnknownTarget -->
     <img ng-src="{{::urlMeteoblue}}" class="img-meteoblue">
   </ion-scroll>
-  <div class="pie-predicc">Fuente: <a href="http://www.meteoblue.com" target="_blank">Meteoblue</a></div>
 </ion-modal-view>

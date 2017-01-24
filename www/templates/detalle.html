@@ -12,14 +12,8 @@
       background: transparent url(img/clock-32x32-3.png) no-repeat center center;
       cursor: pointer;}
     @media (min-width: 720px) {
-      .card {
-        width: 75%;
-        margin: 32px auto;
-      }
-      #contenido-detalle{
-        background-color:ghostwhite;
-      }
-    }
+      .card {width: 75%; margin: 32px auto;}
+      #contenido-detalle{background-color:ghostwhite;}}
     .cam-img {height: 100%;width: 100%;}
     .full-width {width: 100%;}
     .fnt-small {font-size: small;}
@@ -54,7 +48,7 @@
     .btn-style {
       width: 50%;
       font-size: inherit;}
-    .pie {text-align: center;}
+    .url-meteoblue {text-align: center; padding: 20px;}
     .ico-meteo {vertical-align: middle;}
     .estado-meteo {white-space: normal;}
     .meteo-data {padding: 10px;}
@@ -114,7 +108,7 @@
         <div class="txt-meteo">
           <div>
             <span><img ng-src="{{ ::iconoUrl }}" class="ico-meteo"/></span>
-            <span class="estado-meteo">Estado actual: {{ descripcion }}</span>
+            <span class="estado-meteo">Estado actual: {{ ::descripcion }}</span>
           </div>
           <div class="meteo-data">
             &bullet; Temperatura: {{::temp}} ºC<br>
@@ -123,13 +117,14 @@
             &bullet; Nubosidad: {{::nubosidad}} %<br>
             &bullet; Velocidad del viento: {{::velocidadViento}} m/s<br>
             &bullet; Dirección del viento: {{::direccionViento}}º<br>
+            &bullet; Fuente: <a href="http://www.openweathermap.com" target="_blank">OpenWeatherMap.com</a>
           </div>
           <div class="predicc">
             <button class="button button-calm btn-style" ng-click="showModalPrediction()">
               <i class="icon ion-android-open"></i><span class="predicc-label">Predicción</span>
             </button>
+            <div class="url-meteoblue">Fuente: <a href="http://www.meteoblue.com" target="_blank">Meteoblue</a></div>
           </div>
-          <div class="pie">Fuente: <a href="http://www.openweathermap.com" target="_blank">OpenWeatherMap.com</a></div>
         </div>
       </div>
       <div class="item-body div-info" ng-class="{active:active}" ng-show="page === 'second'">
@@ -138,6 +133,5 @@
       </div>
     </div>
     <!-- Fin Tabs -------------------------------------------------------------------------------------------------- -->
-
   </ion-content>
 </ion-view>
