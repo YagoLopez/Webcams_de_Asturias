@@ -11,7 +11,7 @@ app.config(function($stateProvider, $urlRouterProvider, $compileProvider, $ionic
     $ionicConfigProvider.backButton.previousTitleText(false).text(' ');
     // enable/disable native scroll
     if (!ionic.Platform.isIOS()) {
-      $ionicConfigProvider.scrolling.jsScrolling(true);
+      $ionicConfigProvider.scrolling.jsScrolling(false);
     }
     // filterbar config
     $ionicFilterBarConfigProvider.placeholder('Buscar');
