@@ -11,13 +11,13 @@ app.config(function($stateProvider, $urlRouterProvider, $compileProvider, $ionic
     $ionicConfigProvider.backButton.previousTitleText(false).text(' ');
     // enable/disable native scroll
     if (!ionic.Platform.isIOS()) {
-      $ionicConfigProvider.scrolling.jsScrolling(false);
+      $ionicConfigProvider.scrolling.jsScrolling(true);
     }
     // filterbar config
     $ionicFilterBarConfigProvider.placeholder('Buscar');
     $ionicFilterBarConfigProvider.transition('vertical');
     // num templates to prefetch
-    $ionicConfigProvider.templates.maxPrefetch(2);
+    $ionicConfigProvider.templates.maxPrefetch(0);
     // disable angular log system
     $logProvider.debugEnabled(false);
     // disable state transitions
@@ -189,7 +189,7 @@ app.config(function($stateProvider, $urlRouterProvider, $compileProvider, $ionic
 
   $urlRouterProvider.otherwise('app/listado?idCategoria=7');
 
-})
+});
 // Inicializaciones ===================================================================================================
 app.run(function($ionicPlatform, $rootScope, $window) {
 
@@ -199,7 +199,7 @@ app.run(function($ionicPlatform, $rootScope, $window) {
       $rootScope.screenWidth = $window.innerWidth;
       // console.log('resize event', $rootScope.screenWidth);
     })
-  })
+  });
   $rootScope.screenWidth = $window.innerWidth;
 
   $ionicPlatform.ready(function() {
@@ -215,5 +215,5 @@ app.run(function($ionicPlatform, $rootScope, $window) {
     //   ionic.Platform.isFullScreen = true;
     // }
   });
-})
+});
 

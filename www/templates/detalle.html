@@ -39,7 +39,7 @@
       color: cornflowerblue !important;
       text-decoration: underline;}
     .tabs-bar {background: white;}
-    .predicc {
+    .div-predicc {
       text-align: center;
       padding-top: 15px;
       padding-bottom: 15px;}
@@ -48,7 +48,7 @@
     .btn-style {
       width: 50%;
       font-size: inherit;}
-    .url-meteoblue {text-align: center; padding: 20px;}
+    .url-meteoblue {text-align: center; padding-top: 20px; padding-bottom: 0px;}
     .ico-meteo {vertical-align: middle;}
     .estado-meteo {white-space: normal;}
     .meteo-data {padding: 10px;}
@@ -61,9 +61,8 @@
     </ion-nav-buttons>
   </ion-nav-bar>
 
-  <ion-content>
-    <!-- Card ------------------------------------------------------------------------------------------------------ -->
-    <div class="list card">
+  <ion-content ng-init="activeTab='meteoTab'">
+    <div class="list card"><!-- Card Img Detalle ------------------------------------------------------------------  -->
       <div class="item item-image cam-img">
         <img ng-src="{{ cam.imagen }}" fallback-src="img/imgFail.png" class="imgLoader"
              imageonload="imgLoaded()" on-touch="modalDetalle.show()"/>
@@ -73,7 +72,7 @@
         <i class="icon ion-checkmark-circled i-item"></i> Concejo: {{ ::cam.concejo }}<br>
         <i class="icon ion-checkmark-circled i-item"></i> Categoría: {{ ::cam.categoria }}
       </div>
-      <!-- botones ------------------------------------------------------------------------------------------------- -->
+      <!-- botones -->
       <div class="item item-text-wrap div-btns">
         <div class="row">
           <div class="col">
@@ -88,27 +87,30 @@
           </div>
         </div>
       </div>
-      <!-- fin botones --------------------------------------------------------------------------------------------- -->
-    </div>
-    <!-- Tabs ------------------------------------------------------------------------------------------------------ -->
-    <div class="card">
+      <!-- fin botones -->
+    </div><!-- /Card Img Detalle ----------------------------------------------------------------------------------  -->
 
+    <div class="card"><!-- Card Tabs ------------------------------------------------------------------------------- -->
+
+      <!--Tabs bar-->
       <div class="item item-divider tabs tabs-icon-left tabs-color-positive tabs-bar">
-        <a class="tab-item fnt-small" ng-click="page='first'" ng-class="{'tab-active':page === 'first'}">
-          <i class="icon ion-ios-partlysunny"></i> Meteorología
+        <a class="tab-item fnt-small" ng-click="(activeTab = 'meteoTab')"
+          ng-class="{'tab-active':activeTab === 'meteoTab'}">
+            <i class="icon ion-ios-partlysunny"></i> Meteorología
         </a>
-        <a class="tab-item fnt-small" ng-click="page='second';getInfo()" ng-class="{'tab-active':page === 'second'}">
-          <i class="icon ion-document-text"></i> Información
+        <a class="tab-item fnt-small" ng-click="(activeTab = 'infoTab'); getInfo()"
+          ng-class="{'tab-active':activeTab === 'infoTab'}">
+            <i class="icon ion-document-text"></i> Información
         </a>
       </div>
+      <!-- /Tabs bar -->
 
-      <div ng-init="page='first'"></div>
-
-      <div class="item" ng-show="page === 'first'">
+      <!--Tabs content-->
+      <div ng-show="activeTab === 'meteoTab'" class="item">
         <div class="txt-meteo">
           <div>
             <span><img ng-src="{{ ::iconoUrl }}" class="ico-meteo"/></span>
-            <span class="estado-meteo">Estado actual: {{ ::descripcion }}</span>
+            <span class="estado-meteo">Estado actual: {{ descripcion }}</span>
           </div>
           <div class="meteo-data">
             &bullet; Temperatura: {{::temp}} ºC<br>
@@ -119,7 +121,7 @@
             &bullet; Dirección del viento: {{::direccionViento}}º<br>
             &bullet; Fuente: <a href="http://www.openweathermap.com" target="_blank">OpenWeatherMap.com</a>
           </div>
-          <div class="predicc">
+          <div class="div-predicc">
             <button class="button button-calm btn-style" ng-click="showModalPrediction()">
               <i class="icon ion-android-open"></i><span class="predicc-label">Predicción</span>
             </button>
@@ -127,11 +129,17 @@
           </div>
         </div>
       </div>
-      <div class="item-body div-info" ng-class="{active:active}" ng-show="page === 'second'">
-        <div>{{ infoConcejo }}</div>
-        <div ng-bind-html="wikipediaCredits"></div>
+
+      <div ng-show="activeTab === 'infoTab'" class="item-body div-info" ng-class="{active:active}">
+        <div ng-if="infoConcejo">
+          <div>{{ infoConcejo }}</div>
+          <div><a href="{{ wikiUrl }}" target="_blank">Ampliar Información</a></div>
+        </div>
+        <div ng-if="!infoConcejo">No hay resultados</div>
+        <div><br>Fuente: <a href="https://es.wikipedia.org" target="_blank">Wikipedia</a></div>
       </div>
-    </div>
-    <!-- Fin Tabs -------------------------------------------------------------------------------------------------- -->
+       <!-- Tabs content -->
+
+    </div><!-- Fin Card Tabs --------------------------------------------------------------------------------------- -->
   </ion-content>
 </ion-view>

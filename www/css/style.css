@@ -1,18 +1,8 @@
+.enlaceListado{border: 2px outset;}
+.resalteListado{color:#28a54c;}
+.textoListado {font-size:small;}
 
-.enlaceListado{
-  border: 2px outset;
-}
-.resalteListado{
-  color:#28a54c;
-}
-.textoListado {
-  font-size:small;
-}
-.scale-in {
-  -webkit-transform: scale(0.0);
-  transform: scale(0.0);
-  opacity: 0;
-}
+.scale-in {-webkit-transform: scale(0.0);transform: scale(0.0);opacity: 0;}
 .scale-in.ng-enter,
 .scale-in > .ng-enter {
   -webkit-transition: all cubic-bezier(.1, .7, .1, 1) 400ms;
@@ -32,4 +22,10 @@
 .sombraInferior{
   box-shadow: -1px 1px 5px #888888;
 }
-
+.cargando{
+  display: block;
+  text-align: center;
+  margin-top: 20%;
+  margin-left: auto;
+  margin-right:auto;
+}

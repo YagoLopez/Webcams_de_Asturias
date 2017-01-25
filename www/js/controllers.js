@@ -263,7 +263,8 @@ angular.module('wca.controllers',[])
       var pageid = data.query.pageids[0];
       if(pageid) {
         $scope.infoConcejo = data.query.pages[pageid].extract;
-        $scope.wikipediaCredits = '<br>Fuente: <a href="http://org.wikipedia.es" target="_blank">Wikipedia</a>';
+        $scope.wikiUrl = data.query.pages[pageid].fullurl;
+        // $scope.wikiCredits = '<br>Fuente: <a href="https://es.wikipedia.org" target="_blank">Wikipedia</a>';
       }
     }).error(function(status){
       $scope.infoConcejo = STRINGS.ERROR;
@@ -287,8 +288,7 @@ angular.module('wca.controllers',[])
   $scope.showModalPrediction = function () {
     $scope.modalPrediccion.show();
     $scope.urlMeteoblue = 'https://www.meteoblue.com/meteogram-web?' +
-      'lon=' + $rootScope.cam.lng + '&lat=' + $rootScope.cam.lat + '&lang=en&look=CELSIUS,KILOMETER_PER_HOUR';
-      console.warn($scope.urlMeteoblue);
+      ('lon='+$rootScope.cam.lng) + ('&lat='+$rootScope.cam.lat) + ('&lang=es&look=CELSIUS,KILOMETER_PER_HOUR');
   };
   // POPOVER MENU ------------------------------------------------------------------------------------------------------
   $ionicPopover.fromTemplateUrl('templates/popover.html', {
