@@ -264,7 +264,6 @@ angular.module('wca.controllers',[])
       if(pageid) {
         $scope.infoConcejo = data.query.pages[pageid].extract;
         $scope.wikiUrl = data.query.pages[pageid].fullurl;
-        // $scope.wikiCredits = '<br>Fuente: <a href="https://es.wikipedia.org" target="_blank">Wikipedia</a>';
       }
     }).error(function(status){
       $scope.infoConcejo = STRINGS.ERROR;
