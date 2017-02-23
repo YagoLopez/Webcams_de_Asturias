@@ -23,10 +23,9 @@ angular.module('wca.controllers',[])
     $scope.$apply();
   };
 
-  // todo: usar this
   function esSubcadena(idCategoria, urlCategoria) {
     return (urlCategoria.indexOf('categoria=' + idCategoria) > -1);
-  };
+  }
 
   $ionicHistory.clearCache();
   // fin init ----------------------------------------------------------------------------------------------------------
@@ -44,7 +43,7 @@ angular.module('wca.controllers',[])
       // -------------------------------------------------------------------------------------------------------------
         $rootScope.items = $filter('filter')(data.rows, function (cam) {
           if (concejo && idCategoria) {
-            // cam[1]: concejo de camara, cam[3]: url categoria (no id de categoria, no confundir)
+            // cam[1]: concejo, cam[3]: url categoria (no id de categoria, no confundir)
             return (cam[1].toLowerCase() == concejo.toLowerCase() && esSubcadena(idCategoria, cam[3]));
           } else {
             if (concejo)

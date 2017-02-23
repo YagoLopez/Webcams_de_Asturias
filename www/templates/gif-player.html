@@ -3,34 +3,23 @@
 <!--todo: menu superior derecho con icono de interrogacion para ayuda. Interaccion con las imágenes-->
 <ion-view view-title="{{ ::itemMeteo.categoria }}">
   <style>
-    div.jsgif > canvas{
-      width:100%;
-    }
-    div.jsgif {
-      width:100%;
-      top: -3px;
-    }
-    .btnTransparente {
-      background-color:transparent;
-    }
-    #playControls > tbody > tr > td > a > i {
-      font-size: 35px;
-    }
-    #zoomControls > tbody > tr > td > a > i {
-      font-size: 30px;
-    }
-    table {
-      margin: 0 auto;
-    }
+    div.jsgif > canvas{width:100%}
+    div.jsgif {width:100%; top: -3px}
+    .btn-transparent {background-color:transparent}
+    .btn-zoom {padding-bottom: 0%; padding-top: 10px}
+    .range-zoom {vertical-align: middle; padding-bottom:0}
+    .light-gray{color: lightgray}
+    .green{color: green}
+    .small-font{font-size: small}
+    .range-frames{padding: 0 3%}
+    .ico-btn-zoom{font-size: x-large}
+    #playControls > tbody > tr > td > a > i {font-size: 35px}
+    #zoomControls > tbody > tr > td > a > i {font-size: 30px}
+    table {margin: 0 auto}
     @media (min-width: 720px) {
-      .card{
-        width: 80%;
-        margin: 32px auto;
-      }
+      .card{width: 80%; margin: 32px auto}
     }
-    .zoom-label{
-      vertical-align: middle; padding-bottom: 7px; padding-right: 10px;
-    }
+    /*.zoom-label{vertical-align: middle; padding-bottom: 7px; padding-right: 10px;}*/
   </style>
 
   <ion-nav-bar class="bar-positive">
@@ -39,19 +28,19 @@
 
   <ion-content>
 
-    <!-- imagen ------------------------------------------------------------------------------------------------ -->
+    <!-- image ----------------------------------------------------------------------------------------------------- -->
     <img id="gif" src="img/loader/6.gif" rel:animated_src="{{ image_data }}"
          rel:auto_play="0" rel:fps="700" ng-click="playPause()" width="100%"/>
-    <!-- fin imagen -------------------------------------------------------------------------------------------- -->
+    <!-- /imagen --------------------------------------------------------------------------------------------------- -->
 
     <div class="card">
-      <!-- range slider -------------------------------------------------------------------------------------- -->
-      <label class="range range-assertive" style="padding: 0 3%;" ng-click="pause()" on-touch="pause()">
+      <!-- range slider frames ------------------------------------------------------------------------------------- -->
+      <label class="range range-assertive range-frames" ng-click="pause()" on-touch="pause()">
         <input id="levelRange" type="range" min="0" max="{{ totalFrames - 1 }}"
              value="{{ currentFrame }}" ng-model="currentFrame" ng-change="irPosicion(currentFrame)"
              style="margin:0"/>
       </label>
-      <!-- play controls------------------------------------------------------------------------------------ -->
+      <!-- play controls-------------------------------------------------------------------------------------------- -->
       <table id="playControls">
         <tr>
           <td>
@@ -74,34 +63,34 @@
           </td>
         </tr>
       </table>
-      <!-- info frames ------------------------------------------------------------------------------------------- -->
+      <!-- info frames --------------------------------------------------------------------------------------------- -->
       <div style="width: 100%;text-align:center;padding-bottom:2px">
         <div>Fotograma: <b style="color:red">
           {{ gifAnimado.get_current_frame() + 1 }}</b> de {{ ::totalFrames }}
         </div>
       </div>
-      <!-- fin leyenda ---------------------------------------------------------------------------------------- -->
+      <!-- fin leyenda --------------------------------------------------------------------------------------------- -->
     </div>
 
-    <!-- card zoom controls ---------------------------------------------------------------------------------------------- -->
+    <!-- zoom controls --------------------------------------------------------------------------------------------- -->
     <div class="card">
       <table id="zoomControls">
         <tr>
-          <!-- botones de zoom omitidos hasta que se arregle bug en jquery panzoom
-          <td>
-            <a class="button btnTransparente zoom-out"><i class="ion-ios-minus-outline"></i></a>
+          <!-- botones de zoom omitidos hasta que se arregle bug en jquery panzoom -->
+          <td class="btn-zoom">
+            <a class="button btn-transparent zoom-out"><i class="ion-ios-minus-outline ico-btn-zoom"></i></a>
           </td>
-          <td>
-            <a class="button btnTransparente zoom-in"><i class="ion-ios-plus-outline" style=""></i></a>
+          <td class="btn-zoom">
+            <a class="button btn-transparent zoom-in"><i class="ion-ios-plus-outline ico-btn-zoomº"></i></a>
           </td>
-          -->
-          <td class="zoom-label">Nivel de zoom: </td>
-          <td style="vertical-align: middle;">
-            <!--aqui deben aparecer los mismos valores definidos en panzoom ctrl-->
-            <input type="range" class="zoom-range" min="1" max="4" step="0.1"/>
+          <!--<td class="zoom-label">Nivel de zoom: </td>-->
+          <td class="range-zoom">
+            <label class="range range-assertive">
+              <input type="range" class="zoom-range" min="1" max="4" step="0.1"/>
+            </label>
           </td>
-          <td>
-            <a class="button btnTransparente reset"><i class="ion-arrow-expand" style="color:lightgray"></i></a>
+          <td class="btn-zoom">
+            <a class="button btn-transparent reset"><i class="ion-arrow-expand light-gray"></i></a>
           </td>
         </tr>
       </table>
@@ -110,14 +99,14 @@
 
     <!-- card detalles --------------------------------------------------------------------------------------------- -->
     <div class="card">
-        <div class="item item-divider" style="font-size:small">Detalles:</div>
-        <div class="item item-text-wrap" style="font-size:small">
-          <div><span style="color:green">&bullet; Nombre:</span> {{ ::itemMeteo.nombre}}</div>
+        <div class="item item-divider small-font">Detalles:</div>
+        <div class="item item-text-wrap small-font">
+          <div><span class="green">&bullet; Nombre:</span> {{ ::itemMeteo.nombre}}</div>
           <div>
-            <span style="color:green">&bullet; Fuente:</span>
+            <span class="green">&bullet; Fuente:</span>
             <a ng-href="{{ ::itemMeteo.urlFuente }}" target="_blank">{{ ::itemMeteo.fuente}}</a>
           </div>
-          <div><span style="color:green">&bullet; Descripción:</span> {{ ::itemMeteo.descripcion }}</div>
+          <div><span class="green">&bullet; Descripción:</span> {{ ::itemMeteo.descripcion }}</div>
         </div>
       </div>
      <!-- fin detalles --------------------------------------------------------------------------------------- -->
