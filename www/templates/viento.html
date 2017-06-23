@@ -1,25 +1,14 @@
 <ion-view view-title="Viento">
   <style type="text/css">
+    .content{text-align: center}
+    .fuente {padding: 10px; text-align: center; width: 100%; margin: auto}
     #mapaviento {
       width: 100%;
       height: 90%;
       background: transparent url(img/clock-32x32-3.png) no-repeat center center;
     }
     @media (min-width: 720px) {
-      #mapaviento {
-        width: 75%;
-        padding-top: 50px;
-        margin: auto;
-      }
-    }
-    .content{
-      text-align: center;
-    }
-    .fuente {
-      padding: 10px;
-      text-align: center;
-      width: 100%;
-      margin: auto;
+      #mapaviento {width: 75%; padding-top: 50px; margin: auto}
     }
   </style>
 
@@ -28,18 +17,11 @@
   </ion-nav-bar>
 
   <ion-content class="content">
-    <!--
-    <iframe id="mapaviento" ng-src="https://embed.windyty.com/?40.4,-3.7,5,metric.wind.km/h"
-            scrolling="no" marginwidth="0" marginheight="0" allowfullscreen frameborder="0"
-            iframe-onload="cargaFrameTerminada()">
-    </iframe>
-    -->
-    
     <iframe id="mapaviento" scrolling="no" marginwidth="0" marginheight="0" allowfullscreen frameborder="0"
-            ng-src="https://embed.windytv.com/embed2.html?lat=40.280&lon=-3.647&zoom=5&level=surface&overlay=wind&menu=true&message=true&marker=&forecast=12&calendar=now&location=coordinates&type=map&actualGrid=&metricWind=km%2Fh&metricTemp=%C2%B0C" 
-            iframe-onload="cargaFrameTerminada()">
-    </iframe>    
+      ng-src="https://embed.windytv.com/embed2.html?lat=40.280&lon=-3.647&zoom=5&level=surface&overlay=wind&menu=true&message=true&marker=&forecast=12&calendar=now&location=coordinates&type=map&actualGrid=&metricWind=km%2Fh&metricTemp=%C2%B0C"
+      iframe-onload="cargaFrameTerminada()">
+    </iframe>
 
-    <div class="fuente">Fuente: <a href="http://www.windyty.com" target="_blank">windyty.com</a></div>
+    <div class="fuente">Fuente: <a href="http://www.windy.com" target="_blank">windy.com</a></div>
   </ion-content>
 </ion-view>

@@ -235,26 +235,32 @@ angular.module('wca.controllers',[])
   $rootScope.cam = new Cam(datosCam);
 
   // CLIMA -------------------------------------------------------------------------------------------------------------
-  SClima.getData( $rootScope.cam.lat, $rootScope.cam.lng ).success(function(climadata){
-    if(climadata.weather){
-      $scope.descripcion = climadata.weather[0].description;
-      $scope.temp = climadata.main.temp;
-      $scope.presion = climadata.main.pressure;
-      $scope.humedad = climadata.main.humidity;
-      $scope.nubosidad = climadata.clouds.all;
-      $scope.velocidadViento = climadata.wind.speed;
-      $scope.direccionViento = climadata.wind.deg;
-      //volumen precipitaciones ultimas 3 horas
-      //$scope.precipitacion = climadata.rain['3h'];
-      //url icono: http://openweathermap.org/img/w/10n.png
-      $scope.iconoUrl = 'http://openweathermap.org/img/w/'+climadata.weather[0].icon+'.png' ;
-    } else {
+
+  // Priority is webcam image load. Wait 1000 ms before loading clima data
+  $scope.timerGetClimaData = setTimeout( function(){
+    SClima.getData( $rootScope.cam.lat, $rootScope.cam.lng ).success(function(climadata){
+      if(climadata.weather){
+        $scope.descripcion = climadata.weather[0].description;
+        $scope.temp = climadata.main.temp;
+        $scope.presion = climadata.main.pressure;
+        $scope.humedad = climadata.main.humidity;
+        $scope.nubosidad = climadata.clouds.all;
+        $scope.velocidadViento = climadata.wind.speed;
+        $scope.direccionViento = climadata.wind.deg;
+        //volumen precipitaciones ultimas 3 horas
+        //$scope.precipitacion = climadata.rain['3h'];
+        //url icono: http://openweathermap.org/img/w/10n.png
+        $scope.iconoUrl = 'http://openweathermap.org/img/w/'+climadata.weather[0].icon+'.png' ;
+      } else {
+        $scope.descripcion = STRINGS.ERROR;
+      }
+    }).error(function(status){
       $scope.descripcion = STRINGS.ERROR;
-    }
-  }).error(function(status){
-    $scope.descripcion = STRINGS.ERROR;
-    console.error('SClima.getData(): ', status);
-  });
+      console.error('SClima.getData(): ', status);
+    });
+  }, 1000);
+
+
   // WIKIPEDIA ---------------------------------------------------------------------------------------------------------
   $scope.infoConcejo = 'Cargando...';
   $scope.getInfo = function(){
@@ -285,8 +291,12 @@ angular.module('wca.controllers',[])
   });
   $scope.showModalPrediction = function () {
     $scope.modalPrediccion.show();
-    $scope.urlMeteoblue = 'https://www.meteoblue.com/meteogram-web?' +
-      ('lon='+$rootScope.cam.lng) + ('&lat='+$rootScope.cam.lat) + ('&lang=es&look=CELSIUS,KILOMETER_PER_HOUR');
+    $scope.timerMeteoblue = setTimeout( function(){
+      $scope.$apply(function(){
+        $scope.urlMeteoblue = 'https://www.meteoblue.com/meteogram-web?' +
+          ('lon='+$rootScope.cam.lng) + ('&lat='+$rootScope.cam.lat) + ('&lang=es&look=CELSIUS,KILOMETER_PER_HOUR');
+      })
+    }, 500);
   };
   // POPOVER MENU ------------------------------------------------------------------------------------------------------
   $ionicPopover.fromTemplateUrl('templates/popover.html', {
@@ -302,7 +312,7 @@ angular.module('wca.controllers',[])
         $rootScope.cam.imagen = $rootScope.cam.imagen + '#' + new Date().getTime();
         SLoader.hide();
       })
-    }, 500);
+    }, 600);
   };
   // FIN IMG RELOAD ----------------------------------------------------------------------------------------------------
 
@@ -310,10 +320,12 @@ angular.module('wca.controllers',[])
     SLoader.hide();
   };
 
-  // cierra ventanas modales al navegar hacia atras (util en movil)
+  // Close modals when backwards navigation and clear timers for preventing memory leaks
   $scope.$on('$ionicView.beforeLeave', function (event, data) {
-      $scope.modalDetalle.hide();
-      $scope.modalPrediccion.hide();
+    $scope.modalDetalle.hide();
+    $scope.modalPrediccion.hide();
+    clearTimeout($scope.timerGetClimaData);
+    clearTimeout($scope.timerMeteoblue);
   })
 })
 // ====================================================================================================================

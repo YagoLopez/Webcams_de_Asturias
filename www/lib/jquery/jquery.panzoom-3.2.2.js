@@ -1163,8 +1163,8 @@
 			// Remove any transitions happening
 			this.transition(true);
 
-			// Indicate that we are currently panning. disabled temporarily since fixed
-			// this.panning = true;
+			// Indicate that we are currently panning
+			this.panning = true;
 
 			// Trigger start event
 			this._trigger('start', event, touches);
