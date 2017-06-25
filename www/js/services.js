@@ -1,9 +1,9 @@
 // url completa para consultar fusion table. Usar como plantilla
 // https://www.googleapis.com/fusiontables/v2/query?sql=SELECT%20*%20FROM%201gX5maFbqFyRziZiUYlpOBYhcC1v9lGkKqCXvZREF&key=AIzaSyBsdouSTimjrC2xHmbGgOt8VfbLBWc9Gps
 
-angular.module('wca.services',[])
+wcaModule = angular.module('wca.services',[]);
 // ====================================================================================================================
-.service('SFusionTable', function($http){
+wcaModule.service('SFusionTable', function($http){
 
   var API_ENDPOINT = 'https://www.googleapis.com/fusiontables/v2/query';
   var API_KEY = 'AIzaSyBsdouSTimjrC2xHmbGgOt8VfbLBWc9Gps';
@@ -18,9 +18,9 @@ angular.module('wca.services',[])
   this.getLocalData = function(path_fichero){
     return $http.get(path_fichero);
   };
-})
+});
 // ====================================================================================================================
-.service('SMapa', function(SFusionTable, SPopup){
+wcaModule.service('SMapa', function(SFusionTable, SPopup){
 
   if (typeof google === 'undefined'){
     window.location = 'index.html';
@@ -41,7 +41,7 @@ angular.module('wca.services',[])
     placesService.textSearch(request, callback);
     function callback(results, status) {
       if (status == google.maps.places.PlacesServiceStatus.OK) {
-        //console.log('Resultados de busqueda street view results[0]', results[0]);
+        //console.log('Debugging resultados de busqueda street view results[0]', results[0]);
         fn(results[0].geometry.location);
       } else {
         SPopup.show('Error', 'No se han podido hallar coordenadas para panorama StreetView');
@@ -94,24 +94,24 @@ angular.module('wca.services',[])
       loader.hide();
     });
   };
-})
+});
 // ====================================================================================================================
-.service('SClima', function($http){
-
+wcaModule.service('SClima', function($http){
+  this.urlCorsProxy = 'https://cors-anywhere.herokuapp.com/';
   this.getData = function(lat, lng){
-    return $http.get( 'http://api.openweathermap.org/data/2.5/weather?lat='+lat+'&lon='+lng+
+    return $http.get( this.urlCorsProxy + 'http://api.openweathermap.org/data/2.5/weather?lat='+lat+'&lon='+lng+
       '&appid=b7514b5aaf43d023c350462fd57a1791&lang=es&units=metric', {cache:true} );
   };
-})
+});
 // ====================================================================================================================
-.service('SPopup', function($ionicPopup, SLoader){
+wcaModule.service('SPopup', function($ionicPopup, SLoader){
   this.show = function(titulo, msg) {
     SLoader.hide();
     $ionicPopup.alert({ title: titulo, template: msg });
   };
-})
+});
 // ====================================================================================================================
-.service('SWikipedia', function($http){
+wcaModule.service('SWikipedia', function($http){
 
   this.info = function(termino){
     return $http.jsonp('https://es.wikipedia.org/w/api.php?'+
@@ -124,7 +124,7 @@ angular.module('wca.services',[])
       'action=query&list=search&srsearch='+termino+'&utf8=&format=json', {cache: true});
   };
 
-  // respuesta formato xml
+  /** Respuesta en formato xml */
   this.infoLatLngGeonames = function(lat, lng){
     return $http.get('http://api.geonames.org/findNearbyWikipedia?'+
       'lat='+lat+'&lng='+lng+'&username=yagolopez&lang=es', {cache: true});
@@ -141,14 +141,14 @@ angular.module('wca.services',[])
       '&rvprop=content&rvsection=0&rvparse');
   };
 
-  // bueno para lugares concretos con descripción breve
+  /** Bueno para lugares concretos con descripción breve */
   this.openSearch = function(termino){
     return $http.jsonp('https://es.wikipedia.org/w/api.php?action=opensearch&'+
       'search='+termino+'&callback=JSON_CALLBACK', {cache: true});
   };
-})
+});
 // ====================================================================================================================
-.service('ItemsMeteo', function($filter){
+wcaModule.service('ItemsMeteo', function($filter){
 
   var meteoData = null;
 
@@ -173,11 +173,12 @@ angular.module('wca.services',[])
       return (item[0] == idItem);
     }, true);
   };
-})
+});
 // ====================================================================================================================
-.factory('ItemMeteo', function(){
+wcaModule.factory('ItemMeteo', function(){
 
   var urlProxy = 'https://script.google.com/macros/s/AKfycbyX6ViYZ2IuHEurQXJ--t_UOqRTyQZ9yGeSeLcbiM7ZSVcTujTw/exec?url=';
+  //var urlProxy = 'https://cors-anywhere.herokuapp.com/';
   //var urlProxy = 'http://www.whateverorigin.org/get?url='
   //var urlProxy = 'http://anyorigin.com/get?url=';
   //var urlProxy = 'http://dontfilter.us/browse.php?&f=norefer&u=';
@@ -199,9 +200,9 @@ angular.module('wca.services',[])
     }
   }
   return ItemMeteo;
-})
+});
 // ====================================================================================================================
-.service('SLoader', function($ionicLoading){
+wcaModule.service('SLoader', function($ionicLoading){
   var spinnerIco = "<ion-spinner icon='lines' class='spinner-calm'></ion-spinner><br/>";
   var contenidoLoader = "Cargando datos...";
 
@@ -222,17 +223,17 @@ angular.module('wca.services',[])
   this.hide = function(){
     $ionicLoading.hide();
   };
-})
+});
 // ====================================================================================================================
-.factory('$exceptionHandler', function($injector) {
+wcaModule.factory('$exceptionHandler', function($injector) {
   return function(exception, cause) {
     var SPopup = $injector.get('SPopup');
     console.error(exception);
     SPopup.show('Error', 'Detalles: '+exception.message);
   };
-})
+});
 // ====================================================================================================================
-.factory('Cam', function(SCategorias){
+wcaModule.factory('Cam', function(SCategorias){
   function Cam(arrayDatosCam){
     if(arrayDatosCam) {
       this.lugar = arrayDatosCam[0][0];
@@ -245,35 +246,43 @@ angular.module('wca.services',[])
     }//if
   }
   return Cam;
-})
+});
 // ====================================================================================================================
-.service('SCategorias', function(){
-  var nombreCategoria = null;
+wcaModule.service('SCategorias', function(){
+  var nombreCategoria;
   var urlBaseCategoria = 'http://webcamsdeasturias.com/interior.php?categoria=';
 
+  // this.url_a_nombre = function(urlCategoria){
+  //   if (urlCategoria === urlBaseCategoria+'1'){
+  //     nombreCategoria = 'Poblaciones';
+  //   }
+  //   if (urlCategoria === urlBaseCategoria+'2')
+  //     nombreCategoria = 'Puertos';
+  //   if (urlCategoria === urlBaseCategoria+'3')
+  //     nombreCategoria = 'Montaña';
+  //   if (urlCategoria === urlBaseCategoria+'5')
+  //     nombreCategoria = 'Ríos';
+  //   if (urlCategoria === urlBaseCategoria+'7')
+  //     nombreCategoria = 'Playas';
+  // return nombreCategoria;
+  // };
+
   this.url_a_nombre = function(urlCategoria){
-    if (urlCategoria === urlBaseCategoria+'1')
-      nombreCategoria = 'Poblaciones';
-    if (urlCategoria === urlBaseCategoria+'2')
-      nombreCategoria = 'Puertos';
-    if (urlCategoria === urlBaseCategoria+'3')
-      nombreCategoria = 'Montaña';
-    if (urlCategoria === urlBaseCategoria+'5')
-      nombreCategoria = 'Ríos';
-    if (urlCategoria === urlBaseCategoria+'7')
-      nombreCategoria = 'Playas';
-  return nombreCategoria;
+    (urlCategoria === urlBaseCategoria+'1') && (nombreCategoria = 'Poblaciones');
+    (urlCategoria === urlBaseCategoria+'2') &&  (nombreCategoria = 'Puertos');
+    (urlCategoria === urlBaseCategoria+'3') &&  (nombreCategoria = 'Montaña');
+    (urlCategoria === urlBaseCategoria+'5') &&  (nombreCategoria = 'Ríos');
+    (urlCategoria === urlBaseCategoria+'7') && (nombreCategoria = 'Playas');
+    return nombreCategoria;
   };
 
   this.idCategoria_a_nombre = function(idCategoria){
     return this.url_a_nombre(urlBaseCategoria+idCategoria);
   };
-})
+});
 // ====================================================================================================================
-.constant('STRINGS', {
+wcaModule.constant('STRINGS', {
   ERROR: 'Error. No se han podido obtener datos remotos. Posibles causas: ' +
     '1) Sin conexión de datos. 2) Fallo de servidor remoto',
   RECARGANDO_IMG: 'Recargando imagen...'
-})
-
-; // FIN
+});

@@ -29,7 +29,7 @@
     <!-- image ----------------------------------------------------------------------------------------------------- -->
     <img id="gif" src="img/loader/6.gif" rel:animated_src="{{ image_data }}"
          rel:auto_play="0" rel:fps="700" ng-click="playPause()" width="100%"/>
-    <!-- /imagen --------------------------------------------------------------------------------------------------- -->
+    <!-- /image ---------------------------------------------------------------------------------------------------- -->
 
     <div class="card">
       <!-- range slider frames ------------------------------------------------------------------------------------- -->
@@ -45,20 +45,15 @@
             <a class="button" ng-click="playPause()" ng-class="{'button-positive': isGifPlaying}">
               <i ng-if="isGifPlaying" class="ion-ios-pause"></i>
               <i ng-if=" ! isGifPlaying" class="ion-ios-play-outline"></i>
-            </a>
-          </td>
+            </a></td>
           <td>
-            <a class="button" ng-click="backward()"><i class="ion-ios-rewind-outline"></i></a>
-          </td>
+            <a class="button" ng-click="backward()"><i class="ion-ios-rewind-outline"></i></a></td>
           <td>
-            <a class="button" ng-click="forward()"><i class="ion-ios-fastforward-outline"></i></a>
-          </td>
+            <a class="button" ng-click="forward()"><i class="ion-ios-fastforward-outline"></i></a></td>
           <td>
-            <a class="button" ng-click="restart()"><i class="ion-ios-skipbackward-outline"></i></a>
-          </td>
+            <a class="button" ng-click="restart()"><i class="ion-ios-skipbackward-outline"></i></a></td>
           <td>
-            <a class="button" ng-click="end()"><i class="ion-ios-skipforward-outline"></i></a>
-          </td>
+            <a class="button" ng-click="end()"><i class="ion-ios-skipforward-outline"></i></a></td>
         </tr>
       </table>
       <!-- info frames --------------------------------------------------------------------------------------------- -->
@@ -74,7 +69,6 @@
     <div class="card">
       <table id="zoomControls">
         <tr>
-          <!-- botones de zoom omitidos hasta que se arregle bug en jquery panzoom -->
           <td class="btn-zoom">
             <a class="button btn-transparent zoom-out"><i class="ion-ios-minus-outline ico-btn-zoom"></i></a>
           </td>
@@ -93,21 +87,21 @@
         </tr>
       </table>
     </div>
-    <!-- fin card zoom controls ------------------------------------------------------------------------------------ -->
+    <!-- /card zoom controls --------------------------------------------------------------------------------------- -->
 
     <!-- card detalles --------------------------------------------------------------------------------------------- -->
     <div class="card">
-        <div class="item item-divider small-font">Detalles:</div>
-        <div class="item item-text-wrap small-font">
-          <div><span class="green">&bullet; Nombre:</span> {{ ::itemMeteo.nombre}}</div>
-          <div>
-            <span class="green">&bullet; Fuente:</span>
-            <a ng-href="{{ ::itemMeteo.urlFuente }}" target="_blank">{{ ::itemMeteo.fuente}}</a>
-          </div>
-          <div><span class="green">&bullet; Descripción:</span> {{ ::itemMeteo.descripcion }}</div>
+      <div class="item item-divider small-font">Información:</div>
+      <div class="item item-text-wrap small-font">
+        <div><span class="green">&bullet; Nombre:</span> {{ ::itemMeteo.nombre}}</div>
+        <div>
+          <span class="green">&bullet; Fuente:</span>
+          <a ng-href="{{ ::itemMeteo.urlFuente }}" target="_blank">{{ ::itemMeteo.fuente}}</a>
         </div>
+        <div><span class="green">&bullet; Detalles:</span> {{ ::itemMeteo.descripcion }}</div>
       </div>
-     <!-- fin detalles --------------------------------------------------------------------------------------- -->
+    </div>
+     <!-- /card detalles ------------------------------------------------------------------------------------------- -->
 
   </ion-content>
 </ion-view>

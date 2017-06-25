@@ -7,9 +7,9 @@
 //TODO: de errores
 //TODO: añadir favoritos
 
-angular.module('wca.controllers',[])
+wcaCtrlMod = angular.module('wca.controllers',[]);
 // ====================================================================================================================
-.controller('ListadoCtrl', function($scope, $stateParams, $rootScope, $ionicFilterBar, STRINGS,
+wcaCtrlMod.controller('ListadoCtrl', function($scope, $stateParams, $rootScope, $ionicFilterBar, STRINGS,
              SFusionTable, $filter, $ionicScrollDelegate, SCategorias, $ionicHistory, SLoader) {
 
   // init --------------------------------------------------------------------------------------------------------------
@@ -89,9 +89,9 @@ angular.module('wca.controllers',[])
       $rootScope.tituloVista = SCategorias.idCategoria_a_nombre(idCategoria);
     }
   });
-})
+});
 // ====================================================================================================================
-.controller('MapaCtrl', function($scope, SMapa, $rootScope, $location){
+wcaCtrlMod.controller('MapaCtrl', function($scope, SMapa, $rootScope, $location){
 
   $scope.$on('$ionicView.afterEnter', function() {
     //var mapa = SMapa.crear(document.getElementById('mapa'));
@@ -136,9 +136,9 @@ angular.module('wca.controllers',[])
   */
   // Fin Geolocalizacion ----------------------------------------------------------------------------------------------
 
-})
+});
 // ====================================================================================================================
-.controller('MapaGlobalCtrl', function($scope, SMapa, SFusionTable, SPopup, SCategorias){
+wcaCtrlMod.controller('MapaGlobalCtrl', function($scope, SMapa, SFusionTable, SPopup, SCategorias){
 
   var layer = null; mapa = null; zoomLevel = 7;
   var sqlQueryConcejos = 'SELECT Concejo FROM '+SFusionTable.TABLE_ID+' GROUP BY Concejo';
@@ -213,15 +213,15 @@ angular.module('wca.controllers',[])
   //   e.preventDefault();
   // }
 
-})
+});
 // ====================================================================================================================
-.controller('DetalleCtrl', function($scope, $stateParams, $ionicModal, SClima, $filter, $rootScope,
+wcaCtrlMod.controller('DetalleCtrl', function($scope, $stateParams, $ionicModal, SClima, $filter, $rootScope,
              SPopup, SWikipedia, $ionicPopover, Cam, SLoader, $location, STRINGS, $ionicPlatform){
 
   // INIT --------------------------------------------------------------------------------------------------------------
   var datosCam;
   $scope.rowid = $stateParams.rowid;
-  $scope.descripcion = ' (Obteniendo datos del servidor...)'
+  $scope.descripcion = ' (Obteniendo datos del servidor...)';
   SLoader.show('Cargando...');
   if(!$rootScope.items || !$scope.rowid){
     $location.path('#/'); // si no hay lista de items (cams) redirigir a root y abortar
@@ -327,16 +327,17 @@ angular.module('wca.controllers',[])
     clearTimeout($scope.timerGetClimaData);
     clearTimeout($scope.timerMeteoblue);
   })
-})
+});
 // ====================================================================================================================
-.controller('StreetViewCtrl', function($scope, SMapa, $rootScope, SPopup, $location){
+wcaCtrlMod.controller('StreetViewCtrl', function($scope, SMapa, $rootScope, SPopup, $location, $ionicSideMenuDelegate){
 
+  // Initializations
   if(!$rootScope.cam) {
     $location.path( "#/" );
     return;
   }
-
   var coords = {lat: $rootScope.cam.lat, lng: $rootScope.cam.lng};
+  $ionicSideMenuDelegate.canDragContent(false);
 
   $scope.$on('$ionicView.afterEnter', function() {
     var div = document.getElementById('street-view');
@@ -349,11 +350,15 @@ angular.module('wca.controllers',[])
             'getPanoramaByLocation(): '+status);
         }
       })
-  })
+  });
 
-})
+  $scope.$on('$ionicView.leave', function(){
+    $ionicSideMenuDelegate.canDragContent(true);
+  });
+
+});
 // ====================================================================================================================
-.controller('GifPlayerCtrl', function($scope, $interval, $stateParams, ItemsMeteo, ItemMeteo, SLoader,
+wcaCtrlMod.controller('GifPlayerCtrl', function($scope, $interval, $stateParams, ItemsMeteo, ItemMeteo, SLoader,
              SPopup, $location){
 
   SLoader.showWithBackdrop('Cargando...<br/>El proceso puede tardar');
@@ -511,9 +516,9 @@ angular.module('wca.controllers',[])
   })
   // Fin evento destroy -----------------------------------------------------------------------------------------------
 
-})
+});
 // ====================================================================================================================
-.controller('MeteoCtrl', function($scope, SFusionTable, SPopup, ItemsMeteo, SLoader){
+wcaCtrlMod.controller('MeteoCtrl', function($scope, SFusionTable, SPopup, ItemsMeteo, SLoader){
 
   var showError = function(status){
     SPopup.show('Error', ' MeteoCtrl: Compruebe conexión de red. Estado: '+status );
@@ -539,9 +544,9 @@ angular.module('wca.controllers',[])
     SLoader.hide();
   });
 
-})
+});
 // ====================================================================================================================
-.controller('MeteoDetalleCtrl', function($scope, $stateParams, ItemMeteo, ItemsMeteo, $location){
+wcaCtrlMod.controller('MeteoDetalleCtrl', function($scope, $stateParams, ItemMeteo, ItemsMeteo, $location){
 
   $scope.itemMeteo = new ItemMeteo( ItemsMeteo.getItemById($stateParams.id_item_meteo) );
 
@@ -552,9 +557,9 @@ angular.module('wca.controllers',[])
   $scope.$on('$ionicView.afterEnter', function(){
     document.getElementById('imgMeteo').style.background = 'none';
   });
-})
+});
 // ====================================================================================================================
-.controller('PorCategoriaCtrl', function($scope, $window, $sce, SLoader){
+wcaCtrlMod.controller('PorCategoriaCtrl', function($scope, $window, $sce, SLoader){
 
     $scope.$on('$ionicView.beforeEnter', function () {
       SLoader.showWithBackdrop('Cargando...');
@@ -597,9 +602,9 @@ angular.module('wca.controllers',[])
       SLoader.hide();
     }
 
-  })
+  });
 // ====================================================================================================================
-.controller('PorConcejoCtrl', function($scope, $window, $sce, SLoader){
+wcaCtrlMod.controller('PorConcejoCtrl', function($scope, $window, $sce, SLoader){
 
     var iframeHeigth = 525;
     $scope.endLoad = false;
@@ -641,9 +646,9 @@ angular.module('wca.controllers',[])
       SLoader.hide();
       $scope.endLoad = true;
     }
-  })
+  });
 // ====================================================================================================================
-.controller('VientoCtrl', function($scope, SLoader){
+wcaCtrlMod.controller('VientoCtrl', function($scope, SLoader){
 
   SLoader.showWithBackdrop('Cargando...');
 

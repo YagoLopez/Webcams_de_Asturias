@@ -1,33 +1,14 @@
 <ion-view view-title="{{ itemMeteo.nombre }}">
   <style type="text/css">
-    .green {
-      color: green;
-    }
-    #imgMeteo {
-      width: 100%;
-      height: 400px;
-    }
-    ion-header-bar > div > img {
-      width: 35px;
-      vertical-align: middle;
-    }
-    .small-text {
-      font-size: small;
-    }
+    ion-header-bar > div > img {width: 35px; vertical-align: middle}
+    #imgMeteo {width: 100%; height: 400px}
+    .green {color: green}
+    .small-text {font-size: small}
+    .hide-scrollbars{overflow-x: hidden !important; overflow-y: hidden !important}
+    .img-meteo {cursor: move}
     @media (min-width: 720px) {
-      .card{
-        width: 80%;
-        margin: 32px auto;
-      }
-      #imgMeteo{
-        width: 80%;
-        height: 450px;
-        margin: 32px auto;
-      }
-    }
-    .hide-scrollbars{
-      overflow-x: hidden !important;
-      overflow-y: hidden !important;
+      .card{width: 80%; margin: 32px auto}
+      #imgMeteo{width: 80%; height: 450px;  margin: 32px auto}
     }
   </style>
 
@@ -36,21 +17,19 @@
   </ion-nav-bar>
 
   <ion-content overflow-scroll="true">
-
     <ion-scroll id="imgMeteo" zooming="true" direction="xy" locking="false" overflow-scroll="false" class="hide-scrollbars">
-      <img ng-src="{{ ::itemMeteo.urlNoProxy }}" width="100%"/>
+      <img ng-src="{{ ::itemMeteo.urlNoProxy }}" width="100%" class="img-meteo"/>
     </ion-scroll>
     <div class="card">
-      <div class="item item-divider">Detalles:</div>
+      <div class="item item-divider">Información:</div>
       <div class="item item-text-wrap small-text">
-        <div><span class="green">&bullet; Nombre:</span> {{ ::itemMeteo.nombre }}</div>
-        <div><span class="green">&bullet; Fuente:</span> <a href="{{ ::itemMeteo.urlFuente }}" target="_blank">
+        <div><span class="green">&bullet; Nombre: </span>{{ ::itemMeteo.nombre }}</div>
+        <div><span class="green">&bullet; Fuente: </span><a href="{{ ::itemMeteo.urlFuente }}" target="_blank">
           {{ ::itemMeteo.fuente }}</a>
         </div>
-        <div><span class="green">&bullet; Tipo imagen:</span> {{ ::itemMeteo.tipoImagen }}</div>
-        <div><span class="green">&bullet; Descripción:</span> {{ ::itemMeteo.descripcion }}</div>
+        <div><span class="green">&bullet; Tipo imagen: </span>{{ ::itemMeteo.tipoImagen }}</div>
+        <div><span class="green">&bullet; Detalles: </span>{{ ::itemMeteo.descripcion }}</div>
       </div>
     </div>
-
   </ion-content>
 </ion-view>
