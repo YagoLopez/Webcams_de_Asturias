@@ -276,11 +276,11 @@ wcaCtrlMod.controller('DetalleCtrl', function($scope, $stateParams, $ionicModal,
     })
   };
   // DIALOGO MODAL DETALLE ---------------------------------------------------------------------------------------------
-  $ionicModal.fromTemplateUrl('templates/modal-detalle.html', {
+  $ionicModal.fromTemplateUrl('templates/modal-img-detalle.html', {
     scope: $scope,
     animation: 'scale-in'
   }).then(function(modal) {
-    $scope.modalDetalle = modal;
+    $scope.modalImgDetalle = modal;
   });
   // DIALOGO MODAL PREDICCION ----------------------------------------------------------------------------------------
   $ionicModal.fromTemplateUrl('templates/modal-meteoblue.html', {
@@ -322,7 +322,7 @@ wcaCtrlMod.controller('DetalleCtrl', function($scope, $stateParams, $ionicModal,
 
   // Close modals when backwards navigation and clear timers for preventing memory leaks
   $scope.$on('$ionicView.beforeLeave', function (event, data) {
-    $scope.modalDetalle.hide();
+    $scope.modalImgDetalle.hide();
     $scope.modalPrediccion.hide();
     clearTimeout($scope.timerGetClimaData);
     clearTimeout($scope.timerMeteoblue);
@@ -376,7 +376,7 @@ wcaCtrlMod.controller('GifPlayerCtrl', function($scope, $interval, $stateParams,
     SLoader.hide();
     $location.path( '#/' );
     return;
-  };
+  }
   var killTimer = function(){
     if(angular.isDefined(timer)) {
       $interval.cancel(timer);
@@ -507,13 +507,13 @@ wcaCtrlMod.controller('GifPlayerCtrl', function($scope, $interval, $stateParams,
       SPopup.show('Error de red', 'Comprobar conexión');
       $location.path(' #/' );
     }
-  })
+  });
 
   // Evento destroy ---------------------------------------------------------------------------------------------------
   $scope.$on("$destroy",function(){
       window.clearTimeout(0);
       $scope.pause();
-  })
+  });
   // Fin evento destroy -----------------------------------------------------------------------------------------------
 
 });
@@ -537,7 +537,7 @@ wcaCtrlMod.controller('MeteoCtrl', function($scope, SFusionTable, SPopup, ItemsM
       ItemsMeteo.setData(data.rows);
       $scope.getItemsByCategoriaId = function(idCategoria){
         return ItemsMeteo.getItemsByCategoriaId(idCategoria);
-      }
+      };
       SLoader.hide();
     }
   ).error(function(status){
@@ -553,7 +553,7 @@ wcaCtrlMod.controller('MeteoDetalleCtrl', function($scope, $stateParams, ItemMet
   if(angular.equals({}, $scope.itemMeteo)){
     $location.path('#/');
     return;
-  };
+  }
   $scope.$on('$ionicView.afterEnter', function(){
     document.getElementById('imgMeteo').style.background = 'none';
   });
@@ -568,7 +568,7 @@ wcaCtrlMod.controller('PorCategoriaCtrl', function($scope, $window, $sce, SLoade
     $scope.calculateDimensions = function(gesture) {
       $scope.dev_width = $window.innerWidth;
       $scope.dev_height = $window.innerHeight;
-    }
+    };
     angular.element($window).bind('resize', function(){
       $scope.$apply(function() {
         $scope.calculateDimensions();
@@ -612,7 +612,7 @@ wcaCtrlMod.controller('PorConcejoCtrl', function($scope, $window, $sce, SLoader)
     $scope.calculateDimensions = function(gesture) {
       $scope.dev_width = $window.innerWidth;
       $scope.dev_height = $window.innerHeight;
-    }
+    };
     angular.element($window).bind('resize', function(){
       $scope.$apply(function() {
         $scope.calculateDimensions();

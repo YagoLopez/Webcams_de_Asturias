@@ -1,35 +1,13 @@
 <ion-modal-view class="modal-view-detalle">
 
   <style type="text/css">
-    .modal-view-detalle{
-      width: 100%;
-      height: 100%;
-      top: 0;
-      left: 0;
-    }
-    #imgCamContainer {
-      margin-top: 45px;
-      width: 100%;
-      height: 100%;
-      text-align: center;
-    }
-    #imgCamContainer > img {
-      width: 35px;
-      vertical-align: middle;
-    }
-    ion-header-bar > div > img {
-      width: 35px;
-      vertical-align: middle;
-    }
-    .info-img {
-      display: block;
-      padding-bottom: 40px;
-    }
+    ion-header-bar > div > img {width: 35px; vertical-align: middle}
+    #imgCamContainer {margin-top: 45px; width: 100%; height: 100%; text-align: center; cursor: move}
+    #imgCamContainer > img {width: 35px; vertical-align: middle}
+    .modal-view-detalle{width: 100%; height: 100%; top: 0; left: 0}
+    .info-img {display: block; padding-bottom: 40px}
     @media (min-width: 720px) {
-      #cam-imagen {
-        width: 90%;
-        margin: 32px auto;
-      }
+      #cam-imagen {width: 90%; margin: 32px auto}
     }
   </style>
 
@@ -38,7 +16,7 @@
       <!--suppress HtmlUnknownTarget -->
       <img src="img/pinch1.png"/>
     </div>
-    <button class="button pull-right" ng-click="modalDetalle.hide()">
+    <button class="button pull-right" ng-click="modalImgDetalle.hide()">
       <i class="icon icon-right ion-ios-close-outline"></i>
     </button>
   </ion-header-bar>

@@ -42,18 +42,18 @@
       <table id="playControls">
         <tr>
           <td>
-            <a class="button" ng-click="playPause()" ng-class="{'button-positive': isGifPlaying}">
+            <a class="button" ng-click="playPause()" ng-class="{'button-positive': isGifPlaying}" title="Play/Pause">
               <i ng-if="isGifPlaying" class="ion-ios-pause"></i>
               <i ng-if=" ! isGifPlaying" class="ion-ios-play-outline"></i>
             </a></td>
           <td>
-            <a class="button" ng-click="backward()"><i class="ion-ios-rewind-outline"></i></a></td>
+            <a class="button" ng-click="restart()"><i class="ion-ios-skipbackward-outline" title="Restart"></i></a></td>
           <td>
-            <a class="button" ng-click="forward()"><i class="ion-ios-fastforward-outline"></i></a></td>
+            <a class="button" ng-click="backward()" title="Backward"><i class="ion-ios-rewind-outline"></i></a></td>
           <td>
-            <a class="button" ng-click="restart()"><i class="ion-ios-skipbackward-outline"></i></a></td>
+            <a class="button" ng-click="forward()" title="Foreward"><i class="ion-ios-fastforward-outline"></i></a></td>
           <td>
-            <a class="button" ng-click="end()"><i class="ion-ios-skipforward-outline"></i></a></td>
+            <a class="button" ng-click="end()" title="End"><i class="ion-ios-skipforward-outline"></i></a></td>
         </tr>
       </table>
       <!-- info frames --------------------------------------------------------------------------------------------- -->

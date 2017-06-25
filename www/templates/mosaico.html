@@ -1,34 +1,15 @@
 <ion-view view-title="Mosaico" cache-view="true">
-  <style type="text/css" scoped>
-    .txt {
-      font-size: xx-small;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-    .itemCam {
-      padding: 0;
-    }
-    .imgLoader{
-      background: transparent url(img/clock-32x32-3.png) no-repeat center center;
-      cursor: pointer;
-    }
-    .icon-badge {
-      vertical-align: sub;
-      margin-top: 4px;
-      margin-bottom: 4px;
-      padding-top: 4px;
-    }
-    .item-padd{
-      border: 0;
-    }
+  <style type="text/css">
+    /*noinspection CssUnknownTarget*/
+    .imgLoader{background: transparent url(img/clock-32x32-3.png) no-repeat center center; cursor: pointer}
+    .txt {font-size: xx-small; overflow: hidden; text-overflow: ellipsis; text-align: center}
+    .itemCam {padding: 0; border-width: 0; border-style: none}
+    .item-padd{border: 0}
+    .icon-badge {vertical-align: sub; margin-top: 4px; margin-bottom: 4px; padding-top: 4px}
     @media (min-width: 720px) {
-      div.grid {
-        width: 90%;
-        margin: 32px auto;
+      #contenido-mosaico{background-color: ghostwhite}
+      div.grid {width: 90%; margin: 32px auto;
         box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
-      }
-      #contenido-mosaico{
-        background-color:ghostwhite;
       }
     }
   </style>
@@ -38,12 +19,13 @@
     <span class="badge badge-calm icon-badge">{{ items.length }}</span>
     <ion-nav-back-button class="button-icon ion-android-arrow-back"></ion-nav-back-button>
     <ion-nav-buttons side="left">
-      <button ng-if="screenWidth < 760" class="button button-icon button-clear ion-navicon" menu-toggle="left"></button>
+      <button ng-if="screenWidth < 760" menu-toggle="left" class="button button-icon button-clear ion-navicon"></button>
     </ion-nav-buttons>
     <ion-nav-buttons side="right">
       <button class="button button-icon icon ion-ios-search-strong" ng-click="showFilterBar()"></button>
     </ion-nav-buttons>
   </ion-nav-bar>
+
   <ion-header-bar class="bar-subheader bar-stable">
     <h1 class="title">{{ tituloVista }}</h1>
     <span class="badge badge-calm icon-badge">{{ items.length }}</span>

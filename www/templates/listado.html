@@ -2,30 +2,30 @@
 <ion-view view-title="Listado" cache-view="true">
 
   <style type="text/css" scoped>
-    #btnMosaico{padding:0; border:0;}
-    #listadoContainer > .item-icon-right{min-height: 0; padding-left: 80px;}
-    #imWC {height: 64px; width: 72px; top: 6px; background: transparent url(img/clock-32x32-3.png) no-repeat center center;}
-    .textoItem {margin-top:10px;  margin-left: 10px;}
-    .icon-badge {vertical-align: sub; margin-top: 4px; margin-bottom: 4px; padding-top: 4px;}
-    .error {text-align: center; color: red;}
-    .color-blue {color: #387ef5;}
+    /*noinspection CssUnknownTarget*/
+    #imWC {height: 64px; width: 72px; top: 6px; background: transparent url(img/clock-32x32-3.png) no-repeat center center}
+    #btnMosaico{padding:0; border:0}
+    #listadoContainer > .item-icon-right{min-height: 0; padding-left: 80px}
+    .textoItem {margin-top:10px;  margin-left: 10px}
+    .icon-badge {vertical-align: sub; margin-top: 4px; margin-bottom: 4px; padding-top: 4px}
+    .error {text-align: center; color: red}
     @media (min-width: 720px) {
-      #listadoContainer{
-        width: 80%;
-        margin: 32px auto;
-        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);}
-      #contenido-listado{background-color:ghostwhite;}
+      #listadoContainer{width: 80%; margin: 32px auto;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24)}
+      #contenido-listado{background-color:ghostwhite}
     }
   </style>
 
   <ion-nav-buttons side="left">
     <button ng-if="screenWidth < 760" class="button button-icon button-clear ion-navicon" menu-toggle="left"></button>
   </ion-nav-buttons>
+
   <ion-nav-buttons side="right">
     <a id="btnMosaico" class="button button-icon icon ion-grid"
        href="#/app/mosaico?concejo={{ concejo }}&idCategoria={{ idCategoria }}"></a>
     <button class="button button-icon icon ion-ios-search-strong" ng-click="showFilterBar()"></button>
   </ion-nav-buttons>
+
   <ion-header-bar class="bar-subheader bar-stable">
     <h1 class="title">{{ tituloVista }}</h1>
     <span class="badge badge-calm icon-badge">{{ items.length }}</span>
@@ -55,7 +55,6 @@
         <!-- /DEBUG INFO -->
       </a>
     </div>
-  <br/>
-  <br/>
+    <br/><br/>
   </ion-content>
 </ion-view>
