@@ -124,7 +124,14 @@ app.config(function($stateProvider, $urlRouterProvider, $compileProvider, $ionic
 // Inicializaciones ===================================================================================================
 app.run(function($ionicPlatform, $rootScope, $window) {
 
-  window.scrollTo(0,1);
+  window.addEventListener("load",function() {
+    // Set a timeout...
+    setTimeout(function(){
+      // Hide the address bar!
+      window.scrollTo(0, 1);
+    }, 0);
+  });
+
 
   // halla anchura de pantalla para dibujar o no menu-button en ion-nav-bar (en 'menu.html')
   ionic.on('resize', function(){
