@@ -124,6 +124,8 @@ app.config(function($stateProvider, $urlRouterProvider, $compileProvider, $ionic
 // Inicializaciones ===================================================================================================
 app.run(function($ionicPlatform, $rootScope, $window) {
 
+  window.scrollTo(0,1);
+
   // halla anchura de pantalla para dibujar o no menu-button en ion-nav-bar (en 'menu.html')
   ionic.on('resize', function(){
     $rootScope.$apply(function(){
