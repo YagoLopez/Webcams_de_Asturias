@@ -1,17 +1,10 @@
 <ion-modal-view>
-
   <style type="text/css">
-    #scrollContainer {margin-top: 45px; width: 100%; height: 100%; text-align: center; overflow:hidden}
-    #scrollContainer > img {width: 35px; vertical-align: middle}
+    #scroll-container {margin-top: 45px; width: 100%; height: 100%; text-align: center; overflow:hidden}
+    #scroll-container > img {width: 35px; vertical-align: middle}
     ion-header-bar > div > img {width: 35px; vertical-align: middle}
     .img-meteoblue{height: 490px; display: block; margin: auto; cursor: move; padding-bottom: 40px}
-    .loading-text{
-      position: absolute;
-      text-align: center;
-      width: 100%;
-      top: 150px;
-      z-index: -1;
-    }
+    .loading-text{position: absolute; text-align: center; width: 100%; top: 150px; z-index: -1}
   </style>
 
   <ion-header-bar align-title="center">
@@ -25,7 +18,7 @@
 
   <!-- overflow-scroll="false" para permitir scrolling. Permite hacer zoom en imagen -->
   <!-- locking="false" para permitir srcroll simultaneo en ejes x,y. apropiado para hacer zoom -->
-  <ion-scroll id="scrollContainer" zooming="true" direction="xy" locking="false" overflow-scroll="false">
+  <ion-scroll id="scroll-container" zooming="true" direction="xy" locking="false" overflow-scroll="false">
     <div class="loading-text">Obteniendo datos</div>
     <img ng-src="{{urlMeteoblue}}" class="img-meteoblue">
   </ion-scroll>

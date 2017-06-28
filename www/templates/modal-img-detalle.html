@@ -2,8 +2,8 @@
 
   <style type="text/css">
     ion-header-bar > div > img {width: 35px; vertical-align: middle}
-    #imgCamContainer {margin-top: 45px; width: 100%; height: 100%; text-align: center; cursor: move}
-    #imgCamContainer > img {width: 35px; vertical-align: middle}
+    #img-cam-container {margin-top: 45px; width: 100%; height: 100%; text-align: center; cursor: move}
+    #img-cam-container > img {width: 35px; vertical-align: middle}
     .modal-view-detalle{width: 100%; height: 100%; top: 0; left: 0}
     .info-img {display: block; padding-bottom: 40px}
     @media (min-width: 720px) {
@@ -23,7 +23,7 @@
 
   <!-- overflow-scroll=false para permitir scrolling con javascript. Permite hacer zoom en imagen -->
   <!-- locking=false para permitir srcroll simultaneo en ejes x,y. apropiado para hacer zoom -->
-  <ion-scroll id="imgCamContainer" zooming="true" direction="xy" locking="false" overflow-scroll="false">
+  <ion-scroll id="img-cam-container" zooming="true" direction="xy" locking="false" overflow-scroll="false">
     <img id="cam-imagen" ng-src="{{ cam.imagen }}"/>
     <div class="info-img">{{ ::cam.lugar }}<br>Concejo: {{ ::cam.concejo }}</div>
   </ion-scroll>

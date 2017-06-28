@@ -22,12 +22,12 @@ wcaModule.service('SFusionTable', function($http){
 // ====================================================================================================================
 wcaModule.service('SMapa', function(SFusionTable, SPopup){
 
+  var placesService, request, mapa;
+
   if (typeof google === 'undefined'){
     window.location = 'index.html';
     return;
   }
-
-  var placesService = null, request = null;
 
   this.OVIEDO = {lat: 43.4667, lng: -5.8333}; // centro de mapa vista global
   this.RADIO_BUSQUEDA = 500; // radio de búsqueda de panorama StreetView a partir de coordenadas de cam (metros)
@@ -59,7 +59,7 @@ wcaModule.service('SMapa', function(SFusionTable, SPopup){
   };
 
   this.crear = function (domElement){
-    var mapa = new google.maps.Map(domElement,  {
+    mapa = new google.maps.Map(domElement,  {
       mapTypeControl: true,
       mapTypeControlOptions: { style: google.maps.MapTypeControlStyle.DROPDOWN_MENU },
       mapTypeId: google.maps.MapTypeId.HYBRID

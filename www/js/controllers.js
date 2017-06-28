@@ -13,24 +13,21 @@ wcaCtrlMod.controller('ListadoCtrl', function($scope, $stateParams, $rootScope, 
              SFusionTable, $filter, $ionicScrollDelegate, SCategorias, $ionicHistory, SLoader) {
 
   // init --------------------------------------------------------------------------------------------------------------
-  SLoader.show('Cargando...');
+  var sqlQuery;
   var concejo = $stateParams.concejo;
   var idCategoria = $stateParams.idCategoria;
-  var camsFiltradasPorUrl = null;
-
+  SLoader.show('Cargando...');
   $scope.imgError = function () {
     $scope.error = STRINGS.ERROR;
     $scope.$apply();
   };
-
   function esSubcadena(idCategoria, urlCategoria) {
     return (urlCategoria.indexOf('categoria=' + idCategoria) > -1);
   }
-
   $ionicHistory.clearCache();
   // fin init ----------------------------------------------------------------------------------------------------------
 
-  var sqlQuery = 'SELECT Lugar,Concejo,Imagen,Categoria,rowid,latitud,longitud FROM '+ SFusionTable.TABLE_ID;
+  sqlQuery = 'SELECT Lugar,Concejo,Imagen,Categoria,rowid,latitud,longitud FROM '+ SFusionTable.TABLE_ID;
     SFusionTable.getRemoteData(sqlQuery).success(function(data) {
 
       if (data.error) {
@@ -46,12 +43,15 @@ wcaCtrlMod.controller('ListadoCtrl', function($scope, $stateParams, $rootScope, 
             // cam[1]: concejo, cam[3]: url categoria (no id de categoria, no confundir)
             return (cam[1].toLowerCase() == concejo.toLowerCase() && esSubcadena(idCategoria, cam[3]));
           } else {
-            if (concejo)
+            if (concejo){
               return cam[1].toLowerCase() == concejo.toLowerCase();
-            if (idCategoria)
+            }
+            if (idCategoria){
               return esSubcadena(idCategoria, cam[3]);
-            if (!concejo && !idCategoria)
+            }
+            if (!concejo && !idCategoria){
               return data.rows;
+            }
           }
         });
       // -------------------------------------------------------------------------------------------------------------
@@ -60,7 +60,7 @@ wcaCtrlMod.controller('ListadoCtrl', function($scope, $stateParams, $rootScope, 
       // Este filtro se aplica sobre los datos previamente filtrados por parametros url (filtro 1)
 
       // TODO: Habría que mejorar la búsqueda para que fuera menos estricta. Por ejemplo, si se introduce "puerto
-               // llanes" no se encuentra "Puerto de Llanes"
+      // llanes" no se encuentra "Puerto de Llanes"
       $rootScope.showFilterBar = function () {
         $rootScope.filterBarInstance = $ionicFilterBar.show({
           items: $rootScope.items,
@@ -94,53 +94,25 @@ wcaCtrlMod.controller('ListadoCtrl', function($scope, $stateParams, $rootScope, 
 wcaCtrlMod.controller('MapaCtrl', function($scope, SMapa, $rootScope, $location){
 
   $scope.$on('$ionicView.afterEnter', function() {
-    //var mapa = SMapa.crear(document.getElementById('mapa'));
-    //var layer = SMapa.creaFusionTableLayer().setMap(mapa);
-    var posicion = null;
+    var mapa, layer, posicion;
 
     if(!$rootScope.cam){
       $location.path( "#/" );
       return;
     } else {
-      var mapa = SMapa.crear(document.getElementById('mapa'));
-      var layer = SMapa.creaFusionTableLayer().setMap(mapa);
+      mapa = SMapa.crear(document.getElementById('mapa'));
+      layer = SMapa.creaFusionTableLayer().setMap(mapa);
       posicion = {lat: $rootScope.cam.lat, lng: $rootScope.cam.lng};
       SMapa.creaMarker(posicion, mapa);
       mapa.setCenter(posicion);
       mapa.setZoom(13);
     }
   });
-
-  // Geolocalizacion --------------------------------------------------------------------------------------------------
-  /*
-      if (navigator.geolocation) {
-        console.log("Device supports Geolocation");
-        navigator.geolocation.getCurrentPosition(function(position) {
-          console.log("Enter getCurrentPosition");
-          var pos = new google.maps.LatLng(position.coords.latitude,
-            position.coords.longitude);
-          console.log(pos);
-          $scope.map.setCenter(pos);
-
-          var myLocation = new google.maps.Marker({
-            position: pos,
-            map: $scope.map,
-            content: 'Your location'
-          });
-        });
-      } else {
-        // Device doesn't support Geolocation
-        console.log("Device doesn't support Geolocation");
-      }
-    };
-  */
-  // Fin Geolocalizacion ----------------------------------------------------------------------------------------------
-
 });
 // ====================================================================================================================
 wcaCtrlMod.controller('MapaGlobalCtrl', function($scope, SMapa, SFusionTable, SPopup, SCategorias){
 
-  var layer = null; mapa = null; zoomLevel = 7;
+  var layer, mapa, filtroConcejo, filtroCategoria, zoomLevel = 7;
   var sqlQueryConcejos = 'SELECT Concejo FROM '+SFusionTable.TABLE_ID+' GROUP BY Concejo';
   var sqlQueryCategorias = 'SELECT Categoria FROM '+SFusionTable.TABLE_ID+' GROUP BY Categoria';
   $scope.checked = null;
@@ -165,7 +137,7 @@ wcaCtrlMod.controller('MapaGlobalCtrl', function($scope, SMapa, SFusionTable, SP
     $scope.checked = 'con';
     // elimina retornos de carro y espacios en blanco al principio y al final
     concejo = concejo.replace(/(\r\n|\n|\r)/gm,'').trim();
-    var filtroConcejo = 'Concejo=\'' + concejo + '\''; // el concejo tiene que ir entre comillas
+    filtroConcejo = 'Concejo=\'' + concejo + '\''; // el concejo tiene que ir entre comillas
     layer.setMap(null); // borra layer anterior si la hubiera
     layer = SMapa.creaFusionTableLayer(filtroConcejo);
     layer.setMap(mapa);
@@ -174,7 +146,6 @@ wcaCtrlMod.controller('MapaGlobalCtrl', function($scope, SMapa, SFusionTable, SP
   };
 
   $scope.categoriaEscogida = function(categoria){
-    var filtroCategoria = null;
     $scope.checked = 'cat';
     categoria = categoria.replace(/(\r\n|\n|\r)/gm,'').trim();
     filtroCategoria = 'Categoria=\'' + categoria + '\'';
@@ -198,20 +169,12 @@ wcaCtrlMod.controller('MapaGlobalCtrl', function($scope, SMapa, SFusionTable, SP
     document.getElementById('selectCategoria').selectedIndex = -1;
   };
 
-  // mapa = SMapa.crear(document.getElementById('mapaglobal'));
-  // $scope.mostrarTodos(); // por defecto
-
   // activa manualmente el ciclo de deteccion de cambios de angular (digest cycle) para evaluar javascript externo
   // (en este caso google maps)
   setTimeout(function () {
     mapa = SMapa.crear(document.getElementById('mapaglobal'));
     $scope.mostrarTodos(); // por defecto
   }, 0);
-
-  // $scope.selectClick = function (e) {
-  //   console.log('select click');
-  //   e.preventDefault();
-  // }
 
 });
 // ====================================================================================================================

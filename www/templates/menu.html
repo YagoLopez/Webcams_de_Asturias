@@ -1,76 +1,73 @@
 <ion-side-menus enable-menu-with-back-views="true">
 
-  <style>
-    #menuaapp > div > ion-item {border-style:none;cursor: pointer}
-    #menuaapp > div > ion-item > a {padding:12px}
+  <style type="text/css">
+    #left-menu > div > ion-item {border-style:none; cursor:pointer}
+    #left-menu > div > ion-item > a {padding:12px}
+    /*noinspection CssUnknownTarget*/
+    .menu-top-img {height:100px; display:block; background:url(img/bckgrnd6.jpg) !important}
     .menu-item {vertical-align:text-top}
-    .ion-content{top: 110px}
-    .credits{font-size:small;text-align: center}
+    .ion-content{top:110px}
+    .credits{font-size:small; text-align:center}
+    .font20{font-size:20px}
+    .font25{font-size:25px}
+    .font30{font-size:30px}
   </style>
 
-  <!-- Side Menu Content ------------------------------------------------------------------------------------------ -->
-  <ion-side-menu-content drag-content="true">
-
-    <ion-nav-bar class="bar-positive"><!--usar aqui clase 'sombraInferior' para poner sombra inferior en la barra de títulos-->
-      <ion-nav-buttons side="left">
-        <button ng-if="screenWidth < 760" class="button button-icon button-clear ion-navicon" menu-toggle="left"></button>
-      </ion-nav-buttons>
-    </ion-nav-bar>
-
-    <ion-nav-view name="menuContent"></ion-nav-view>
-
-  </ion-side-menu-content>
-  <!-- Fin Side Menu Content -------------------------------------------------------------------------------------- -->
-
   <!-- Side Menu -------------------------------------------------------------------------------------------------- -->
+  <!-- Ids DE CATEGORIAS: [1] Poblaciones [2] Puertos [3] Montaña [5] Ríos [7] Playas -->
+
   <ion-side-menu side="left" expose-aside-when="large">
-    <ion-header-bar class="bar-royal" style="height:100px;display:block;background: url(img/bckgrnd6.jpg);">
+    <ion-header-bar class="bar-royal menu-top-img">
       <h1 class="title"></h1>
     </ion-header-bar>
-    <!--
-    - Ids de Categorias -
-    1 poblaciones/Zonas Urbanas
-    2 Puertos
-    3 Montaña
-    5 Ríos
-    7 playas
-    -->
     <ion-content class="ion-content">
-      <ion-list id="menuaapp" class="pad-top-10">
+      <ion-list id="left-menu" class="pad-top-10">
         <ion-item menu-close ui-sref="app.listado({idCategoria:7})">
-          <i class="icon icon-left ion-ios-sunny menu-item" style="font-size:25px"></i> Playas
+          <i class="icon icon-left ion-ios-sunny menu-item font25"></i> Playas
         </ion-item>
         <ion-item menu-close ui-sref="app.listado({idCategoria:2})">
-          <i class="icon icon-left ion-android-boat menu-item" style="font-size:20px"></i> Puertos
+          <i class="icon icon-left ion-android-boat menu-item font20"></i> Puertos
         </ion-item>
         <ion-item menu-close ui-sref="app.listado({idCategoria:1})">
-          <i class="icon icon-left ion-ios-home menu-item" style="font-size:25px"></i> Poblaciones
+          <i class="icon icon-left ion-ios-home menu-item font25"></i> Poblaciones
         </ion-item>
         <ion-item menu-close ui-sref="app.listado({idCategoria:5})">
           <img ng-src="img/icon-river.png" width="20" height="20" class="menu-item"> Ríos
         </ion-item>
         <ion-item menu-close ui-sref="app.listado({idCategoria:3})">
-          <i class="icon icon-left ion-android-image menu-item" style="font-size:25px"></i> Montaña
+          <i class="icon icon-left ion-android-image menu-item font25"></i> Montaña
         </ion-item>
-        <!--<ion-item menu-close href="#/app/listado">-->
-          <!--<i class="icon icon-left ion-ios-list-outline menu-item" style="font-size:25px"></i> Todas-->
-        <!--</ion-item>-->
         <ion-item menu-close ui-sref="app.mapaglobal">
-          <i class="icon icon-left ion-earth menu-item" style="font-size:25px"></i> Mapa Global
+          <i class="icon icon-left ion-earth menu-item font25"></i> Mapa Global
         </ion-item>
         <ion-item menu-close ui-sref="app.meteo">
-          <i class="icon icon-left ion-ios-partlysunny menu-item" style="font-size:30px"></i> Meteo
+          <i class="icon icon-left ion-ios-partlysunny menu-item font30"></i> Meteo
         </ion-item>
         <ion-item menu-close ui-sref="app.stats">
-          <i class="icon icon-left ion-stats-bars menu-item" style="font-size:30px"></i> Estadísticas
+          <i class="icon icon-left ion-stats-bars menu-item font30"></i> Estadísticas
         </ion-item>
       </ion-list>
       <br/>
       <div class="credits">
         Desarrollado por<br/>
-        <a href="https://yagolopez.github.io" target="_blank">Yago López</a><br/><br/><br/>
+        <a href="https://yagolopez.js.org" target="_blank">Yago López</a><br/><br/><br/>
       </div>
     </ion-content>
   </ion-side-menu>
+
   <!-- Fin Side Menu ---------------------------------------------------------------------------------------------- -->
+
+  <!-- Side Menu Content ------------------------------------------------------------------------------------------ -->
+
+  <ion-side-menu-content drag-content="true">
+    <ion-nav-bar class="bar-positive">
+      <ion-nav-buttons side="left">
+        <button ng-if="screenWidth < 760" class="button button-icon button-clear ion-navicon" menu-toggle="left"></button>
+      </ion-nav-buttons>
+    </ion-nav-bar>
+    <ion-nav-view name="menuContent"></ion-nav-view>
+  </ion-side-menu-content>
+
+  <!-- /Side Menu Content ----------------------------------------------------------------------------------------- -->
+
 </ion-side-menus>
