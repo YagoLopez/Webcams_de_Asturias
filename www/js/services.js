@@ -3,6 +3,7 @@
 
 wcaModule = angular.module('wca.services',[]);
 // ====================================================================================================================
+/*
 wcaModule.service('SFusionTable', function($http){
 
   var API_ENDPOINT = 'https://www.googleapis.com/fusiontables/v2/query';
@@ -11,8 +12,47 @@ wcaModule.service('SFusionTable', function($http){
   this.TABLE_ID = '1gX5maFbqFyRziZiUYlpOBYhcC1v9lGkKqCXvZREF';
 
   this.getRemoteData = function( sqlQueryString ) {
-    var url = API_ENDPOINT+ '?sql=' +sqlQueryString+ '&key=' +API_KEY+ '&callback=JSON_CALLBACK';
+    var url = API_ENDPOINT+ '?sql=' +encodeURI(sqlQueryString)+ '&key=' +API_KEY+ '&callback=JSON_CALLBACK';
     return $http.jsonp( encodeURI(url), {cache: true} );
+  };
+
+  this.getLocalData = function(path_fichero){
+    return $http.get(path_fichero);
+  };
+});
+*/
+// ====================================================================================================================
+wcaModule.service('SFusionTable', function($http){
+
+  // Antiguas claves de identificacion
+  var API_ENDPOINT = 'https://www.googleapis.com/fusiontables/v2/query';
+  var API_KEY = 'AIzaSyBsdouSTimjrC2xHmbGgOt8VfbLBWc9Gps';
+
+  // Nuevas claves de identificacion usando OAuth2
+  var ID_CLIENT_OAUTH2 = '657321649789-3oh0002a4bnqiflmkmv0q47slvi21jdi.apps.googleusercontent.com';
+  var OAUTH2_SECRET = 'gT0WTpsma4NNqhmsAG7owIqA';
+  var auth_token = {
+    "web": {
+      "client_id": "657321649789-3oh0002a4bnqiflmkmv0q47slvi21jdi.apps.googleusercontent.com",
+      "project_id": "webcams-de-asturias",
+      "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+      "token_uri": "https://accounts.google.com/o/oauth2/token",
+      "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+      "client_secret": "gT0WTpsma4NNqhmsAG7owIqA"
+    }
+  };
+
+  this.TABLE_ID = '1gX5maFbqFyRziZiUYlpOBYhcC1v9lGkKqCXvZREF';
+
+  this.getRemoteData = function( sqlQueryString ) {
+    var url = API_ENDPOINT+ '?sql=' +(sqlQueryString)+ '&key=' +API_KEY+ '&callback=JSON_CALLBACK';
+    console.log(sqlQueryString);
+    return $http.jsonp( encodeURI(url), {cache: true} );
+  };
+
+  this.getRemoteDataOAuth = function( sqlQueryString ) {
+    var url = API_ENDPOINT+ '?sql=' +encodeURI(sqlQueryString);
+    return $http.get( encodeURI(url), {cache: true, headers: {'Authorization': auth_token}} );
   };
 
   this.getLocalData = function(path_fichero){

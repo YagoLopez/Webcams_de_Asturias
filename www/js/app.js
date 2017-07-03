@@ -101,7 +101,7 @@ app.config(function($stateProvider, $urlRouterProvider, $compileProvider, $ionic
 // -------------------------------------------------------------------------------------------------------------------
   $stateProvider.state('app.listado', {
     url: '/listado?concejo&idCategoria',
-    cache: true,
+    cache: false,
     views: {'menuContent': {templateUrl: 'templates/listado.html', controller: 'ListadoCtrl'}}
   });
 // -------------------------------------------------------------------------------------------------------------------
@@ -115,6 +115,12 @@ app.config(function($stateProvider, $urlRouterProvider, $compileProvider, $ionic
     url: '/viento',
     cache: true,
     views: {'menuContent': {templateUrl: 'templates/viento.html',controller: 'VientoCtrl'}}
+  });
+// -------------------------------------------------------------------------------------------------------------------
+  $stateProvider.state('app.buscar', {
+    url: '/buscar',
+    cache: false,
+    views: {'menuContent': {templateUrl: 'templates/buscar.html', controller: 'BuscarCtrl'}}
   });
 // -------------------------------------------------------------------------------------------------------------------
 
@@ -146,5 +152,6 @@ app.run(function($ionicPlatform, $rootScope, $window) {
     //   ionic.Platform.isFullScreen = true;
     // }
   });
+
 });
 
