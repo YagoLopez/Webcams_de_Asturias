@@ -602,9 +602,9 @@ wcaCtrlMod.controller('VientoCtrl', function($scope, SLoader){
 // ====================================================================================================================
 wcaCtrlMod.controller('BuscarCtrl', function($scope, $rootScope, $filter, SFusionTable, SLoader, $location){
 
-  var sqlQuery = 'SELECT Lugar, Concejo, Imagen ,Categoria, rowid, latitud, longitud FROM '+ SFusionTable.TABLE_ID;
-  console.log('texto busqueda', $scope.textoBusqueda);
-  // $scope.textoBusqueda = '';
+  // var sqlQuery = 'SELECT Lugar, Concejo, Imagen ,Categoria, rowid, latitud, longitud FROM '+ SFusionTable.TABLE_ID;
+  console.log('texto busqueda', $scope.busqueda);
+  $scope.busqueda = {lugar: ''};
   $scope.searchItems = [];
 
   if(!$rootScope.items){
@@ -627,26 +627,20 @@ wcaCtrlMod.controller('BuscarCtrl', function($scope, $rootScope, $filter, SFusio
   }
 
 
-  // Filtra las cams por texto de búsqueda
-  // $scope.buscarCam = function(){
-  //   $filter('filter')($rootScope.items, function(cam) {
-  //     var matchCondition = cam[0].toLowerCase().indexOf( $scope.textoBusqueda.toLowerCase() ) > -1;
-  //     if(matchCondition){
-  //       $scope.searchItems.push(cam);
-  //     }
-  //   });
-  // };
-
   $scope.buscarCam = function(){
-    console.log('model texto busqueda', $scope.textoBusqueda);
+    var matchCondition1, matchCondition2;
+    if($scope.busqueda.lugar.length < 1){
+      $scope.searchItems = [];
+      return;
+    }
     $scope.searchItems = $filter('filter')($rootScope.items, function(cam) {
-      var matchCondition = cam[0].toLowerCase().indexOf($scope.textoBusqueda.toLowerCase()) > -1;
-      if(matchCondition){
+      matchCondition1 = cam[0].toLowerCase().indexOf($scope.busqueda.lugar.toLowerCase()) > -1;
+      matchCondition2 = cam[1].toLowerCase().indexOf($scope.busqueda.lugar.toLowerCase()) > -1;
+      if(matchCondition1 || matchCondition2){
         return cam;
       }
     });
   };
-
 
   console.log('$scope.items', $scope.searchItems);
 

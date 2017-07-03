@@ -2,11 +2,13 @@
 
   <style type="text/css">
     /*noinspection CssUnknownTarget*/
+/*
     #img-cam {height: 64px; width: 72px; top: 6px;
       background: transparent url(img/clock-32x32-3.png) no-repeat center center}
-    #btn-mosaico{padding:0; border:0}
-    #listado-container > .item-icon-right{min-height: 0; padding-left: 80px}
-    .textoItem {margin-top:10px;  margin-left: 10px}
+*/
+    /*#btn-mosaico{padding:0; border:0}*/
+    #listado-container > .item-icon-right{min-height: 0}
+    /*.textoItem {margin-top:10px;  margin-left: 10px}*/
     .icon-badge {vertical-align: sub; margin-top: 4px; margin-bottom: 4px; padding-top: 4px}
     .error {text-align: center; color: red}
     @media (min-width: 720px) {
@@ -38,32 +40,28 @@
 
       <label class="item item-input">
         <i class="icon ion-search placeholder-icon"></i>
-        <input type="search" placeholder="Buscar webcam..." ng-model="textoBusqueda">
+        <input type="text" placeholder="Buscar webcams..."
+          ng-model="busqueda.lugar" ng-change="buscarCam(busqueda.lugar)">
       </label>
-      <button ng-click="buscarCam(textoBusqueda)">Buscar</button>
 
-      <div>total: {{ searchItems.length }}</div>
-      <div>texto busqueda: {{ textoBusqueda }}</div>
+      <!--<button ng-click="buscarCam(busqueda.lugar)">Buscar</button>-->
+      <!--<div>total: {{ searchItems.length }}</div>-->
+      <!--<div>texto busqueda: {{ busqueda.lugar }}</div>-->
 
-      <a class="item item-thumbnail-left item-icon-right"
+      <a class="item item-icon-right"
          ng-repeat="cam in searchItems track by cam[4]" href="#/app/detalle/{{ searchItems[$index][4] }}">
         <!--<img id="img-cam" ng-src="{{ cam[2] }}" class="image-webcam" fallback-src="img/imgFail.png"/>-->
-        <img id="img-cam" ng-src="img/imgFail.png" class="image-webcam" fallback-src="img/imgFail.png"/>
-        <div class="textoItem">
-          <p>
-            <span class="resalteListado"><b>&bullet; </b></span>
-            <span class="textoListado">{{ cam[0] }}</span>
-          </p>
-          <p>
-            <span class="resalteListado"><b>&bullet; </b></span>
-            <span class="textoListado">Concejo: {{ cam[1] }}</span>
-          </p>
+        <!--<img id="img-cam" ng-src="img/imgFail.png" class="image-webcam" fallback-src="img/imgFail.png"/>-->
+        <!--<div class="textoItem">-->
+        <div>
+          <p><span><b>&bullet;</b> {{ cam[0] }}</span></p>
+          <p><span><b>&bullet;</b> Concejo: {{ cam[1] }}</span></p>
         </div>
         <i class="icon ion-ios-arrow-right"></i>
         <!-- DEBUG INFO -->
-        <p>Categoría: {{cam[3]}}</p>
-        <p>indice: {{$index}}</p>
-        <p>ROWID: {{cam[4]}}</p>
+        <!--<p>Categoría: {{cam[3]}}</p>-->
+        <!--<p>indice: {{$index}}</p>-->
+        <!--<p>ROWID: {{cam[4]}}</p>-->
         <!-- /DEBUG INFO -->
       </a>
 
