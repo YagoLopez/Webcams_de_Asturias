@@ -14,10 +14,10 @@ app.config(function($stateProvider, $urlRouterProvider, $compileProvider, $ionic
       $ionicConfigProvider.scrolling.jsScrolling(false);
     }
     // filterbar config
-    $ionicFilterBarConfigProvider.placeholder('Buscar');
-    $ionicFilterBarConfigProvider.transition('vertical');
+    // $ionicFilterBarConfigProvider.placeholder('Buscar');
+    // $ionicFilterBarConfigProvider.transition('vertical');
     // num templates to prefetch
-    $ionicConfigProvider.templates.maxPrefetch(0);
+    $ionicConfigProvider.templates.maxPrefetch(5);
     // disable angular log system
     $logProvider.debugEnabled(false);
     // disable state transitions
@@ -137,6 +137,7 @@ app.run(function($ionicPlatform, $rootScope, $window) {
       // console.log('resize event', $rootScope.screenWidth);
     })
   });
+
   $rootScope.screenWidth = $window.innerWidth;
 
   $ionicPlatform.ready(function() {

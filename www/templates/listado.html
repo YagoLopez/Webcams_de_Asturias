@@ -35,8 +35,9 @@
       <div class="error">{{ ::error }}</div>
       <a class="item item-thumbnail-left item-icon-right"
          ng-repeat="cam in items track by cam[4]" href="#/app/detalle/{{ items[$index][4] }}">
-        <!--<img id="img-cam" ng-src="{{ cam[2] }}" class="image-webcam" fallback-src="img/imgFail.png"/>-->
-        <img id="img-cam" ng-src="img/imgFail.png" class="image-webcam" fallback-src="img/imgFail.png"/>
+        <img id="img-cam" ng-src="{{ cam[2] }}" class="image-webcam" fallback-src="img/imgFail.png"/>
+        <!--<img id="img-cam" ng-src="img/imgFail.png" class="image-webcam" fallback-src="img/imgFail.png"/>-->
+        <!--todo: revisar span.class, se puede simplificar -->
         <div class="textoItem">
           <p>
             <span class="resalteListado"><b>&bullet; </b></span>
