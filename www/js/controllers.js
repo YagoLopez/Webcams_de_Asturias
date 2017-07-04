@@ -9,7 +9,7 @@
 
 wcaCtrlMod = angular.module('wca.controllers',[]);
 // ====================================================================================================================
-wcaCtrlMod.controller('ListadoCtrl', function($scope, $stateParams, $rootScope, $ionicFilterBar, STRINGS,
+wcaCtrlMod.controller('ListadoCtrl', function($scope, $stateParams, $rootScope, STRINGS,
    SFusionTable, $filter, $ionicScrollDelegate, SCategorias, $ionicHistory, SLoader) {
 
   var concejo = $stateParams.concejo || '';
@@ -605,11 +605,11 @@ wcaCtrlMod.controller('BuscarCtrl', function($scope, $rootScope, $filter, SFusio
   //todo: usar params para obtener categoria
   //todo: al entrar en esta vista habría que ejecutar de nuevo una peticion a fusion table para recibir todas las cams
   //      y poder buscar en todas las cams
+  //todo: cachear busqueda para que no se pierda al navegar al una vista detalle
 
   // var sqlQuery = 'SELECT Lugar, Concejo, Imagen ,Categoria, rowid, latitud, longitud FROM '+ SFusionTable.TABLE_ID;
-  console.log('items', $rootScope.items);
   var inputBuscaCam = document.getElementById('inputBuscaCam');
-  $('#inputBuscaCam').focus();
+  console.log('items', $rootScope.items);
   $scope.busqueda = {lugar: ''};
   $scope.searchItems = [];
 
@@ -632,7 +632,6 @@ wcaCtrlMod.controller('BuscarCtrl', function($scope, $rootScope, $filter, SFusio
 
   }
 
-
   $scope.buscaCam = function(){
     var matchCondition1, matchCondition2;
     if($scope.busqueda.lugar.length < 1){
@@ -649,13 +648,15 @@ wcaCtrlMod.controller('BuscarCtrl', function($scope, $rootScope, $filter, SFusio
   };
 
   $scope.resetBusqueda = function($event){
-    //todo: falla auto focus
-    // debugger
     $scope.searchItems = [];
     inputBuscaCam.value = '';
-    $('#inputBuscaCam').focus();
+    setTimeout(function () {
+      inputBuscaCam.focus();
+    }, 500);
   };
 
-  // console.log('$scope.items', $scope.searchItems);
+  $scope.$on('$ionicView.afterEnter', function(){
+    inputBuscaCam.focus();
+  });
 
 });

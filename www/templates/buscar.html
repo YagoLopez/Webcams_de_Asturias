@@ -1,21 +1,15 @@
-<!--todo: arreglar responsividad  del boton limpiar busqueda -->
 <!--todo: añadir animacion a pag busqueda y paginas iniciales -->
-<ion-view view-title="Buscar" cache-view="false">
+<ion-view view-title="Búsqueda" cache-view="false">
 
   <style type="text/css">
-/*
-    #img-cam {height: 64px; width: 72px; top: 6px;
-      background: transparent url(img/clock-32x32-3.png) no-repeat center center}
-*/
-    /*#btn-mosaico{padding:0; border:0}*/
     #listado-container > .item-icon-right{min-height: 0}
-    /*.textoItem {margin-top:10px;  margin-left: 10px}*/
     .icon-badge {vertical-align: sub; margin-top: 4px; margin-bottom: 4px; padding-top: 4px}
-    .error {text-align: center; color: red}
+    .clear-search {z-index: 3; position: absolute; right: 0; min-height: 20px; background: white; margin-top: 1px}
     @media (min-width: 720px) {
       #listado-container{width: 80%; margin: 32px auto;
         box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24)}
       #contenido-listado{background-color:ghostwhite}
+      .clear-search {z-index: 3; position: absolute; right: 10%; min-height: 20px; background: white; margin-top: 1px}
     }
   </style>
 
@@ -35,8 +29,7 @@
     <div id="listado-container">
 
       <!-- Búsqueda -->
-      <button ng-click="resetBusqueda()" class="button icon ion-android-close"
-        style="z-index: 3;position: absolute;right: 0; margin-top: -1px"></button>
+      <button ng-click="resetBusqueda()" class="button icon ion-android-close clear-search"></button>
       <label class="item item-input">
         <i class="icon ion-search placeholder-icon"></i>
         <input id="inputBuscaCam" type="text" placeholder="Buscar webcams..."
@@ -53,9 +46,7 @@
         </div>
         <i class="icon ion-ios-arrow-right"></i>
         <!-- DEBUG INFO -->
-        <!--<p>Categoría: {{cam[3]}}</p>-->
-        <!--<p>indice: {{$index}}</p>-->
-        <!--<p>ROWID: {{cam[4]}}</p>-->
+        <!--<p>Categoría: {{cam[3]}}</p><p>indice: {{$index}}</p><p>ROWID: {{cam[4]}}</p>-->
         <!-- /DEBUG INFO -->
       </a>
       <!-- /Item -->

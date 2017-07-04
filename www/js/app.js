@@ -1,33 +1,29 @@
 
-var app = angular.module('wca', ['ionic', 'wca.controllers', 'wca.services', 'jett.ionic.filter.bar']);
+var app = angular.module('wca', ['ionic', 'wca.controllers', 'wca.services']);
 
 // Configuracion ======================================================================================================
 app.config(function($stateProvider, $urlRouterProvider, $compileProvider, $ionicConfigProvider,
-                 $ionicFilterBarConfigProvider, $logProvider, $httpProvider) {
+  $logProvider, $httpProvider) {
 
-    // enable/disable debug info
-    $compileProvider.debugInfoEnabled(false);
-    // remove back button text totally
-    $ionicConfigProvider.backButton.previousTitleText(false).text(' ');
-    // enable/disable native scroll
-    if (!ionic.Platform.isIOS()) {
-      $ionicConfigProvider.scrolling.jsScrolling(false);
-    }
-    // filterbar config
-    // $ionicFilterBarConfigProvider.placeholder('Buscar');
-    // $ionicFilterBarConfigProvider.transition('vertical');
-    // num templates to prefetch
-    $ionicConfigProvider.templates.maxPrefetch(5);
-    // disable angular log system
-    $logProvider.debugEnabled(false);
-    // disable state transitions
-    // $ionicConfigProvider.views.transition('none');
-    // nav bar title position for all platforms
-    $ionicConfigProvider.navBar.alignTitle('center');
-    $httpProvider.useApplyAsync(true);
+  // enable/disable debug info
+  $compileProvider.debugInfoEnabled(false);
+  // remove back button text totally
+  $ionicConfigProvider.backButton.previousTitleText(false).text(' ');
+  // enable/disable native scroll
+  if (!ionic.Platform.isIOS()) {
+    $ionicConfigProvider.scrolling.jsScrolling(false);
+  }
+  // num templates to prefetch
+  $ionicConfigProvider.templates.maxPrefetch(0);
+  // disable angular log system
+  $logProvider.debugEnabled(false);
+  // disable state transitions
+  // $ionicConfigProvider.views.transition('none');
+  // nav bar title position for all platforms
+  $ionicConfigProvider.navBar.alignTitle('center');
+  $httpProvider.useApplyAsync(true);
 
 // Estados ------------------------------------------------------------------------------------------------------------
-
   $stateProvider.state('app', {
     url: '/app', abstract: true, templateUrl: 'templates/menu.html'
   });
