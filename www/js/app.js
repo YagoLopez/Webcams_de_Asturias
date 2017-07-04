@@ -1,4 +1,3 @@
-
 var app = angular.module('wca', ['ionic', 'wca.controllers', 'wca.services']);
 
 // Configuracion ======================================================================================================
@@ -115,7 +114,7 @@ app.config(function($stateProvider, $urlRouterProvider, $compileProvider, $ionic
 // -------------------------------------------------------------------------------------------------------------------
   $stateProvider.state('app.buscar', {
     url: '/buscar',
-    cache: false,
+    cache: true,
     views: {'menuContent': {templateUrl: 'templates/buscar.html', controller: 'BuscarCtrl'}}
   });
 // -------------------------------------------------------------------------------------------------------------------

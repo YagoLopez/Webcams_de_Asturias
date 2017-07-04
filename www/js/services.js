@@ -46,7 +46,7 @@ wcaModule.service('SFusionTable', function($http){
 
   this.getRemoteData = function( sqlQueryString ) {
     var url = API_ENDPOINT+ '?sql=' +(sqlQueryString)+ '&key=' +API_KEY+ '&callback=JSON_CALLBACK';
-    console.log(sqlQueryString);
+    // console.log(sqlQueryString);
     return $http.jsonp( encodeURI(url), {cache: true} );
   };
 
@@ -323,6 +323,6 @@ wcaModule.service('SCategorias', function(){
 // ====================================================================================================================
 wcaModule.constant('STRINGS', {
   ERROR: 'Error. No se han podido obtener datos remotos. Posibles causas: ' +
-    '1) Sin conexión de datos. 2) Fallo de servidor remoto',
+    '(1) Sin conexión de datos. (2) Fallo de servidor remoto',
   RECARGANDO_IMG: 'Recargando imagen...'
 });
