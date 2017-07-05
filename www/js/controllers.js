@@ -26,7 +26,6 @@ wcaCtrlMod.controller('ListadoCtrl', function($scope, $stateParams, $rootScope, 
   function esSubcadena(idCategoria, urlCategoria) {
     return (urlCategoria.indexOf('categoria=' + idCategoria) > -1);
   }
-  // $ionicHistory.clearCache();
 
   SFusionTable.getRemoteData(sqlQuery).success(function(data) {
     if (data.error) {
