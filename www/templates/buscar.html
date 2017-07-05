@@ -17,7 +17,7 @@
     <ion-nav-back-button class="button-icon ion-android-arrow-back"></ion-nav-back-button>
     <ion-nav-buttons side="left">
       <div style="margin-left: 7px">
-        <span class="badge badge-calm icon-badge">{{ searchItems.length }}</span>
+        <span class="badge badge-calm icon-badge">{{ searchCams.length }}</span>
       </div>
     </ion-nav-buttons>
     <ion-nav-buttons side="right">
@@ -38,8 +38,8 @@
       <!-- /Búsqueda -->
 
       <!-- Item -->
-      <a class="item item-icon-right" ng-repeat="cam in searchItems track by cam[4]"
-        href="#/app/detalle/{{ searchItems[$index][4] }}">
+      <a class="item item-icon-right" ng-repeat="cam in searchCams track by cam[4]"
+        href="#/app/detalle/{{ searchCams[$index][4] }}">
         <div>
           <p><span><b>&bullet;</b> {{ cam[0] }}</span></p>
           <p><span><b>&bullet;</b> Concejo: {{ cam[1] }}</span></p>

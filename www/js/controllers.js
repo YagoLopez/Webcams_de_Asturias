@@ -11,12 +11,12 @@
 wcaCtrlMod = angular.module('wca.controllers',[]);
 // ====================================================================================================================
 wcaCtrlMod.controller('ListadoCtrl', function($scope, $stateParams, $rootScope, STRINGS,
-   SFusionTable, $filter, $ionicScrollDelegate, SCategorias, $ionicHistory, SLoader) {
+   SFusionTable, $filter, $ionicScrollDelegate, SCategorias, SLoader) {
 
   var concejo = $stateParams.concejo || '';
   var idCategoria = $stateParams.idCategoria || '';
   var sqlQuery = 'SELECT Lugar, Concejo, Imagen ,Categoria, rowid, latitud, longitud FROM '+ SFusionTable.TABLE_ID;
-  $rootScope.items = [];
+  $rootScope.cams = [];
 
   SLoader.show('Cargando...');
   $scope.imgError = function () {
@@ -33,8 +33,12 @@ wcaCtrlMod.controller('ListadoCtrl', function($scope, $stateParams, $rootScope, 
       $scope.imgError();
       SLoader.hide();
     }
-    // Filtra las cams por parametros de url: concejo y categoria
-    $rootScope.items = $filter('filter')(data.rows, function(cam) {
+
+    // Items (Cams) totales sin filtrar
+    $rootScope.cams = data.rows;
+
+    // Items (Cams) filtrados por parametros de url: concejo y categoria
+    $scope.camsPorCategoria = $filter('filter')(data.rows, function(cam) {
       var filteredItems;
       if (concejo && idCategoria) {
         // cam[1]: concejo, cam[3]: url categoria (no id de categoria, no confundir)
@@ -52,6 +56,7 @@ wcaCtrlMod.controller('ListadoCtrl', function($scope, $stateParams, $rootScope, 
       }
       return filteredItems;
     });
+
     SLoader.hide();
   }).error(function(data, status) {
     $scope.imgError();
@@ -154,6 +159,7 @@ wcaCtrlMod.controller('MapaGlobalCtrl', function($scope, SMapa, SFusionTable, SP
     $scope.mostrarTodos(); // por defecto
   }, 0);
 
+
 });
 // ====================================================================================================================
 wcaCtrlMod.controller('DetalleCtrl', function($scope, $stateParams, $ionicModal, SClima, $filter, $rootScope,
@@ -165,12 +171,12 @@ wcaCtrlMod.controller('DetalleCtrl', function($scope, $stateParams, $ionicModal,
   $scope.rowid = $stateParams.rowid;
   $scope.descripcion = ' (Obteniendo datos del servidor...)';
   SLoader.show('Cargando...');
-  if(!$rootScope.items || !$scope.rowid){
+  if(!$rootScope.cams || !$scope.rowid){
     $location.path('#/'); // si no hay lista de items (cams) redirigir a root y abortar
     return;
   }
 
-  datosCam = $filter('filter')($rootScope.items, function(cam) {
+  datosCam = $filter('filter')($rootScope.cams, function(cam) {
     return cam[4] == $scope.rowid;
   });
 
@@ -608,34 +614,20 @@ wcaCtrlMod.controller('BuscarCtrl', function($scope, $rootScope, $filter, SFusio
 
   var inputBuscaCam = document.getElementById('inputBuscaCam');
   $scope.busqueda = {lugar: ''};
-  $scope.searchItems = [];
+  $scope.searchCams = [];
 
-  if(!$rootScope.items){
+  if(!$rootScope.cams){
     $location.path('#/'); // si no hay lista de items (cams) redirigir a root y abortar
     return;
-    // SFusionTable.getRemoteData(sqlQuery).then(function(data) {
-    //   if (data.error) {
-    //     console.error(data);
-    //     $scope.imgError();
-    //     SLoader.hide();
-    //   }
-    //   console.log('data', data);
-    //   data = data;
-    //   SLoader.hide();
-    // }).catch(function(data, status) {
-    //   $scope.imgError();
-    //   SLoader.hide();
-    // });
-
   }
 
   $scope.buscaCam = function(){
     var matchCondition1, matchCondition2;
     if($scope.busqueda.lugar.length < 1){
-      $scope.searchItems = [];
+      $scope.searchCams = [];
       return;
     }
-    $scope.searchItems = $filter('filter')($rootScope.items, function(cam) {
+    $scope.searchCams = $filter('filter')($rootScope.cams, function(cam) {
       matchCondition1 = cam[0].toLowerCase().indexOf($scope.busqueda.lugar.toLowerCase()) > -1;
       matchCondition2 = cam[1].toLowerCase().indexOf($scope.busqueda.lugar.toLowerCase()) > -1;
       if(matchCondition1 || matchCondition2){
@@ -645,7 +637,7 @@ wcaCtrlMod.controller('BuscarCtrl', function($scope, $rootScope, $filter, SFusio
   };
 
   $scope.resetBusqueda = function($event){
-    $scope.searchItems = [];
+    $scope.searchCams = [];
     inputBuscaCam.value = '';
     setTimeout(function () {
       inputBuscaCam.focus();

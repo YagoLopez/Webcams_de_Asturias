@@ -21,7 +21,7 @@
   <ion-nav-buttons side="left">
     <button ng-if="screenWidth < 760" class="button button-icon button-clear ion-navicon" menu-toggle="left"></button>
     <div style="margin-left: 7px">
-      <span class="badge badge-calm icon-badge">{{ items.length }}</span>
+      <span class="badge badge-calm icon-badge">{{ camsPorCategoria.length }}</span>
     </div>
   </ion-nav-buttons>
   <ion-nav-buttons side="right">
@@ -35,7 +35,7 @@
     <div id="listado-container">
       <div ng-if="error" class="error">{{ ::error }}</div>
       <a class="item item-thumbnail-left item-icon-right"
-         ng-repeat="cam in items track by cam[4]" href="#/app/detalle/{{ items[$index][4] }}">
+         ng-repeat="cam in camsPorCategoria track by cam[4]" href="#/app/detalle/{{ camsPorCategoria[$index][4] }}">
         <img id="img-cam" ng-src="{{ cam[2] }}" class="image-webcam" fallback-src="img/imgFail.png"/>
         <!--<img id="img-cam" ng-src="img/imgFail.png" class="image-webcam" fallback-src="img/imgFail.png"/>-->
         <div class="textoItem">
