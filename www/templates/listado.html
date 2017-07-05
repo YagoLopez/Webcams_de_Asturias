@@ -11,6 +11,7 @@
     .textoItem {margin-top:10px;  margin-left: 10px}
     .icon-badge {vertical-align: sub; margin-top: 4px; margin-bottom: 4px; padding-top: 4px}
     .error {text-align: center; color: red; padding: 40px}
+    .badge-container-left {margin-left: 7px}
     @media (min-width: 720px) {
       #listado-container{width: 80%; margin: 32px auto;
         box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24)}
@@ -20,14 +21,13 @@
 
   <ion-nav-buttons side="left">
     <button ng-if="screenWidth < 760" class="button button-icon button-clear ion-navicon" menu-toggle="left"></button>
-    <div style="margin-left: 7px">
+    <div class="badge-container-left">
       <span class="badge badge-calm icon-badge">{{ camsPorCategoria.length }}</span>
     </div>
   </ion-nav-buttons>
   <ion-nav-buttons side="right">
     <a id="btn-mosaico" class="button button-icon icon ion-grid"
        href="#/app/mosaico?concejo={{ concejo }}&idCategoria={{ idCategoria }}" title="Mosaico"></a>
-    <!--<button class="button button-icon icon ion-ios-search-strong" ng-click="showFilterBar()"></button>-->
     <a class="button button-icon icon ion-ios-search-strong" href="#/app/buscar" title="Buscar"></a>
   </ion-nav-buttons>
 

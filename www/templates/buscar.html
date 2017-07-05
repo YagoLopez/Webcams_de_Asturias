@@ -1,10 +1,10 @@
-<!--todo: añadir animacion a pag busqueda y paginas iniciales -->
 <ion-view view-title="Búsqueda" cache-view="true">
 
   <style type="text/css">
     #listado-container > .item-icon-right{min-height: 0}
     .icon-badge {vertical-align: sub; margin-top: 4px; margin-bottom: 4px; padding-top: 4px}
     .clear-search {z-index: 3; position: absolute; right: 0; min-height: 20px; background: white; margin-top: 1px}
+    .badge-container-right {margin-right: 13px}
     @media (min-width: 720px) {
       #listado-container{width: 80%; margin: 32px auto;
         box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24)}
@@ -16,12 +16,12 @@
   <ion-nav-bar class="bar-positive">
     <ion-nav-back-button class="button-icon ion-android-arrow-back"></ion-nav-back-button>
     <ion-nav-buttons side="left">
-      <div style="margin-left: 7px">
-        <span class="badge badge-calm icon-badge">{{ searchCams.length }}</span>
-      </div>
+      <button ng-if="screenWidth < 760" menu-toggle="left" class="button button-icon button-clear ion-navicon"></button>
     </ion-nav-buttons>
     <ion-nav-buttons side="right">
-      <button ng-if="screenWidth < 760" menu-toggle="left" class="button button-icon button-clear ion-navicon"></button>
+      <div class="badge-container-right">
+        <span class="badge badge-calm icon-badge">{{ camsBuscadas.length }}</span>
+      </div>
     </ion-nav-buttons>
   </ion-nav-bar>
 
@@ -33,23 +33,23 @@
       <label class="item item-input">
         <i class="icon ion-search placeholder-icon"></i>
         <input id="inputBuscaCam" type="text" placeholder="Buscar webcams..."
-          ng-model="busqueda.lugar" ng-change="buscaCam(busqueda.lugar)" autofocus>
+          ng-model="busqueda.lugar" ng-change="buscaCam(busqueda.lugar)">
       </label>
       <!-- /Búsqueda -->
 
-      <!-- Item -->
-      <a class="item item-icon-right" ng-repeat="cam in searchCams track by cam[4]"
-        href="#/app/detalle/{{ searchCams[$index][4] }}">
+      <!-- Item cam -->
+      <a class="item item-icon-right" ng-repeat="cam in camsBuscadas track by cam[4]"
+        href="#/app/detalle/{{ camsBuscadas[$index][4] }}">
         <div>
           <p><span><b>&bullet;</b> {{ cam[0] }}</span></p>
           <p><span><b>&bullet;</b> Concejo: {{ cam[1] }}</span></p>
         </div>
         <i class="icon ion-ios-arrow-right"></i>
         <!-- DEBUG INFO -->
-        <!--<p>Categoría: {{cam[3]}}</p><p>indice: {{$index}}</p><p>ROWID: {{cam[4]}}</p>-->
+        <!--<p>Categoría: {{cam[3]}}</p> <p>indice: {{$index}}</p> <p>ROWID: {{cam[4]}}</p>-->
         <!-- /DEBUG INFO -->
       </a>
-      <!-- /Item -->
+      <!-- /Item cam -->
 
     </div>
     <br/><br/>

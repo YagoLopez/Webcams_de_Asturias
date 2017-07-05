@@ -17,6 +17,7 @@ wcaCtrlMod.controller('ListadoCtrl', function($scope, $stateParams, $rootScope, 
   var idCategoria = $stateParams.idCategoria || '';
   var sqlQuery = 'SELECT Lugar, Concejo, Imagen ,Categoria, rowid, latitud, longitud FROM '+ SFusionTable.TABLE_ID;
   $rootScope.cams = [];
+  $scope.camsPorCategoria = [];
 
   SLoader.show('Cargando...');
   $scope.imgError = function () {
@@ -34,10 +35,10 @@ wcaCtrlMod.controller('ListadoCtrl', function($scope, $stateParams, $rootScope, 
       SLoader.hide();
     }
 
-    // Items (Cams) totales sin filtrar
+    // Cams totales sin filtrar
     $rootScope.cams = data.rows;
 
-    // Items (Cams) filtrados por parametros de url: concejo y categoria
+    // Cams filtradas por parametros de url: concejo y categoria
     $scope.camsPorCategoria = $filter('filter')(data.rows, function(cam) {
       var filteredItems;
       if (concejo && idCategoria) {
@@ -96,6 +97,8 @@ wcaCtrlMod.controller('MapaCtrl', function($scope, SMapa, $rootScope, $location)
 wcaCtrlMod.controller('MapaGlobalCtrl', function($scope, SMapa, SFusionTable, SPopup, SCategorias){
 
   var layer, mapa, filtroConcejo, filtroCategoria, zoomLevel = 7;
+  var selectCategoria = document.getElementById('selectCategoria');
+  var selectConcejo = document.getElementById('selectConcejo');
   var sqlQueryConcejos = 'SELECT Concejo FROM '+SFusionTable.TABLE_ID+' GROUP BY Concejo';
   var sqlQueryCategorias = 'SELECT Categoria FROM '+SFusionTable.TABLE_ID+' GROUP BY Categoria';
   $scope.checked = null;
@@ -116,7 +119,20 @@ wcaCtrlMod.controller('MapaGlobalCtrl', function($scope, SMapa, SFusionTable, SP
     return SCategorias.url_a_nombre(url);
   };
 
+  $scope.categoriaEscogida = function(categoria){
+    selectConcejo.selectedIndex = -1;
+    $scope.checked = 'cat';
+    categoria = categoria.replace(/(\r\n|\n|\r)/gm,'').trim();
+    filtroCategoria = 'Categoria=\'' + categoria + '\'';
+    layer.setMap(null); // borra layer antigua si la hubiera
+    layer = SMapa.creaFusionTableLayer(filtroCategoria);
+    layer.setMap(mapa);
+    mapa.setCenter(SMapa.OVIEDO);
+    mapa.setZoom(zoomLevel);
+  };
+
   $scope.concejoEscogido = function(concejo){
+    selectCategoria.selectedIndex = -1;
     $scope.checked = 'con';
     // elimina retornos de carro y espacios en blanco al principio y al final
     concejo = concejo.replace(/(\r\n|\n|\r)/gm,'').trim();
@@ -128,16 +144,6 @@ wcaCtrlMod.controller('MapaGlobalCtrl', function($scope, SMapa, SFusionTable, SP
     mapa.setZoom(zoomLevel);
   };
 
-  $scope.categoriaEscogida = function(categoria){
-    $scope.checked = 'cat';
-    categoria = categoria.replace(/(\r\n|\n|\r)/gm,'').trim();
-    filtroCategoria = 'Categoria=\'' + categoria + '\'';
-    layer.setMap(null); // borra layer antigua si la hubiera
-    layer = SMapa.creaFusionTableLayer(filtroCategoria);
-    layer.setMap(mapa);
-    mapa.setCenter(SMapa.OVIEDO);
-    mapa.setZoom(zoomLevel);
-  };
 
   $scope.mostrarTodos = function(){
     $scope.checked = null;
@@ -148,8 +154,8 @@ wcaCtrlMod.controller('MapaGlobalCtrl', function($scope, SMapa, SFusionTable, SP
     layer.setMap(mapa);
     mapa.setCenter(SMapa.OVIEDO);
     mapa.setZoom(zoomLevel);
-    document.getElementById('selectConcejo').selectedIndex = -1;
-    document.getElementById('selectCategoria').selectedIndex = -1;
+    selectCategoria.selectedIndex = -1;
+    selectConcejo.selectedIndex = -1;
   };
 
   // activa manualmente el ciclo de deteccion de cambios de angular (digest cycle) para evaluar javascript externo
@@ -614,7 +620,7 @@ wcaCtrlMod.controller('BuscarCtrl', function($scope, $rootScope, $filter, SFusio
 
   var inputBuscaCam = document.getElementById('inputBuscaCam');
   $scope.busqueda = {lugar: ''};
-  $scope.searchCams = [];
+  $scope.camsBuscadas = [];
 
   if(!$rootScope.cams){
     $location.path('#/'); // si no hay lista de items (cams) redirigir a root y abortar
@@ -624,10 +630,10 @@ wcaCtrlMod.controller('BuscarCtrl', function($scope, $rootScope, $filter, SFusio
   $scope.buscaCam = function(){
     var matchCondition1, matchCondition2;
     if($scope.busqueda.lugar.length < 1){
-      $scope.searchCams = [];
+      $scope.camsBuscadas = [];
       return;
     }
-    $scope.searchCams = $filter('filter')($rootScope.cams, function(cam) {
+    $scope.camsBuscadas = $filter('filter')($rootScope.cams, function(cam) {
       matchCondition1 = cam[0].toLowerCase().indexOf($scope.busqueda.lugar.toLowerCase()) > -1;
       matchCondition2 = cam[1].toLowerCase().indexOf($scope.busqueda.lugar.toLowerCase()) > -1;
       if(matchCondition1 || matchCondition2){
@@ -637,15 +643,10 @@ wcaCtrlMod.controller('BuscarCtrl', function($scope, $rootScope, $filter, SFusio
   };
 
   $scope.resetBusqueda = function($event){
-    $scope.searchCams = [];
+    $scope.camsBuscadas = [];
     inputBuscaCam.value = '';
     setTimeout(function () {
       inputBuscaCam.focus();
     }, 500);
   };
-
-  $scope.$on('$ionicView.afterEnter', function(){
-    inputBuscaCam.focus();
-  });
-
 });
