@@ -9,9 +9,9 @@
     #listado-container > .item-icon-right{min-height: 0; padding-left: 80px}
     .verde{color:#28a54c}
     .textoItem {margin-top:10px;  margin-left: 10px}
-    .icon-badge {vertical-align: sub; margin-top: 4px; margin-bottom: 4px; padding-top: 4px}
     .error {text-align: center; color: red; padding: 40px}
-    .badge-container-left {margin-left: 7px}
+    .cam-counter-left {background: #11c1f3; display: block; width: 25px; text-align: center; padding: 3px;
+      margin: auto 8px; border-radius: 3px}
     @media (min-width: 720px) {
       #listado-container{width: 80%; margin: 32px auto;
         box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24)}
@@ -21,9 +21,7 @@
 
   <ion-nav-buttons side="left">
     <button ng-if="screenWidth < 760" class="button button-icon button-clear ion-navicon" menu-toggle="left"></button>
-    <div class="badge-container-left">
-      <span class="badge badge-calm icon-badge">{{ camsPorCategoria.length }}</span>
-    </div>
+    <div class="cam-counter-left">{{ camsPorCategoria.length }}</div>
   </ion-nav-buttons>
   <ion-nav-buttons side="right">
     <a id="btn-mosaico" class="button button-icon icon ion-grid"

@@ -25,16 +25,24 @@
 
   <ion-content>
 
-    <div id="mapaglobal" data-tap-disabled="true"></div>
+    <!--<div id="mapaglobal" data-tap-disabled="true"></div>-->
+    <div id="mapaglobal"></div>
 
     <div id="responsive-container">
 
       <div class="ico-funnel-content"><i class="icon icon-left ion-android-funnel ico-funnel"></i>Filtrar por:</div>
 
+
+        <div onClick="window.alert('click on div')">div</div>
+        <select onClick="window.alert('hola')">
+          <option>option1</option>
+        </select>
+
+
       <div class="list item-input-inset">
         <label class="item item-input item-select label-content">
-          Categoría:
-          <select ng-modal="test" id="selectCategoria" class="color-blue" ng-model="filtro.categoria" ng-change="categoriaEscogida(filtro.categoria)">
+          <i class="icon ion-arrow-right-a color-blue" ng-show="checked==='cat'"></i> Categoría:
+          <select id="selectCategoria" class="color-blue" ng-model="categoria" ng-change="categoriaEscogida(categoria)">
             <option ng-repeat="categoria in categorias" value="{{ categoria[0] }}">
               {{ urlCategoria_a_nombre( categoria[0] )}}
             </option>
@@ -42,10 +50,11 @@
         </label>
       </div>
 
+
       <div class="list item-input-inset">
         <label class="item item-input item-select label-content">
-          Concejo:
-          <select id="selectConcejo" class="color-blue" ng-model="filtro.concejo" ng-change="concejoEscogido(filtro.concejo)">
+          <i class="icon ion-arrow-right-a color-blue" ng-show="checked==='con'"></i> Concejo:
+          <select id="selectConcejo" class="color-blue" ng-model="concejo" ng-change="concejoEscogido(concejo)">
             <option ng-repeat="concejo in concejos">{{ concejo[0] }}</option>
           </select>
         </label>
@@ -57,7 +66,13 @@
 
     </div>
 
-    <br>
+    <br/><br/><br/>
+
+    <!-- Radio buttons que controlan el filtrado, ocultos por defecto -->
+    <div class="hide">
+      <ion-radio ng-model="checked" ng-value="'con'">Concejo:</ion-radio>
+      <ion-radio ng-model="checked" ng-value="'cat'">Categoría:</ion-radio>
+    </div>
 
   </ion-content>
 </ion-view>

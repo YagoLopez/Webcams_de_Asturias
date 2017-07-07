@@ -1,12 +1,12 @@
 <ion-view view-title="{{ tituloVista }}" cache-view="true">
+
   <style type="text/css">
-    /*noinspection CssUnknownTarget*/
-    /*.imgLoader{background: transparent url(img/clock-32x32-3.png) no-repeat center center; cursor: pointer}*/
     .txt {font-size: xx-small; overflow: hidden; text-overflow: ellipsis; text-align: center}
     .itemCam {padding: 0; border-width: 0; border-style: none}
     .item-padd{border: 0}
-    .icon-badge {vertical-align: sub; margin-top: 4px; margin-bottom: 4px; padding-top: 4px}
     .row-cam {padding: 0; margin: 0}
+    .cam-counter-left {background: #11c1f3; display: block; width: 25px; text-align: center; padding: 3px;
+      margin: auto 4px; border-radius: 3px}
     @media (min-width: 720px) {
       #contenido-mosaico{background-color: ghostwhite}
       div.grid {width: 90%; margin: 32px auto;
@@ -18,7 +18,7 @@
   <ion-nav-bar class="bar-positive">
     <ion-nav-back-button class="button-icon ion-android-arrow-back"></ion-nav-back-button>
     <ion-nav-buttons side="left">
-      <span class="badge badge-calm icon-badge">{{ camsPorCategoria.length }}</span>
+      <div class="cam-counter-left">{{ camsPorCategoria.length }}</div>
     </ion-nav-buttons>
     <ion-nav-buttons side="right">
       <a class="button button-icon icon ion-ios-search-strong" href="#/app/buscar" title="Buscar"></a>
@@ -33,6 +33,7 @@
         <ion-item class="item-padd col col-33" ng-if="$index < camsPorCategoria.length">
           <a href="#/app/detalle/{{ camsPorCategoria[$index][4] }}" class="item itemCam imgLoader">
             <img ng-src="{{ camsPorCategoria[$index][2] }}" fallback-src="img/imgFail.png" width="100%"/>
+            <!--<img ng-src="img/imgFail.png" fallback-src="img/imgFail.png" width="100%"/>-->
             <div class="txt">{{ camsPorCategoria[$index][0] }}</div>
           </a>
         </ion-item>
@@ -40,6 +41,7 @@
         <ion-item class="item-padd col col-33" ng-if="$index+1 < camsPorCategoria.length" ng-click="showModal($index+1)">
           <a href="#/app/detalle/{{ camsPorCategoria[$index+1][4] }}" class="item itemCam">
             <img ng-src="{{ camsPorCategoria[$index+1][2] }}" fallback-src="img/imgFail.png" width="100%" class="imgLoader"/>
+            <!--<img ng-src="img/imgFail.png" fallback-src="img/imgFail.png" width="100%" class="imgLoader"/>-->
             <div class="txt">{{ camsPorCategoria[$index+1][0] }}</div>
           </a>
         </ion-item>
@@ -47,6 +49,7 @@
         <ion-item class="item-padd col col-33" ng-if="$index+2 < camsPorCategoria.length" ng-click="showModal($index+2)">
           <a href="#/app/detalle/{{ camsPorCategoria[$index+2][4] }}" class="item itemCam">
             <img ng-src="{{ camsPorCategoria[$index+2][2] }}" fallback-src="img/imgFail.png" width="100%" class="imgLoader"/>
+            <!--<img ng-src="img/imgFail.png" fallback-src="img/imgFail.png" width="100%" class="imgLoader"/>-->
             <div class="txt">{{ camsPorCategoria[$index+2][0] }}</div>
           </a>
         </ion-item>

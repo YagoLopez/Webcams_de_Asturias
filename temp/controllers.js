@@ -134,7 +134,7 @@ wcaCtrlMod.controller('MapaGlobalCtrl', function($scope, SMapa, SFusionTable, SP
     mapa.setZoom(zoomLevel);
   };
 
-  $scope.mostrarTodos = function(){
+  $scope.mostrarTodas = function(){
     $scope.checked = null;
     if(layer){
       layer.setMap(null);
@@ -151,7 +151,7 @@ wcaCtrlMod.controller('MapaGlobalCtrl', function($scope, SMapa, SFusionTable, SP
   // (en este caso google maps)
   setTimeout(function () {
     mapa = SMapa.crear(document.getElementById('mapaglobal'));
-    $scope.mostrarTodos(); // por defecto
+    $scope.mostrarTodas(); // por defecto
   }, 0);
 
 });

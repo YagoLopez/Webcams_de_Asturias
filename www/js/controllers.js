@@ -1,4 +1,3 @@
-//todo: diferenciar entre todos los items de la tabla y los items por categoria que se muestran en el listado/mosaico
 //TODO: podria ser mejor arrojar una excepcion en vez de llamaar a SPopup cada vez que hay un error. Ya se encarga el
 //TODO: servicio de excepciones de capturar la excepcion y mostrar un popup. De esta forma está más centralizado el tratamiento
 //TODO: de errores
@@ -24,6 +23,7 @@ wcaCtrlMod.controller('ListadoCtrl', function($scope, $stateParams, $rootScope, 
     $scope.error = STRINGS.ERROR;
     $scope.$apply();
   };
+
   function esSubcadena(idCategoria, urlCategoria) {
     return (urlCategoria.indexOf('categoria=' + idCategoria) > -1);
   }
@@ -94,14 +94,13 @@ wcaCtrlMod.controller('MapaCtrl', function($scope, SMapa, $rootScope, $location)
   });
 });
 // ====================================================================================================================
-wcaCtrlMod.controller('MapaGlobalCtrl', function($scope, SMapa, SFusionTable, SPopup, SCategorias){
+wcaCtrlMod.controller('MapaGlobalCtrl', function($scope, $rootScope, $filter, SMapa, SFusionTable, SPopup, SCategorias, $document){
 
-  var layer, mapa, filtroConcejo, filtroCategoria, zoomLevel = 7;
-  var selectCategoria = document.getElementById('selectCategoria');
-  var selectConcejo = document.getElementById('selectConcejo');
-  var sqlQueryConcejos = 'SELECT Concejo FROM '+SFusionTable.TABLE_ID+' GROUP BY Concejo';
-  var sqlQueryCategorias = 'SELECT Categoria FROM '+SFusionTable.TABLE_ID+' GROUP BY Categoria';
-  $scope.checked = null;
+  var layer, mapa, sqlQueryConcejos, sqlQueryCategorias, zoomLevel = 7;
+
+  sqlQueryConcejos = 'SELECT Concejo FROM '+SFusionTable.TABLE_ID+' GROUP BY Concejo';
+  sqlQueryCategorias = 'SELECT Categoria FROM '+SFusionTable.TABLE_ID+' GROUP BY Categoria';
+  $scope.filtro = {categoria: '', concejo: ''};
 
   SFusionTable.getRemoteData(sqlQueryConcejos).success(function(data){
     $scope.concejos = data.rows;
@@ -115,13 +114,18 @@ wcaCtrlMod.controller('MapaGlobalCtrl', function($scope, SMapa, SFusionTable, SP
     console.error('MapaGlobalCtrl.getRemoteData() status:', status);
   });
 
+  //todo: sustituir remote queries por filtros sobre datos de $rootScope.cams
+  // console.log('rootScope.cams', $rootScope.cams);
+  // $scope.categorias = $filter('filter')($rootScope.cams, function(cam) {
+  //   console.log('filtering categorias', cam[3]);
+  // });
+
   $scope.urlCategoria_a_nombre = function(url){
     return SCategorias.url_a_nombre(url);
   };
 
   $scope.categoriaEscogida = function(categoria){
-    selectConcejo.selectedIndex = -1;
-    $scope.checked = 'cat';
+    var filtroCategoria;
     categoria = categoria.replace(/(\r\n|\n|\r)/gm,'').trim();
     filtroCategoria = 'Categoria=\'' + categoria + '\'';
     layer.setMap(null); // borra layer antigua si la hubiera
@@ -129,12 +133,12 @@ wcaCtrlMod.controller('MapaGlobalCtrl', function($scope, SMapa, SFusionTable, SP
     layer.setMap(mapa);
     mapa.setCenter(SMapa.OVIEDO);
     mapa.setZoom(zoomLevel);
+    $scope.filtro.concejo = '';
   };
 
   $scope.concejoEscogido = function(concejo){
-    selectCategoria.selectedIndex = -1;
-    $scope.checked = 'con';
-    // elimina retornos de carro y espacios en blanco al principio y al final
+    // Elimina retornos de carro y espacios en blanco al principio y al final
+    var filtroConcejo;
     concejo = concejo.replace(/(\r\n|\n|\r)/gm,'').trim();
     filtroConcejo = 'Concejo=\'' + concejo + '\''; // el concejo tiene que ir entre comillas
     layer.setMap(null); // borra layer anterior si la hubiera
@@ -142,27 +146,24 @@ wcaCtrlMod.controller('MapaGlobalCtrl', function($scope, SMapa, SFusionTable, SP
     layer.setMap(mapa);
     mapa.setCenter(SMapa.OVIEDO);
     mapa.setZoom(zoomLevel);
+    $scope.filtro.categoria = '';
   };
 
-
-  $scope.mostrarTodos = function(){
-    $scope.checked = null;
-    if(layer){
-      layer.setMap(null);
-    }
+  $scope.mostrarTodas = function(){
+    layer && layer.setMap(null);
     layer = SMapa.creaFusionTableLayer();
     layer.setMap(mapa);
     mapa.setCenter(SMapa.OVIEDO);
     mapa.setZoom(zoomLevel);
-    selectCategoria.selectedIndex = -1;
-    selectConcejo.selectedIndex = -1;
+    $scope.filtro.categoria = '';
+    $scope.filtro.concejo = '';
   };
 
-  // activa manualmente el ciclo de deteccion de cambios de angular (digest cycle) para evaluar javascript externo
-  // (en este caso google maps)
+  // Activa manualmente el ciclo de deteccion de cambios de angular (digest cycle) para evaluar javascript externo
+  // (En este caso google maps)
   setTimeout(function () {
     mapa = SMapa.crear(document.getElementById('mapaglobal'));
-    $scope.mostrarTodos(); // por defecto
+    $scope.mostrarTodas(); // por defecto
   }, 0);
 
 
@@ -371,7 +372,7 @@ wcaCtrlMod.controller('GifPlayerCtrl', function($scope, $interval, $stateParams,
         loop_mode: 0,
         draw_while_loading: 1
       });
-      // ====== Carga datos resultantes de peticion ajax en gifAnimado ===============
+      // ====== Carga datos resultantes de peticion ajax en gifAnimado ==============
       gifAnimado.load_raw( convertDataURIToBinary(resp.image_data), function () {
         $scope.totalFrames = gifAnimado.get_length();
         $scope.currentFrame = gifAnimado.get_current_frame();
@@ -443,12 +444,7 @@ wcaCtrlMod.controller('GifPlayerCtrl', function($scope, $interval, $stateParams,
           $zoomOut: $('.zoom-out'),
           $zoomRange: $('.zoom-range'),
           $reset: $('.reset'),
-          minScale: 1,
-          maxScale: 4,
-          increment: 0.5,
-          rangeStep: 0.1,
-          duration: 200,
-          contain: 'invert'
+          minScale: 1, maxScale: 4, increment: 0.5, rangeStep: 0.1, duration: 200, contain: 'invert'
         });
         // Fin PanZoom ----------------------------------------------------------------
 
@@ -614,26 +610,22 @@ wcaCtrlMod.controller('VientoCtrl', function($scope, SLoader){
 // ====================================================================================================================
 wcaCtrlMod.controller('BuscarCtrl', function($scope, $rootScope, $filter, SFusionTable, SLoader, $location){
 
-  //todo: usar params para obtener categoria
-  //todo: al entrar en esta vista habría que ejecutar de nuevo una peticion a fusion table para recibir todas las cams
-  //      y poder buscar en todas las cams
-
   var inputBuscaCam = document.getElementById('inputBuscaCam');
   $scope.busqueda = {lugar: ''};
-  $scope.camsBuscadas = [];
+  $scope.camsEncontradas = [];
 
   if(!$rootScope.cams){
-    $location.path('#/'); // si no hay lista de items (cams) redirigir a root y abortar
+    $location.path('#/'); // si no hay lista de cams redirigir a root y abortar
     return;
   }
 
   $scope.buscaCam = function(){
     var matchCondition1, matchCondition2;
     if($scope.busqueda.lugar.length < 1){
-      $scope.camsBuscadas = [];
+      $scope.camsEncontradas = [];
       return;
     }
-    $scope.camsBuscadas = $filter('filter')($rootScope.cams, function(cam) {
+    $scope.camsEncontradas = $filter('filter')($rootScope.cams, function(cam) {
       matchCondition1 = cam[0].toLowerCase().indexOf($scope.busqueda.lugar.toLowerCase()) > -1;
       matchCondition2 = cam[1].toLowerCase().indexOf($scope.busqueda.lugar.toLowerCase()) > -1;
       if(matchCondition1 || matchCondition2){
@@ -643,7 +635,7 @@ wcaCtrlMod.controller('BuscarCtrl', function($scope, $rootScope, $filter, SFusio
   };
 
   $scope.resetBusqueda = function($event){
-    $scope.camsBuscadas = [];
+    $scope.camsEncontradas = [];
     inputBuscaCam.value = '';
     setTimeout(function () {
       inputBuscaCam.focus();
