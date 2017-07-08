@@ -13,7 +13,7 @@ app.config(function($stateProvider, $urlRouterProvider, $compileProvider, $ionic
     $ionicConfigProvider.scrolling.jsScrolling(false);
   }
   // num templates to prefetch
-  $ionicConfigProvider.templates.maxPrefetch(0);
+  $ionicConfigProvider.templates.maxPrefetch(4);
   // disable angular log system
   $logProvider.debugEnabled(false);
   // disable state transitions

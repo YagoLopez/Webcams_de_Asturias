@@ -613,6 +613,7 @@ wcaCtrlMod.controller('BuscarCtrl', function($scope, $rootScope, $filter, SFusio
   var inputBuscaCam = document.getElementById('inputBuscaCam');
   $scope.busqueda = {lugar: ''};
   $scope.camsEncontradas = [];
+  $scope.showImages = false;
 
   if(!$rootScope.cams){
     $location.path('#/'); // si no hay lista de cams redirigir a root y abortar
@@ -621,6 +622,7 @@ wcaCtrlMod.controller('BuscarCtrl', function($scope, $rootScope, $filter, SFusio
 
   $scope.buscaCam = function(){
     var matchCondition1, matchCondition2;
+    $scope.showImages = false;
     if($scope.busqueda.lugar.length < 1){
       $scope.camsEncontradas = [];
       return;
@@ -635,10 +637,15 @@ wcaCtrlMod.controller('BuscarCtrl', function($scope, $rootScope, $filter, SFusio
   };
 
   $scope.resetBusqueda = function($event){
+    $scope.showImages = false;
     $scope.camsEncontradas = [];
     inputBuscaCam.value = '';
     setTimeout(function () {
       inputBuscaCam.focus();
     }, 500);
   };
+
+  $scope.toggleShowImages = function () {
+    $scope.showImages = !$scope.showImages;
+  }
 });

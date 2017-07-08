@@ -1,12 +1,16 @@
 <ion-view view-title="Búsqueda" cache-view="true">
 
   <style type="text/css">
-    #listado-container > .item-icon-right{min-height: 0}
-    #inputBuscaCam {color: dodgerblue; padding-bottom: 5px; padding-left: 8px}
+    /*Nota: no borrar clases aunque parezca que sobran*/
+    /*noinspection CssUnknownTarget*/
+    .img-cam {height: 64px !important; width: 72px !important; top: 6px !important;
+      background: transparent url('img/clock-32x32-3.png') no-repeat center center}
+    .item-thumbnail-left {min-height: 0; padding-left: 90px; padding-top: 18px}
     .clear-search {z-index: 3; position: absolute; right: 0; min-height: 20px; background: white; margin-top: 1px}
-    .footer {color: lightgrey; text-align: center; font-size: small}
+    .footer {color: grey; text-align: center; font-size: small}
     .cam-counter-right {background: #11c1f3; display: block; width: 25px; text-align: center;
-      padding: 3px; margin: auto 12px; border-radius: 3px}
+      padding: 1px; margin: auto 12px; border-radius: 3px}
+    #inputBuscaCam {color: dodgerblue; padding-bottom: 5px; padding-left: 8px}
     @media (min-width: 720px) {
       #listado-container{width: 80%; margin: 32px auto;
         box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24)}
@@ -21,6 +25,8 @@
       <button ng-if="screenWidth < 760" menu-toggle="left" class="button button-icon button-clear ion-navicon"></button>
     </ion-nav-buttons>
     <ion-nav-buttons side="right">
+      <button ng-click="toggleShowImages()" class="button button-icon button-clear ion-images"
+        title="Imágenes sí/no"></button>
       <div class="cam-counter-right">{{ camsEncontradas.length }}</div>
     </ion-nav-buttons>
   </ion-nav-bar>
@@ -38,8 +44,9 @@
       <!-- /Búsqueda -->
 
       <!-- Item cam -->
-      <a class="item item-icon-right" ng-repeat="cam in camsEncontradas track by cam[4]"
-        href="#/app/detalle/{{ camsEncontradas[$index][4] }}">
+      <a class="item item-icon-right" ng-class="{'item-thumbnail-left': showImages}"
+        ng-repeat="cam in camsEncontradas track by cam[4]" href="#/app/detalle/{{ camsEncontradas[$index][4] }}">
+        <img ng-if="showImages" class="img-cam" ng-src="{{ cam[2] }}" fallback-src="img/imgFail.png"/>
         <div>
           <p><span><b>&bullet;</b> {{ cam[0] }}</span></p>
           <p><span><b>&bullet;</b> Concejo: {{ cam[1] }}</span></p>
