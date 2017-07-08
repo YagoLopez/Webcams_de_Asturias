@@ -1,8 +1,8 @@
+//todo: convertir en pwa
 //TODO: podria ser mejor arrojar una excepcion en vez de llamaar a SPopup cada vez que hay un error. Ya se encarga el
 //TODO: servicio de excepciones de capturar la excepcion y mostrar un popup. De esta forma está más centralizado el tratamiento
 //TODO: de errores
 //todo: hacer icono y Splash screen
-//TODO: usar native transitions
 //TODO: hacer perfilado en chrome mobile, ver como se comporta la memoria y el procesador al ejecutar la app
 //TODO: hacer zoom en mapa global cuando se escoja filtro por concejo. Usar coordenadas lat lng
 //TODO: añadir favoritos

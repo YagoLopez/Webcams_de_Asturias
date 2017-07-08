@@ -1,6 +1,6 @@
 {
   "name": "Webcams_de_Asturias",
-  "version": "2.1.0",
+  "version": "3.0.0",
   "description": "Realtime images from webcams located in Asturias, Spain",
   "scripts": {
     "serve": "live-server",
