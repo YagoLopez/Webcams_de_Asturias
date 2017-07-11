@@ -41,7 +41,7 @@
     <div class="list card">
       <div class="item item-image cam-img">
         <img ng-src="{{ cam.imagen }}" fallback-src="img/imgFail.png" class="imgLoader"
-             imageonload="imgLoaded()" on-touch="modalImgDetalle.show()"/>
+          imageonload="imgLoaded()" on-touch="showModalImgDetalle()"/>
       </div>
       <div class="item item-body fnt-small">
         <i class="icon ion-checkmark-circled i-item"></i> Lugar: {{ ::cam.lugar }}<br>
@@ -52,7 +52,7 @@
       <div class="item item-text-wrap div-btns">
         <div class="row">
           <div class="col">
-            <button class="button button-calm full-width" ng-click="modalImgDetalle.show()">
+            <button class="button button-calm full-width" ng-click="showModalImgDetalle()">
               <i class="icon ion-arrow-expand"></i> Ampliar
             </button>
           </div>
@@ -76,7 +76,7 @@
           ng-class="{'tab-active':activeTab === 'meteoTab'}">
             <i class="icon ion-ios-partlysunny"></i> Meteorología
         </a>
-        <a class="tab-item fnt-small" ng-click="(activeTab = 'infoTab'); getInfo()"
+        <a class="tab-item fnt-small" ng-click="(activeTab = 'infoTab'); getWikipediaInfo()"
           ng-class="{'tab-active':activeTab === 'infoTab'}">
             <i class="icon ion-document-text"></i> Información
         </a>
@@ -100,7 +100,7 @@
             &bullet; Fuente: <a href="http://www.openweathermap.com" target="_blank">OpenWeatherMap.com</a>
           </div>
           <div class="div-predicc">
-            <button class="button button-calm btn-style" ng-click="showModalPrediction()">
+            <button class="button button-calm btn-style" ng-click="showModalPrediccion()">
               <i class="icon ion-android-open"></i><span class="predicc-label">Predicción</span>
             </button>
             <div class="url-meteoblue">Fuente: <a href="http://www.meteoblue.com" target="_blank">Meteoblue</a></div>

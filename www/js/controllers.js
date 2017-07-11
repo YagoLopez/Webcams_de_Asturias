@@ -170,11 +170,12 @@ wcaCtrlMod.controller('MapaGlobalCtrl', function($scope, $rootScope, $filter, SM
 });
 // ====================================================================================================================
 wcaCtrlMod.controller('DetalleCtrl', function($scope, $stateParams, $ionicModal, SClima, $filter, $rootScope,
-   SPopup, SWikipedia, $ionicPopover, Cam, SLoader, $location, STRINGS){
+   SPopup, SWikipedia, $ionicPopover, Cam, SLoader, $location, SFusionTable, STRINGS){
 
-  // INIT --------------------------------------------------------------------------------------------------------------
+  // Init --------------------------------------------------------------------------------------------------------------
 
   var datosCam;
+  $scope.modalOpen = false;
   $scope.rowid = $stateParams.rowid;
   $scope.descripcion = ' (Obteniendo datos del servidor...)';
   SLoader.show('Cargando...');
@@ -189,7 +190,7 @@ wcaCtrlMod.controller('DetalleCtrl', function($scope, $stateParams, $ionicModal,
 
   $rootScope.cam = new Cam(datosCam);
 
-  // CLIMA -------------------------------------------------------------------------------------------------------------
+  // Clima Data --------------------------------------------------------------------------------------------------------
 
   // Priority is webcam image load. Wait 1000 ms before loading clima data
   $scope.timerGetClimaData = setTimeout( function(){
@@ -215,10 +216,10 @@ wcaCtrlMod.controller('DetalleCtrl', function($scope, $stateParams, $ionicModal,
     });
   }, 1000);
 
+  // Wikipedia Info ----------------------------------------------------------------------------------------------------
 
-  // WIKIPEDIA ---------------------------------------------------------------------------------------------------------
   $scope.infoConcejo = 'Cargando...';
-  $scope.getInfo = function(){
+  $scope.getWikipediaInfo = function(){
     SWikipedia.info($rootScope.cam.concejo).success(function(data){
       var pageid = data.query.pageids[0];
       if(pageid) {
@@ -230,21 +231,34 @@ wcaCtrlMod.controller('DetalleCtrl', function($scope, $stateParams, $ionicModal,
       console.error('SWikipedia.info()', status)
     })
   };
-  // DIALOGO MODAL DETALLE ---------------------------------------------------------------------------------------------
-  $ionicModal.fromTemplateUrl('templates/modal-img-detalle.html', {
-    scope: $scope,
-    animation: 'scale-in'
-  }).then(function(modal) {
-    $scope.modalImgDetalle = modal;
-  });
-  // DIALOGO MODAL PREDICCION ----------------------------------------------------------------------------------------
-  $ionicModal.fromTemplateUrl('templates/modal-meteoblue.html', {
-    scope: $scope,
-    animation: 'scale-in'
-  }).then(function(modal) {
-    $scope.modalPrediccion = modal;
-  });
-  $scope.showModalPrediction = function () {
+
+  // Dialogo Modal Detalle ---------------------------------------------------------------------------------------------
+
+  $ionicModal.fromTemplateUrl('templates/modal-img-detalle.html', {scope: $scope, animation: 'scale-in'})
+    .then(function(modal) {$scope.modalImgDetalle = modal});
+
+  $scope.showModalImgDetalle = function () {
+    $scope.modalOpen = true;
+    $scope.modalImgDetalle.show();
+  };
+
+  $scope.hideModalImgDetalle = function () {
+    $scope.modalOpen = false;
+    $scope.modalImgDetalle.hide();
+  };
+
+  // Dialogo Modal Prediccion ------------------------------------------------------------------------------------------
+
+  $ionicModal.fromTemplateUrl('templates/modal-meteoblue.html', {scope: $scope, animation: 'scale-in'})
+    .then(function(modal) {$scope.modalPrediccion = modal});
+
+  $scope.hideModalPrediccion = function () {
+    $scope.modalOpen = false;
+    $scope.modalPrediccion.hide();
+  };
+
+  $scope.showModalPrediccion = function () {
+    $scope.modalOpen = true;
     $scope.modalPrediccion.show();
     $scope.timerMeteoblue = setTimeout( function(){
       $scope.$apply(function(){
@@ -253,13 +267,13 @@ wcaCtrlMod.controller('DetalleCtrl', function($scope, $stateParams, $ionicModal,
       })
     }, 500);
   };
-  // POPOVER MENU ------------------------------------------------------------------------------------------------------
-  $ionicPopover.fromTemplateUrl('templates/popover.html', {
-    scope: $scope
-  }).then(function(popover) {
-    $scope.popover = popover;
-  });
-  // IMG RELOAD --------------------------------------------------------------------------------------------------------
+  // Popover Menu ------------------------------------------------------------------------------------------------------
+
+  $ionicPopover.fromTemplateUrl('templates/popover.html', {scope: $scope})
+    .then(function(popover) {$scope.popover = popover});
+
+  // Img Reload --------------------------------------------------------------------------------------------------------
+
   $scope.reloadImg = function(){
     SLoader.show('Recargando imagen...');
     setTimeout(function(){
@@ -269,16 +283,24 @@ wcaCtrlMod.controller('DetalleCtrl', function($scope, $stateParams, $ionicModal,
       })
     }, 600);
   };
-  // FIN IMG RELOAD ----------------------------------------------------------------------------------------------------
 
   $scope.imgLoaded = function(){
     SLoader.hide();
   };
 
-  // Close modals when backwards navigation and clear timers for preventing memory leaks
+  // Live Cycle Events -------------------------------------------------------------------------------------------------
+
+  // Prevent state change when modal is open and backwards navigation
+  $rootScope.$on("$stateChangeStart", function (event, toState, toParams, fromState, fromParams){
+    if($scope.modalOpen){
+      $scope.hideModalImgDetalle();
+      $scope.hideModalPrediccion();
+      event.preventDefault();
+    }
+  });
+
+  // On view exit, clear timers for preventing memory leaks
   $scope.$on('$ionicView.beforeLeave', function (event, data) {
-    $scope.modalImgDetalle.hide();
-    $scope.modalPrediccion.hide();
     clearTimeout($scope.timerGetClimaData);
     clearTimeout($scope.timerMeteoblue);
   })
@@ -470,11 +492,10 @@ wcaCtrlMod.controller('GifPlayerCtrl', function($scope, $interval, $stateParams,
 // ====================================================================================================================
 wcaCtrlMod.controller('MeteoCtrl', function($scope, SFusionTable, SPopup, ItemsMeteo, SLoader){
 
+  var queryString = 'SELECT * FROM '+ItemsMeteo.FUSION_TABLE_ID+' ORDER BY id ASC';
   var showError = function(status){
     SPopup.show('Error', ' MeteoCtrl: Compruebe conexión de red. Estado: '+status );
   };
-  var queryString = 'SELECT * FROM '+ItemsMeteo.FUSION_TABLE_ID+' ORDER BY id ASC';
-
   SLoader.showWithBackdrop('Cargando...');
 
   SFusionTable.getRemoteData(queryString).success(

@@ -4,8 +4,9 @@
       .vertAlign{vertical-align: middle}
       .mapas{width: 29px; height: 24px}
       .satEsp{width: 29px}
+      .meteo-footer {font-size: small; color: cornflowerblue; text-align: center}
       @media (min-width: 720px) {
-        ion-content#conteido-meteo {background-color: ghostwhite}
+        ion-content #conteido-meteo {background-color: ghostwhite}
         #lista-meteo > div.list {
           width: 80%;
           margin: 32px auto;
@@ -15,35 +16,45 @@
     </style>
 
     <ion-list id="lista-meteo">
-      <!------------------------------------------------------------------------------------------------------------ -->
+
       <ion-item class="item-divider">
         <img ng-src="img/spain2.png" class="vertAlign satEsp"/> Península Ibérica
       </ion-item>
-      <ion-item ng-repeat="item in getItemsByCategoriaId(1)" class="item item-icon-right" href="#/app/gif-player/{{item[0]}}">
-        {{ ::item[3] }} <i class="icon ion-ios-arrow-right"></i>
+
+      <ion-item ng-repeat="item in getItemsByCategoriaId(1)" class="item item-icon-right"
+        href="#/app/gif-player/{{item[0]}}">{{ ::item[3] }} <i class="icon ion-ios-arrow-right"></i>
       </ion-item>
+
       <!------------------------------------------------------------------------------------------------------------ -->
+
       <ion-item class="item-divider">
         <img ng-src="img/eu.png" class="vertAlign"/> Europa
       </ion-item>
-      <ion-item ng-repeat="item in getItemsByCategoriaId(2)" class="item item-icon-right" href="#/app/gif-player/{{item[0]}}">
-        {{ ::item[3] }} <i class="icon ion-ios-arrow-right"></i>
+
+      <ion-item ng-repeat="item in getItemsByCategoriaId(2)" class="item item-icon-right"
+        href="#/app/gif-player/{{item[0]}}">{{ ::item[3] }} <i class="icon ion-ios-arrow-right"></i>
       </ion-item>
+
       <!------------------------------------------------------------------------------------------------------------ -->
+
       <ion-item class="item-divider">
         <img ng-src="img/map3.png" class="vertAlign mapas"/> Mapas
       </ion-item>
-      <ion-item ng-repeat="item in getItemsByCategoriaId(3)" class="item item-icon-right" href="#/app/meteo-detalle/{{item[0]}}">
-        {{ ::item[3] }} <i class="icon ion-ios-arrow-right"></i>
+
+      <ion-item ng-repeat="item in getItemsByCategoriaId(3)" class="item item-icon-right"
+        href="#/app/meteo-detalle/{{item[0]}}">{{ ::item[3] }} <i class="icon ion-ios-arrow-right"></i>
       </ion-item>
+
       <ion-item class="item item-icon-right" href="#/app/viento">
         Viento <i class="icon ion-ios-arrow-right"></i>
       </ion-item>
-      <!------------------------------------------------------------------------------------------------------------ -->
+
     </ion-list>
-    <div style="font-size:small; color:cornflowerblue;text-align:center" class="padding"><br/>
-      <strong>Nota:</strong> La obtención de datos del servidor y su procesamiento puede tardar varios segundos
-      dependiendo del ancho de banda y del hardware disponible.<br/><br/>
+
+    <br/>
+    <div class="padding meteo-footer">
+      <strong>Nota:</strong> La obtención de datos de los servidores y su procesamiento se puede prolongar varios
+      segundos dependiendo del ancho de banda y del hardware disponible.<br/><br/>
     </div>
 
   </ion-content>
