@@ -37,10 +37,15 @@
   </ion-nav-bar>
 
   <ion-content ng-init="activeTab='meteoTab'">
+
+    <div>modalOpen: {{ modalOpen }}</div>
+
     <!-- Card Img -------------------------------------------------------------------------------------------------  -->
     <div class="list card">
       <div class="item item-image cam-img">
-        <img ng-src="{{ cam.imagen }}" fallback-src="img/imgFail.png" class="imgLoader"
+        <!--<img ng-src="{{ cam.imagen }}" fallback-src="img/imgFail.png" class="imgLoader"-->
+          <!--imageonload="imgLoaded()" on-touch="showModalImgDetalle()"/>-->
+        <img ng-src="img/imgFail.png" fallback-src="img/imgFail.png" class="imgLoader"
           imageonload="imgLoaded()" on-touch="showModalImgDetalle()"/>
       </div>
       <div class="item item-body fnt-small">

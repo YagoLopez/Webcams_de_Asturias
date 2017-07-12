@@ -98,6 +98,14 @@ wcaModule.service('SMapa', function(SFusionTable, SPopup){
     });
   };
 
+  this.creaStreetView2 = function(domElement, locationLatLng, heading){
+    return new google.maps.StreetViewPanorama( domElement, {
+      pov: {heading: heading || 0, pitch: 0},
+      position: locationLatLng,
+      zoom: 1
+    });
+  };
+
   this.crear = function (domElement){
     mapa = new google.maps.Map(domElement,  {
       mapTypeControl: true,

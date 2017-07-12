@@ -28,93 +28,62 @@ app.config(function($stateProvider, $urlRouterProvider, $compileProvider, $ionic
   });
 // -------------------------------------------------------------------------------------------------------------------
   $stateProvider.state('app.mapa', {
-    url: '/mapa',
-    cache: false,
-    views: {'menuContent': {templateUrl: 'templates/mapa.html', controller: 'MapaCtrl'}}
+    url: '/mapa', cache: true, views: {'menuContent': {templateUrl: 'templates/mapa.html', controller: 'MapaCtrl'}}
   });
 // -------------------------------------------------------------------------------------------------------------------
-  $stateProvider.state('app.mapaglobal', {
-    url: '/mapaglobal',
-    cache: false,
+  $stateProvider.state('app.mapaglobal', {url: '/mapaglobal', cache: true,
     views: {'menuContent': {templateUrl: 'templates/mapa-global.html', controller: 'MapaGlobalCtrl'}}
   });
 // -------------------------------------------------------------------------------------------------------------------
-  $stateProvider.state('app.streetview', {
-    url: '/streetview',
-    cache: false,
+  $stateProvider.state('app.streetview', {url: '/streetview', cache: true,
     views: {'menuContent': {templateUrl: 'templates/streetview.html', controller: 'StreetViewCtrl'}}
   });
 // -------------------------------------------------------------------------------------------------------------------
-  $stateProvider.state('app.detalle', {
-    url: '/detalle/:rowid',
-    cache: true,
+  $stateProvider.state('app.detalle', {url: '/detalle/:rowid', cache: false,
     views: {'menuContent': {templateUrl: 'templates/detalle.html', controller: 'DetalleCtrl'}}
   });
 // -------------------------------------------------------------------------------------------------------------------
-  $stateProvider.state('app.gif-player', {
-    url: '/gif-player/:id_item_meteo',
-    cache: false,
+  $stateProvider.state('app.gif-player', {url: '/gif-player/:id_item_meteo', cache: false,
     views: {'menuContent': {templateUrl: 'templates/gif-player.html', controller: 'GifPlayerCtrl'}}
   });
 // -------------------------------------------------------------------------------------------------------------------
-  $stateProvider.state('app.meteo', {
-    url: '/meteo',
-    cache: true,
-    views: {'menuContent': {templateUrl: 'templates/meteo.html', controller: 'MeteoCtrl'}
-    }
+  $stateProvider.state('app.meteo', {url: '/meteo', cache: true,
+    views: {'menuContent': {templateUrl: 'templates/meteo.html', controller: 'MeteoCtrl'}}
   });
 // -------------------------------------------------------------------------------------------------------------------
-  $stateProvider.state('app.meteo-detalle', {
-    url: '/meteo-detalle/:id_item_meteo',
-    cache: false,
+  $stateProvider.state('app.meteo-detalle', {url: '/meteo-detalle/:id_item_meteo', cache: false,
     views: {'menuContent': {templateUrl: 'templates/meteo-detalle.html', controller: 'MeteoDetalleCtrl'}}
   });
 // -------------------------------------------------------------------------------------------------------------------
   $stateProvider.state('app.stats', {
-    url: '/stats',
-    cache: true,
-    views: {'menuContent': {templateUrl: 'templates/stats.html'}}
+    url: '/stats', cache: true, views: {'menuContent': {templateUrl: 'templates/stats.html'}}
   });
 // -------------------------------------------------------------------------------------------------------------------
   $stateProvider.state('app.heatmap', {
-    url: '/heatmap',
-    cache: true,
-    views: {'menuContent': {templateUrl: 'templates/heatmap.html'}}
+    url: '/heatmap', cache: true, views: {'menuContent': {templateUrl: 'templates/heatmap.html'}}
   });
 // -------------------------------------------------------------------------------------------------------------------
-  $stateProvider.state('app.por_categoria', {
-    url: '/por_categoria',
-    cache: true,
+  $stateProvider.state('app.por_categoria', {url: '/por_categoria', cache: true,
     views: {'menuContent': {templateUrl: 'templates/por_categoria.html', controller: 'PorCategoriaCtrl'}}
   });
 // -------------------------------------------------------------------------------------------------------------------
-  $stateProvider.state('app.por_concejo', {
-    url: '/por_concejo',
-    cache: true,
+  $stateProvider.state('app.por_concejo', {url: '/por_concejo', cache: true,
     views: {'menuContent': {templateUrl: 'templates/por_concejo.html', controller: 'PorConcejoCtrl'}}
   });
 // -------------------------------------------------------------------------------------------------------------------
-  $stateProvider.state('app.listado', {
-    url: '/listado?concejo&idCategoria',
-    cache: false,
+  $stateProvider.state('app.listado', {url: '/listado?concejo&idCategoria', cache: true,
     views: {'menuContent': {templateUrl: 'templates/listado.html', controller: 'ListadoCtrl'}}
   });
 // -------------------------------------------------------------------------------------------------------------------
-  $stateProvider.state('app.mosaico', {
-    url: '/mosaico?concejo&idCategoria',
-    cache: true,
+  $stateProvider.state('app.mosaico', {url: '/mosaico?concejo&idCategoria', cache: true,
     views: {'menuContent': {templateUrl: 'templates/mosaico.html', controller: 'ListadoCtrl'}}
   });
 // -------------------------------------------------------------------------------------------------------------------
-  $stateProvider.state('app.viento', {
-    url: '/viento',
-    cache: true,
+  $stateProvider.state('app.viento', {url: '/viento', cache: true,
     views: {'menuContent': {templateUrl: 'templates/viento.html',controller: 'VientoCtrl'}}
   });
 // -------------------------------------------------------------------------------------------------------------------
-  $stateProvider.state('app.buscar', {
-    url: '/buscar',
-    cache: true,
+  $stateProvider.state('app.buscar', {url: '/buscar', cache: true,
     views: {'menuContent': {templateUrl: 'templates/buscar.html', controller: 'BuscarCtrl'}}
   });
 // -------------------------------------------------------------------------------------------------------------------
