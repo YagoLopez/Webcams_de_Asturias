@@ -32,24 +32,24 @@
 
         <ion-item class="item-padd col col-33" ng-if="$index < camsPorCategoria.length">
           <a href="#/app/detalle/{{ camsPorCategoria[$index][4] }}" class="item itemCam imgLoader">
-            <!--<img ng-src="{{ camsPorCategoria[$index][2] }}" fallback-src="img/imgFail.png" width="100%"/>-->
-            <img ng-src="img/imgFail.png" fallback-src="img/imgFail.png" width="100%"/>
+            <img ng-src="{{ camsPorCategoria[$index][2] }}" fallback-src="img/imgFail.png" width="100%"/>
+            <!--<img ng-src="img/imgFail.png" fallback-src="img/imgFail.png" width="100%"/>-->
             <div class="txt">{{ camsPorCategoria[$index][0] }}</div>
           </a>
         </ion-item>
 
         <ion-item class="item-padd col col-33" ng-if="$index+1 < camsPorCategoria.length" ng-click="showModal($index+1)">
           <a href="#/app/detalle/{{ camsPorCategoria[$index+1][4] }}" class="item itemCam">
-            <!--<img ng-src="{{ camsPorCategoria[$index+1][2] }}" fallback-src="img/imgFail.png" width="100%" class="imgLoader"/>-->
-            <img ng-src="img/imgFail.png" fallback-src="img/imgFail.png" width="100%" class="imgLoader"/>
+            <img ng-src="{{ camsPorCategoria[$index+1][2] }}" fallback-src="img/imgFail.png" width="100%" class="imgLoader"/>
+            <!--<img ng-src="img/imgFail.png" fallback-src="img/imgFail.png" width="100%" class="imgLoader"/>-->
             <div class="txt">{{ camsPorCategoria[$index+1][0] }}</div>
           </a>
         </ion-item>
 
         <ion-item class="item-padd col col-33" ng-if="$index+2 < camsPorCategoria.length" ng-click="showModal($index+2)">
           <a href="#/app/detalle/{{ camsPorCategoria[$index+2][4] }}" class="item itemCam">
-            <!--<img ng-src="{{ camsPorCategoria[$index+2][2] }}" fallback-src="img/imgFail.png" width="100%" class="imgLoader"/>-->
-            <img ng-src="img/imgFail.png" fallback-src="img/imgFail.png" width="100%" class="imgLoader"/>
+            <img ng-src="{{ camsPorCategoria[$index+2][2] }}" fallback-src="img/imgFail.png" width="100%" class="imgLoader"/>
+            <!--<img ng-src="img/imgFail.png" fallback-src="img/imgFail.png" width="100%" class="imgLoader"/>-->
             <div class="txt">{{ camsPorCategoria[$index+2][0] }}</div>
           </a>
         </ion-item>

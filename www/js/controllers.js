@@ -170,7 +170,7 @@ wcaCtrlMod.controller('MapaGlobalCtrl', function($scope, $rootScope, $filter, SM
 });
 // ====================================================================================================================
 wcaCtrlMod.controller('DetalleCtrl', function($scope, $stateParams, $ionicModal, SClima, $filter, $rootScope,
-   SPopup, SWikipedia, $ionicPopover, Cam, SLoader, $location, SFusionTable, STRINGS, $ionicPlatform){
+   SPopup, SWikipedia, $ionicPopover, Cam, SLoader, $location, SFusionTable, STRINGS){
 
   // Init --------------------------------------------------------------------------------------------------------------
 
@@ -232,43 +232,6 @@ wcaCtrlMod.controller('DetalleCtrl', function($scope, $stateParams, $ionicModal,
     })
   };
 
-  // Dialogo Modal Detalle ---------------------------------------------------------------------------------------------
-
-  $ionicModal.fromTemplateUrl('templates/modal-img-detalle.html', {scope: $scope, animation: 'scale-in'})
-    .then(function(modal) {$scope.modalImgDetalle = modal});
-
-  $scope.showModalImgDetalle = function () {
-    $scope.modalOpen = true;
-    $scope.modalImgDetalle.show();
-    console.log('showModalImgDetalle(): modalOpen', $scope.modalOpen);
-  };
-
-  $scope.hideModalImgDetalle = function () {
-    $scope.modalOpen = false;
-    $scope.modalImgDetalle.hide();
-    console.log('hideMOdalImgDetalle(): modalOpen', $scope.modalOpen);
-  };
-
-  // Dialogo Modal Prediccion ------------------------------------------------------------------------------------------
-
-  $ionicModal.fromTemplateUrl('templates/modal-meteoblue.html', {scope: $scope, animation: 'scale-in'})
-    .then(function(modal) {$scope.modalPrediccion = modal});
-
-  // $scope.hideModalPrediccion = function () {
-  //   $scope.modalPrediccionOpen = false;
-  //   $scope.modalPrediccion.hide();
-  // };
-
-  // $scope.showModalPrediccion = function () {
-  //   $scope.modalOpenPrediccion = true;
-  //   $scope.modalPrediccion.show();
-  //   $scope.timerMeteoblue = setTimeout( function(){
-  //     $scope.$apply(function(){
-  //       $scope.urlMeteoblue = 'https://www.meteoblue.com/meteogram-web?' +
-  //         ('lon='+$rootScope.cam.lng) + ('&lat='+$rootScope.cam.lat) + ('&lang=es&look=CELSIUS,KILOMETER_PER_HOUR');
-  //     })
-  //   }, 500);
-  // };
   // Popover Menu ------------------------------------------------------------------------------------------------------
 
   $ionicPopover.fromTemplateUrl('templates/popover.html', {scope: $scope})
@@ -292,46 +255,27 @@ wcaCtrlMod.controller('DetalleCtrl', function($scope, $stateParams, $ionicModal,
 
   // Live Cycle Events -------------------------------------------------------------------------------------------------
 
-  $ionicPlatform.registerBackButtonAction(function(e) {
-    console.log('register back button action');
-    //do your stuff
-    if($scope.modalOpen){
-      e.preventDefault();
-      $scope.modalImgDetalle.hide();
-      $scope.modalPrediccion.hide();
-      $scope.modalOpen = false;
-    }
-  }, 101);
-
-  // Prevent state change when modal is open and backwards navigation
-  $rootScope.$on("$stateChangeStart", function (event, toState, toParams, fromState, fromParams){
-
-
-/*
-    if($scope.modalOpen){
-      // $scope.hideModalImgDetalle();
-      // $scope.hideModalPrediccion();
-      event.preventDefault();
-      $scope.modalImgDetalle.hide();
-      $scope.modalPrediccion.hide();
-      $scope.modalOpen = false;
-      console.log('stateChangeStart(): modalOpen', $scope.modalOpen);
-      console.log('fromState', fromState);
-      console.log('toState', toState);
-      console.log('event', event);
-
-    }
-*/
-  });
-
   // On view exit, clear timers for preventing memory leaks
   $scope.$on('$ionicView.beforeLeave', function (event, data) {
     clearTimeout($scope.timerGetClimaData);
-    clearTimeout($scope.timerMeteoblue);
-    $scope.modalImgDetalle.hide();
-    $scope.modalPrediccion.hide();
-    $scope.modalOpen = false;
   })
+
+});
+// ====================================================================================================================
+wcaCtrlMod.controller('MeteoblueCtrl', function ($scope, $rootScope) {
+
+  $scope.timerMeteoblue = setTimeout(function () {
+    $scope.$apply(function () {
+      $scope.urlMeteoblue = 'https://www.meteoblue.com/meteogram-web?' +
+        ('lon=' + $rootScope.cam.lng) + ('&lat=' + $rootScope.cam.lat) + ('&lang=es&look=CELSIUS,KILOMETER_PER_HOUR');
+    })
+  }, 500);
+
+  // On view exit, clear timers for preventing memory leaks
+  $scope.$on('$ionicView.beforeLeave', function (event, data) {
+    clearTimeout($scope.timerMeteoblue);
+  })
+
 });
 // ====================================================================================================================
 wcaCtrlMod.controller('StreetViewCtrl', function($scope, SMapa, $rootScope, SPopup, $location, $ionicSideMenuDelegate){

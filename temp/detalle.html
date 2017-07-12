@@ -38,11 +38,16 @@
 
   <ion-content ng-init="activeTab='meteoTab'">
 
+    <div>modalOpen: {{ modalOpen }}</div>
+
     <!-- Card Img -------------------------------------------------------------------------------------------------  -->
     <div class="list card">
       <div class="item item-image cam-img">
-        <a href="#/app/img-detalle">
-          <img ng-src="{{ cam.imagen }}" fallback-src="img/imgFail.png" class="imgLoader" imageonload="imgLoaded()"/>
+        <!--<img ng-src="{{ cam.imagen }}" fallback-src="img/imgFail.png" class="imgLoader"-->
+          <!--imageonload="imgLoaded()" on-touch="showModalImgDetalle()"/>-->
+        <a href="#/app/test">
+          <img ng-src="img/imgFail.png" fallback-src="img/imgFail.png" class="imgLoader"
+            imageonload="imgLoaded()"/>
         </a>
       </div>
       <div class="item item-body fnt-small">
@@ -54,9 +59,9 @@
       <div class="item item-text-wrap div-btns">
         <div class="row">
           <div class="col">
-            <a href="#/app/img-detalle" class="button button-calm full-width">
+            <button class="button button-calm full-width" ng-click="showModalImgDetalle()">
               <i class="icon ion-arrow-expand"></i> Ampliar
-            </a>
+            </button>
           </div>
           <div class="col">
             <button class="button button-calm full-width" ng-click="reloadImg()">
@@ -102,9 +107,9 @@
             &bullet; Fuente: <a href="http://www.openweathermap.com" target="_blank">OpenWeatherMap.com</a>
           </div>
           <div class="div-predicc">
-            <a href="#/app/prediccion" class="button button-calm btn-style">
+            <button class="button button-calm btn-style" ng-click="showModalPrediccion()">
               <i class="icon ion-android-open"></i><span class="predicc-label">Predicción</span>
-            </a>
+            </button>
             <div class="url-meteoblue">Fuente: <a href="http://www.meteoblue.com" target="_blank">Meteoblue</a></div>
           </div>
         </div>

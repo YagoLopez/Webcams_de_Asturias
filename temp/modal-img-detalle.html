@@ -1,4 +1,4 @@
-<ion-view view-title="{{ ::cam.lugar }}" class="modal-view-detalle">
+<ion-modal-view class="modal-view-detalle">
 
   <style type="text/css">
     ion-header-bar > div > img {width: 35px; vertical-align: middle}
@@ -11,18 +11,25 @@
     }
   </style>
 
-  <ion-nav-bar>
-    <ion-header-bar class="bar-calm" align-title="center">
-      <ion-nav-back-button class="button-icon ion-android-arrow-back"></ion-nav-back-button>
-    </ion-header-bar>
-  </ion-nav-bar>
+  <ion-header-bar align-title="center">
+    <div class="title">Zoom
+      <!--suppress HtmlUnknownTarget -->
+      <img src="img/pinch1.png"/>
+    </div>
+    <button class="button pull-right" ng-click="hideModalImgDetalle()">
+      <i class="icon icon-right ion-ios-close-outline"></i>
+    </button>
+  </ion-header-bar>
 
   <!-- overflow-scroll="false" => permite scrolling con javascript y hacer zoom en imagen -->
   <!-- locking="false" => permite srcroll simultaneo en ejes x,y. apropiado para hacer zoom -->
   <ion-scroll id="img-cam-container" zooming="true" direction="xy" locking="false" overflow-scroll="false">
 
-    <img id="cam-imagen" ng-src="{{ cam.imagen }}"/>
-    <div class="info-img">Concejo: {{ ::cam.concejo }}</div>
+    <div>modalOpen: {{ modalOpen}}</div>
+
+    <!--<img id="cam-imagen" ng-src="{{ cam.imagen }}"/>-->
+    <img id="cam-imagen" ng-src="img/imgFail.png"/>
+    <div class="info-img">{{ ::cam.lugar }}<br>Concejo: {{ ::cam.concejo }}</div>
   </ion-scroll>
 
-</ion-view>
+</ion-modal-view>

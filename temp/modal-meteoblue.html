@@ -1,4 +1,4 @@
-<ion-view view-title="{{ ::cam.lugar }}">
+<ion-modal-view>
   <style type="text/css">
     #scroll-container {margin-top: 45px; width: 100%; height: 100%; text-align: center; overflow:hidden}
     #scroll-container > img {width: 35px; vertical-align: middle}
@@ -6,6 +6,17 @@
     ion-header-bar > div > img {width: 35px; vertical-align: middle}
     .loading-text{position: absolute; text-align: center; width: 100%; top: 150px; z-index: -1}
   </style>
+
+<!--
+  <ion-header-bar align-title="center">
+    <div class="title">Predicción
+      &lt;!&ndash;suppress HtmlUnknownTarget &ndash;&gt;
+      <img src="img/pinch1.png"/></div>
+      <button class="button pull-right" ng-click="hideModalPrediccion()">
+        <i class="icon icon-right ion-ios-close-outline"></i>
+      </button>
+  </ion-header-bar>
+-->
 
   <ion-nav-bar>
     <ion-header-bar class="bar-calm" align-title="center">
@@ -17,7 +28,10 @@
   <!-- locking="false" para permitir srcroll simultaneo en ejes x,y. apropiado para hacer zoom -->
   <ion-scroll id="scroll-container" zooming="true" direction="xy" locking="false" overflow-scroll="false">
 
+    <div>modalOpen: {{ modalOpen}}</div>
+
     <div class="loading-text">Obteniendo datos</div>
-    <img id="img-meteoblue" ng-src="{{ urlMeteoblue }}"/>
+    <!--<img id="img-meteoblue" ng-src="{{ urlMeteoblue }}"/>-->
+    <img id="img-meteoblue" ng-src="img/imgFail.png"/>
   </ion-scroll>
-</ion-view>
+</ion-modal-view>

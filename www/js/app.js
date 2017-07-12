@@ -87,6 +87,14 @@ app.config(function($stateProvider, $urlRouterProvider, $compileProvider, $ionic
     views: {'menuContent': {templateUrl: 'templates/buscar.html', controller: 'BuscarCtrl'}}
   });
 // -------------------------------------------------------------------------------------------------------------------
+  $stateProvider.state('app.imgdetalle', {url: '/img-detalle', cache: true,
+    views: {'menuContent': {templateUrl: 'templates/modal-img-detalle.html'}}
+  });
+// -------------------------------------------------------------------------------------------------------------------
+  $stateProvider.state('app.prediccion', {url: '/prediccion', cache: true,
+    views: {'menuContent': {templateUrl: 'templates/modal-meteoblue.html', controller: 'MeteoblueCtrl'}}
+  });
+// -------------------------------------------------------------------------------------------------------------------
 
   $urlRouterProvider.otherwise('app/listado?idCategoria=7');
 
