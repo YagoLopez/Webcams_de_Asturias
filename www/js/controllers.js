@@ -460,7 +460,7 @@ wcaCtrlMod.controller('GifPlayerCtrl', function($scope, $interval, $stateParams,
   // Evento destroy ---------------------------------------------------------------------------------------------------
   $scope.$on("$destroy",function(){
       window.clearTimeout(0);
-      $scope.pause();
+      $scope.pause && $scope.pause();
   });
   // Fin evento destroy -----------------------------------------------------------------------------------------------
 
