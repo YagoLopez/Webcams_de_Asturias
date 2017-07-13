@@ -255,14 +255,19 @@ wcaCtrlMod.controller('DetalleCtrl', function($scope, $stateParams, $ionicModal,
 
   // Live Cycle Events -------------------------------------------------------------------------------------------------
 
-  // On view exit, clear timers for preventing memory leaks
+  // On view exit, clear timers to prevent memory leaks
   $scope.$on('$ionicView.beforeLeave', function (event, data) {
     clearTimeout($scope.timerGetClimaData);
   })
 
 });
 // ====================================================================================================================
-wcaCtrlMod.controller('MeteoblueCtrl', function ($scope, $rootScope) {
+wcaCtrlMod.controller('MeteoblueCtrl', function ($scope, $rootScope, $location) {
+
+  if(!$rootScope.cam){
+    $location.path('#/'); // si no hay datos de cam redirigir a root y abortar
+    return;
+  }
 
   $scope.timerMeteoblue = setTimeout(function () {
     $scope.$apply(function () {
@@ -271,11 +276,10 @@ wcaCtrlMod.controller('MeteoblueCtrl', function ($scope, $rootScope) {
     })
   }, 500);
 
-  // On view exit, clear timers for preventing memory leaks
+  // On view exit, clear timers to prevent memory leaks
   $scope.$on('$ionicView.beforeLeave', function (event, data) {
     clearTimeout($scope.timerMeteoblue);
   })
-
 });
 // ====================================================================================================================
 wcaCtrlMod.controller('StreetViewCtrl', function($scope, SMapa, $rootScope, SPopup, $location, $ionicSideMenuDelegate){
