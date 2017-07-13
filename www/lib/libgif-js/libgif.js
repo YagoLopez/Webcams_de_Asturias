@@ -459,6 +459,9 @@
         var frameOffsets = []; // elements have .x and .y properties
 
         var gif = options.gif;
+        if(!gif){
+          throw new Error('Carga de datos abortada');
+        }
         if (gif.getAttribute('rel:fps')) {
           options.fps = gif.getAttribute('rel:fps');
         }
@@ -955,7 +958,7 @@
                 h.send();
             },
             load: function (callback) {
-                this.load_url(gif.getAttribute('rel:animated_src') || gif.src,callback);
+                this.load_url( gif && gif.getAttribute('rel:animated_src') || gif.src,callback);
             },
             load_raw: function(arr, callback) {
                 if (!load_setup(callback)) return;
