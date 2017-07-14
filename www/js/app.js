@@ -39,7 +39,7 @@ app.config(function($stateProvider, $urlRouterProvider, $compileProvider, $ionic
     views: {'menuContent': {templateUrl: 'templates/streetview.html', controller: 'StreetViewCtrl'}}
   });
 // -------------------------------------------------------------------------------------------------------------------
-  $stateProvider.state('app.detalle', {url: '/detalle/:rowid', cache: false,
+  $stateProvider.state('app.detalle', {url: '/detalle/:rowid', cache: true,
     views: {'menuContent': {templateUrl: 'templates/detalle.html', controller: 'DetalleCtrl'}}
   });
 // -------------------------------------------------------------------------------------------------------------------
@@ -91,7 +91,7 @@ app.config(function($stateProvider, $urlRouterProvider, $compileProvider, $ionic
     views: {'menuContent': {templateUrl: 'templates/modal-img-detalle.html'}}
   });
 // -------------------------------------------------------------------------------------------------------------------
-  $stateProvider.state('app.prediccion', {url: '/prediccion', cache: true,
+  $stateProvider.state('app.prediccion', {url: '/prediccion', cache: false,
     views: {'menuContent': {templateUrl: 'templates/modal-meteoblue.html', controller: 'MeteoblueCtrl'}}
   });
 // -------------------------------------------------------------------------------------------------------------------

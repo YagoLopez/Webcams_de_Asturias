@@ -1,7 +1,7 @@
 <ion-view view-title="{{ ::cam.lugar }}">
 
   <style type="text/css">
-    /* NOTA: no modificar estilos aunque parezca que sobran */
+    /* NOTA: no borrar estilos aunque parezca que sobran */
     /*noinspection CssUnknownTarget*/
     .imgLoader{background: transparent url(img/clock-32x32-3.png) no-repeat center center; cursor: pointer}
     .card {padding-top: 1px; padding-bottom: 1px; margin-right:4%; margin-left:4%}
@@ -75,11 +75,11 @@
       <!--Tabs bar-->
       <div class="item item-divider tabs tabs-icon-left tabs-color-positive tabs-bar">
         <a class="tab-item fnt-small" ng-click="(activeTab = 'meteoTab')"
-          ng-class="{'tab-active':activeTab === 'meteoTab'}">
+          ng-class="{'tab-active': activeTab === 'meteoTab'}">
             <i class="icon ion-ios-partlysunny"></i> Meteorología
         </a>
         <a class="tab-item fnt-small" ng-click="(activeTab = 'infoTab'); getWikipediaInfo()"
-          ng-class="{'tab-active':activeTab === 'infoTab'}">
+          ng-class="{'tab-active': activeTab === 'infoTab'}">
             <i class="icon ion-document-text"></i> Información
         </a>
       </div>
@@ -112,8 +112,8 @@
 
       <div ng-show="activeTab === 'infoTab'" class="item-body div-info" ng-class="{active:active}">
         <div ng-if="infoConcejo">
-          <div>{{ infoConcejo }}</div>
-          <div><a href="{{ wikiUrl }}" target="_blank">Ampliar Información</a></div>
+          <div>{{ ::infoConcejo }}</div>
+          <div><a href="{{ ::wikiUrl }}" target="_blank">Ampliar Información</a></div>
         </div>
         <div ng-if="!infoConcejo">No hay resultados</div>
         <div><br>Fuente: <a href="https://es.wikipedia.org" target="_blank">Wikipedia</a></div>
