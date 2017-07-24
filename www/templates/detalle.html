@@ -112,8 +112,8 @@
 
       <div ng-show="activeTab === 'infoTab'" class="item-body div-info" ng-class="{active:active}">
         <div ng-if="infoConcejo">
-          <div>{{ ::infoConcejo }}</div>
-          <div><a href="{{ ::wikiUrl }}" target="_blank">Ampliar Información</a></div>
+          <div>{{ infoConcejo }}</div>
+          <div><a href="{{ wikiUrl }}" target="_blank">Ampliar Información</a></div>
         </div>
         <div ng-if="!infoConcejo">No hay resultados</div>
         <div><br>Fuente: <a href="https://es.wikipedia.org" target="_blank">Wikipedia</a></div>
