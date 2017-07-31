@@ -88,11 +88,11 @@ app.config(function($stateProvider, $urlRouterProvider, $compileProvider, $ionic
   });
 // -------------------------------------------------------------------------------------------------------------------
   $stateProvider.state('app.imgdetalle', {url: '/img-detalle', cache: true,
-    views: {'menuContent': {templateUrl: 'templates/modal-img-detalle.html'}}
+    views: {'menuContent': {templateUrl: 'templates/detalle-img.html'}}
   });
 // -------------------------------------------------------------------------------------------------------------------
   $stateProvider.state('app.prediccion', {url: '/prediccion', cache: false,
-    views: {'menuContent': {templateUrl: 'templates/modal-meteoblue.html', controller: 'MeteoblueCtrl'}}
+    views: {'menuContent': {templateUrl: 'templates/detalle-meteoblue.html', controller: 'MeteoblueCtrl'}}
   });
 // -------------------------------------------------------------------------------------------------------------------
 

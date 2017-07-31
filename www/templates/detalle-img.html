@@ -20,7 +20,7 @@
   <!-- overflow-scroll="false" => permite scrolling con javascript y hacer zoom en imagen -->
   <!-- locking="false" => permite srcroll simultaneo en ejes x,y. apropiado para hacer zoom -->
   <ion-scroll id="img-cam-container" zooming="true" direction="xy" locking="false" overflow-scroll="false">
-    <img id="cam-imagen" ng-src="{{ cam.imagen }}"/>
+    <img id="cam-imagen" ng-src="{{ cam.imagen }}" fallback-src="img/imgFail.png"/>
     <div class="info-img">Concejo: {{ ::cam.concejo }}</div>
   </ion-scroll>
 
