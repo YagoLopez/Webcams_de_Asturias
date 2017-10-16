@@ -71,6 +71,7 @@ var filesToCache = [
 
 ];
 
+// todo: check if service worker is installed before
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('wca-sw.js').then(function() {
     console.log('sw: registration ok');
