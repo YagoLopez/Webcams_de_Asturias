@@ -612,7 +612,7 @@ wcaCtrlMod.controller('PorConcejoCtrl', function($scope, $window, $sce, SLoader)
 // ====================================================================================================================
 wcaCtrlMod.controller('VientoCtrl', function($scope, SLoader){
 
-  SLoader.showWithBackdrop('Cargando...');
+  SLoader.show('Cargando...');
 
   $scope.cargaFrameTerminada = function(){
     SLoader.hide();

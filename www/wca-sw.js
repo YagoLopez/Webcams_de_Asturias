@@ -120,7 +120,6 @@ self.addEventListener('sw: fetch', function(event) {
       // 2) if response not cached, fetch resource from network
       // return response || fetch(event.request);
 
-
       if(response) {
         return response;
       } else {

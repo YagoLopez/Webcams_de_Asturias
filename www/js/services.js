@@ -251,6 +251,7 @@ wcaModule.factory('ItemMeteo', function(){
 });
 // ====================================================================================================================
 wcaModule.service('SLoader', function($ionicLoading){
+
   var spinnerIco = "<ion-spinner icon='lines' class='spinner-calm'></ion-spinner><br/>";
   var contenidoLoader = "Cargando datos...";
 
