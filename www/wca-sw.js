@@ -103,7 +103,7 @@ self.addEventListener('install', function(event) {
  *
  */
 self.addEventListener('activate', function (event) {
-  console.log('sw: service worker ready and activated', event);
+  console.log('sw: service worker ready and activated');
 });
 // ---------------------------------------------------------------------------------------------------------------------
 /**
@@ -113,13 +113,23 @@ self.addEventListener('activate', function (event) {
  * @param {function} Callback function with event data
  *
  */
-self.addEventListener('fetch', function(event) {
+self.addEventListener('sw: fetch', function(event) {
   event.respondWith(
     // test if the request is cached
     caches.match(event.request).then(function(response) {
       // 1) if response cached, it will be returned from browser cache
       // 2) if response not cached, fetch resource from network
-      return response || fetch(event.request);
+      // return response || fetch(event.request);
+
+
+      if(response) {
+        return response;
+      } else {
+        return fetch(event.request).then(function (response) {
+          return response;
+        });
+      }
+
     }).catch(function (err) {
       // if response not cached and network not available an error is thrown => return fallback image
       return caches.match('img/offline-img.png');
