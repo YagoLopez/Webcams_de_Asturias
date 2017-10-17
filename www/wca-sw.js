@@ -70,7 +70,9 @@ var filesToCache = [
   'favicon.png'
 
 ];
-
+/** --------------------------------------------------------------------------------------------------------------------
+ * Service worker registration
+ */
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('wca-sw.js').then(function() {
     console.log('sw: registration ok');
@@ -78,8 +80,7 @@ if ('serviceWorker' in navigator) {
     console.error(err);
   });
 }
-// ---------------------------------------------------------------------------------------------------------------------
-/**
+/** --------------------------------------------------------------------------------------------------------------------
  * 'Install' event. Writing files to browser cache
  *
  * @param {string} Event name ('install')
@@ -94,8 +95,7 @@ self.addEventListener('install', function(event) {
     })
   )
 });
-// ---------------------------------------------------------------------------------------------------------------------
-/**
+/** --------------------------------------------------------------------------------------------------------------------
  * 'Activate' event. Service worker is activated
  *
  * @param {string} Event name ('activate')
@@ -105,8 +105,7 @@ self.addEventListener('install', function(event) {
 self.addEventListener('activate', function (event) {
   console.log('sw: service worker ready and activated');
 });
-// ---------------------------------------------------------------------------------------------------------------------
-/**
+/** --------------------------------------------------------------------------------------------------------------------
  * 'Fetch' event. Browser tries to get resources making a request
  *
  * @param {string} Event name ('fetch')
