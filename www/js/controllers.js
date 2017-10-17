@@ -474,12 +474,14 @@ wcaCtrlMod.controller('MeteoCtrl', function($scope, SFusionTable, SPopup, ItemsM
     SPopup.show('Error', ' MeteoCtrl: Compruebe conexión de red. Estado: '+status );
   };
   SLoader.showWithBackdrop('Cargando...');
+  $scope.loading = true;
 
   SFusionTable.getRemoteData(queryString).success(
     function(data){
       if(!data.rows){
         SLoader.hide();
         showError('Respuesta nula');
+        $scope.loading = false;
         return;
       }
       ItemsMeteo.setData(data.rows);
@@ -487,9 +489,11 @@ wcaCtrlMod.controller('MeteoCtrl', function($scope, SFusionTable, SPopup, ItemsM
         return ItemsMeteo.getItemsByCategoriaId(idCategoria);
       };
       SLoader.hide();
+      $scope.loading = false;
     }
   ).error(function(status){
     SLoader.hide();
+    $scope.loading = false;
   });
 
 });
