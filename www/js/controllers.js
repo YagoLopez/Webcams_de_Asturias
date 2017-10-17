@@ -520,7 +520,11 @@ wcaCtrlMod.controller('PorCategoriaCtrl', function($scope, $window, $sce, SLoade
   });
   //Calculo de dimensiones de ventana al redimensionar
   $scope.calculateDimensions = function(gesture) {
-    $scope.dev_width = $window.innerWidth;
+    if($window.innerWidth > 765){
+      $scope.dev_width = $window.innerWidth - 270;
+    } else {
+      $scope.dev_width = $window.innerWidth;
+    }
     $scope.dev_height = $window.innerHeight;
   };
   angular.element($window).bind('resize', function(){
