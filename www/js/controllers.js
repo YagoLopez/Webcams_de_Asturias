@@ -1,5 +1,7 @@
+//todo: paginacion y/o infinite scroll
+//todo: mejorar orientacion imagenes street view (heading)
 //todo: convertir en pwa
-//TODO: podria ser mejor arrojar una excepcion en vez de llamaar a SPopup cada vez que hay un error. Ya se encarga el
+//TODO: podria ser mejor arrojar una excepcion en vez de llamar a SPopup cada vez que hay un error. Ya se encarga el
 //TODO: servicio de excepciones de capturar la excepcion y mostrar un popup. De esta forma está más centralizado el tratamiento
 //TODO: de errores
 //todo: hacer icono y Splash screen
@@ -95,7 +97,7 @@ wcaCtrlMod.controller('MapaCtrl', function($scope, SMapa, $rootScope, $location)
 });
 // ====================================================================================================================
 wcaCtrlMod.controller('MapaGlobalCtrl', function($scope, $rootScope, $filter, SMapa, SFusionTable, SPopup,
-   SCategorias, $document){
+   SCategorias){
 
   var layer, mapa, sqlQueryConcejos, sqlQueryCategorias, zoomLevel = 7;
 
@@ -313,33 +315,34 @@ wcaCtrlMod.controller('StreetViewCtrl', function($scope, SMapa, $rootScope, SPop
 });
 // ====================================================================================================================
 wcaCtrlMod.controller('GifPlayerCtrl', function($scope, $interval, $stateParams, ItemsMeteo, ItemMeteo, SLoader,
-  SPopup, $location){
+  SPopup, $location, STRINGS, $rootScope){
 
-  SLoader.showWithBackdrop('Cargando...<br/>El proceso puede tardar');
+  // Inicializaciones -------------------------------------------------------------------------------------------------
 
-  // Obtiene itemMeteo ------------------------------------------------------------------------------------------------
-
-  $scope.itemMeteo = new ItemMeteo(ItemsMeteo.getItemById($stateParams.id_item_meteo));
-
-  // inicializaciones -------------------------------------------------------------------------------------------------
-
+  var timer, killTimer, gifAnimado, convertDataURIToBinary, rangeSlider, sondearPosicion, successAjax, errorAjax,
+    makeGifAnimadoPanZoom;
+  var loadingHtml = 'Cargando...<br/>El proceso puede tardar' +
+    '<div id="cancelLinkContainer"><button><a id="cancelLink" href="#/app/meteo">Cancelar</a></div></button>';
+  SLoader.showWithBackdrop(loadingHtml);
   $scope.currentFrame = 0;
   $scope.isGifPlaying = false;
-  var timer = null;
+  $scope.itemMeteo = new ItemMeteo(ItemsMeteo.getItemById($stateParams.id_item_meteo));
   if(angular.equals({}, $scope.itemMeteo)){
     SLoader.hide();
     $location.path( '#/' );
     return;
   }
-  var killTimer = function(){
+  // Fin Inicializaciones ---------------------------------------------------------------------------------------------
+
+  killTimer = function(){
     if(angular.isDefined(timer)) {
       $interval.cancel(timer);
       timer = undefined;
       $scope.isGifPlaying = false;
     }
   };
-  var gifAnimado = null;
-  var convertDataURIToBinary = function(dataURI) {
+
+  convertDataURIToBinary = function(dataURI) {
     var BASE64_MARKER = ';base64,';
     var base64Index = dataURI.indexOf(BASE64_MARKER) + BASE64_MARKER.length;
     var base64 = dataURI.substring(base64Index);
@@ -352,9 +355,103 @@ wcaCtrlMod.controller('GifPlayerCtrl', function($scope, $interval, $stateParams,
     return array;
   };
 
-  // Peticion AJAX  para obtener datos de imagenes remotas en formato base64 ----------------------------------------
-  // Por usar un proxy remoto no compatible con angular, hay que usar $.ajax de JQuery
+  makeGifAnimadoPanZoom = function (htmlElement) {
+    htmlElement.panzoom({
+      $zoomIn: $('.zoom-in'),
+      $zoomOut: $('.zoom-out'),
+      $zoomRange: $('.zoom-range'),
+      $reset: $('.reset'),
+      minScale: 1, maxScale: 4, increment: 0.5, rangeStep: 0.1, duration: 200, contain: 'invert'
+    });
+  };
 
+  successAjax = function(resp) {
+    // ====== Creacion de gifAnimado ===============================================
+    gifAnimado = new SuperGif({
+      gif: document.getElementById('gif'),
+      loop_mode: 0,
+      draw_while_loading: 1
+    });
+    // ====== Carga datos resultantes de peticion ajax en gifAnimado ==============
+    gifAnimado.load_raw( convertDataURIToBinary(resp.image_data), function () {
+      $scope.totalFrames = gifAnimado.get_length();
+      $scope.currentFrame = gifAnimado.get_current_frame();
+      $scope.gifAnimado = gifAnimado;
+
+      // player controls
+      rangeSlider = document.getElementById('levelRange');
+      $scope.playPause = function(){
+        if ($scope.isGifPlaying) {
+          $scope.pause();
+        } else {
+          $scope.play();
+        }
+      };
+      $scope.pause= function(){
+        killTimer();
+        $scope.isGifPlaying = false;
+        gifAnimado.pause();
+      };
+      $scope.play = function(){
+        killTimer();
+        $scope.isGifPlaying = true;
+        gifAnimado.play();
+        sondearPosicion();
+      };
+      $scope.restart= function(){
+        killTimer();
+        gifAnimado.pause();
+        gifAnimado.move_to(0);
+        rangeSlider.value = 0;
+        $scope.currentFrame = 0;
+      };
+      $scope.forward= function(){
+        killTimer();
+        gifAnimado.pause();
+        gifAnimado.move_relative(1);
+        rangeSlider.value = gifAnimado.get_current_frame();
+        $scope.currentFrame = gifAnimado.get_current_frame();
+      };
+      $scope.backward= function(){
+        killTimer();
+        gifAnimado.pause();
+        gifAnimado.move_relative(-1);
+        rangeSlider.value = gifAnimado.get_current_frame();
+        $scope.currentFrame = gifAnimado.get_current_frame();
+      };
+      $scope.end= function(){
+        killTimer();
+        var posicionFinal = gifAnimado.get_length()-1;
+        gifAnimado.pause();
+        gifAnimado.move_to(posicionFinal);
+        rangeSlider.value = posicionFinal;
+        $scope.currentFrame = posicionFinal;
+      };
+      sondearPosicion = function(){
+        timer = $interval( function(){
+          var currentFrame = gifAnimado.get_current_frame();
+          rangeSlider.value = currentFrame;
+          $scope.currentFrame = currentFrame;
+        }, 50);
+      };
+      $scope.irPosicion = function(posicion){
+        gifAnimado.move_to(posicion);
+      };
+      makeGifAnimadoPanZoom($('.jsgif > canvas'));
+      SLoader.hide();
+    })
+  };
+
+  errorAjax = function(error) {
+    document.getElementById('gif').src = '';
+    console.error(error);
+    SLoader.hide();
+    SPopup.show('Error', STRINGS.ERROR);
+    // $location.path(' #/' );
+  };
+
+  // Peticion AJAX  para obtener datos de imagenes remotas en formato base64 ------------------------------------------
+  // Por usar un proxy remoto no compatible con Angular, hay que usar $.ajax de JQuery
   $.ajax({
     type: 'GET',
     url: $scope.itemMeteo.url,
@@ -363,107 +460,16 @@ wcaCtrlMod.controller('GifPlayerCtrl', function($scope, $interval, $stateParams,
     contentType: 'application/json',
     dataType: 'jsonp',
     cache: true,
-    success: function(resp) {
-
-      // ====== Cración de gifAnimado ===============================================
-      gifAnimado = new SuperGif({
-        gif: document.getElementById('gif'),
-        loop_mode: 0,
-        draw_while_loading: 1
-      });
-      // ====== Carga datos resultantes de peticion ajax en gifAnimado ==============
-      gifAnimado.load_raw( convertDataURIToBinary(resp.image_data), function () {
-        $scope.totalFrames = gifAnimado.get_length();
-        $scope.currentFrame = gifAnimado.get_current_frame();
-        $scope.gifAnimado = gifAnimado;
-
-        // player controls
-        var rangeSlider = document.getElementById('levelRange');
-        $scope.playPause = function(){
-          if ($scope.isGifPlaying) {
-            $scope.pause();
-          } else {
-            $scope.play();
-          }
-        };
-        $scope.pause= function(){
-          killTimer();
-          $scope.isGifPlaying = false;
-          gifAnimado.pause();
-        };
-        $scope.play = function(){
-          killTimer();
-          $scope.isGifPlaying = true;
-          gifAnimado.play();
-          sondearPosicion();
-        };
-        $scope.restart= function(){
-          killTimer();
-          gifAnimado.pause();
-          gifAnimado.move_to(0);
-          rangeSlider.value = 0;
-          $scope.currentFrame = 0;
-        };
-        $scope.forward= function(){
-          killTimer();
-          gifAnimado.pause();
-          gifAnimado.move_relative(1);
-          rangeSlider.value = gifAnimado.get_current_frame();
-          $scope.currentFrame = gifAnimado.get_current_frame();
-        };
-        $scope.backward= function(){
-          killTimer();
-          gifAnimado.pause();
-          gifAnimado.move_relative(-1);
-          rangeSlider.value = gifAnimado.get_current_frame();
-          $scope.currentFrame = gifAnimado.get_current_frame();
-        };
-        $scope.end= function(){
-          killTimer();
-          var posicionFinal = gifAnimado.get_length()-1;
-          gifAnimado.pause();
-          gifAnimado.move_to(posicionFinal);
-          rangeSlider.value = posicionFinal;
-          $scope.currentFrame = posicionFinal;
-        };
-        var sondearPosicion = function(){
-          timer = $interval( function(){
-            var currentFrame = gifAnimado.get_current_frame();
-            rangeSlider.value = currentFrame;
-            $scope.currentFrame = currentFrame;
-          }, 50);
-        };
-        $scope.irPosicion = function(posicion){
-          gifAnimado.move_to(posicion);
-        };
-
-        // PanZoom --------------------------------------------------------------------
-        $('.jsgif > canvas').panzoom({
-          $zoomIn: $('.zoom-in'),
-          $zoomOut: $('.zoom-out'),
-          $zoomRange: $('.zoom-range'),
-          $reset: $('.reset'),
-          minScale: 1, maxScale: 4, increment: 0.5, rangeStep: 0.1, duration: 200, contain: 'invert'
-        });
-        // Fin PanZoom ----------------------------------------------------------------
-
-        SLoader.hide();
-      })
-    },
-    error: function(error) {
-      console.error( error.message );
-      SLoader.hide();
-      SPopup.show('Error de red', 'Comprobar conexión');
-      $location.path(' #/' );
-    }
+    success: successAjax,
+    error: errorAjax
   });
 
-  // Evento destroy ---------------------------------------------------------------------------------------------------
+  // Evento destroy view ----------------------------------------------------------------------------------------------
   $scope.$on("$destroy",function(){
-      window.clearTimeout(0);
-      $scope.pause && $scope.pause();
+    window.clearTimeout(0);
+    $scope.pause && $scope.pause();
   });
-  // Fin evento destroy -----------------------------------------------------------------------------------------------
+  // Fin evento destroy view ------------------------------------------------------------------------------------------
 
 });
 // ====================================================================================================================

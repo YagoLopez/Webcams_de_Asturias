@@ -74,7 +74,7 @@ var filesToCache = [
  * Service worker registration
  */
 if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('wca-sw.js').then(function() {
+  navigator.serviceWorker.register('wca-sw.js', {scope: '/Webcams_de_Asturias/'}).then(function() {
     console.log('sw: registration ok');
   }).catch(function(err) {
     console.error(err);
@@ -118,15 +118,15 @@ self.addEventListener('sw: fetch', function(event) {
     caches.match(event.request).then(function(response) {
       // 1) if response cached, it will be returned from browser cache
       // 2) if response not cached, fetch resource from network
-      // return response || fetch(event.request);
+      return response || fetch(event.request);
 
-      if(response) {
-        return response;
-      } else {
-        return fetch(event.request).then(function (response) {
-          return response;
-        });
-      }
+      // if(response) {
+      //   return response;
+      // } else {
+      //   return fetch(event.request).then(function (response) {
+      //     return response;
+      //   });
+      // }
 
     }).catch(function (err) {
       // if response not cached and network not available an error is thrown => return fallback image
