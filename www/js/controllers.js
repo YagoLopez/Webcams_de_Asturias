@@ -1,4 +1,5 @@
-//todo: style right chevron en listado
+//todo: info de mareas
+//todo: style right chevron en listado (color blue)
 //todo: lazy-loading images (mas sencillo que paginacion)
 //todo: paginacion y/o infinite scroll
 //todo: mejorar orientacion imagenes street view (heading)
