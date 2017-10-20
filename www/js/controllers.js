@@ -1,3 +1,5 @@
+//todo: style right chevron en listado
+//todo: lazy-loading images (mas sencillo que paginacion)
 //todo: paginacion y/o infinite scroll
 //todo: mejorar orientacion imagenes street view (heading)
 //todo: convertir en pwa
@@ -365,7 +367,7 @@ wcaCtrlMod.controller('GifPlayerCtrl', function($scope, $interval, $stateParams,
     });
   };
 
-  successAjax = function(resp) {
+  successAjax = function(response) {
     // ====== Creacion de gifAnimado ===============================================
     gifAnimado = new SuperGif({
       gif: document.getElementById('gif'),
@@ -373,7 +375,7 @@ wcaCtrlMod.controller('GifPlayerCtrl', function($scope, $interval, $stateParams,
       draw_while_loading: 1
     });
     // ====== Carga datos resultantes de peticion ajax en gifAnimado ==============
-    gifAnimado.load_raw( convertDataURIToBinary(resp.image_data), function () {
+    gifAnimado.load_raw( convertDataURIToBinary(response.image_data), function () {
       $scope.totalFrames = gifAnimado.get_length();
       $scope.currentFrame = gifAnimado.get_current_frame();
       $scope.gifAnimado = gifAnimado;
@@ -442,12 +444,18 @@ wcaCtrlMod.controller('GifPlayerCtrl', function($scope, $interval, $stateParams,
     })
   };
 
-  errorAjax = function(error) {
+  errorAjax = function(ajaxRequest, textStatus, error) {
+    if (error.message === "jsonpCallback was not called"){
+      console.warn('Abortando peticion ajax');
+      ajaxRequest.abort();
+      ajaxRequest = null;
+      return;
+    }
     document.getElementById('gif').src = '';
     console.error(error);
     SLoader.hide();
     SPopup.show('Error', STRINGS.ERROR);
-    // $location.path(' #/' );
+    // $location.path(' #/app/meteo' );
   };
 
   // Peticion AJAX  para obtener datos de imagenes remotas en formato base64 ------------------------------------------
