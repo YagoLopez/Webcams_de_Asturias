@@ -1,13 +1,11 @@
-//todo: info de mareas
-//todo: style right chevron en listado (color blue)
 //todo: lazy-loading images (mas sencillo que paginacion)
 //todo: paginacion y/o infinite scroll
+//todo: info de mareas
 //todo: mejorar orientacion imagenes street view (heading)
 //todo: convertir en pwa
 //TODO: podria ser mejor arrojar una excepcion en vez de llamar a SPopup cada vez que hay un error. Ya se encarga el
 //TODO: servicio de excepciones de capturar la excepcion y mostrar un popup. De esta forma está más centralizado el tratamiento
 //TODO: de errores
-//todo: hacer icono y Splash screen
 //TODO: hacer perfilado en chrome mobile, ver como se comporta la memoria y el procesador al ejecutar la app
 //TODO: hacer zoom en mapa global cuando se escoja filtro por concejo. Usar coordenadas lat lng
 //TODO: añadir favoritos

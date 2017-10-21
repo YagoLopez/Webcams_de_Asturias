@@ -1,12 +1,11 @@
-<!--todo: arreglar estilos inline-->
 <!--todo: posibilidad de usar la directiva awesome-slider en lugar del range slider de ionic-->
 <!--todo: menu superior derecho con icono de interrogacion para ayuda. Interaccion con las imágenes-->
-<ion-view view-title="{{ ::itemMeteo.categoria }}">
+<ion-view view-title="{{ ::itemMeteo.nombre }}">
   <style>
     div.jsgif > canvas{width:100%}
     div.jsgif {width:100%; top: -3px}
     .btn-transparent {background-color:transparent}
-    .btn-zoom {padding-bottom: 0%; padding-top: 10px}
+    .btn-zoom {padding-bottom: 0; padding-top: 10px}
     .range-zoom {vertical-align: middle; padding-bottom:0}
     .light-gray{color: lightgray}
     .green{color: green}
@@ -19,7 +18,6 @@
     #cancelLink{text-decoration: none; color: grey}
     table {margin: 0 auto}
     @media (min-width: 720px) { .card{width: 80%; margin: 32px auto} }
-    /*.zoom-label{vertical-align: middle; padding-bottom: 7px; padding-right: 10px;}*/
   </style>
 
   <ion-nav-bar class="bar-positive">
@@ -28,10 +26,10 @@
 
   <ion-content>
 
-    <!-- image ----------------------------------------------------------------------------------------------------- -->
+    <!-- gif image ------------------------------------------------------------------------------------------------- -->
     <img id="gif" src="img/loader/6.gif" rel:animated_src="{{ image_data }}"
-         rel:auto_play="0" rel:fps="700" ng-click="playPause()" width="100%"/>
-    <!-- /image ---------------------------------------------------------------------------------------------------- -->
+      rel:auto_play="0" rel:fps="700" ng-click="playPause()" width="100%"/>
+    <!-- /gif image ------------------------------------------------------------------------------------------------ -->
 
     <div class="card">
       <!-- range slider frames ------------------------------------------------------------------------------------- -->
@@ -77,7 +75,6 @@
           <td class="btn-zoom">
             <a class="button btn-transparent zoom-in"><i class="ion-ios-plus-outline ico-btn-zoomº"></i></a>
           </td>
-          <!--<td class="zoom-label">Nivel de zoom: </td>-->
           <td class="range-zoom">
             <label class="range range-assertive">
               <input type="range" class="zoom-range" min="1" max="4" step="0.1"/>
@@ -95,10 +92,10 @@
     <div class="card">
       <div class="item item-divider small-font">Información:</div>
       <div class="item item-text-wrap small-font">
-        <div><span class="green">&bullet; Nombre:</span> {{ ::itemMeteo.nombre}}</div>
+        <div><span class="green">&bullet; Categoría:</span> {{ ::itemMeteo.categoria }}</div>
         <div>
           <span class="green">&bullet; Fuente:</span>
-          <a ng-href="{{ ::itemMeteo.urlFuente }}" target="_blank">{{ ::itemMeteo.fuente}}</a>
+          <a ng-href="{{ ::itemMeteo.urlFuente }}" target="_blank">{{ ::itemMeteo.fuente }}</a>
         </div>
         <div><span class="green">&bullet; Detalles:</span> {{ ::itemMeteo.descripcion }}</div>
       </div>

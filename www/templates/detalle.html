@@ -4,25 +4,22 @@
     /* NOTA: no borrar estilos aunque parezca que sobran */
     /*noinspection CssUnknownTarget*/
     .imgLoader{background: transparent url(img/clock-32x32-3.png) no-repeat center center; cursor: pointer}
+    .contenido-detalle{background-color: ghostwhite}
     .card {padding-top: 1px; padding-bottom: 1px; margin-right:4%; margin-left:4%}
     .tabs-color-positive{border-bottom: 1px solid}
     @media (min-width: 720px) {
       .card {width: 75%; margin: 32px auto}
-      #contenido-detalle{background-color:ghostwhite}
     }
-    .cam-img {height: 100%;width: 100%}
-    .full-width {width: 100%}
+    .cam-img {height: 100%; width: 100%}
+    .btn {width: 38%}
     .fnt-small {font-size: small}
     .txt-meteo {font-size: smaller}
     .div-info {width: 100%; overflow-y: scroll; height: 300px}
-    .i-item {color: #387ef5; font-size: medium; margin-right: 5px; vertical-align: middle}
-    .div-btns {padding: 0; text-align: center}
-    .td-desc {padding-left: 15px; vertical-align: middle; padding-bottom: 10px}
+    .i-item {color: #387ef5; font-size: medium !important; margin-right: 5px; vertical-align: middle}
     .tab-active {font-weight: bold; color: cornflowerblue !important; text-decoration: underline}
     .tabs-bar {background: white}
     .div-predicc {text-align: center; padding-top: 15px; padding-bottom: 15px}
     .predicc-label{padding: 6px}
-    .btn-style {width: 50%; font-size: inherit}
     .url-meteoblue {text-align: center; padding-top: 20px; padding-bottom: 0}
     .ico-meteo {vertical-align: middle}
     .estado-meteo {white-space: normal}
@@ -36,7 +33,7 @@
     </ion-nav-buttons>
   </ion-nav-bar>
 
-  <ion-content ng-init="activeTab='meteoTab'">
+  <ion-content class="contenido-detalle" ng-init="activeTab='meteoTab'">
 
     <!-- Card Img -------------------------------------------------------------------------------------------------  -->
     <div class="list card">
@@ -51,19 +48,13 @@
         <i class="icon ion-checkmark-circled i-item"></i> Categoría: {{ ::cam.categoria }}
       </div>
       <!-- Botones -->
-      <div class="item item-text-wrap div-btns">
-        <div class="row">
-          <div class="col">
-            <a href="#/app/img-detalle" class="button button-calm full-width">
-              <i class="icon ion-arrow-expand"></i> Ampliar
-            </a>
-          </div>
-          <div class="col">
-            <button class="button button-calm full-width" ng-click="reloadImg()">
-              <i class="icon ion-refresh"></i> Recargar
-            </button>
-          </div>
-        </div>
+      <div class="item centered">
+        <a href="#/app/img-detalle" class="button button-calm btn">
+          <i class="icon ion-arrow-expand"></i> Ampliar
+        </a>
+        <button class="button button-calm btn" ng-click="reloadImg()">
+          <i class="icon ion-refresh"></i> Recargar
+        </button>
       </div>
       <!-- /Botones -->
     </div>
@@ -85,7 +76,7 @@
       </div>
       <!-- /Tabs bar -->
 
-      <!--Tabs content-->
+      <!--Tab Meteo-->
       <div ng-show="activeTab === 'meteoTab'" class="item">
         <div class="txt-meteo">
           <div>
@@ -98,18 +89,20 @@
             &bullet; Humedad relativa: {{::humedad}} %<br>
             &bullet; Nubosidad: {{::nubosidad}} %<br>
             &bullet; Velocidad del viento: {{::velocidadViento}} m/s<br>
-            &bullet; Dirección del viento: {{::direccionViento}}º (0º: Norte)<br>
+            &bullet; Dirección del viento: {{::direccionViento}}º (0º = Norte)<br>
             &bullet; Fuente: <a href="http://www.openweathermap.com" target="_blank">OpenWeatherMap.com</a>
           </div>
           <div class="div-predicc">
-            <a href="#/app/prediccion" class="button button-calm btn-style">
-              <i class="icon ion-android-open"></i><span class="predicc-label">Predicción</span>
+            <a href="#/app/prediccion" class="button button-calm btn">
+              <i class="icon ion-android-arrow-forward"></i><span class="predicc-label">Predicción</span>
             </a>
             <div class="url-meteoblue">Fuente: <a href="http://www.meteoblue.com" target="_blank">Meteoblue</a></div>
           </div>
         </div>
       </div>
+      <!--/Tab Meteo-->
 
+      <!--Tab Wikipedia-->
       <div ng-show="activeTab === 'infoTab'" class="item-body div-info" ng-class="{active:active}">
         <div ng-if="infoConcejo">
           <div>{{ infoConcejo }}</div>
@@ -118,7 +111,8 @@
         <div ng-if="!infoConcejo">No hay resultados</div>
         <div><br>Fuente: <a href="https://es.wikipedia.org" target="_blank">Wikipedia</a></div>
       </div>
-      <!-- /Tabs content -->
+      <!-- /Tab Wikipedia -->
+
     </div>
     <!-- Fin Card Tabs --------------------------------------------------------------------------------------------- -->
 
