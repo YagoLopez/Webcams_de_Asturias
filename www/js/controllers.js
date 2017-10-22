@@ -1,3 +1,4 @@
+//todo: borrar comentarios en services.js
 //todo: lazy-loading images (mas sencillo que paginacion)
 //todo: paginacion y/o infinite scroll
 //todo: info de mareas
