@@ -4,13 +4,10 @@
   <style type="text/css">
     #scroll-container {margin-top: 45px; width: 100%; height: 100%; text-align: center; overflow:hidden}
     #scroll-container > img {width: 35px; vertical-align: middle}
-    /*#img-meteoblue {height: 490px; display: block; margin: auto; cursor: move; padding-bottom: 40px}*/
     ion-header-bar > div > img {width: 35px; vertical-align: middle}
-    .loading-text {position: absolute; text-align: center; width: 100%; top: 200px; z-index: -1}
     .gray {color: gray}
     @media (min-width: 720px) {
-      #img-meteoblue {width: 80%; display: block; margin: auto; cursor: move; padding-bottom: 40px}
-    }
+      #img-meteoblue {width: 80%; display: block; margin: auto; cursor: move; padding-bottom: 40px}}
   </style>
 
   <ion-nav-bar>
@@ -19,14 +16,13 @@
     </ion-header-bar>
   </ion-nav-bar>
 
-  <!--
-  [overflow-scroll="false"] para permitir scrolling. Permite hacer zoom en imagen
-  [locking="false"] para permitir srcroll simultaneo en ejes x,y. apropiado para hacer zoom
-  -->
+  <!-- Info: -->
+  <!-- [overflow-scroll="false"] para permitir scrolling. Permite hacer zoom en imagen -->
+  <!-- [locking="false"] para permitir srcroll simultaneo en ejes x,y. apropiado para hacer zoom -->
   <ion-scroll id="scroll-container" zooming="true" direction="xy" locking="false" overflow-scroll="false">
     <h5 class="gray">Predicción</h5>
-    <div class="loading-text"><img src="img/clock-32x32-3.png"/></div>
-    <img id="img-meteoblue" ng-src="{{ ::urlMeteoblue }}" fallback-src="img/imgFail.png"/>
+    <div class="loading-icon"><img class="fade-out" src="img/clock-32x32-3.png"/></div>
+    <img id="img-meteoblue" class="fade-in" ng-src="{{ ::urlMeteoblue }}" fallback-src="img/imgFail.png"/>
   </ion-scroll>
 
 </ion-view>

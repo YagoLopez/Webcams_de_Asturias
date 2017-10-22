@@ -1,4 +1,3 @@
-<!--suppress HtmlUnknownTarget -->
 <ion-view view-title="{{ ::cam.lugar }}">
 
   <style type="text/css">
@@ -8,7 +7,8 @@
     .info-img {display: block; padding-bottom: 40px}
     @media (min-width: 720px) {
       #img-cam-container {margin-top: 12px; width: 100%; height: 100%; text-align: center; cursor: move}
-      #cam-imagen {width: 100%; margin: 32px auto}}
+      #cam-imagen {width: 100%; margin: 32px auto}
+    }
   </style>
 
   <ion-nav-bar>
@@ -17,12 +17,10 @@
     </ion-header-bar>
   </ion-nav-bar>
 
-  <!-- Info: -->
-  <!-- [overflow-scroll="false"] para permitir scrolling. Permite hacer zoom en imagen -->
-  <!-- [locking="false"] para permitir srcroll simultaneo en ejes x,y. apropiado para hacer zoom -->
+  <!-- overflow-scroll="false" => permite scrolling con javascript y hacer zoom en imagen -->
+  <!-- locking="false" => permite srcroll simultaneo en ejes x,y. apropiado para hacer zoom -->
   <ion-scroll id="img-cam-container" zooming="true" direction="xy" locking="false" overflow-scroll="false">
-    <div class="loading-icon"><img class="fade-out" src="img/clock-32x32-3.png"/></div>
-    <img id="cam-imagen" class="fade-in" ng-src="{{ cam.imagen }}" fallback-src="img/imgFail.png"/>
+    <img id="cam-imagen" ng-src="{{ cam.imagen }}" fallback-src="img/imgFail.png"/>
     <div class="info-img">Concejo: {{ ::cam.concejo }}</div>
   </ion-scroll>
 

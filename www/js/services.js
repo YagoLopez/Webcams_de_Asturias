@@ -335,3 +335,4 @@ wcaModule.constant('STRINGS', {
     '(1) Sin conexión de datos. (2) Fallo de servidor remoto',
   RECARGANDO_IMG: 'Recargando imagen...'
 });
+

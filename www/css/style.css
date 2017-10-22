@@ -1,9 +1,14 @@
 .centered {text-align: center}
 .sombraInferior{box-shadow: -1px 1px 5px #888888}
 .cargando{text-align: center; margin-top: 65%}
-
+.fade-in {-webkit-animation: fade 3s ease both; animation: fade 3s ease both}
+@-webkit-keyframes fade {from {opacity: 0 } to { opacity: 1 }}
+@keyframes fade {from {opacity: 0 } to { opacity: 1 }}
+.fade-out {-webkit-animation: fade-out 1s ease-out both; animation: fade-out 1s ease-out both}
+@-webkit-keyframes fade-out {from {opacity: 1 } to { opacity: 0 }}
+@keyframes fade-out {from {opacity: 1 } to { opacity: 0 }}
+.loading-icon {position: absolute; text-align: center; width: 100%; top: 200px; z-index: -1}
 /* SCROLLBARS ------------------------------------------------------------------------- */
-
 body{
   scrollbar-base-color: #C0C0C0;
   scrollbar-face-color: darkgrey;
