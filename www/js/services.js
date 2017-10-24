@@ -116,12 +116,10 @@ wcaModule.service('SMapa', function(SFusionTable, SPopup){
   };
 
   this.creaFusionTableLayer = function(filtroMarkers){
-    var query = { select: 'col7', from: SFusionTable.TABLE_ID, where: filtroMarkers };
-    var options = { styleId: 6, templateId: 8 };
     var layer = new google.maps.FusionTablesLayer({
       heatmap: { enabled: false },
-      query: query,
-      options: options
+      query  : { select: 'col7', from: SFusionTable.TABLE_ID, where: filtroMarkers },
+      options: { styleId: 6, templateId: 8 }
     });
     return layer;
   };
@@ -147,6 +145,7 @@ wcaModule.service('SMapa', function(SFusionTable, SPopup){
 wcaModule.service('SClima', function($http){
   this.urlCorsProxy = 'https://cors-anywhere.herokuapp.com/';
   this.getData = function(lat, lng){
+    this.urlCorsProxy = '';
     return $http.get( this.urlCorsProxy + 'http://api.openweathermap.org/data/2.5/weather?lat='+lat+'&lon='+lng+
       '&appid=b7514b5aaf43d023c350462fd57a1791&lang=es&units=metric', {cache:true} );
   };

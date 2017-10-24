@@ -1,5 +1,6 @@
 /**
  * Created by PAVEI on 30/09/2014.
+ * https://github.com/paveisistemas/ionic-image-lazy-load
  * Updated by Ross Martin on 12/05/2014
  * Updated by Davide Pastore on 04/14/2015
  * Updated by Michel Vidailhet on 05/12/2015

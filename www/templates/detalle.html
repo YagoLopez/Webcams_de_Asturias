@@ -2,24 +2,20 @@
 
   <style type="text/css">
     /* NOTA: no borrar estilos aunque parezca que sobran */
-    /*noinspection CssUnknownTarget*/
-    .imgLoader{background: transparent url(img/clock-32x32-3.png) no-repeat center center; cursor: pointer}
     .contenido-detalle{background-color: ghostwhite}
     .card {padding-top: 1px; padding-bottom: 1px; margin-right:4%; margin-left:4%}
     .tabs-color-positive{border-bottom: 1px solid}
-    @media (min-width: 720px) {
-      .card {width: 75%; margin: 32px auto}
-    }
     .cam-img {height: 100%; width: 100%}
-    .btn {width: 38%; margin: 10px}
     .fnt-small {font-size: small}
     .txt-meteo {font-size: smaller}
     .div-info {width: 100%; overflow-y: scroll; height: 300px}
     .i-item {color: #387ef5; font-size: medium !important; margin-right: 5px; vertical-align: middle}
     .tab-active {font-weight: bold; color: cornflowerblue !important;
-      text-decoration: underline;
-      border: 0 none lightgrey;
       background-color: aliceblue;
+      border: 1px solid lightsteelblue;
+      border-bottom-width: 0;
+      border-top-left-radius: 5px;
+      border-top-right-radius: 5px;
     }
     .tabs-bar {background: white; border-color: lightgrey}
     .div-predicc {text-align: center; padding-top: 15px; padding-bottom: 15px}
@@ -28,6 +24,7 @@
     .ico-meteo {vertical-align: middle}
     .estado-meteo {white-space: normal}
     .meteo-data {padding: 10px}
+    @media (min-width: 720px) {.card {width: 75%; margin: 32px auto}}
   </style>
 
   <ion-nav-bar class="bar-positive">
@@ -53,11 +50,11 @@
       </div>
       <!-- Botones -->
       <div class="centered">
-        <a href="#/app/img-detalle" class="button button-calm btn">
-          <i class="icon ion-arrow-expand"></i> Ampliar
+        <a href="#/app/img-detalle" class="button button-calm marg-10">
+          <i class="icon ion-arrow-expand"></i><span class="pad-10">Ampliar</span>
         </a>
-        <button class="button button-calm btn" ng-click="reloadImg()">
-          <i class="icon ion-refresh"></i> Recargar
+        <button class="button button-calm marg-10" ng-click="reloadImg()">
+          <i class="icon ion-refresh"></i><span class="pad-10">Recargar</span>
         </button>
       </div>
       <!-- /Botones -->
@@ -69,11 +66,11 @@
 
       <!--Tabs bar-->
       <div class="item item-divider tabs tabs-icon-left tabs-color-positive tabs-bar">
-        <a class="tab-item fnt-small" ng-click="(activeTab = 'meteoTab')"
+        <a class="tab-item fnt-small" ng-click="activeTab = 'meteoTab'"
           ng-class="{'tab-active': activeTab === 'meteoTab'}">
             <i class="icon ion-ios-partlysunny"></i> Meteorología
         </a>
-        <a class="tab-item fnt-small" ng-click="(activeTab = 'infoTab'); getWikipediaInfo()"
+        <a class="tab-item fnt-small" ng-click="activeTab = 'infoTab'; getWikipediaInfo()"
           ng-class="{'tab-active': activeTab === 'infoTab'}">
             <i class="icon ion-document-text"></i> Información
         </a>
@@ -97,8 +94,8 @@
             &bullet; Fuente: <a href="http://www.openweathermap.com" target="_blank">OpenWeatherMap.com</a>
           </div>
           <div class="div-predicc">
-            <a href="#/app/prediccion" class="button button-calm btn">
-              <i class="icon ion-android-arrow-forward"></i><span class="predicc-label">Predicción</span>
+            <a href="#/app/prediccion" class="button button-calm">
+              <i class="icon ion-android-arrow-forward"></i><span class="pad-10">Predicción</span>
             </a>
             <div class="url-meteoblue">Fuente: <a href="http://www.meteoblue.com" target="_blank">Meteoblue</a></div>
           </div>

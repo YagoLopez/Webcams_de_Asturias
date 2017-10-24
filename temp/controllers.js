@@ -178,6 +178,7 @@ wcaModule.controller('DetalleCtrl', function($scope, $stateParams, $ionicModal, 
   // Init --------------------------------------------------------------------------------------------------------------
 
   var datosCam;
+  $scope.modalOpen = false;
   $scope.rowid = $stateParams.rowid;
   $scope.descripcion = ' (Obteniendo datos del servidor...)';
   SLoader.show('Cargando...');
@@ -246,7 +247,6 @@ wcaModule.controller('DetalleCtrl', function($scope, $stateParams, $ionicModal, 
     setTimeout(function(){
       $scope.$apply(function(){
         $rootScope.cam.imagen = $rootScope.cam.imagen + '#' + new Date().getTime();
-        console.log('Recargando imagen: ', $rootScope.cam.imagen);
         SLoader.hide();
       })
     }, 600);
@@ -297,15 +297,15 @@ wcaModule.controller('StreetViewCtrl', function($scope, SMapa, $rootScope, SPopu
 
   $scope.$on('$ionicView.afterEnter', function() {
     var div = document.getElementById('street-view');
-    var streetViewService = new google.maps.StreetViewService();
-    streetViewService.getPanoramaByLocation(coords, SMapa.RADIO_BUSQUEDA, function (data, status) {
-      if (status == google.maps.StreetViewStatus.OK) {
-        //todo: revisar
-        SMapa.creaStreetView2(div, data.location.latLng);
-      } else {
-        SPopup.show('Aviso', 'Panorama StreetView no disponible en esta ubicación<br>' +status);
-      }
-    })
+      var streetViewService = new google.maps.StreetViewService();
+      streetViewService.getPanoramaByLocation(coords, SMapa.RADIO_BUSQUEDA, function (data, status) {
+        if (status == google.maps.StreetViewStatus.OK) {
+          //todo: revisar
+          SMapa.creaStreetView2(div, data.location.latLng);
+        } else {
+          SPopup.show('Aviso', 'Panorama StreetView no disponible en esta ubicación<br>' +status);
+        }
+      })
   });
 
   $scope.$on('$ionicView.leave', function(){
@@ -523,13 +523,13 @@ wcaModule.controller('MeteoDetalleCtrl', function($scope, $stateParams, ItemMete
   });
 });
 // ====================================================================================================================
-wcaModule.controller('PorCategoriaCtrl', function($scope, $window, $sce){
+wcaModule.controller('PorCategoriaCtrl', function($scope, $window, $sce, SLoader){
 
   var urlGraficoSectores, urlGraficoBarras;
 
-  // $scope.$on('$ionicView.beforeEnter', function () {
-  //   SLoader.showWithBackdrop('Cargando...');
-  // });
+  $scope.$on('$ionicView.beforeEnter', function () {
+    SLoader.showWithBackdrop('Cargando...');
+  });
   //Calculo de dimensiones de ventana al redimensionar
   $scope.calculateDimensions = function(gesture) {
     if($window.innerWidth > 765){
@@ -568,13 +568,13 @@ wcaModule.controller('PorCategoriaCtrl', function($scope, $window, $sce){
   $scope.urlGraficoSectores = $sce.trustAsResourceUrl(urlGraficoSectores);
   $scope.urlGraficoBarras = $sce.trustAsResourceUrl(urlGraficoBarras);
 
-  // $scope.cargaFrameTerminada = function(){
-  //   SLoader.hide();
-  // }
+  $scope.cargaFrameTerminada = function(){
+    SLoader.hide();
+  }
 
   });
 // ====================================================================================================================
-wcaModule.controller('PorConcejoCtrl', function($scope, $window, $sce){
+wcaModule.controller('PorConcejoCtrl', function($scope, $window, $sce, SLoader){
 
   var urlConcejosMasCams, urlCamsConcejo, iframeHeigth = 550;
 

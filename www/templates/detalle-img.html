@@ -21,8 +21,8 @@
   <!-- [overflow-scroll="false"] para permitir scrolling. Permite hacer zoom en imagen -->
   <!-- [locking="false"] para permitir srcroll simultaneo en ejes x,y. apropiado para hacer zoom -->
   <ion-scroll id="img-cam-container" zooming="true" direction="xy" locking="false" overflow-scroll="false">
-    <div class="loading-icon"><img class="fade-out" src="img/clock-32x32-3.png"/></div>
-    <img id="cam-imagen" class="fade-in" ng-src="{{ cam.imagen }}" fallback-src="img/imgFail.png"/>
+    <div class="loading-icon-img"><img class="rotate-center" src="img/clock-32x32-3.png"/></div>
+    <img id="cam-imagen" ng-src="{{ cam.imagen }}" fallback-src="img/imgFail.png"/>
     <div class="info-img">Concejo: {{ ::cam.concejo }}</div>
   </ion-scroll>
 

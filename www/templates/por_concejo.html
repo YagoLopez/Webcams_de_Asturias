@@ -1,9 +1,10 @@
+<!--suppress HtmlUnknownTarget -->
 <ion-view view-title="Concejos">
   <style type="text/css">
-    /*noinspection CssUnknownTarget*/
-    #concejosMasCams, #camsConcejo {
-      background: transparent url('img/clock-32x32-3.png') no-repeat center center; width: 100%; height: 100%;
-      margin: auto; display: block}
+    /*#concejosMasCams, #camsConcejo {*/
+      /*background: transparent url('img/clock-32x32-3.png') no-repeat center center; width: 100%; height: 100%;*/
+      /*margin: auto; display: block}*/
+    #concejosMasCams, #camsConcejo {width: 100%; height: 100%; margin: auto; display: block}
     .pie-diagrama {text-align: center}
   </style>
 
@@ -14,16 +15,18 @@
   <ion-content>
 
     <div class="item item-divider">Concejos con más cámaras</div>
-    <iframe id="concejosMasCams" ng-src="{{ ::urlConcejosMasCams }}" scrolling="no" marginwidth="0" marginheight="0"
-      frameborder="0" allowfullscreen iframe-onload="cargaFrameTerminada()">
+    <div class="loading-icon"><img class="rotate-center" src="img/clock-32x32-3.png"/></div>
+    <iframe id="concejosMasCams" ng-src="{{ ::urlConcejosMasCams }}" scrolling="no" marginwidth="0"
+      marginheight="0" frameborder="0" allowfullscreen>
     </iframe>
 
     <div class="item item-divider">Nº webcams por concejo</div>
-    <iframe id="camsConcejo" ng-src="{{ ::urlCamsConcejo }}" scrolling="no" marginwidth="0" marginheight="0"
-      frameborder="0" allowfullscreen iframe-onload="cargaFrameTerminada()">
+    <div class="loading-icon2"><img class="rotate-center" src="img/clock-32x32-3.png"/></div>
+    <iframe id="camsConcejo" ng-src="{{ ::urlCamsConcejo }}" scrolling="no" marginwidth="0"
+      marginheight="0" frameborder="0" allowfullscreen>
     </iframe>
 
-    <div class="padding pie-diagrama">Toque en sectores del diagrama para información específica</div>
+    <div class="padding pie-diagrama">Toque en sectores del diagrama para más información</div>
 
   </ion-content>
 </ion-view>

@@ -1,13 +1,27 @@
+.img-cam {height: 64px !important; width: 72px !important; top: 6px !important;
+  background: transparent url('../img/clock-32x32-3.png') no-repeat center center}
+.imgLoader{background: transparent url('../img/clock-32x32-3.png') no-repeat center center; cursor: pointer}
 .centered {text-align: center}
 .sombraInferior{box-shadow: -1px 1px 5px #888888}
 .cargando{text-align: center; margin-top: 65%}
+.loading-icon {position: absolute; text-align: center; width: 100%; top: 30%; z-index: -1}
+.loading-icon2 {position: relative; top: 25%; left: 45%; z-index: -1}
+.loading-icon-img {position: absolute; width: 100%; top: 225px; z-index: -1}
+.pad-10 {padding: 10px}
+.marg-10 {margin: 10px}
+/* ANIMATIONS --------------------------------------------------------------------------- */
+/* Fade in */
 .fade-in {-webkit-animation: fade 3s ease both; animation: fade 3s ease both}
 @-webkit-keyframes fade {from {opacity: 0 } to { opacity: 1 }}
 @keyframes fade {from {opacity: 0 } to { opacity: 1 }}
+/* Fade out */
 .fade-out {-webkit-animation: fade-out 1s ease-out both; animation: fade-out 1s ease-out both}
 @-webkit-keyframes fade-out {from {opacity: 1 } to { opacity: 0 }}
 @keyframes fade-out {from {opacity: 1 } to { opacity: 0 }}
-.loading-icon {position: absolute; text-align: center; width: 100%; top: 200px; z-index: -1}
+/* Rotate Center */
+.rotate-center{-webkit-animation:rotate-center .6s linear .3s infinite both;animation:rotate-center .6s linear .3s infinite both}
+@-webkit-keyframes rotate-center{0%{-webkit-transform:rotate(0);transform:rotate(0)}100%{-webkit-transform:rotate(360deg);transform:rotate(360deg)}}
+@keyframes rotate-center{0%{-webkit-transform:rotate(0);transform:rotate(0)}100%{-webkit-transform:rotate(360deg);transform:rotate(360deg)}}
 /* SCROLLBARS ------------------------------------------------------------------------- */
 body{
   scrollbar-base-color: #C0C0C0;
