@@ -9,7 +9,7 @@
 //TODO: hacer zoom en mapa global cuando se escoja filtro por concejo. Usar coordenadas lat lng
 //TODO: añadir favoritos
 
-wcaModule = angular.module('wca.controllers',[]);
+var wcaModule = angular.module('wca.controllers',[]);
 // ====================================================================================================================
 wcaModule.controller('ListadoCtrl', function($scope, $stateParams, $rootScope, STRINGS,
    SFusionTable, $filter, $ionicScrollDelegate, SCategorias, SLoader) {
