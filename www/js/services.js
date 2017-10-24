@@ -144,7 +144,6 @@ wcaModule.service('SMapa', function(SFusionTable, SPopup){
 wcaModule.service('SClima', function($http){
   this.urlCorsProxy = 'https://cors-anywhere.herokuapp.com/';
   this.getData = function(lat, lng){
-    this.urlCorsProxy = '';
     return $http.get( this.urlCorsProxy + 'http://api.openweathermap.org/data/2.5/weather?lat='+lat+'&lon='+lng+
       '&appid=b7514b5aaf43d023c350462fd57a1791&lang=es&units=metric', {cache:true} );
   };
