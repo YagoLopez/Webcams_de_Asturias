@@ -31,8 +31,8 @@
       <div ng-if="error" class="error">{{ ::error }}</div>
       <a class="item item-thumbnail-left item-icon-right"
         ng-repeat="cam in camsPorCategoria track by cam[4]" href="#/app/detalle/{{ camsPorCategoria[$index][4] }}">
-        <img image-lazy-src="{{ cam[2] }}" fallback-src="img/imgFail.png" class="img-cam"/>
-        <!--<img image-lazy-src="img/imgFail.png" class="img-cam"/>-->
+        <!--<img image-lazy-src="{{ cam[2] }}" fallback-src="img/imgFail.png" class="img-cam"/>-->
+        <img image-lazy-src="img/imgFail.png" class="img-cam"/>
         <div>
           <p><span><b class="verde">&bullet;</b> {{ cam[0] }}</span></p>
           <p><span><b class="verde">&bullet;</b> Concejo: {{ cam[1] }}</span></p>

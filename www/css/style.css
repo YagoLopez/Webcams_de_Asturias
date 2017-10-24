@@ -8,6 +8,7 @@
 .loading-icon2 {position: relative; top: 25%; left: 45%; z-index: -1}
 .loading-icon-img {position: absolute; width: 100%; top: 225px; z-index: -1}
 .pad-10 {padding: 10px}
+.pad-5 {padding: 5px}
 .marg-10 {margin: 10px}
 /* ANIMATIONS --------------------------------------------------------------------------- */
 /* Fade in */
@@ -15,11 +16,11 @@
 @-webkit-keyframes fade {from {opacity: 0 } to { opacity: 1 }}
 @keyframes fade {from {opacity: 0 } to { opacity: 1 }}
 /* Fade out */
-.fade-out {-webkit-animation: fade-out 1s ease-out both; animation: fade-out 1s ease-out both}
+.fade-out {-webkit-animation: fade-out 10s ease-out both; animation: fade-out 10s ease-out both}
 @-webkit-keyframes fade-out {from {opacity: 1 } to { opacity: 0 }}
 @keyframes fade-out {from {opacity: 1 } to { opacity: 0 }}
 /* Rotate Center */
-.rotate-center{-webkit-animation:rotate-center .6s linear .3s infinite both;animation:rotate-center .6s linear .3s infinite both}
+.rotate-center{-webkit-animation:rotate-center .6s linear .3s 8 both;animation:rotate-center .6s linear .3s 8 both}
 @-webkit-keyframes rotate-center{0%{-webkit-transform:rotate(0);transform:rotate(0)}100%{-webkit-transform:rotate(360deg);transform:rotate(360deg)}}
 @keyframes rotate-center{0%{-webkit-transform:rotate(0);transform:rotate(0)}100%{-webkit-transform:rotate(360deg);transform:rotate(360deg)}}
 /* SCROLLBARS ------------------------------------------------------------------------- */

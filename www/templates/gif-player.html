@@ -1,6 +1,7 @@
 <!--todo: posibilidad de usar la directiva awesome-slider en lugar del range slider de ionic-->
 <!--todo: menu superior derecho con icono de interrogacion para ayuda. Interaccion con las imágenes-->
-<ion-view view-title="{{ ::itemMeteo.nombre }}">
+<!--suppress HtmlUnknownTarget -->
+<ion-view view-title="{{ ::itemMeteo.nombre }}" xmlns:rel="http://www.w3.org/1999/xhtml">
   <style>
     div.jsgif > canvas{width:100%}
     div.jsgif {width:100%; top: -3px}
@@ -17,6 +18,9 @@
     #cancelLinkContainer{padding-top: 20px} /* no borrar */
     #cancelLink{text-decoration: none; color: grey}
     table {margin: 0 auto}
+    .red {color: red}
+    .info-fotogramas{width: 100%; text-align:center; padding: 10px}
+    .font-32 {font-size: 32px}
     @media (min-width: 720px) { .card{width: 80%; margin: 32px auto} }
   </style>
 
@@ -39,30 +43,31 @@
              style="margin:0"/>
       </label>
       <!-- play controls-------------------------------------------------------------------------------------------- -->
-      <table id="playControls">
-        <tr>
-          <td>
-            <a class="button" ng-click="playPause()" ng-class="{'button-positive': isGifPlaying}" title="Play/Pause">
-              <i ng-if="isGifPlaying" class="ion-ios-pause"></i>
-              <i ng-if=" ! isGifPlaying" class="ion-ios-play-outline"></i>
-            </a></td>
-          <td>
-            <a class="button" ng-click="restart()"><i class="ion-ios-skipbackward-outline" title="Restart"></i></a></td>
-          <td>
-            <a class="button" ng-click="backward()" title="Backward"><i class="ion-ios-rewind-outline"></i></a></td>
-          <td>
-            <a class="button" ng-click="forward()" title="Foreward"><i class="ion-ios-fastforward-outline"></i></a></td>
-          <td>
-            <a class="button" ng-click="end()" title="End"><i class="ion-ios-skipforward-outline"></i></a></td>
-        </tr>
-      </table>
-      <!-- info frames --------------------------------------------------------------------------------------------- -->
-      <div style="width: 100%;text-align:center;padding-bottom:2px">
-        <div>Fotograma: <b style="color:red">
-          {{ gifAnimado.get_current_frame() + 1 }}</b> de {{ ::totalFrames }}
-        </div>
+      <div class="centered">
+        <span>
+          <a class="button font-32" ng-click="playPause()" ng-class="{'button-positive': isGifPlaying}" title="Play/Pause">
+            <i ng-if="isGifPlaying" class="ion-ios-pause"></i>
+            <i ng-if=" ! isGifPlaying" class="ion-ios-play-outline"></i>
+          </a>
+        </span>
+          <span>
+          <a class="button font-32" ng-click="restart()"><i class="ion-ios-skipbackward-outline" title="Restart"></i></a>
+        </span>
+          <span>
+          <a class="button font-32" ng-click="backward()" title="Backward"><i class="ion-ios-rewind-outline"></i></a>
+        </span>
+          <span>
+          <a class="button font-32" ng-click="forward()" title="Foreward"><i class="ion-ios-fastforward-outline"></i></a>
+        </span>
+          <span>
+          <a class="button font-32" ng-click="end()" title="End"><i class="ion-ios-skipforward-outline"></i></a>
+        </span>
       </div>
-      <!-- fin leyenda --------------------------------------------------------------------------------------------- -->
+      <!-- info frames --------------------------------------------------------------------------------------------- -->
+      <div class="info-fotogramas">
+        Fotograma: <b class="red">{{ gifAnimado.get_current_frame() + 1 }}</b> de {{ ::totalFrames }}
+      </div>
+      <!-- /info frames -------------------------------------------------------------------------------------------- -->
     </div>
 
     <!-- zoom controls --------------------------------------------------------------------------------------------- -->
