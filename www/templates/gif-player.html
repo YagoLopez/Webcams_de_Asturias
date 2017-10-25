@@ -5,21 +5,15 @@
   <style>
     div.jsgif > canvas{width:100%}
     div.jsgif {width:100%; top: -3px}
-    .btn-transparent {background-color:transparent}
-    .btn-zoom {padding-bottom: 0; padding-top: 10px}
-    .range-zoom {vertical-align: middle; padding-bottom:0}
-    .light-gray{color: lightgray}
-    .green{color: green}
-    .small-font{font-size: small}
-    .range-frames{padding: 0 3%}
-    .ico-btn-zoom{font-size: x-large}
-    #playControls > tbody > tr > td > a > i {font-size: 35px}
-    #zoomControls > tbody > tr > td > a > i {font-size: 30px}
-    #cancelLinkContainer{padding-top: 20px} /* no borrar */
-    #cancelLink{text-decoration: none; color: grey}
-    table {margin: 0 auto}
+    .btn-zoom {background-color:transparent; vertical-align: inherit}
+    .light-gray {color: lightgray}
+    .small-font {font-size: small}
+    .range-label {display: inline-block; padding: 0}
+    .range-frames {padding: 0 3%}
+    #cancelLinkContainer {padding-top: 20px} /* no borrar */
+    #cancelLink {text-decoration: none; color: grey}
     .red {color: red}
-    .info-fotogramas{width: 100%; text-align:center; padding: 10px}
+    .info-fotogramas {width: 100%; text-align:center; padding: 10px}
     .font-32 {font-size: 32px}
     @media (min-width: 720px) { .card{width: 80%; margin: 32px auto} }
   </style>
@@ -72,37 +66,27 @@
 
     <!-- zoom controls --------------------------------------------------------------------------------------------- -->
     <div class="card">
-      <table id="zoomControls">
-        <tr>
-          <td class="btn-zoom">
-            <a class="button btn-transparent zoom-out"><i class="ion-ios-minus-outline ico-btn-zoom"></i></a>
-          </td>
-          <td class="btn-zoom">
-            <a class="button btn-transparent zoom-in"><i class="ion-ios-plus-outline ico-btn-zoomº"></i></a>
-          </td>
-          <td class="range-zoom">
-            <label class="range range-assertive">
-              <input type="range" class="zoom-range" min="1" max="4" step="0.1"/>
-            </label>
-          </td>
-          <td class="btn-zoom">
-            <a class="button btn-transparent reset"><i class="ion-arrow-expand light-gray"></i></a>
-          </td>
-        </tr>
-      </table>
+      <div class="centered">
+        <a class="button btn-zoom zoom-out"><i class="ion-ios-minus-outline font-32"></i></a>
+        <a class="button btn-zoom zoom-in"><i class="ion-ios-plus-outline font-32"></i></a>
+        <label class="range range-assertive range-label">
+          <input type="range" class="zoom-range" min="1" max="4" step="0.1"/>
+        </label>
+        <a class="button btn-zoom reset"><i class="ion-arrow-expand light-gray font-32"></i></a>
+      </div>
     </div>
-    <!-- /card zoom controls --------------------------------------------------------------------------------------- -->
+    <!-- /zoom controls -------------------------------------------------------------------------------------------- -->
 
     <!-- card detalles --------------------------------------------------------------------------------------------- -->
     <div class="card">
       <div class="item item-divider small-font">Información:</div>
       <div class="item item-text-wrap small-font">
-        <div><span class="green">&bullet; Categoría:</span> {{ ::itemMeteo.categoria }}</div>
+        <div><span class="verde">&bullet; Categoría:</span> {{ ::itemMeteo.categoria }}</div>
         <div>
-          <span class="green">&bullet; Fuente:</span>
+          <span class="verde">&bullet; Fuente:</span>
           <a ng-href="{{ ::itemMeteo.urlFuente }}" target="_blank">{{ ::itemMeteo.fuente }}</a>
         </div>
-        <div><span class="green">&bullet; Detalles:</span> {{ ::itemMeteo.descripcion }}</div>
+        <div><span class="verde">&bullet; Detalles:</span> {{ ::itemMeteo.descripcion }}</div>
       </div>
     </div>
      <!-- /card detalles ------------------------------------------------------------------------------------------- -->

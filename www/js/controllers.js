@@ -315,7 +315,7 @@ wcaModule.controller('StreetViewCtrl', function($scope, SMapa, $rootScope, SPopu
 });
 // ====================================================================================================================
 wcaModule.controller('GifPlayerCtrl', function($scope, $interval, $stateParams, ItemsMeteo, ItemMeteo, SLoader,
-  SPopup, $location, STRINGS, $rootScope){
+  SPopup, $location, STRINGS){
 
   // Inicializaciones -------------------------------------------------------------------------------------------------
 

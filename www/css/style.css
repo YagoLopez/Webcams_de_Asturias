@@ -6,10 +6,13 @@
 .cargando{text-align: center; margin-top: 65%}
 .loading-icon {position: absolute; text-align: center; width: 100%; top: 30%; z-index: -1}
 .loading-icon2 {position: relative; top: 25%; left: 45%; z-index: -1}
-.loading-icon-img {position: absolute; width: 100%; top: 225px; z-index: -1}
+.loading-icon3 {position: absolute; width: 100%; top: 225px; z-index: -1}
 .pad-10 {padding: 10px}
 .pad-5 {padding: 5px}
 .marg-10 {margin: 10px}
+.verde {color: #28a54c}
+.cam-counter-left {background: #11c1f3; display: block; width: 25px; text-align: center; padding: 1px;
+  margin: auto 4px; border-radius: 3px}
 /* ANIMATIONS --------------------------------------------------------------------------- */
 /* Fade in */
 .fade-in {-webkit-animation: fade 3s ease both; animation: fade 3s ease both}
