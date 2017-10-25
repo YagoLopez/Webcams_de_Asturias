@@ -30,7 +30,7 @@
     <!-- /gif image ------------------------------------------------------------------------------------------------ -->
 
     <div class="card">
-      <!-- range slider frames ------------------------------------------------------------------------------------- -->
+      <!-- range slider -------------------------------------------------------------------------------------------- -->
       <label class="range range-assertive range-frames" ng-click="pause()" on-touch="pause()">
         <input id="levelRange" type="range" min="0" max="{{ totalFrames - 1 }}"
              value="{{ currentFrame }}" ng-model="currentFrame" ng-change="irPosicion(currentFrame)"
@@ -44,7 +44,7 @@
             <i ng-if=" ! isGifPlaying" class="ion-ios-play-outline"></i>
           </a>
         </span>
-          <span>
+        <span>
           <a class="button font-32" ng-click="restart()"><i class="ion-ios-skipbackward-outline" title="Restart"></i></a>
         </span>
           <span>

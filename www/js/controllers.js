@@ -8,6 +8,7 @@
 //TODO: hacer perfilado en chrome mobile, ver como se comporta la memoria y el procesador al ejecutar la app
 //TODO: hacer zoom en mapa global cuando se escoja filtro por concejo. Usar coordenadas lat lng
 //TODO: añadir favoritos
+//todo: geolocalizacion y busqueda webcams cercanas
 
 var wcaModule = angular.module('wca.controllers',[]);
 // ====================================================================================================================
