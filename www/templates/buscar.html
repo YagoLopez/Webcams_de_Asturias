@@ -4,7 +4,7 @@
     /*Nota: no borrar clases aunque parezca que sobran*/
     .item-thumbnail-left {min-height: 0; padding-left: 90px; padding-top: 18px}
     .clear-search {z-index: 3; position: absolute; right: 0; min-height: 20px; background: white; margin-top: 1px}
-    .buscar-footer {color: grey; text-align: center; font-size: small}
+    .buscar-footer {color: cornflowerblue; text-align: center; font-size: small; padding: 20px}
     .cam-counter-right {background: #11c1f3; display: block; width: 25px; text-align: center;
       padding: 1px; margin: auto 12px; border-radius: 3px}
     #inputBuscaCam {color: dodgerblue; padding-bottom: 5px; padding-left: 8px}
@@ -36,7 +36,7 @@
       <label class="item item-input">
         <i class="icon ion-search placeholder-icon"></i>
         <input id="inputBuscaCam" type="text" placeholder="Buscar webcams..."
-          ng-model="busqueda.lugar" ng-change="buscaCam(busqueda.lugar)">
+          ng-model="busqueda.lugar" ng-change="buscarCams(busqueda.lugar)">
       </label>
       <!-- /Búsqueda -->
 
@@ -57,7 +57,9 @@
 
     </div>
     <br/>
-    <div class="buscar-footer">Buscar por el nombre del lugar como "La Griega" o por el nombre de concejo como "Llanes"</div>
+    <div class="buscar-footer">
+      <i class="ion-information-circled"></i> Buscar por el nombre del lugar como "La Griega" o por el nombre de
+      concejo como "Llanes"</div>
     <br/>
   </ion-content>
 </ion-view>

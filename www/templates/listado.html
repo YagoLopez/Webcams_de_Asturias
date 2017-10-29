@@ -17,12 +17,12 @@
     <a class="button button-icon icon ion-ios-search-strong" href="#/app/buscar" title="Buscar"></a>
   </ion-nav-buttons>
 
-  <ion-content lazy-scroll>
+  <ion-content>
     <div class="responsive-container">
       <div ng-if="error" class="error">{{ ::error }}</div>
       <a class="item item-thumbnail-left item-icon-right"
          ng-repeat="cam in camsFiltradas track by cam[4]" href="#/app/detalle/{{ camsFiltradas[$index][4] }}">
-        <!--<img image-lazy-src="{{ cam[2] }}" fallback-src="img/imgFail.png" class="img-cam"/>-->
+        <!--<img ng-src="{{ cam[2] }}" fallback-src="img/imgFail.png" class="img-cam"/>-->
         <img ng-src="img/imgFail.png" class="img-cam"/>
         <div>
           <p><span><b class="verde">&bullet;</b> {{ cam[0] }}</span></p>

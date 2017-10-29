@@ -1,19 +1,18 @@
 <ion-view view-title="Meteorología">
-  <ion-content id="conteido-meteo">
-    <style>
-      .vertAlign{vertical-align: middle}
-      .mapas{width: 29px; height: 24px}
-      .satEsp{width: 29px}
-      .meteo-footer {font-size: small; color: cornflowerblue; text-align: center}
-      @media (min-width: 720px) {
-        ion-content #conteido-meteo {background-color: ghostwhite}
-        #lista-meteo > div.list {
-          width: 80%;
-          margin: 32px auto;
-          box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
-        }
+  <style>
+    .vertAlign{vertical-align: middle}
+    .mapas{width: 29px; height: 24px}
+    .satEsp{width: 29px}
+    .meteo-footer {font-size: small; color: cornflowerblue; text-align: center}
+    @media (min-width: 720px) {
+      #lista-meteo > div.list {
+        width: 80%;
+        margin: 32px auto;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
       }
-    </style>
+    }
+  </style>
+  <ion-content>
 
     <div id="meteo_list_container" ng-hide="loading">
       <ion-list id="lista-meteo">
@@ -42,8 +41,13 @@
         <ion-item ng-repeat="item in getItemsByCategoriaId(3)" class="item item-icon-right"
           href="#/app/meteo-detalle/{{item[0]}}">{{ ::item[3] }} <i class="icon ion-ios-arrow-right"></i>
         </ion-item>
-        <ion-item class="item item-icon-right" href="#/app/viento">
+
+        <ion-item class="item item-icon-right" href="#/app/windy/viento">
           Viento <i class="icon ion-ios-arrow-right"></i>
+        </ion-item>
+
+        <ion-item class="item item-icon-right" href="#/app/windy/oleaje">
+          Oleaje <i class="icon ion-ios-arrow-right"></i>
         </ion-item>
 
       </ion-list>
@@ -51,8 +55,9 @@
       <br/>
 
       <div class="padding meteo-footer">
-        <strong>Nota:</strong> La obtención de datos de los servidores y su procesamiento se puede prolongar varios
-        segundos dependiendo del ancho de banda y del hardware disponible.<br/><br/>
+        <i class="ion-information-circled"></i> <strong>Nota:</strong> La obtención de datos de los servidores y su
+        procesamiento se puede prolongar varios segundos dependiendo del ancho de banda y del hardware disponible.
+        <br/><br/>
       </div>
     </div>
 

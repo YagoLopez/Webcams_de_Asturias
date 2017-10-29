@@ -5,7 +5,7 @@ app.config(function($stateProvider, $urlRouterProvider, $compileProvider, $ionic
   $logProvider, $httpProvider) {
 
   // enable/disable debug info
-  $compileProvider.debugInfoEnabled(true);
+  $compileProvider.debugInfoEnabled(false);
   // remove back button text totally
   $ionicConfigProvider.backButton.previousTitleText(false).text(' ');
   // enable/disable native scroll
@@ -78,12 +78,12 @@ app.config(function($stateProvider, $urlRouterProvider, $compileProvider, $ionic
     views: {'menuContent': {templateUrl: 'templates/mosaico.html', controller: 'ListadoCtrl'}}
   });
 // -------------------------------------------------------------------------------------------------------------------
-  $stateProvider.state('app.viento', {url: '/viento', cache: true,
-    views: {'menuContent': {templateUrl: 'templates/viento.html',controller: 'VientoCtrl'}}
+  $stateProvider.state('app.windy', {url: '/windy/:tipo', cache: true,
+    views: {'menuContent': {templateUrl: 'templates/windy.html', controller: 'WindyCtrl'}}
   });
 // -------------------------------------------------------------------------------------------------------------------
   $stateProvider.state('app.buscar', {url: '/buscar', cache: true,
-    views: {'menuContent': {templateUrl: 'templates/buscar.html', controller: 'BuscarCtrl'}}
+    views: {'menuContent': {templateUrl: 'templates/buscar.html', controller: 'BuscarCamsCtrl'}}
   });
 // -------------------------------------------------------------------------------------------------------------------
   $stateProvider.state('app.imgdetalle', {url: '/img-detalle', cache: true,
@@ -96,7 +96,6 @@ app.config(function($stateProvider, $urlRouterProvider, $compileProvider, $ionic
 // -------------------------------------------------------------------------------------------------------------------
   $urlRouterProvider.otherwise('app/listado?idCategoria=7');
 });
-
 // Inicializaciones ===================================================================================================
 app.run(function($ionicPlatform, $rootScope, $window) {
 

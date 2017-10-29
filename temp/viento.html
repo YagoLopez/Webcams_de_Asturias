@@ -11,9 +11,14 @@
   </ion-nav-bar>
 
   <ion-content class="content">
+<!--
     <iframe id="mapaviento" scrolling="no" marginwidth="0" marginheight="0" allowfullscreen frameborder="0"
       ng-src="https://embed.windytv.com/embed2.html?lat=40.280&lon=-3.647&zoom=5&level=surface&overlay=wind&menu=true&message=true&marker=&forecast=12&calendar=now&location=coordinates&type=map&actualGrid=&metricWind=km%2Fh&metricTemp=%C2%B0C"
       iframe-onload="cargaFrameTerminada()">
+    </iframe>
+-->
+    <iframe id="mapaviento" scrolling="no" marginwidth="0" marginheight="0" allowfullscreen frameborder="0"
+      ng-src="{{ windyUrl }}" iframe-onload="cargaFrameTerminada()">
     </iframe>
 
     <div class="fuente">Fuente: <a href="http://www.windy.com" target="_blank">windy.com</a></div>

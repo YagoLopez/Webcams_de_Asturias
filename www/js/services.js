@@ -3,7 +3,7 @@
 var wcaModule = angular.module('wca.services',[]);
 // ====================================================================================================================
 /*
-wcaModule.service('SFusionTable', function($http){
+wcaModule.service('Cams', function($http){
 
   var API_ENDPOINT = 'https://www.googleapis.com/fusiontables/v2/query';
   var API_KEY = 'AIzaSyBsdouSTimjrC2xHmbGgOt8VfbLBWc9Gps';
@@ -21,8 +21,8 @@ wcaModule.service('SFusionTable', function($http){
 });
 */
 // ====================================================================================================================
-//todo: renombrar SFusionTable a CamsCollection y añadir getCamsById, getCamsByConcejo, getCamsByCategoria
-wcaModule.service('SFusionTable', function($http, $filter){
+//todo: renombrar Cams a Cams y añadir getCamsById, getCamsByConcejo, getCamsByCategoria
+wcaModule.service('Cams', function($http, $filter){
 
   // Antiguas claves de identificacion
   var API_ENDPOINT = 'https://www.googleapis.com/fusiontables/v2/query';
@@ -88,11 +88,20 @@ wcaModule.service('SFusionTable', function($http, $filter){
     return $filter('filter')(listaCams, function(cam) {
       return cam[4] == rowid;
     });
-  }
+  };
 
+  this.buscarCams = function (searchString, listaAllCams) {
+    return $filter('filter')(listaAllCams, function(cam) {
+      var matchCondition1 = cam[0].toLowerCase().indexOf(searchString.toLowerCase()) > -1;
+      var matchCondition2 = cam[1].toLowerCase().indexOf(searchString.toLowerCase()) > -1;
+      if(matchCondition1 || matchCondition2){
+        return cam;
+      }
+    });
+  }
 });
 // ====================================================================================================================
-wcaModule.service('SMapa', function(SFusionTable, SPopup){
+wcaModule.service('SMapa', function(Cams, SPopup){
 
   var placesService, request, mapa;
 
@@ -150,7 +159,7 @@ wcaModule.service('SMapa', function(SFusionTable, SPopup){
   this.creaFusionTableLayer = function(filtroMarkers){
     var layer = new google.maps.FusionTablesLayer({
       heatmap: { enabled: false },
-      query  : { select: 'col7', from: SFusionTable.TABLE_ID, where: filtroMarkers },
+      query  : { select: 'col7', from: Cams.TABLE_ID, where: filtroMarkers },
       options: { styleId: 6, templateId: 8 }
     });
     return layer;
@@ -312,13 +321,13 @@ wcaModule.factory('$exceptionHandler', function($injector) {
   };
 });
 // ====================================================================================================================
-wcaModule.factory('Cam', function(SCategorias){
+wcaModule.factory('Cam', function(Categorias){
   function Cam(arrayDatosCam){
     if(arrayDatosCam) {
       this.lugar = arrayDatosCam[0][0];
       this.concejo = arrayDatosCam[0][1];
       this.imagen = arrayDatosCam[0][2];
-      this.categoria = SCategorias.url_a_nombre( arrayDatosCam[0][3] );
+      this.categoria = Categorias.url_a_nombre( arrayDatosCam[0][3] );
       this.id = arrayDatosCam[0][4];
       this.lat = arrayDatosCam[0][5];
       this.lng = arrayDatosCam[0][6];
@@ -327,24 +336,9 @@ wcaModule.factory('Cam', function(SCategorias){
   return Cam;
 });
 // ====================================================================================================================
-wcaModule.service('SCategorias', function(){
+wcaModule.service('Categorias', function(){
   var nombreCategoria;
   var urlBaseCategoria = 'http://webcamsdeasturias.com/interior.php?categoria=';
-
-  // this.url_a_nombre = function(urlCategoria){
-  //   if (urlCategoria === urlBaseCategoria+'1'){
-  //     nombreCategoria = 'Poblaciones';
-  //   }
-  //   if (urlCategoria === urlBaseCategoria+'2')
-  //     nombreCategoria = 'Puertos';
-  //   if (urlCategoria === urlBaseCategoria+'3')
-  //     nombreCategoria = 'Montaña';
-  //   if (urlCategoria === urlBaseCategoria+'5')
-  //     nombreCategoria = 'Ríos';
-  //   if (urlCategoria === urlBaseCategoria+'7')
-  //     nombreCategoria = 'Playas';
-  // return nombreCategoria;
-  // };
 
   this.url_a_nombre = function(urlCategoria){
     (urlCategoria === urlBaseCategoria+'1') && (nombreCategoria = 'Poblaciones');

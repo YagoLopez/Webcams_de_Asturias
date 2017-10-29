@@ -13,7 +13,7 @@ var filesToCache = [
 
   // CSS
   'lib/ionic/ionic.min.1.3.3.css',
-  'css/style.css',
+  'css/styles.css',
 
   // SCRIPTS
   'lib/ionic/ionic.bundle.min.1.3.3.js',

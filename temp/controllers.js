@@ -625,7 +625,7 @@ wcaModule.controller('BuscarCtrl', function($scope, $rootScope, $filter, SFusion
     return;
   }
 
-  $scope.buscaCam = function(){
+  $scope.buscarCams = function(){
     var matchCondition1, matchCondition2;
     $scope.showImages = false;
     if($scope.busqueda.lugar.length < 1){
