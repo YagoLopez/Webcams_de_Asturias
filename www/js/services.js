@@ -101,7 +101,7 @@ wcaModule.service('Cams', function($http, $filter){
   }
 });
 // ====================================================================================================================
-wcaModule.service('SMapa', function(Cams, SPopup){
+wcaModule.service('Mapa', function(Cams, Popup){
 
   var placesService, request, mapa;
 
@@ -125,8 +125,8 @@ wcaModule.service('SMapa', function(Cams, SPopup){
         //console.log('Debugging resultados de busqueda street view results[0]', results[0]);
         fn(results[0].geometry.location);
       } else {
-        SPopup.show('Error', 'No se han podido hallar coordenadas para panorama StreetView');
-        console.error('SMapa.hallaLatLng(): no se han podido hallar coordenadas');
+        Popup.show('Error', 'No se han podido hallar coordenadas para panorama StreetView');
+        console.error('Mapa.hallaLatLng(): no se han podido hallar coordenadas');
       }
     }
   };
@@ -183,7 +183,7 @@ wcaModule.service('SMapa', function(Cams, SPopup){
   };
 });
 // ====================================================================================================================
-wcaModule.service('SClima', function($http){
+wcaModule.service('Clima', function($http){
   this.urlCorsProxy = 'https://cors-anywhere.herokuapp.com/';
   this.getData = function(lat, lng){
     return $http.get( this.urlCorsProxy + 'http://api.openweathermap.org/data/2.5/weather?lat='+lat+'&lon='+lng+
@@ -191,14 +191,14 @@ wcaModule.service('SClima', function($http){
   };
 });
 // ====================================================================================================================
-wcaModule.service('SPopup', function($ionicPopup, SLoader){
+wcaModule.service('Popup', function($ionicPopup, Loader){
   this.show = function(titulo, msg) {
-    SLoader.hide();
+    Loader.hide();
     $ionicPopup.alert({ title: titulo, template: msg });
   };
 });
 // ====================================================================================================================
-wcaModule.service('SWikipedia', function($http){
+wcaModule.service('Wikipedia', function($http){
 
   this.info = function(termino){
     return $http.jsonp('https://es.wikipedia.org/w/api.php?'+
@@ -289,7 +289,7 @@ wcaModule.factory('ItemMeteo', function(){
   return ItemMeteo;
 });
 // ====================================================================================================================
-wcaModule.service('SLoader', function($ionicLoading){
+wcaModule.service('Loader', function($ionicLoading){
 
   var spinnerIco = "<ion-spinner icon='lines' class='spinner-calm'></ion-spinner><br/>";
   var contenidoLoader = "Cargando datos...";
@@ -315,9 +315,9 @@ wcaModule.service('SLoader', function($ionicLoading){
 // ====================================================================================================================
 wcaModule.factory('$exceptionHandler', function($injector) {
   return function(exception, cause) {
-    var SPopup = $injector.get('SPopup');
+    var Popup = $injector.get('Popup');
     console.error(exception);
-    SPopup.show('Error', 'Detalles: '+exception.message);
+    Popup.show('Error', 'Detalles: '+exception.message);
   };
 });
 // ====================================================================================================================
