@@ -1,3 +1,4 @@
+//todo: tests para carga de datos de fusion table en listadoCtrl
 //todo: borrar comentarios en services.js
 //todo: info de mareas
 //todo: convertir en pwa
@@ -8,8 +9,9 @@
 //TODO: hacer perfilado en chrome mobile, ver como se comporta la memoria y el procesador al ejecutar la app
 //TODO: hacer zoom en mapa global cuando se escoja filtro por concejo. Usar coordenadas lat lng
 //TODO: añadir favoritos
+//todo: geolocalizacion y busqueda webcams cercanas
 
-wcaModule = angular.module('wca.controllers',[]);
+var wcaModule = angular.module('wca.controllers',[]);
 // ====================================================================================================================
 wcaModule.controller('ListadoCtrl', function($scope, $stateParams, $rootScope, STRINGS,
    SFusionTable, $filter, $ionicScrollDelegate, SCategorias, SLoader) {
@@ -18,61 +20,41 @@ wcaModule.controller('ListadoCtrl', function($scope, $stateParams, $rootScope, S
   var idCategoria = $stateParams.idCategoria || '';
   var sqlQuery = 'SELECT Lugar, Concejo, Imagen ,Categoria, rowid, latitud, longitud FROM '+ SFusionTable.TABLE_ID;
   $rootScope.cams = [];
-  $scope.camsPorCategoria = [];
+  $scope.camsFiltradas = [];
 
   SLoader.show('Cargando...');
-  $scope.imgError = function () {
-    $scope.error = STRINGS.ERROR;
-    $scope.$apply();
-  };
+  // $scope.imgError = function () {
+  //   $scope.error = STRINGS.ERROR;
+  //   $scope.$apply();
+  // };
 
-  function esSubcadena(idCategoria, urlCategoria) {
-    return (urlCategoria.indexOf('categoria=' + idCategoria) > -1);
+  function showError(errorMsg){
+    SLoader.hide();
+    $scope.error = STRINGS.ERROR;
+    console.log(errorMsg);
   }
 
   SFusionTable.getRemoteData(sqlQuery).success(function(data) {
     if (data.error) {
-      console.error(data);
-      $scope.imgError();
-      SLoader.hide();
+      showError(data.error);
     }
-
+    // data.error && showError(data.error);
     // Cams totales sin filtrar
     $rootScope.cams = data.rows;
-
-    // Cams filtradas por parametros de url: concejo y categoria
-    $scope.camsPorCategoria = $filter('filter')(data.rows, function(cam) {
-      var filteredItems;
-      if (concejo && idCategoria) {
-        // cam[1]: concejo, cam[3]: url categoria (no id de categoria, no confundir)
-        filteredItems = (cam[1].toLowerCase() == concejo.toLowerCase() && esSubcadena(idCategoria, cam[3]));
-      } else {
-        if (concejo){
-          filteredItems = cam[1].toLowerCase() == concejo.toLowerCase();
-        }
-        if (idCategoria){
-          filteredItems = esSubcadena(idCategoria, cam[3]);
-        }
-        if (!concejo && !idCategoria){
-          filteredItems = data.rows;
-        }
-      }
-      return filteredItems;
-    });
-
+    // Cams filtradas por parametros url
+    $scope.camsFiltradas = SFusionTable.filtrarListaCams(concejo, idCategoria, data.rows);
     SLoader.hide();
   }).error(function(data, status) {
-    $scope.imgError();
-    SLoader.hide();
+    showError(status);
   });
 
   $scope.$on('$ionicView.afterEnter', function(){
-    $rootScope.concejo = concejo;
-    $rootScope.idCategoria = idCategoria;
+    $scope.concejo = concejo;
+    $scope.idCategoria = idCategoria;
     if (!idCategoria || idCategoria === '') {
-      $rootScope.tituloVista = 'Todas'
+      $scope.tituloVista = 'Todas'
     } else {
-      $rootScope.tituloVista = SCategorias.idCategoria_a_nombre(idCategoria);
+      $scope.tituloVista = SCategorias.idCategoria_a_nombre(idCategoria);
     }
   });
 });
@@ -178,9 +160,8 @@ wcaModule.controller('DetalleCtrl', function($scope, $stateParams, $ionicModal, 
   // Init --------------------------------------------------------------------------------------------------------------
 
   var datosCam;
-  $scope.modalOpen = false;
   $scope.rowid = $stateParams.rowid;
-  $scope.descripcion = ' (Obteniendo datos del servidor...)';
+  $scope.info = ' (Obteniendo datos del servidor...)';
   SLoader.show('Cargando...');
   if(!$rootScope.cams || !$scope.rowid){
     $location.path('#/'); // si no hay lista de items (cams) redirigir a root y abortar
@@ -199,7 +180,7 @@ wcaModule.controller('DetalleCtrl', function($scope, $stateParams, $ionicModal, 
   $scope.timerGetClimaData = setTimeout( function(){
     SClima.getData( $rootScope.cam.lat, $rootScope.cam.lng ).success(function(climadata){
       if(climadata.weather){
-        $scope.descripcion = climadata.weather[0].description;
+        $scope.info = climadata.weather[0].description;
         $scope.temp = climadata.main.temp;
         $scope.presion = climadata.main.pressure;
         $scope.humedad = climadata.main.humidity;
@@ -211,10 +192,10 @@ wcaModule.controller('DetalleCtrl', function($scope, $stateParams, $ionicModal, 
         //url icono: http://openweathermap.org/img/w/10n.png
         $scope.iconoUrl = 'http://openweathermap.org/img/w/'+climadata.weather[0].icon+'.png' ;
       } else {
-        $scope.descripcion = STRINGS.ERROR;
+        $scope.info = STRINGS.ERROR;
       }
     }).error(function(status){
-      $scope.descripcion = STRINGS.ERROR;
+      $scope.info = STRINGS.ERROR;
       console.error('SClima.getData(): ', status);
     });
   }, 1000);
@@ -247,6 +228,7 @@ wcaModule.controller('DetalleCtrl', function($scope, $stateParams, $ionicModal, 
     setTimeout(function(){
       $scope.$apply(function(){
         $rootScope.cam.imagen = $rootScope.cam.imagen + '#' + new Date().getTime();
+        console.log('Recargando imagen: ', $rootScope.cam.imagen);
         SLoader.hide();
       })
     }, 600);
@@ -297,15 +279,15 @@ wcaModule.controller('StreetViewCtrl', function($scope, SMapa, $rootScope, SPopu
 
   $scope.$on('$ionicView.afterEnter', function() {
     var div = document.getElementById('street-view');
-      var streetViewService = new google.maps.StreetViewService();
-      streetViewService.getPanoramaByLocation(coords, SMapa.RADIO_BUSQUEDA, function (data, status) {
-        if (status == google.maps.StreetViewStatus.OK) {
-          //todo: revisar
-          SMapa.creaStreetView2(div, data.location.latLng);
-        } else {
-          SPopup.show('Aviso', 'Panorama StreetView no disponible en esta ubicación<br>' +status);
-        }
-      })
+    var streetViewService = new google.maps.StreetViewService();
+    streetViewService.getPanoramaByLocation(coords, SMapa.RADIO_BUSQUEDA, function (data, status) {
+      if (status == google.maps.StreetViewStatus.OK) {
+        //todo: revisar
+        SMapa.creaStreetView2(div, data.location.latLng);
+      } else {
+        SPopup.show('Aviso', 'Panorama StreetView no disponible en esta ubicación<br>' +status);
+      }
+    })
   });
 
   $scope.$on('$ionicView.leave', function(){
@@ -315,7 +297,7 @@ wcaModule.controller('StreetViewCtrl', function($scope, SMapa, $rootScope, SPopu
 });
 // ====================================================================================================================
 wcaModule.controller('GifPlayerCtrl', function($scope, $interval, $stateParams, ItemsMeteo, ItemMeteo, SLoader,
-  SPopup, $location, STRINGS, $rootScope){
+  SPopup, $location, STRINGS){
 
   // Inicializaciones -------------------------------------------------------------------------------------------------
 
@@ -523,13 +505,13 @@ wcaModule.controller('MeteoDetalleCtrl', function($scope, $stateParams, ItemMete
   });
 });
 // ====================================================================================================================
-wcaModule.controller('PorCategoriaCtrl', function($scope, $window, $sce, SLoader){
+wcaModule.controller('PorCategoriaCtrl', function($scope, $window, $sce){
 
   var urlGraficoSectores, urlGraficoBarras;
 
-  $scope.$on('$ionicView.beforeEnter', function () {
-    SLoader.showWithBackdrop('Cargando...');
-  });
+  // $scope.$on('$ionicView.beforeEnter', function () {
+  //   SLoader.showWithBackdrop('Cargando...');
+  // });
   //Calculo de dimensiones de ventana al redimensionar
   $scope.calculateDimensions = function(gesture) {
     if($window.innerWidth > 765){
@@ -568,13 +550,13 @@ wcaModule.controller('PorCategoriaCtrl', function($scope, $window, $sce, SLoader
   $scope.urlGraficoSectores = $sce.trustAsResourceUrl(urlGraficoSectores);
   $scope.urlGraficoBarras = $sce.trustAsResourceUrl(urlGraficoBarras);
 
-  $scope.cargaFrameTerminada = function(){
-    SLoader.hide();
-  }
+  // $scope.cargaFrameTerminada = function(){
+  //   SLoader.hide();
+  // }
 
   });
 // ====================================================================================================================
-wcaModule.controller('PorConcejoCtrl', function($scope, $window, $sce, SLoader){
+wcaModule.controller('PorConcejoCtrl', function($scope, $window, $sce){
 
   var urlConcejosMasCams, urlCamsConcejo, iframeHeigth = 550;
 

@@ -5,16 +5,11 @@
     .azul {color: #387ef5}
     .error {text-align: center; color: red; padding: 40px}
     #btn-mosaico{padding:0; border:0}
-    @media (min-width: 720px) {
-      #listado-container{width: 80%; margin: 32px auto;
-        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24)}
-      #contenido-listado{background-color:ghostwhite}
-    }
   </style>
 
   <ion-nav-buttons side="left">
     <button ng-if="screenWidth < 760" class="button button-icon button-clear ion-navicon" menu-toggle="left"></button>
-    <div class="cam-counter-left">{{ camsPorCategoria.length }}</div>
+    <div class="cam-counter-left">{{ camsFiltradas.length }}</div>
   </ion-nav-buttons>
   <ion-nav-buttons side="right">
     <a id="btn-mosaico" class="button button-icon icon ion-grid"
@@ -22,13 +17,13 @@
     <a class="button button-icon icon ion-ios-search-strong" href="#/app/buscar" title="Buscar"></a>
   </ion-nav-buttons>
 
-  <ion-content id="contenido-listado" lazy-scroll>
-    <div id="listado-container">
+  <ion-content lazy-scroll>
+    <div class="responsive-container">
       <div ng-if="error" class="error">{{ ::error }}</div>
       <a class="item item-thumbnail-left item-icon-right"
-        ng-repeat="cam in camsPorCategoria track by cam[4]" href="#/app/detalle/{{ camsPorCategoria[$index][4] }}">
-        <img image-lazy-src="{{ cam[2] }}" fallback-src="img/imgFail.png" class="img-cam"/>
-        <!--<img image-lazy-src="img/imgFail.png" class="img-cam"/>-->
+         ng-repeat="cam in camsFiltradas track by cam[4]" href="#/app/detalle/{{ camsFiltradas[$index][4] }}">
+        <!--<img image-lazy-src="{{ cam[2] }}" fallback-src="img/imgFail.png" class="img-cam"/>-->
+        <img ng-src="img/imgFail.png" class="img-cam"/>
         <div>
           <p><span><b class="verde">&bullet;</b> {{ cam[0] }}</span></p>
           <p><span><b class="verde">&bullet;</b> Concejo: {{ cam[1] }}</span></p>

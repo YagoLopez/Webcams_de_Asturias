@@ -5,7 +5,7 @@ app.config(function($stateProvider, $urlRouterProvider, $compileProvider, $ionic
   $logProvider, $httpProvider) {
 
   // enable/disable debug info
-  $compileProvider.debugInfoEnabled(false);
+  $compileProvider.debugInfoEnabled(true);
   // remove back button text totally
   $ionicConfigProvider.backButton.previousTitleText(false).text(' ');
   // enable/disable native scroll
@@ -24,8 +24,7 @@ app.config(function($stateProvider, $urlRouterProvider, $compileProvider, $ionic
 
 // Estados ------------------------------------------------------------------------------------------------------------
   $stateProvider.state('app', {
-    url: '/app', abstract: true, templateUrl: 'templates/menu.html'
-  });
+    url: '/app', abstract: true, templateUrl: 'templates/menu.html'});
 // -------------------------------------------------------------------------------------------------------------------
   $stateProvider.state('app.mapa', {
     url: '/mapa', cache: true, views: {'menuContent': {templateUrl: 'templates/mapa.html', controller: 'MapaCtrl'}}
@@ -95,9 +94,7 @@ app.config(function($stateProvider, $urlRouterProvider, $compileProvider, $ionic
     views: {'menuContent': {templateUrl: 'templates/detalle-meteoblue.html', controller: 'MeteoblueCtrl'}}
   });
 // -------------------------------------------------------------------------------------------------------------------
-
   $urlRouterProvider.otherwise('app/listado?idCategoria=7');
-
 });
 
 // Inicializaciones ===================================================================================================

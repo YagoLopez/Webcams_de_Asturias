@@ -6,7 +6,6 @@
     .item-padd{border: 0}
     .row-cam {padding: 0; margin: 0}
     @media (min-width: 720px) {
-      #contenido-mosaico{background-color: ghostwhite}
       div.grid {width: 90%; margin: 32px auto; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24)}
     }
   </style>
@@ -14,7 +13,7 @@
   <ion-nav-bar class="bar-positive">
     <ion-nav-back-button class="button-icon ion-android-arrow-back"></ion-nav-back-button>
     <ion-nav-buttons side="left">
-      <div class="cam-counter-left">{{ camsPorCategoria.length }}</div>
+      <div class="cam-counter-left">{{ camsFiltradas.length }}</div>
     </ion-nav-buttons>
     <ion-nav-buttons side="right">
       <a class="button button-icon icon ion-ios-search-strong" href="#/app/buscar" title="Buscar"></a>
@@ -22,31 +21,31 @@
     </ion-nav-buttons>
   </ion-nav-bar>
 
-  <ion-content id="contenido-mosaico" lazy-scroll>
+  <ion-content>
     <div class="grid">
-      <div class="row row-cam" ng-repeat="cam in camsPorCategoria track by cam[4]" ng-if="$index % 3 === 0">
+      <div class="row row-cam" ng-repeat="cam in camsFiltradas track by cam[4]" ng-if="$index % 3 === 0">
 
-        <ion-item class="item-padd col col-33" ng-if="$index < camsPorCategoria.length">
-          <a href="#/app/detalle/{{ camsPorCategoria[$index][4] }}" class="item itemCam">
-            <img image-lazy-src="{{ camsPorCategoria[$index][2] }}" fallback-src="img/imgFail.png" width="100%"/>
-            <!--<img image-lazy-src="{{ 'http://lorempixel.com/400/200/' }}" fallback-src="img/imgFail.png" width="100%" class="imgLoader"/>-->
-            <div class="txt">{{ camsPorCategoria[$index][0] }}</div>
+        <ion-item class="item-padd col col-33" ng-if="$index < camsFiltradas.length">
+          <a href="#/app/detalle/{{ camsFiltradas[$index][4] }}" class="item itemCam">
+            <!--<img ng-src="{{ camsFiltradas[$index][2] }}" fallback-src="img/imgFail.png" width="100%"/>-->
+            <img ng-src="{{ img/imgFail.png }}" fallback-src="img/imgFail.png" width="100%" height="50%" class="imgLoader"/>
+            <div class="txt">{{ camsFiltradas[$index][0] }}</div>
           </a>
         </ion-item>
 
-        <ion-item class="item-padd col col-33" ng-if="$index + 1 < camsPorCategoria.length">
-          <a href="#/app/detalle/{{ camsPorCategoria[$index + 1][4] }}" class="item itemCam">
-            <img image-lazy-src="{{ camsPorCategoria[$index + 1][2] }}" fallback-src="img/imgFail.png" width="100%"/>
-            <!--<img image-lazy-src="{{ 'http://lorempixel.com/400/200/' }}" fallback-src="img/imgFail.png" width="100%" class="imgLoader"/>-->
-            <div class="txt">{{ camsPorCategoria[$index+1][0] }}</div>
+        <ion-item class="item-padd col col-33" ng-if="$index + 1 < camsFiltradas.length">
+          <a href="#/app/detalle/{{ camsFiltradas[$index + 1][4] }}" class="item itemCam">
+            <!--<img ng-src="{{ camsFiltradas[$index + 1][2] }}" fallback-src="img/imgFail.png" width="100%"/>-->
+            <img ng-src="{{ img/imgFail.png }}" fallback-src="img/imgFail.png" width="100%" class="imgLoader"/>
+            <div class="txt">{{ camsFiltradas[$index + 1][0] }}</div>
           </a>
         </ion-item>
 
-        <ion-item class="item-padd col col-33" ng-if="$index + 2 < camsPorCategoria.length">
-          <a href="#/app/detalle/{{ camsPorCategoria[$index + 2][4] }}" class="item itemCam">
-            <img image-lazy-src="{{ camsPorCategoria[$index + 2][2] }}" fallback-src="img/imgFail.png" width="100%"/>
-            <!--<img image-lazy-src="{{ 'http://lorempixel.com/400/200/' }}" fallback-src="img/imgFail.png" width="100%" class="imgLoader"/>-->
-            <div class="txt">{{ camsPorCategoria[$index+2][0] }}</div>
+        <ion-item class="item-padd col col-33" ng-if="$index + 2 < camsFiltradas.length">
+          <a href="#/app/detalle/{{ camsFiltradas[$index + 2][4] }}" class="item itemCam">
+            <!--<img ng-src="{{ camsFiltradas[$index + 2][2] }}" fallback-src="img/imgFail.png" width="100%"/>-->
+            <img ng-src="{{ img/imgFail.png }}" fallback-src="img/imgFail.png" width="100%" class="imgLoader"/>
+            <div class="txt">{{ camsFiltradas[$index + 2][0] }}</div>
           </a>
         </ion-item>
 

@@ -1,0 +1,1078 @@
+// API callback
+angular.callbacks._0({
+ "kind": "fusiontables#sqlresponse",
+ "columns": [
+  "Lugar",
+  "Concejo",
+  "Imagen",
+  "Categoria",
+  "rowid",
+  "latitud",
+  "longitud"
+ ],
+ "rows": [
+  [
+   "Campo de Caso",
+   "Caso",
+   "http://www.wewebcams.com/get_imagen_ws.php?id=45",
+   "http://webcamsdeasturias.com/interior.php?categoria=1",
+   "2",
+   43.183219,
+   -5.344876
+  ],
+  [
+   "Mirador de San Roque, Lastres",
+   "Colunga",
+   "http://www.wewebcams.com/get_imagen_ws.php?id=10",
+   "http://webcamsdeasturias.com/interior.php?categoria=1",
+   "3",
+   43.516369,
+   -5.269086
+  ],
+  [
+   "Cudillero",
+   "Cudillero",
+   "http://www.wewebcams.com/get_imagen_ws.php?id=82",
+   "http://webcamsdeasturias.com/interior.php?categoria=1",
+   "4",
+   43.564444,
+   -6.147551
+  ],
+  [
+   "Panes",
+   "Peñamellera Baja",
+   "http://www.wewebcams.com/get_imagen_ws.php?id=98",
+   "http://webcamsdeasturias.com/interior.php?categoria=1",
+   "5",
+   43.326115,
+   -4.584061
+  ],
+  [
+   "Plaza Parres Sobrino",
+   "Llanes",
+   "http://www.wewebcams.com/get_imagen_ws.php?id=26",
+   "http://webcamsdeasturias.com/interior.php?categoria=1",
+   "6",
+   43.419974,
+   -4.755038
+  ],
+  [
+   "Avilés - Centro Niemeyer",
+   "Avilés",
+   "http://www.wewebcams.com/get_imagen_ws.php?id=145",
+   "http://webcamsdeasturias.com/interior.php?categoria=1",
+   "7",
+   43.5634638,
+   -5.9219835
+  ],
+  [
+   "Puerto Deportivo - Poniente",
+   "Gijón",
+   "http://www.wewebcams.com/get_imagen_ws.php?id=25",
+   "http://webcamsdeasturias.com/interior.php?categoria=2",
+   "8",
+   43.546742,
+   -5.66631
+  ],
+  [
+   "Vista del parque de Sabino Moutas",
+   "Pravia",
+   "http://www.wewebcams.com/get_imagen_ws.php?id=34",
+   "http://webcamsdeasturias.com/interior.php?categoria=1",
+   "9",
+   43.490004,
+   -6.113621
+  ],
+  [
+   "Villaviciosa - Ayuntamiento - Plaza´l Güevu",
+   "Villaviciosa",
+   "http://www.wewebcams.com/get_imagen_ws.php?id=97",
+   "http://webcamsdeasturias.com/interior.php?categoria=1",
+   "10",
+   43.48123,
+   -5.43389
+  ],
+  [
+   "Plaza del Ayto de Onís",
+   "Onís",
+   "http://www.wewebcams.com/get_imagen_ws.php?id=36",
+   "http://webcamsdeasturias.com/interior.php?categoria=1",
+   "11",
+   43.334637,
+   -4.969237
+  ],
+  [
+   "Casco urbano",
+   "Colunga",
+   "http://www.wewebcams.com/get_imagen_ws.php?id=18",
+   "http://webcamsdeasturias.com/interior.php?categoria=1",
+   "12",
+   43.485595,
+   -5.269908
+  ],
+  [
+   "Parque Los Jardinillos, Navia",
+   "Navia",
+   "http://www.wewebcams.com/get_imagen_ws.php?id=81",
+   "http://webcamsdeasturias.com/interior.php?categoria=1",
+   "13",
+   43.5400567,
+   -6.724426
+  ],
+  [
+   "Cabañaquinta",
+   "Aller",
+   "http://www.wewebcams.com/get_imagen_ws.php?id=17",
+   "http://webcamsdeasturias.com/interior.php?categoria=1",
+   "14",
+   43.1613869,
+   -5.6225745
+  ],
+  [
+   "Mieres",
+   "Mieres",
+   "http://www.wewebcams.com/get_imagen_ws.php?id=67",
+   "http://webcamsdeasturias.com/interior.php?categoria=1",
+   "15",
+   43.249696,
+   -5.778611
+  ],
+  [
+   "Vegadeo - A Veiga",
+   "Vegadeo",
+   "http://www.wewebcams.com/get_imagen_ws.php?id=9",
+   "http://webcamsdeasturias.com/interior.php?categoria=1",
+   "16",
+   43.464778,
+   -7.048422
+  ],
+  [
+   "Sama",
+   "Langreo",
+   "http://www.wewebcams.com/get_imagen_ws.php?id=149",
+   "http://webcamsdeasturias.com/interior.php?categoria=1",
+   "17",
+   43.2957181,
+   -5.6837289
+  ],
+  [
+   "Paseo Marítimo de Candás",
+   "Carreño",
+   "http://www.wewebcams.com/get_imagen_ws.php?id=13",
+   "http://webcamsdeasturias.com/interior.php?categoria=2",
+   "18",
+   43.5894394,
+   -5.7584372
+  ],
+  [
+   "Colombres: Iglesia, Plaza y Archivo de Indianos",
+   "Ribadedeva",
+   "http://www.wewebcams.com/get_imagen_ws.php?id=16",
+   "http://webcamsdeasturias.com/interior.php?categoria=1",
+   "20",
+   43.3748234,
+   -4.5404144
+  ],
+  [
+   "Posada de Llanera",
+   "Llanera",
+   "http://www.wewebcams.com/get_imagen_ws.php?id=58",
+   "http://webcamsdeasturias.com/interior.php?categoria=1",
+   "21",
+   43.440608,
+   -5.852197
+  ],
+  [
+   "Villayón",
+   "Villayón",
+   "http://www.wewebcams.com/get_imagen_ws.php?id=130",
+   "http://webcamsdeasturias.com/interior.php?categoria=1",
+   "22",
+   43.447896,
+   -6.704765
+  ],
+  [
+   "Boal desde el Ayto",
+   "Boal",
+   "http://www.wewebcams.com/get_imagen_ws.php?id=43",
+   "http://webcamsdeasturias.com/interior.php?categoria=1",
+   "23",
+   43.428286,
+   -6.81851
+  ],
+  [
+   "San Juan de Beleño (San Xuan) - Picu Tiatordos",
+   "Ponga",
+   "http://www.wewebcams.com/get_imagen_ws.php?id=30",
+   "http://webcamsdeasturias.com/interior.php?categoria=1",
+   "24",
+   43.1908216,
+   -5.165448
+  ],
+  [
+   "Panorámica de Bárzana",
+   "Quirós",
+   "http://www.wewebcams.com/get_imagen_ws.php?id=86",
+   "http://webcamsdeasturias.com/interior.php?categoria=1",
+   "25",
+   43.158509,
+   -5.973431
+  ],
+  [
+   "Cangas de Onis desde Contranquil",
+   "Cangas de Onis",
+   "http://www.wewebcams.com/get_imagen_ws.php?id=85",
+   "http://webcamsdeasturias.com/interior.php?categoria=1",
+   "26",
+   43.35693,
+   -5.132577
+  ],
+  [
+   "Taramundi",
+   "Taramundi",
+   "http://www.wewebcams.com/get_imagen_ws.php?id=28",
+   "http://webcamsdeasturias.com/interior.php?categoria=1",
+   "27",
+   43.360359,
+   -7.108343
+  ],
+  [
+   "Panorámica de Tineo",
+   "Tineo",
+   "http://www.wewebcams.com/get_imagen_ws.php?id=109",
+   "http://webcamsdeasturias.com/interior.php?categoria=1",
+   "28",
+   43.333891,
+   -6.416599
+  ],
+  [
+   "Infiesto",
+   "Piloña",
+   "http://www.wewebcams.com/get_imagen_ws.php?id=137",
+   "http://webcamsdeasturias.com/interior.php?categoria=1",
+   "29",
+   43.347871,
+   -5.363444
+  ],
+  [
+   "Proaza",
+   "Proaza",
+   "http://www.wewebcams.com/get_imagen_ws.php?id=72",
+   "http://webcamsdeasturias.com/interior.php?categoria=1",
+   "30",
+   43.255671,
+   -6.013336
+  ],
+  [
+   "Naranco, Oviedo",
+   "Oviedo",
+   "http://www.wewebcams.com/get_imagen_ws.php?id=8",
+   "http://webcamsdeasturias.com/interior.php?categoria=1",
+   "31",
+   43.384576,
+   -5.863994
+  ],
+  [
+   "La Felguera",
+   "Langreo",
+   "http://212.89.9.220:9000/jpg/image.jpg",
+   "http://webcamsdeasturias.com/interior.php?categoria=1",
+   "32",
+   43.306861,
+   -5.694331
+  ],
+  [
+   "El Entrego",
+   "S.M del Rey Aurelio",
+   "http://www.wewebcams.com/get_imagen_ws.php?id=148",
+   "http://webcamsdeasturias.com/interior.php?categoria=1",
+   "33",
+   43.288113,
+   -5.633667
+  ],
+  [
+   "Pola de Siero",
+   "Siero",
+   "http://www.wewebcams.com/get_imagen_ws.php?id=165",
+   "http://webcamsdeasturias.com/interior.php?categoria=1",
+   "35",
+   43.391443,
+   -5.661059
+  ],
+  [
+   "Villanueva de Oscos",
+   "Villanueva de Oscos",
+   "http://www.wewebcams.com/get_imagen_ws.php?id=176",
+   "http://webcamsdeasturias.com/interior.php?categoria=1",
+   "36",
+   43.311367,
+   -6.986391
+  ],
+  [
+   "Grandas de Salime",
+   "Grandas de Salime",
+   "http://www.wewebcams.com/get_imagen_ws.php?id=188",
+   "http://webcamsdeasturias.com/interior.php?categoria=1",
+   "37",
+   43.217635,
+   -6.875879
+  ],
+  [
+   "Puerto de Cudillero",
+   "Cudillero",
+   "http://www.wewebcams.com/get_imagen_ws.php?id=6",
+   "http://webcamsdeasturias.com/interior.php?categoria=2",
+   "39",
+   43.563343,
+   -6.145914
+  ],
+  [
+   "Paseo Princesa Letizia",
+   "Ribadesella",
+   "http://www.wewebcams.com/get_imagen_ws.php?id=33",
+   "http://webcamsdeasturias.com/interior.php?categoria=2",
+   "40",
+   43.462637,
+   -5.059239
+  ],
+  [
+   "Bahía y villa de Lastres",
+   "Colunga",
+   "http://www.wewebcams.com/get_imagen_ws.php?id=7",
+   "http://webcamsdeasturias.com/interior.php?categoria=2",
+   "41",
+   43.515146,
+   -5.268208
+  ],
+  [
+   "Desembocadura del río Nalón",
+   "Muros del Nalón",
+   "http://www.wewebcams.com/get_imagen_ws.php?id=49",
+   "http://webcamsdeasturias.com/interior.php?categoria=2",
+   "42",
+   43.5601003,
+   -6.0787048
+  ],
+  [
+   "Vista panorámica de Luanco",
+   "Gozón",
+   "http://www.wewebcams.com/get_imagen_ws.php?id=48",
+   "http://webcamsdeasturias.com/interior.php?categoria=2",
+   "43",
+   43.613184,
+   -5.790611
+  ],
+  [
+   "Muelle de San Juan de la Arena",
+   "Soto del Barco",
+   "http://www.wewebcams.com/get_imagen_ws.php?id=20",
+   "http://webcamsdeasturias.com/interior.php?categoria=2",
+   "44",
+   43.556957,
+   -6.076335
+  ],
+  [
+   "Viavélez",
+   "El Franco",
+   "http://www.wewebcams.com/get_imagen_ws.php?id=27",
+   "http://webcamsdeasturias.com/interior.php?categoria=2",
+   "45",
+   43.563921,
+   -6.837688
+  ],
+  [
+   "Muelle de Luanco",
+   "Gozón",
+   "http://www.wewebcams.com/get_imagen_ws.php?id=77",
+   "http://webcamsdeasturias.com/interior.php?categoria=2",
+   "46",
+   43.615824,
+   -5.789533
+  ],
+  [
+   "Puerto de As Figueiras",
+   "Castropol",
+   "http://www.wewebcams.com/get_imagen_ws.php?id=61",
+   "http://webcamsdeasturias.com/interior.php?categoria=2",
+   "47",
+   43.537572,
+   -7.023217
+  ],
+  [
+   "Puerto de Llanes",
+   "Llanes",
+   "http://www.wewebcams.com/get_imagen_ws.php?id=192",
+   "http://webcamsdeasturias.com/interior.php?categoria=2",
+   "48",
+   43.421187,
+   -4.749397
+  ],
+  [
+   "Puerto de Tapia de Casariego",
+   "Tapia de Casariego",
+   "http://www.wewebcams.com/get_imagen_ws.php?id=60",
+   "http://webcamsdeasturias.com/interior.php?categoria=2",
+   "49",
+   43.572647,
+   -6.945462
+  ],
+  [
+   "Fomento - Poniente",
+   "Gijón",
+   "http://www.wewebcams.com/get_imagen_ws.php?id=91",
+   "http://webcamsdeasturias.com/interior.php?categoria=2",
+   "50",
+   43.543188,
+   -5.666514
+  ],
+  [
+   "Puerto de Tazones",
+   "Villaviciosa",
+   "http://www.wewebcams.com/get_imagen_ws.php?id=12",
+   "http://webcamsdeasturias.com/interior.php?categoria=2",
+   "51",
+   43.545288,
+   -5.399732
+  ],
+  [
+   "Acantilados de Luarca - Valdés",
+   "Valdés",
+   "http://www.wewebcams.com/get_imagen_ws.php?id=102",
+   "http://webcamsdeasturias.com/interior.php?categoria=2",
+   "52",
+   43.547783,
+   -6.528103
+  ],
+  [
+   "Puerto de Tapia de Casariego",
+   "Tapia de Casariego",
+   "http://www.wewebcams.com/get_imagen_ws.php?id=99",
+   "http://webcamsdeasturias.com/interior.php?categoria=2",
+   "53",
+   43.572533,
+   -6.945297
+  ],
+  [
+   "Puerto de Vega",
+   "Navia",
+   "http://www.wewebcams.com/get_imagen_ws.php?id=141",
+   "http://webcamsdeasturias.com/interior.php?categoria=2",
+   "54",
+   43.5652488,
+   -6.6463144
+  ],
+  [
+   "Ría del Eo - Castropol",
+   "Castropol",
+   "http://www.wewebcams.com/get_imagen_ws.php?id=120",
+   "http://webcamsdeasturias.com/interior.php?categoria=2",
+   "55",
+   43.527813,
+   -7.031636
+  ],
+  [
+   "Naranjo de Bulnes - Picu Urriellu - Picos de Europa",
+   "Cabrales",
+   "http://www.wewebcams.com/get_imagen_ws.php?id=32",
+   "http://webcamsdeasturias.com/interior.php?categoria=3",
+   "56",
+   43.202787,
+   -4.821201
+  ],
+  [
+   "Pola de Somiedo",
+   "Somiedo",
+   "http://www.wewebcams.com/get_imagen_ws.php?id=44",
+   "http://webcamsdeasturias.com/interior.php?categoria=3",
+   "57",
+   43.092578,
+   -6.255659
+  ],
+  [
+   "Poncebos - Ruta del Cares",
+   "Cabrales",
+   "http://www.wewebcams.com/get_imagen_ws.php?id=59",
+   "http://webcamsdeasturias.com/interior.php?categoria=3",
+   "58",
+   43.257566,
+   -4.831899
+  ],
+  [
+   "Embalse de Casa Julián",
+   "Peñamellera Alta",
+   "http://www.wewebcams.com/get_imagen_ws.php?id=83",
+   "http://webcamsdeasturias.com/interior.php?categoria=3",
+   "59",
+   43.323688,
+   -4.678903
+  ],
+  [
+   "San Isidro - Fuentes de Invierno",
+   "Aller",
+   "http://www.wewebcams.com/get_imagen_ws.php?id=5",
+   "http://webcamsdeasturias.com/interior.php?categoria=3",
+   "60",
+   43.062625,
+   -5.392896
+  ],
+  [
+   "Fuentes de Invierno - Zona Alta",
+   "Aller",
+   "http://www.wewebcams.com/get_imagen_ws.php?id=4",
+   "http://webcamsdeasturias.com/interior.php?categoria=3",
+   "61",
+   43.042119,
+   -5.386675
+  ],
+  [
+   "Mestas de Con",
+   "Cangas de Onis",
+   "http://www.wewebcams.com/get_imagen_ws.php?id=52",
+   "http://webcamsdeasturias.com/interior.php?categoria=3",
+   "62",
+   43.34302,
+   -5.015321
+  ],
+  [
+   "Arnicio",
+   "Caso",
+   "http://www.wewebcams.com/get_imagen_ws.php?id=191",
+   "http://webcamsdeasturias.com/interior.php?categoria=3",
+   "63",
+   43.181642,
+   -5.347388
+  ],
+  [
+   "Quirós desde el Museo Etnográfico",
+   "Quirós",
+   "http://www.wewebcams.com/get_imagen_ws.php?id=63",
+   "http://webcamsdeasturias.com/interior.php?categoria=3",
+   "64",
+   43.251065,
+   -6.016571
+  ],
+  [
+   "E.I Valgrande - Pajares: Valle del Sol",
+   "Lena",
+   "http://www.wewebcams.com/get_imagen_ws.php?id=2",
+   "http://webcamsdeasturias.com/interior.php?categoria=3",
+   "65",
+   42.97788,
+   -5.775776
+  ],
+  [
+   "Covadonga",
+   "Cangas de Onis",
+   "http://www.wewebcams.com/get_imagen_ws.php?id=47",
+   "http://webcamsdeasturias.com/interior.php?categoria=3",
+   "66",
+   43.308279,
+   -5.051301
+  ],
+  [
+   "Sotres - Pandébano",
+   "Cabrales",
+   "http://www.wewebcams.com/get_imagen_ws.php?id=136",
+   "http://webcamsdeasturias.com/interior.php?categoria=3",
+   "67",
+   43.232563,
+   -4.746398
+  ],
+  [
+   "San Martín de Oscos",
+   "S.M de Oscos",
+   "http://www.wewebcams.com/get_imagen_ws.php?id=161",
+   "http://webcamsdeasturias.com/interior.php?categoria=3",
+   "68",
+   43.265088,
+   -6.961622
+  ],
+  [
+   "Picu Urriellu - Naranjo de Bulnes",
+   "Cabrales",
+   "http://www.wewebcams.com/get_imagen_ws.php?id=53",
+   "http://webcamsdeasturias.com/interior.php?categoria=3",
+   "69",
+   43.258732,
+   -4.836692
+  ],
+  [
+   "San Isidro",
+   "Aller",
+   "http://www.wewebcams.com/get_imagen_ws.php?id=123",
+   "http://webcamsdeasturias.com/interior.php?categoria=3",
+   "70",
+   43.065621,
+   -5.387555
+  ],
+  [
+   "Teverga",
+   "Teverga",
+   "http://www.wewebcams.com/get_imagen_ws.php?id=68",
+   "http://webcamsdeasturias.com/interior.php?categoria=3",
+   "71",
+   43.161928,
+   -6.096549
+  ],
+  [
+   "Teverga",
+   "Teverga",
+   "http://www.wewebcams.com/get_imagen_ws.php?id=76",
+   "http://webcamsdeasturias.com/interior.php?categoria=3",
+   "72",
+   43.160704,
+   -6.098498
+  ],
+  [
+   "Caunedo",
+   "Somiedo",
+   "http://www.wewebcams.com/get_imagen_ws.php?id=70",
+   "http://webcamsdeasturias.com/interior.php?categoria=3",
+   "73",
+   43.067146,
+   -6.257188
+  ],
+  [
+   "Pajares",
+   "Lena",
+   "http://www.wewebcams.com/get_imagen_ws.php?id=3",
+   "http://webcamsdeasturias.com/interior.php?categoria=3",
+   "74",
+   43.018495,
+   -5.773164
+  ],
+  [
+   "Bulnes",
+   "Cabrales",
+   "http://www.wewebcams.com/get_imagen_ws.php?id=92",
+   "http://webcamsdeasturias.com/interior.php?categoria=3",
+   "75",
+   43.235429,
+   -4.819593
+  ],
+  [
+   "Luces",
+   "Colunga",
+   "http://www.wewebcams.com/get_imagen_ws.php?id=111",
+   "http://webcamsdeasturias.com/interior.php?categoria=1",
+   "76",
+   43.517198,
+   -5.293936
+  ],
+  [
+   "Sotres",
+   "Cabrales",
+   "http://www.wewebcams.com/get_imagen_ws.php?id=37",
+   "http://webcamsdeasturias.com/interior.php?categoria=3",
+   "77",
+   43.232577,
+   -4.746892
+  ],
+  [
+   "Sames",
+   "Amieva",
+   "http://www.wewebcams.com/get_imagen_ws.php?id=140",
+   "http://webcamsdeasturias.com/interior.php?categoria=3",
+   "78",
+   43.269934,
+   -5.129535
+  ],
+  [
+   "San Tirso de Abres",
+   "S. T de Abres",
+   "http://wewebcams.com/get_imagen_ws.php?id=147",
+   "http://webcamsdeasturias.com/interior.php?categoria=3",
+   "79",
+   43.410162,
+   -7.142331
+  ],
+  [
+   "Refugio del Urriellu",
+   "Cabrales",
+   "http://www.wewebcams.com/get_imagen_ws.php?id=171",
+   "http://webcamsdeasturias.com/interior.php?categoria=3",
+   "80",
+   43.202751,
+   -4.821284
+  ],
+  [
+   "Puente Romano",
+   "Cangas de Onis",
+   "http://www.wewebcams.com/get_imagen_ws.php?id=23",
+   "http://webcamsdeasturias.com/interior.php?categoria=5",
+   "81",
+   43.350746,
+   -5.131581
+  ],
+  [
+   "Arriondas",
+   "Parres",
+   "http://www.wewebcams.com/get_imagen_ws.php?id=22",
+   "http://webcamsdeasturias.com/interior.php?categoria=5",
+   "82",
+   43.386604,
+   -5.186879
+  ],
+  [
+   "Panorámica del Rio Sella",
+   "Parres",
+   "http://www.wewebcams.com/get_imagen_ws.php?id=55",
+   "http://webcamsdeasturias.com/interior.php?categoria=5",
+   "83",
+   43.389199,
+   -5.183085
+  ],
+  [
+   "Panorámica de Belmonte de Miranda",
+   "Belmonte de Miranda",
+   "http://www.wewebcams.com/get_imagen_ws.php?id=15",
+   "http://webcamsdeasturias.com/interior.php?categoria=1",
+   "84",
+   43.282887,
+   -6.218227
+  ],
+  [
+   "Belmonte",
+   "Belmonte de Miranda",
+   "http://www.wewebcams.com/get_imagen_ws.php?id=62",
+   "http://webcamsdeasturias.com/interior.php?categoria=1",
+   "85",
+   43.282577,
+   -6.217219
+  ],
+  [
+   "Playa de Xivares",
+   "Carreño",
+   "http://www.wewebcams.com/get_imagen_ws.php?id=115",
+   "http://webcamsdeasturias.com/interior.php?categoria=7",
+   "93",
+   43.569342,
+   -5.722638
+  ],
+  [
+   "Playa de Poo",
+   "Llanes",
+   "http://www.wewebcams.com/get_imagen_ws.php?id=80",
+   "http://webcamsdeasturias.com/interior.php?categoria=7",
+   "95",
+   43.429589,
+   -4.783651
+  ],
+  [
+   "Playa de Lastres",
+   "Colunga",
+   "http://www.wewebcams.com/get_imagen_ws.php?id=113",
+   "http://webcamsdeasturias.com/interior.php?categoria=7",
+   "99",
+   43.511217,
+   -5.269958
+  ],
+  [
+   "Playa de Tapia (Anguileiro o La Grande)",
+   "Tapia de Casariego",
+   "http://www.wewebcams.com/get_imagen_ws.php?id=95",
+   "http://webcamsdeasturias.com/interior.php?categoria=7",
+   "100",
+   43.567059,
+   -6.9472
+  ],
+  [
+   "La Guía - Playa de Santa Marina",
+   "Ribadesella",
+   "http://www.wewebcams.com/get_imagen_ws.php?id=11",
+   "http://webcamsdeasturias.com/interior.php?categoria=7",
+   "101",
+   43.4675743,
+   -5.0765154
+  ],
+  [
+   "Playa de La Isla",
+   "Colunga",
+   "http://www.wewebcams.com/get_imagen_ws.php?id=000079",
+   "http://webcamsdeasturias.com/interior.php?categoria=7",
+   "103",
+   43.481536,
+   -5.22636
+  ],
+  [
+   "Acantilados y playa de Barro",
+   "Llanes",
+   "http://www.wewebcams.com/get_imagen_ws.php?id=105",
+   "http://webcamsdeasturias.com/interior.php?categoria=7",
+   "104",
+   43.4364045,
+   -4.8234845
+  ],
+  [
+   "Playa de La Franca",
+   "Ribadedeva",
+   "http://www.wewebcams.com/get_imagen_ws.php?id=108",
+   "http://webcamsdeasturias.com/interior.php?categoria=7",
+   "105",
+   43.3922872,
+   -4.5779745
+  ],
+  [
+   "Playa de Xagó",
+   "Gozón",
+   "http://www.wewebcams.com/get_imagen_ws.php?id=132",
+   "http://webcamsdeasturias.com/interior.php?categoria=7",
+   "106",
+   43.596853,
+   -5.925139
+  ],
+  [
+   "Celoriu - La Palombina",
+   "Llanes",
+   "http://www.wewebcams.com/get_imagen_ws.php?id=112",
+   "http://webcamsdeasturias.com/interior.php?categoria=7",
+   "107",
+   43.4310106,
+   -4.8085158
+  ],
+  [
+   "Playa de La Ñora",
+   "Villaviciosa",
+   "http://www.wewebcams.com/get_imagen_ws.php?id=114",
+   "http://webcamsdeasturias.com/interior.php?categoria=7",
+   "108",
+   43.54714,
+   -5.589177
+  ],
+  [
+   "Playa de La Espasa",
+   "Caravia",
+   "http://www.wewebcams.com/get_imagen_ws.php?id=121",
+   "http://webcamsdeasturias.com/interior.php?categoria=7",
+   "109",
+   43.47328,
+   -5.21537
+  ],
+  [
+   "Playa Los Quebrantos",
+   "Soto del Barco",
+   "http://www.wewebcams.com/get_imagen_ws.php?id=24",
+   "http://webcamsdeasturias.com/interior.php?categoria=7",
+   "110",
+   43.56412,
+   -6.064723
+  ],
+  [
+   "Playa de Salinas - El Espartal",
+   "Castrillón",
+   "http://85.152.25.8:1229/jpg/image.jpg",
+   "http://webcamsdeasturias.com/interior.php?categoria=7",
+   "111",
+   43.578771,
+   -5.955771
+  ],
+  [
+   "Playa de Vega",
+   "Ribadesella",
+   "http://www.wewebcams.com/get_imagen_ws.php?id=186",
+   "http://webcamsdeasturias.com/interior.php?categoria=7",
+   "112",
+   43.479358,
+   -5.134387
+  ],
+  [
+   "Playa de San Antolín",
+   "Llanes",
+   "http://www.wewebcams.com/get_imagen_ws.php?id=166",
+   "http://webcamsdeasturias.com/interior.php?categoria=7",
+   "113",
+   43.4418,
+   -4.876271
+  ],
+  [
+   "Playa de Cuevas del Mar",
+   "Llanes",
+   "http://www.wewebcams.com/get_imagen_ws.php?id=174",
+   "http://webcamsdeasturias.com/interior.php?categoria=7",
+   "114",
+   43.456509,
+   -4.93691
+  ],
+  [
+   "Celoriu - Playa de Las Cámaras",
+   "Llanes",
+   "http://www.wewebcams.com/get_imagen_ws.php?id=177",
+   "http://webcamsdeasturias.com/interior.php?categoria=7",
+   "115",
+   43.430945,
+   -4.807118
+  ],
+  [
+   "InfoGijón: San Pedro",
+   "Gijón",
+   "http://www.wewebcams.com/get_imagen_ws.php?id=184",
+   "http://webcamsdeasturias.com/interior.php?categoria=7",
+   "116",
+   43.542247,
+   -5.6595
+  ],
+  [
+   "InfoGijón: Playa de San Lorenzo",
+   "Gijón",
+   "http://www.wewebcams.com/get_imagen_ws.php?id=180",
+   "http://webcamsdeasturias.com/interior.php?categoria=7",
+   "117",
+   43.541619,
+   -5.657703
+  ],
+  [
+   "Arenal de Morís",
+   "Caravia",
+   "http://www.wewebcams.com/get_imagen_ws.php?id=29",
+   "http://webcamsdeasturias.com/interior.php?categoria=7",
+   "118",
+   43.474225,
+   -5.176568
+  ],
+  [
+   "Playa de la Concha de Artedo",
+   "Cudillero",
+   "http://www.wewebcams.com/get_imagen_ws.php?id=173",
+   "http://webcamsdeasturias.com/interior.php?categoria=7",
+   "119",
+   43.564202,
+   -6.189734
+  ],
+  [
+   "Verdicio",
+   "Gozón",
+   "http://www.wewebcams.com/get_imagen_ws.php?id=38",
+   "http://webcamsdeasturias.com/interior.php?categoria=7",
+   "102",
+   43.6269211,
+   -5.8763743
+  ],
+  [
+   "Restaurante El Mirador, Lastres",
+   "Colunga",
+   "http://www.wewebcams.com/get_imagen_ws.php?id=14",
+   "http://webcamsdeasturias.com/interior.php?categoria=2",
+   "38",
+   43.5146522,
+   -5.2686126
+  ],
+  [
+   "Iglesia de San Pedro - Cimadevilla",
+   "Gijón",
+   "http://www.wewebcams.com/get_imagen_ws.php?id=1",
+   "http://webcamsdeasturias.com/interior.php?categoria=7",
+   "19",
+   43.5433434,
+   -5.6610506
+  ],
+  [
+   "Playa de San Lorenzo",
+   "Gijón",
+   "http://www.wewebcams.com/get_imagen_ws.php?id=110",
+   "http://webcamsdeasturias.com/interior.php?categoria=7",
+   "34",
+   "43.5423988",
+   -5.64555083E7
+  ],
+  [
+   "Rodiles Surf",
+   "Villaviciosa",
+   "http://www.wewebcams.com/get_imagen_ws.php?id=116",
+   "http://webcamsdeasturias.com/interior.php?categoria=7",
+   "86",
+   43.5320394,
+   -5.3761585
+  ],
+  [
+   "Playa de La Ribera",
+   "Gozón",
+   "http://www.wewebcams.com/get_imagen_ws.php?id=31",
+   "http://webcamsdeasturias.com/interior.php?categoria=7",
+   "87",
+   43.6154025,
+   -5.7916012
+  ],
+  [
+   "Playa de Rodiles",
+   "Villaviciosa",
+   "http://www.wewebcams.com/get_imagen_ws.php?id=100",
+   "http://webcamsdeasturias.com/interior.php?categoria=7",
+   "96",
+   43.5321626,
+   -5.3766039
+  ],
+  [
+   "Playa de Barro",
+   "Llanes",
+   "http://www.wewebcams.com/get_imagen_ws.php?id=64",
+   "http://webcamsdeasturias.com/interior.php?categoria=7",
+   "94",
+   43.4357774,
+   -4.8248254
+  ],
+  [
+   "Playa  de Toró",
+   "Llanes",
+   "http://www.wewebcams.com/get_imagen_ws.php?id=93",
+   "http://webcamsdeasturias.com/interior.php?categoria=7",
+   "88",
+   43.41684,
+   -4.745033
+  ],
+  [
+   "Playa de Santa Marina",
+   "Ribadesella",
+   "http://www.wewebcams.com/get_imagen_ws.php?id=107",
+   "http://webcamsdeasturias.com/interior.php?categoria=7",
+   "89",
+   43.4652814,
+   -5.06947233E7
+  ],
+  [
+   "Playa de la Griega",
+   "Colunga",
+   "http://www.wewebcams.com/get_imagen_ws.php?id=21",
+   "http://webcamsdeasturias.com/interior.php?categoria=7",
+   "90",
+   43.50259,
+   -5.2609408
+  ],
+  [
+   "Playa de Peñarronda",
+   "Castropol",
+   "http://www.wewebcams.com/get_imagen_ws.php?id=50",
+   "http://webcamsdeasturias.com/interior.php?categoria=7",
+   "91",
+   43.5530681,
+   -6.9928661
+  ],
+  [
+   "La Escalerona - Playa de San Lorenzo",
+   "Gijón",
+   "http://www.wewebcams.com/get_imagen_ws.php?id=65",
+   "http://webcamsdeasturias.com/interior.php?categoria=7",
+   "92",
+   43.5421342,
+   -5.6592559
+  ],
+  [
+   "Playa de Aguilar",
+   "Muros del Nalón",
+   "http://www.wewebcams.com/get_imagen_ws.php?id=106",
+   "http://webcamsdeasturias.com/interior.php?categoria=7",
+   "97",
+   43.5544678,
+   -6.1162758
+  ],
+  [
+   "Playa de Santa María del Mar",
+   "Castrillón",
+   "http://www.wewebcams.com/get_imagen_ws.php?id=69",
+   "http://webcamsdeasturias.com/interior.php?categoria=7",
+   "98",
+   43.571791,
+   -5.9964132
+  ]
+ ]
+}
+);

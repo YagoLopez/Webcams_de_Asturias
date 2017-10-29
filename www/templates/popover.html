@@ -1,16 +1,17 @@
 <ion-popover-view>
-  <ion-content>
-    <style type="text/css">
-      .popover{width: 250px; height: 120px; display: block}
-      .smal{font-size: small}
-    </style>
+  <style type="text/css">
+    .popover{width: 250px; height: 120px; display: block; background-color: white}
+    .small-font{font-size: small}
+    .bg-white{background-color: white; overflow: hidden}
+  </style>
+  <ion-content class="bg-white fade-in">
     <div class="list" ng-click="popover.hide()">
       <ion-list>
-        <ion-item href="#/app/mapa" class="item item-icon-left smal">
+        <ion-item href="#/app/mapa" class="item item-icon-left small-font">
           <i class="icon ion-android-pin"></i>
           Ver en Mapa
         </ion-item>
-        <ion-item href="#/app/streetview" class="item item-icon-left smal">
+        <ion-item href="#/app/streetview" class="item item-icon-left small-font">
           <i class="icon ion-ios-navigate"></i>
           Ver en Street View
         </ion-item>

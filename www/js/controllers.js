@@ -1,3 +1,4 @@
+//todo: tests para carga de datos de fusion table en listadoCtrl
 //todo: borrar comentarios en services.js
 //todo: info de mareas
 //todo: convertir en pwa
@@ -13,67 +14,44 @@
 var wcaModule = angular.module('wca.controllers',[]);
 // ====================================================================================================================
 wcaModule.controller('ListadoCtrl', function($scope, $stateParams, $rootScope, STRINGS,
-   SFusionTable, $filter, $ionicScrollDelegate, SCategorias, SLoader) {
+  SFusionTable, $filter, $ionicScrollDelegate, SCategorias, SLoader) {
 
   var concejo = $stateParams.concejo || '';
   var idCategoria = $stateParams.idCategoria || '';
   var sqlQuery = 'SELECT Lugar, Concejo, Imagen ,Categoria, rowid, latitud, longitud FROM '+ SFusionTable.TABLE_ID;
   $rootScope.cams = [];
-  $scope.camsPorCategoria = [];
+  $scope.camsFiltradas = [];
 
   SLoader.show('Cargando...');
-  $scope.imgError = function () {
-    $scope.error = STRINGS.ERROR;
-    $scope.$apply();
-  };
+  // $scope.imgError = function () {
+  //   $scope.error = STRINGS.ERROR;
+  //   $scope.$apply();
+  // };
 
-  function esSubcadena(idCategoria, urlCategoria) {
-    return (urlCategoria.indexOf('categoria=' + idCategoria) > -1);
+  function showError(errorMsg){
+    SLoader.hide();
+    $scope.error = STRINGS.ERROR;
+    console.log(errorMsg);
   }
 
   SFusionTable.getRemoteData(sqlQuery).success(function(data) {
-    if (data.error) {
-      console.error(data);
-      $scope.imgError();
-      SLoader.hide();
-    }
-
+    data.error && showError(data.error);
     // Cams totales sin filtrar
     $rootScope.cams = data.rows;
-
-    // Cams filtradas por parametros de url: concejo y categoria
-    $scope.camsPorCategoria = $filter('filter')(data.rows, function(cam) {
-      var filteredItems;
-      if (concejo && idCategoria) {
-        // cam[1]: concejo, cam[3]: url categoria (no id de categoria, no confundir)
-        filteredItems = (cam[1].toLowerCase() == concejo.toLowerCase() && esSubcadena(idCategoria, cam[3]));
-      } else {
-        if (concejo){
-          filteredItems = cam[1].toLowerCase() == concejo.toLowerCase();
-        }
-        if (idCategoria){
-          filteredItems = esSubcadena(idCategoria, cam[3]);
-        }
-        if (!concejo && !idCategoria){
-          filteredItems = data.rows;
-        }
-      }
-      return filteredItems;
-    });
-
+    // Cams filtradas por parametros url
+    $scope.camsFiltradas = SFusionTable.filtrarListaCams(concejo, idCategoria, data.rows);
     SLoader.hide();
   }).error(function(data, status) {
-    $scope.imgError();
-    SLoader.hide();
+    showError(status);
   });
 
   $scope.$on('$ionicView.afterEnter', function(){
-    $rootScope.concejo = concejo;
-    $rootScope.idCategoria = idCategoria;
+    $scope.concejo = concejo;
+    $scope.idCategoria = idCategoria;
     if (!idCategoria || idCategoria === '') {
-      $rootScope.tituloVista = 'Todas'
+      $scope.tituloVista = 'Todas'
     } else {
-      $rootScope.tituloVista = SCategorias.idCategoria_a_nombre(idCategoria);
+      $scope.tituloVista = SCategorias.idCategoria_a_nombre(idCategoria);
     }
   });
 });
@@ -178,20 +156,13 @@ wcaModule.controller('DetalleCtrl', function($scope, $stateParams, $ionicModal, 
 
   // Init --------------------------------------------------------------------------------------------------------------
 
-  var datosCam;
-  $scope.rowid = $stateParams.rowid;
-  $scope.descripcion = ' (Obteniendo datos del servidor...)';
+  $scope.info = ' (Obteniendo datos del servidor...)';
   SLoader.show('Cargando...');
-  if(!$rootScope.cams || !$scope.rowid){
+  if(!$rootScope.cams || !$stateParams.rowid){
     $location.path('#/'); // si no hay lista de items (cams) redirigir a root y abortar
     return;
   }
-
-  datosCam = $filter('filter')($rootScope.cams, function(cam) {
-    return cam[4] == $scope.rowid;
-  });
-
-  $rootScope.cam = new Cam(datosCam);
+  $rootScope.cam = new Cam( SFusionTable.getCamByRowid($stateParams.rowid, $rootScope.cams) );
 
   // Clima Data --------------------------------------------------------------------------------------------------------
 
@@ -199,7 +170,7 @@ wcaModule.controller('DetalleCtrl', function($scope, $stateParams, $ionicModal, 
   $scope.timerGetClimaData = setTimeout( function(){
     SClima.getData( $rootScope.cam.lat, $rootScope.cam.lng ).success(function(climadata){
       if(climadata.weather){
-        $scope.descripcion = climadata.weather[0].description;
+        $scope.info = climadata.weather[0].description;
         $scope.temp = climadata.main.temp;
         $scope.presion = climadata.main.pressure;
         $scope.humedad = climadata.main.humidity;
@@ -211,10 +182,10 @@ wcaModule.controller('DetalleCtrl', function($scope, $stateParams, $ionicModal, 
         //url icono: http://openweathermap.org/img/w/10n.png
         $scope.iconoUrl = 'http://openweathermap.org/img/w/'+climadata.weather[0].icon+'.png' ;
       } else {
-        $scope.descripcion = STRINGS.ERROR;
+        $scope.info = STRINGS.ERROR;
       }
     }).error(function(status){
-      $scope.descripcion = STRINGS.ERROR;
+      $scope.info = STRINGS.ERROR;
       console.error('SClima.getData(): ', status);
     });
   }, 1000);
@@ -223,7 +194,7 @@ wcaModule.controller('DetalleCtrl', function($scope, $stateParams, $ionicModal, 
 
   $scope.infoConcejo = 'Cargando...';
   $scope.getWikipediaInfo = function(){
-    SWikipedia.info($rootScope.cam.concejo).success(function(data){
+    SWikipedia.info($rootScope.cam.concejo + '_(Asturias)').success(function(data){
       var pageid = data.query.pageids[0];
       if(pageid) {
         $scope.infoConcejo = data.query.pages[pageid].extract;
@@ -240,7 +211,7 @@ wcaModule.controller('DetalleCtrl', function($scope, $stateParams, $ionicModal, 
   $ionicPopover.fromTemplateUrl('templates/popover.html', {scope: $scope})
     .then(function(popover) {$scope.popover = popover});
 
-  // Img Reload --------------------------------------------------------------------------------------------------------
+  // Reload image ------------------------------------------------------------------------------------------------------
 
   $scope.reloadImg = function(){
     SLoader.show('Recargando imagen...');

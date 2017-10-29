@@ -75,7 +75,7 @@ var filesToCache = [
  */
 if ('serviceWorker' in navigator) {
   // navigator.serviceWorker.register('wca-sw.js', {scope: '/Webcams_de_Asturias/www/#/app/listado?idCategoria=7'}).then(function() {
-  navigator.serviceWorker.register('wca-sw.js', {scope: '/www/'}).then(function() {
+  navigator.serviceWorker.register('wca-sw.js', {scope: '/Webcams_de_Asturias/www/'}).then(function() {
     console.log('sw: registration ok');
   }).catch(function(err) {
     console.error(err);

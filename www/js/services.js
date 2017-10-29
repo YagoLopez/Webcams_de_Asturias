@@ -21,7 +21,8 @@ wcaModule.service('SFusionTable', function($http){
 });
 */
 // ====================================================================================================================
-wcaModule.service('SFusionTable', function($http){
+//todo: renombrar SFusionTable a CamsCollection y añadir getCamsById, getCamsByConcejo, getCamsByCategoria
+wcaModule.service('SFusionTable', function($http, $filter){
 
   // Antiguas claves de identificacion
   var API_ENDPOINT = 'https://www.googleapis.com/fusiontables/v2/query';
@@ -57,6 +58,38 @@ wcaModule.service('SFusionTable', function($http){
   this.getLocalData = function(path_fichero){
     return $http.get(path_fichero);
   };
+
+  function esSubcadena(idCategoria, urlCategoria) {
+    return (urlCategoria.indexOf('categoria=' + idCategoria) > -1);
+  }
+
+  this.filtrarListaCams = function(concejo, idCategoria, listaCams){
+    var filteredItems;
+    return $filter('filter')(listaCams, function(cam) {
+      if (concejo && idCategoria) {
+        // cam[1]: concejo, cam[3]: url categoria (no id de categoria, no confundir)
+        filteredItems = (cam[1].toLowerCase() == concejo.toLowerCase() && esSubcadena(idCategoria, cam[3]));
+      } else {
+        if (concejo){
+          filteredItems = cam[1].toLowerCase() == concejo.toLowerCase();
+        }
+        if (idCategoria){
+          filteredItems = esSubcadena(idCategoria, cam[3]);
+        }
+        if (!concejo && !idCategoria){
+          filteredItems = listaCams;
+        }
+      }
+      return filteredItems;
+    });
+  };
+
+  this.getCamByRowid = function (rowid, listaCams) {
+    return $filter('filter')(listaCams, function(cam) {
+      return cam[4] == rowid;
+    });
+  }
+
 });
 // ====================================================================================================================
 wcaModule.service('SMapa', function(SFusionTable, SPopup){
@@ -232,7 +265,7 @@ wcaModule.factory('ItemMeteo', function(){
   function ItemMeteo(arr){
     if(arr){
       this.id = arr[0][0];
-      this.descripcion = arr[0][1];
+      this.info = arr[0][1];
       this.categoria = arr[0][2];
       this.nombre = arr[0][3];
       this.espectro = arr[0][4];
