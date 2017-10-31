@@ -2,7 +2,6 @@
 
   <style type="text/css">
     .item-thumbnail-left {min-height: 0; padding-left: 90px; padding-top: 18px}
-    .azul {color: #387ef5}
     .error {text-align: center; color: red; padding: 40px}
     #btn-mosaico{padding:0; border:0}
   </style>
@@ -18,7 +17,7 @@
   </ion-nav-buttons>
 
   <ion-content>
-    <div class="responsive-container">
+    <div class="responsive-page">
       <div ng-if="error" class="error">{{ ::error }}</div>
       <a class="item item-thumbnail-left item-icon-right"
          ng-repeat="cam in camsFiltradas track by cam[4]" href="#/app/detalle/{{ camsFiltradas[$index][4] }}">

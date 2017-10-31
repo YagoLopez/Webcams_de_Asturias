@@ -1,4 +1,4 @@
-var app = angular.module('wca', ['ionic', 'wca.controllers', 'wca.services', 'ionicLazyLoad']);
+var app = angular.module('wca', ['ionic', 'wca.controllers', 'wca.services']);
 
 // Configuracion ======================================================================================================
 app.config(function($stateProvider, $urlRouterProvider, $compileProvider, $ionicConfigProvider,

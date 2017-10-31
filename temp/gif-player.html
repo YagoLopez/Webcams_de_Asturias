@@ -6,7 +6,9 @@
     div.jsgif {width:100%; top: -3px}
     div.jsgif > canvas {width:100%}
     @media (min-width: 720px) {
-      div.jsgif {width: 80%; text-align: center; margin-top: 40px; margin-left: auto; margin-right: auto}}
+      div.jsgif {width: 80%; text-align: center; margin-top: 40px; margin-left: auto; margin-right: auto}
+      .card {width: 80%; margin: 32px auto}
+    }
     .btn-zoom {background:transparent; vertical-align: inherit}
     .light-gray {color: lightgray}
     .small-font {font-size: small}
@@ -23,7 +25,8 @@
     <ion-nav-back-button class="button-icon ion-android-arrow-back"></ion-nav-back-button>
   </ion-nav-bar>
 
-  <ion-content>
+  <ion-content class="bg-white">
+
     <!-- gif image ------------------------------------------------------------------------------------------------- -->
     <img id="gif" src="img/loader/6.gif" rel:animated_src="{{ image_data }}"
       rel:auto_play="0" rel:fps="700" ng-click="playPause()" width="100%"/>
@@ -33,8 +36,8 @@
       <!-- range slider -------------------------------------------------------------------------------------------- -->
       <label class="range range-assertive range-frames" ng-click="pause()" on-touch="pause()">
         <input id="levelRange" type="range" min="0" max="{{ totalFrames - 1 }}"
-          value="{{ currentFrame }}" ng-model="currentFrame" ng-change="irPosicion(currentFrame)"
-          style="margin:0"/>
+             value="{{ currentFrame }}" ng-model="currentFrame" ng-change="irPosicion(currentFrame)"
+             style="margin:0"/>
       </label>
       <!-- play controls-------------------------------------------------------------------------------------------- -->
       <div class="centered">
@@ -57,11 +60,11 @@
           <a class="button font-32" ng-click="end()" title="End"><i class="ion-ios-skipforward-outline"></i></a>
         </span>
       </div>
-      <!-- info fotogramas ----------------------------------------------------------------------------------------- -->
+      <!-- info frames --------------------------------------------------------------------------------------------- -->
       <div class="info-fotogramas">
         Fotograma: <b class="red">{{ gifAnimado.get_current_frame() + 1 }}</b> de {{ ::totalFrames }}
       </div>
-      <!-- /info fotogramas ---------------------------------------------------------------------------------------- -->
+      <!-- /info frames -------------------------------------------------------------------------------------------- -->
     </div>
 
     <!-- zoom controls --------------------------------------------------------------------------------------------- -->
@@ -90,5 +93,6 @@
       </div>
     </div>
      <!-- /card detalles ------------------------------------------------------------------------------------------- -->
+
   </ion-content>
 </ion-view>

@@ -1,5 +1,6 @@
 // todo: 'install' event is for old caches deletion. use it?
 // todo: split filesToCache in two arrays for easy configuration and merge them
+// todo: use es6
 // todo: use typescript. references:
 // https://github.com/DefinitelyTyped/DefinitelyTyped/tree/HEAD/service_worker_api
 
@@ -73,8 +74,8 @@ var filesToCache = [
  * Service worker registration
  */
 if ('serviceWorker' in navigator) {
-  // navigator.serviceWorker.register('wca-sw.js', {scope: '/Webcams_de_Asturias/www/#/app/listado?idCategoria=7'}).then(function() {
-  navigator.serviceWorker.register('wca-sw.js', {scope: '/Webcams_de_Asturias/www/'}).then(function() {
+  // navigator.serviceWorker.register('wca-sw.js', {scope: '/Webcams_de_Asturias/www/'}).then(function() {
+  navigator.serviceWorker.register('wca-sw.js').then(function() {
     console.log('sw: registration ok');
   }).catch(function(err) {
     console.error(err);
@@ -112,22 +113,13 @@ self.addEventListener('activate', function (event) {
  * @param {function} Callback function with event data
  *
  */
-self.addEventListener('sw: fetch', function(event) {
+self.addEventListener('fetch', function(event) {
   event.respondWith(
     // test if the request is cached
     caches.match(event.request).then(function(response) {
       // 1) if response cached, it will be returned from browser cache
       // 2) if response not cached, fetch resource from network
       return response || fetch(event.request);
-
-      // if(response) {
-      //   return response;
-      // } else {
-      //   return fetch(event.request).then(function (response) {
-      //     return response;
-      //   });
-      // }
-
     }).catch(function (err) {
       // if response not cached and network not available an error is thrown => return fallback image
       return caches.match('img/offline-img.png');

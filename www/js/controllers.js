@@ -2,7 +2,6 @@
 //todo: en vista "detalle.html", "buscar.html" usar resolve para comprobar si hay cams en rootscope y en caso contrario, cargarlas usando el servicio Cams
 //todo: tests para carga de datos de fusion table en listadoCtrl
 //todo: borrar comentarios en services.js
-//todo: convertir en pwa
 //todo: mejorar orientacion imagenes street view (heading)
 //TODO: podria ser mejor arrojar una excepcion en vez de llamar a Popup cada vez que hay un error. Ya se encarga el
 //TODO: servicio de excepciones de capturar la excepcion y mostrar un popup. De esta forma está más centralizado el tratamiento
@@ -17,8 +16,10 @@ var wcaModule = angular.module('wca.controllers',[]);
 wcaModule.controller('ListadoCtrl', function($scope, $stateParams, $rootScope, STRINGS,
   Cams, $filter, $ionicScrollDelegate, Categorias, Loader) {
 
-  var concejo = $stateParams.concejo || '';
-  var idCategoria = $stateParams.idCategoria || '';
+  // var concejo = $stateParams.concejo || '';
+  // var idCategoria = $stateParams.idCategoria || '';
+  var concejo = $stateParams.concejo;
+  var idCategoria = $stateParams.idCategoria;
   var sqlQuery = 'SELECT Lugar, Concejo, Imagen ,Categoria, rowid, latitud, longitud FROM '+ Cams.TABLE_ID;
   $rootScope.cams = [];
   $scope.camsFiltradas = [];

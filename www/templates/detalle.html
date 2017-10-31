@@ -2,7 +2,6 @@
 
   <style type="text/css">
     /* NOTA: no borrar estilos aunque parezca que sobran */
-    .card {padding-top: 1px; padding-bottom: 1px; margin-right:4%; margin-left:4%}
     .tabs-color-positive{border-bottom: 1px solid}
     .cam-img {height: 100%; width: 100%}
     .fnt-small {font-size: small}
@@ -22,7 +21,6 @@
     .ico-meteo {vertical-align: middle}
     .estado-meteo {white-space: normal}
     .meteo-data {padding: 10px}
-    @media (min-width: 720px) {.card {width: 75%; margin: 32px auto}}
   </style>
 
   <ion-nav-bar class="bar-positive">
@@ -35,7 +33,7 @@
   <ion-content ng-init="activeTab='meteoTab'">
 
     <!-- Card Img -------------------------------------------------------------------------------------------------  -->
-    <div class="list card">
+    <div class="list card resposive">
       <div class="item item-image cam-img">
         <a href="#/app/img-detalle">
           <img ng-src="{{ cam.imagen }}" fallback-src="img/imgFail.png" class="imgLoader" imageonload="imgLoaded()"/>
