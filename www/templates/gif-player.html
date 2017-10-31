@@ -3,9 +3,9 @@
 <!--suppress HtmlUnknownTarget -->
 <ion-view view-title="{{ ::itemMeteo.nombre }}" xmlns:rel="http://www.w3.org/1999/xhtml">
   <style>
-    div.jsgif > canvas{width:100%}
     div.jsgif {width:100%; top: -3px}
-    .btn-zoom {background-color:transparent; vertical-align: inherit}
+    div.jsgif > canvas {width:100%}
+    .btn-zoom {background:transparent; vertical-align: inherit}
     .light-gray {color: lightgray}
     .small-font {font-size: small}
     .range-label {display: inline-block; padding: 0}
@@ -15,14 +15,17 @@
     .red {color: red}
     .info-fotogramas {width: 100%; text-align:center; padding: 10px}
     .font-32 {font-size: 32px}
-    @media (min-width: 720px) { .card{width: 80%; margin: 32px auto} }
+    @media (min-width: 720px) {
+      div.jsgif {width: 80%; text-align: center; margin-top: 40px; margin-left: auto; margin-right: auto}
+      .card {width: 80%; margin: 32px auto}
+    }
   </style>
 
   <ion-nav-bar class="bar-positive">
     <ion-nav-back-button class="button-icon ion-android-arrow-back"></ion-nav-back-button>
   </ion-nav-bar>
 
-  <ion-content>
+  <ion-content class="bg-white">
 
     <!-- gif image ------------------------------------------------------------------------------------------------- -->
     <img id="gif" src="img/loader/6.gif" rel:animated_src="{{ image_data }}"
@@ -45,7 +48,7 @@
           </a>
         </span>
         <span>
-          <a class="button font-32" ng-click="restart()"><i class="ion-ios-skipbackward-outline" title="Restart"></i></a>
+          <a class="button font-32" ng-click="restart()" title="Restart"><i class="ion-ios-skipbackward-outline"></i></a>
         </span>
           <span>
           <a class="button font-32" ng-click="backward()" title="Backward"><i class="ion-ios-rewind-outline"></i></a>

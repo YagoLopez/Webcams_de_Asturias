@@ -1,6 +1,12 @@
 <!--suppress HtmlUnknownTarget -->
 <ion-view view-title="Street View">
-  <style type="text/css">#street-view{width: 100%; height: 70%}</style>
+  <style type="text/css">
+    #street-view{width: 100%; height: 70%}
+    @media (min-width: 720px) {
+      #street-view {width: 80%; margin: 40px auto}
+      .card {width: 80%}
+    }
+  </style>
 
   <ion-nav-bar class="bar-positive">
     <ion-nav-back-button class="button-icon ion-android-arrow-back"></ion-nav-back-button>
@@ -13,6 +19,6 @@
       <div class="item item-text-wrap">{{ ::cam.lugar }}</div>
       <div class="item item-text-wrap">Concejo: {{ ::cam.concejo }}</div>
     </div>
-    <div class="centered">(Ubicación aproximada)</div>
+    <div class="txt-info"><i class="ion-information-circled"></i> Ubicación aproximada</div>
   </ion-content>
 </ion-view>

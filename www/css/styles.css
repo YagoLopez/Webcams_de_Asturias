@@ -1,8 +1,8 @@
-ion-content {background-color: ghostwhite}
 @media (min-width: 720px) {
   .responsive-container {width: 80%; margin: 32px auto;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24)}
 }
+ion-content {background: ghostwhite}
 .img-cam {height: 64px !important; width: 72px !important; top: 6px !important;
   background: transparent url('../img/clock-32x32-3.png') no-repeat center center}
 .imgLoader{background: transparent url('../img/clock-32x32-3.png') no-repeat center center; cursor: pointer}
@@ -16,6 +16,8 @@ ion-content {background-color: ghostwhite}
 .pad-5 {padding: 5px}
 .marg-10 {margin: 10px}
 .verde {color: #28a54c}
+.bg-white {background: white}
+.txt-info {color: cornflowerblue; text-align: center}
 .cam-counter-left {background: #11c1f3; display: block; width: 25px; text-align: center; padding: 1px;
   margin: auto 4px; border-radius: 3px}
 /* ANIMATIONS --------------------------------------------------------------------------- */

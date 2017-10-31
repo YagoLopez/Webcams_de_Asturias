@@ -1,8 +1,7 @@
-//todo: streetview, gif-player responsivo
+//todo: info de mareas
 //todo: en vista "detalle.html", "buscar.html" usar resolve para comprobar si hay cams en rootscope y en caso contrario, cargarlas usando el servicio Cams
 //todo: tests para carga de datos de fusion table en listadoCtrl
 //todo: borrar comentarios en services.js
-//todo: info de mareas
 //todo: convertir en pwa
 //todo: mejorar orientacion imagenes street view (heading)
 //TODO: podria ser mejor arrojar una excepcion en vez de llamar a Popup cada vez que hay un error. Ya se encarga el

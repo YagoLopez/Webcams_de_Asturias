@@ -2,7 +2,6 @@
 
   <style type="text/css">
     /* NOTA: no borrar estilos aunque parezca que sobran */
-    .contenido-detalle{background-color: ghostwhite}
     .card {padding-top: 1px; padding-bottom: 1px; margin-right:4%; margin-left:4%}
     .tabs-color-positive{border-bottom: 1px solid}
     .cam-img {height: 100%; width: 100%}
@@ -11,7 +10,7 @@
     .div-info {width: 100%; overflow-y: scroll; height: 300px}
     .i-item {color: #387ef5; font-size: medium !important; margin-right: 5px; vertical-align: middle}
     .tab-active {font-weight: bold; color: cornflowerblue !important;
-      background-color: aliceblue;
+      background: aliceblue;
       border: 1px solid lightsteelblue;
       border-bottom-width: 0;
       border-top-left-radius: 5px;
@@ -33,7 +32,7 @@
     </ion-nav-buttons>
   </ion-nav-bar>
 
-  <ion-content class="contenido-detalle" ng-init="activeTab='meteoTab'">
+  <ion-content ng-init="activeTab='meteoTab'">
 
     <!-- Card Img -------------------------------------------------------------------------------------------------  -->
     <div class="list card">

@@ -27,7 +27,7 @@ app.config(function($stateProvider, $urlRouterProvider, $compileProvider, $ionic
     url: '/app', abstract: true, templateUrl: 'templates/menu.html'});
 // -------------------------------------------------------------------------------------------------------------------
   $stateProvider.state('app.mapa', {
-    url: '/mapa', cache: true, views: {'menuContent': {templateUrl: 'templates/mapa.html', controller: 'MapaCtrl'}}
+    url: '/mapa', cache: true, views: {'menuContent': {templateUrl: 'templates/detalle-mapa.html', controller: 'MapaCtrl'}}
   });
 // -------------------------------------------------------------------------------------------------------------------
   $stateProvider.state('app.mapaglobal', {url: '/mapaglobal', cache: true,
@@ -35,7 +35,7 @@ app.config(function($stateProvider, $urlRouterProvider, $compileProvider, $ionic
   });
 // -------------------------------------------------------------------------------------------------------------------
   $stateProvider.state('app.streetview', {url: '/streetview', cache: true,
-    views: {'menuContent': {templateUrl: 'templates/streetview.html', controller: 'StreetViewCtrl'}}
+    views: {'menuContent': {templateUrl: 'templates/detalle-streetview.html', controller: 'StreetViewCtrl'}}
   });
 // -------------------------------------------------------------------------------------------------------------------
   $stateProvider.state('app.detalle', {url: '/detalle/:rowid', cache: true,

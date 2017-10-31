@@ -32,7 +32,7 @@ var filesToCache = [
   'templates/gif-player.html',
   'templates/heatmap.html',
   'templates/listado.html',
-  'templates/mapa.html',
+  'templates/detalle-mapa.html',
   'templates/mapa-global.html',
   'templates/menu.html',
   'templates/meteo.html',
@@ -44,7 +44,7 @@ var filesToCache = [
   'templates/por_categoria.html',
   'templates/por_concejo.html',
   'templates/stats.html',
-  'templates/streetview.html',
+  'templates/detalle-streetview.html',
   'templates/viento.html',
 
   // IMAGES
