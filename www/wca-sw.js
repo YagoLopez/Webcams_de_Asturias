@@ -73,8 +73,8 @@ var filesToCache = [
  * Service worker registration
  */
 if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('wca-sw.js', {scope: '/Webcams_de_Asturias/www/'}).then(function() {
-  // navigator.serviceWorker.register('wca-sw.js').then(function() {
+  // navigator.serviceWorker.register('wca-sw.js', {scope: '/Webcams_de_Asturias/www/'}).then(function() {
+  navigator.serviceWorker.register('wca-sw.js').then(function() {
     console.log('sw: registration ok');
   }).catch(function(err) {
     console.error(err);
