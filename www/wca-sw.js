@@ -8,7 +8,6 @@ var filesToCache = [
 
   '/',
   'index.html',
-  '/www/index.html',
   'https://www.googleapis.com/fusiontables/v2/query?sql=SELECT%20Lugar,%20Concejo,%20Imagen%20,Categoria,%20rowid,%20latitud,%20longitud%20FROM%201gX5maFbqFyRziZiUYlpOBYhcC1v9lGkKqCXvZREF&key=AIzaSyBsdouSTimjrC2xHmbGgOt8VfbLBWc9Gps&callback=angular.callbacks._0',
 
   // CSS
@@ -73,8 +72,8 @@ var filesToCache = [
  * Service worker registration
  */
 if ('serviceWorker' in navigator) {
-  // navigator.serviceWorker.register('wca-sw.js', {scope: '/Webcams_de_Asturias/www/'}).then(function() {
-  navigator.serviceWorker.register('wca-sw.js').then(function() {
+  navigator.serviceWorker.register('wca-sw.js', {scope: '/Webcams_de_Asturias/www/'}).then(function() {
+  // navigator.serviceWorker.register('wca-sw.js').then(function() {
     console.log('sw: registration ok');
   }).catch(function(err) {
     console.error(err);
