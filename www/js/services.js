@@ -355,7 +355,7 @@ wcaModule.service('Categorias', function(){
 });
 // ====================================================================================================================
 wcaModule.constant('STRINGS', {
-  ERROR: 'Error. No se han podido obtener datos remotos. Posibles causas: ' +
+  ERROR: 'No se han podido obtener datos remotos. Posibles causas: ' +
     '(1) Sin conexión de datos. (2) Fallo de servidor remoto',
   RECARGANDO_IMG: 'Recargando imagen...'
 });

@@ -1,8 +1,6 @@
 // todo: 'install' event is for old caches deletion. use it?
 // todo: split filesToCache in two arrays for easy configuration and merge them
 // todo: use es6
-// todo: use typescript. references:
-// https://github.com/DefinitelyTyped/DefinitelyTyped/tree/HEAD/service_worker_api
 
 var cacheName = 'wca';
 
@@ -10,6 +8,7 @@ var filesToCache = [
 
   '/',
   'index.html',
+  '/www/index.html',
   'https://www.googleapis.com/fusiontables/v2/query?sql=SELECT%20Lugar,%20Concejo,%20Imagen%20,Categoria,%20rowid,%20latitud,%20longitud%20FROM%201gX5maFbqFyRziZiUYlpOBYhcC1v9lGkKqCXvZREF&key=AIzaSyBsdouSTimjrC2xHmbGgOt8VfbLBWc9Gps&callback=angular.callbacks._0',
 
   // CSS
@@ -91,7 +90,7 @@ if ('serviceWorker' in navigator) {
 self.addEventListener('install', function(event) {
   event.waitUntil(
     caches.open(cacheName).then(function(cache) {
-      console.log('sw: writing files into cache');
+      console.log('sw: writing files to cache');
       return cache.addAll(filesToCache);
     })
   )
@@ -119,7 +118,7 @@ self.addEventListener('fetch', function(event) {
     caches.match(event.request).then(function(response) {
       // 1) if response cached, it will be returned from browser cache
       // 2) if response not cached, fetch resource from network
-      return response || fetch(event.request);
+      return response || fetch(event.request, {mode: 'no-cors'});
     }).catch(function (err) {
       // if response not cached and network not available an error is thrown => return fallback image
       return caches.match('img/offline-img.png');
