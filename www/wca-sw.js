@@ -1,13 +1,16 @@
 // todo: 'install' event is for old caches deletion. use it?
-// todo: split filesToCache in two arrays for easy configuration and merge them
+// todo: split filesToCache into two arrays for easy configuration and merge them
 // todo: use es6
 
 var cacheName = 'wca';
 
 var filesToCache = [
 
-  '/',
-  'index.html',
+  // '/',
+  // 'index.html',
+  '/www/#/app/listado?idCategoria=7',
+  '/www/index.html#/app/listado?idCategoria=7',
+  // 'https://yagolopez.js.org/Webcams_de_Asturias/www/index.html#/app/listado?idCategoria=7',
   'https://www.googleapis.com/fusiontables/v2/query?sql=SELECT%20Lugar,%20Concejo,%20Imagen%20,Categoria,%20rowid,%20latitud,%20longitud%20FROM%201gX5maFbqFyRziZiUYlpOBYhcC1v9lGkKqCXvZREF&key=AIzaSyBsdouSTimjrC2xHmbGgOt8VfbLBWc9Gps&callback=angular.callbacks._0',
 
   // CSS
@@ -114,17 +117,22 @@ self.addEventListener('activate', function (event) {
  *
  */
 self.addEventListener('fetch', function(event) {
-  // console.log(event.request.url);
   event.respondWith(
     // test if the request is cached
     caches.match(event.request).then(function(response) {
-      // 1) if response cached, it will be returned from browser cache
-      // 2) if response not cached, return off-line image
-      // return response || fetch(event.request, {mode: 'cors'});
-      // todo: Detectar cuando request es una imagen (sugerencia: inspeccionar: event.request -> mimeType)
-      return response || caches.match('img/offline-img.png');
+      if(response){
+        // 1) if request is cached, response will be returned from browser cache
+        // console.log('request is cached: ', event.request.url);
+        return response;
+      } else {
+        // 2) if request is not cached, fetch response from network
+        // console.log('request is not cached: ', event.request.url);
+        return fetch(event.request, {mode: 'no-cors'})
+      }
+      // return response || fetch(event.request, {mode: 'no-cors'});
     }).catch(function (err) {
-      console.log('url no encontrada en cache -> fetch error: ', err);
+      console.log('caches.match() error: ', err);
+      // todo: Detectar cuando request es una imagen (sugerencia: inspeccionar: event.request -> mimeType)
       // if response not cached and network not available an error is thrown => return fallback image
       return caches.match('img/offline-img.png');
     })
