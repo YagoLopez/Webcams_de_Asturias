@@ -6,7 +6,7 @@ var cacheName = 'wca';
 
 var filesToCache = [
 
-  // '/',
+  '/',
   'index.html',
   'https://www.googleapis.com/fusiontables/v2/query?sql=SELECT%20Lugar,%20Concejo,%20Imagen%20,Categoria,%20rowid,%20latitud,%20longitud%20FROM%201gX5maFbqFyRziZiUYlpOBYhcC1v9lGkKqCXvZREF&key=AIzaSyBsdouSTimjrC2xHmbGgOt8VfbLBWc9Gps&callback=angular.callbacks._0',
 
@@ -44,6 +44,7 @@ var filesToCache = [
   'templates/por_concejo.html',
   'templates/stats.html',
   'templates/detalle-streetview.html',
+  'templates/windy.html',
 
   // IMAGES
   'img/bckgrnd6.jpg',
@@ -74,8 +75,8 @@ var filesToCache = [
  */
 if ('serviceWorker' in navigator) {
   // navigator.serviceWorker.register('wca-sw.js', {scope: '/Webcams_de_Asturias/www/'}).then(function() {
-  navigator.serviceWorker.register('wca-sw.js').then(function() {
-    console.log('sw: registration ok');
+  navigator.serviceWorker.register('wca-sw.js').then(function(registration) {
+    console.log('sw: registration ok, scope: ', registration.scope);
   }).catch(function(err) {
     console.error(err);
   });
@@ -103,7 +104,7 @@ self.addEventListener('install', function(event) {
  *
  */
 self.addEventListener('activate', function (event) {
-  console.log('sw: service worker ready and activated');
+  console.log('sw: service worker installed and activated');
 });
 /** --------------------------------------------------------------------------------------------------------------------
  * 'Fetch' event. Browser tries to get resources making a request
@@ -113,13 +114,17 @@ self.addEventListener('activate', function (event) {
  *
  */
 self.addEventListener('fetch', function(event) {
+  // console.log(event.request.url);
   event.respondWith(
     // test if the request is cached
     caches.match(event.request).then(function(response) {
       // 1) if response cached, it will be returned from browser cache
-      // 2) if response not cached, fetch resource from network
-      return response || fetch(event.request, {mode: 'no-cors'});
+      // 2) if response not cached, return off-line image
+      // return response || fetch(event.request, {mode: 'cors'});
+      // todo: Detectar cuando request es una imagen (sugerencia: inspeccionar: event.request -> mimeType)
+      return response || caches.match('img/offline-img.png');
     }).catch(function (err) {
+      console.log('url no encontrada en cache -> fetch error: ', err);
       // if response not cached and network not available an error is thrown => return fallback image
       return caches.match('img/offline-img.png');
     })
