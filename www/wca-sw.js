@@ -6,10 +6,10 @@ var cacheName = 'wca';
 
 var filesToCache = [
 
-  // '/',
-  // 'index.html',
-  '/www/#/app/listado?idCategoria=7',
-  '/www/index.html#/app/listado?idCategoria=7',
+  '/',
+  'index.html',
+  // '/www/#/app/listado?idCategoria=7',
+  // '/www/index.html#/app/listado?idCategoria=7',
   // 'https://yagolopez.js.org/Webcams_de_Asturias/www/index.html#/app/listado?idCategoria=7',
   'https://www.googleapis.com/fusiontables/v2/query?sql=SELECT%20Lugar,%20Concejo,%20Imagen%20,Categoria,%20rowid,%20latitud,%20longitud%20FROM%201gX5maFbqFyRziZiUYlpOBYhcC1v9lGkKqCXvZREF&key=AIzaSyBsdouSTimjrC2xHmbGgOt8VfbLBWc9Gps&callback=angular.callbacks._0',
 
