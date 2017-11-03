@@ -19,7 +19,7 @@
 .azul {color: #387ef5}
 .verde {color: #28a54c}
 .bg-blue {background: cornflowerblue}
-.txt-info {color: cornflowerblue; text-align: center}
+.txt-info {color: cornflowerblue; text-align: center; padding-left: 10px; padding-right: 10px}
 .cam-counter-left {background: #11c1f3; display: block; width: 25px; text-align: center; padding: 1px;
   margin: auto 4px; border-radius: 3px}
 /* ANIMATIONS --------------------------------------------------------------------------- */
