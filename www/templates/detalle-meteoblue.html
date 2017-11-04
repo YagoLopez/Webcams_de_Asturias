@@ -6,7 +6,7 @@
     #scroll-container > img {width: 35px; vertical-align: middle}
     ion-header-bar > div > img {width: 35px; vertical-align: middle}
     .gray {color: gray}
-    @media (min-width: 720px) {#img-meteoblue {width: 80%; display: block; margin: auto; cursor: move; padding-bottom: 40px}}
+    @media (min-width: 720px) {#img-meteoblue {width: 75%; display: block; margin: auto; cursor: move; padding-bottom: 40px}}
   </style>
 
   <ion-nav-bar>
@@ -20,7 +20,7 @@
   <!-- [locking="false"] para permitir srcroll simultaneo en ejes x,y. apropiado para hacer zoom -->
   <ion-scroll id="scroll-container" zooming="true" direction="xy" locking="false" overflow-scroll="false">
     <h5 class="gray">Predicción</h5>
-    <div class="loader3"><img class="rotate-center" src="img/clock-32x32-3.png"/></div>
+    <div class="loader3"><img class="rotate-center" src="img/clock.png"/></div>
     <img id="img-meteoblue fade-in" ng-src="{{ ::urlMeteoblue }}" fallback-src="img/imgFail.png"/>
   </ion-scroll>
 

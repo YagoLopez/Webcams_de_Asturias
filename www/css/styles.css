@@ -1,15 +1,13 @@
-/* todo: scale-in animation: use linear curve for simplicity */
 @media (min-width: 720px) {
-  .responsive-page {width: 80%; margin: 32px auto;
+  .responsive-page {width: 75%; margin: 32px auto;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24)}
-  .card {width: 80%; margin: 32px auto}
+  .card {width: 75%; margin: 32px auto}
 }
 .img-cam {height: 64px !important; width: 72px !important; top: 6px !important;
-  background: transparent url('../img/clock-32x32-3.png') no-repeat center center}
-.imgLoader{background: transparent url('../img/clock-32x32-3.png') no-repeat center center; cursor: pointer}
+  background: transparent url('../img/clock.png') no-repeat center center}
+.img-loading {background: transparent url('../img/clock.png') no-repeat center center; /* cursor: pointer */}
 .centered {text-align: center}
-.sombraInferior{box-shadow: -1px 1px 5px #888888}
-.cargando{text-align: center; margin-top: 65%}
+.cargando {text-align: center; margin-top: 65%}
 .loader {position: absolute; text-align: center; width: 100%; top: 30%; z-index: -1}
 .loader2 {position: relative; top: 25%; left: 45%; z-index: -1}
 .loader3 {position: absolute; width: 100%; top: 225px; z-index: -1}
@@ -22,6 +20,8 @@
 .txt-info {color: cornflowerblue; text-align: center; padding-left: 10px; padding-right: 10px}
 .cam-counter-left {background: #11c1f3; display: block; width: 25px; text-align: center; padding: 1px;
   margin: auto 4px; border-radius: 3px}
+/*.sombra-inferior {box-shadow: -1px 1px 5px #888888}*/
+
 /* ANIMATIONS --------------------------------------------------------------------------- */
 /* Fade in */
 .fade-in {-webkit-animation: fade 0.4 ease both; animation: fade 0.4s ease both}
@@ -35,6 +35,7 @@
 .scale-up-tr{-webkit-animation:scale-up-tr .2s both;animation:scale-up-tr .2s both}
 @-webkit-keyframes scale-up-tr{0%{-webkit-transform:scale(.5);transform:scale(.5);-webkit-transform-origin:100% 0;transform-origin:100% 0}100%{-webkit-transform:scale(1);transform:scale(1);-webkit-transform-origin:100% 0;transform-origin:100% 0}}
 @keyframes scale-up-tr{0%{-webkit-transform:scale(.5);transform:scale(.5);-webkit-transform-origin:100% 0;transform-origin:100% 0}100%{-webkit-transform:scale(1);transform:scale(1);-webkit-transform-origin:100% 0;transform-origin:100% 0}}
+
 /* SCROLLBARS ------------------------------------------------------------------------- */
 body{
 scrollbar-base-color: #C0C0C0; scrollbar-face-color: darkgrey; scrollbar-3dlight-color: #C0C0C0;

@@ -51,7 +51,7 @@ var filesToCache = [
 
   // IMAGES
   'img/bckgrnd6.jpg',
-  'img/clock-32x32-3.png',
+  'img/clock.png',
   'img/eu.png',
   'img/icon-river.png',
   'img/imgFail.png',

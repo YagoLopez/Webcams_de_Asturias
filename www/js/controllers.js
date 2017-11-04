@@ -1,3 +1,7 @@
+//todo: revisar datos en bbdd fusion tables
+//todo: refactorizar la comprobacion de existencia de cams en cada vista. Unificar en un servicio
+//todo: cambiar icono clock estatico por imagen estatica
+//todo: tamaño e icons en manifes.json
 //todo: info de mareas
 //todo: en vista "detalle.html", "buscar.html" usar resolve para comprobar si hay cams en rootscope y en caso contrario, cargarlas usando el servicio Cams
 //todo: tests para carga de datos de fusion table en listadoCtrl
@@ -72,7 +76,7 @@ wcaModule.controller('MapaCtrl', function($scope, Mapa, $rootScope, $location){
       posicion = {lat: $rootScope.cam.lat, lng: $rootScope.cam.lng};
       Mapa.creaMarker(posicion, mapa);
       mapa.setCenter(posicion);
-      mapa.setZoom(13);
+      mapa.setZoom(18);
     }
   });
 });
@@ -219,7 +223,7 @@ wcaModule.controller('DetalleCtrl', function($scope, $stateParams, $ionicModal, 
     Loader.show('Recargando imagen...');
     setTimeout(function(){
       $scope.$apply(function(){
-        $rootScope.cam.imagen = $rootScope.cam.imagen + '#' + new Date().getTime();
+        $rootScope.cam.imagen = $rootScope.cam.imagen + '#' + new Date().getTime().toString().substring(0, 3);
         console.log('Recargando imagen: ', $rootScope.cam.imagen);
         Loader.hide();
       })

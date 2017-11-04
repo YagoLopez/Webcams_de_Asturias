@@ -33,10 +33,10 @@
   <ion-content ng-init="activeTab='meteoTab'">
 
     <!-- Card Img -------------------------------------------------------------------------------------------------  -->
-    <div class="list card resposive">
+    <div class="list card">
       <div class="item item-image cam-img">
         <a href="#/app/img-detalle">
-          <img ng-src="{{ cam.imagen }}" fallback-src="img/imgFail.png" class="imgLoader" imageonload="imgLoaded()"/>
+          <img ng-src="{{ cam.imagen }}" class="img-loading" fallback-src="img/imgFail.png" imageonload="imgLoaded()"/>
         </a>
       </div>
       <div class="item item-body fnt-small">
@@ -73,7 +73,7 @@
       </div>
       <!-- /Tabs bar -->
 
-      <!--Tab Meteo-->
+      <!-- Tab Meteo Content -->
       <div ng-show="activeTab === 'meteoTab'" class="item">
         <div class="txt-meteo">
           <div>
@@ -97,18 +97,18 @@
           </div>
         </div>
       </div>
-      <!--/Tab Meteo-->
+      <!-- /Tab Meteo Content -->
 
-      <!--Tab Wikipedia-->
+      <!-- Tab Wikipedia Content -->
       <div ng-show="activeTab === 'infoTab'" class="item-body div-info" ng-class="{active:active}">
         <div ng-if="infoConcejo">
           <div>{{ infoConcejo }}</div>
-          <div><a href="{{ wikiUrl }}" target="_blank">Ampliar Información</a></div>
+          <div><a ng-href="{{ wikiUrl }}" target="_blank">Ampliar Información</a></div>
         </div>
-        <div ng-if="!infoConcejo">No hay resultados</div>
+        <div ng-if="!infoConcejo || infoConcejo.length < 100">No hay resultados</div>
         <div><br>Fuente: <a href="https://es.wikipedia.org" target="_blank">Wikipedia</a></div>
       </div>
-      <!-- /Tab Wikipedia -->
+      <!-- /Tab Wikipedia Content -->
 
     </div>
     <!-- Fin Card Tabs --------------------------------------------------------------------------------------------- -->
