@@ -1,16 +1,17 @@
-//todo: revisar datos en bbdd fusion tables
-//todo: refactorizar la comprobacion de existencia de cams en cada vista. Unificar en un servicio
-//todo: cambiar icono clock estatico por imagen estatica
-//todo: tamaño e icons en manifes.json
+//todo: refactorizar la comprobacion de existencia de cams en cada vista (en nueva rama). Unificar en un servicio
+//todo: calcular altura en imagenes en vista mosaico.html
+//todo: cancelar carga de imagen en vista detalle.html como en gif-player.html
+//todo: tamaño e icons en manifest.json
+//todo: detalles en meteo.html no aparecen
 //todo: info de mareas
-//todo: en vista "detalle.html", "buscar.html" usar resolve para comprobar si hay cams en rootscope y en caso contrario, cargarlas usando el servicio Cams
+//todo: en vista "detalle.html", "buscar.html", etc. usar resolve para comprobar si hay cams en rootscope y en caso contrario, cargarlas usando el servicio Cams
 //todo: tests para carga de datos de fusion table en listadoCtrl
 //todo: borrar comentarios en services.js
 //todo: mejorar orientacion imagenes street view (heading)
 //TODO: podria ser mejor arrojar una excepcion en vez de llamar a Popup cada vez que hay un error. Ya se encarga el
 //TODO: servicio de excepciones de capturar la excepcion y mostrar un popup. De esta forma está más centralizado el tratamiento
 //TODO: de errores
-//TODO: hacer perfilado en chrome mobile, ver como se comporta la memoria y el procesador al ejecutar la app
+//TODO: hacer perfilado en chrome mobile, ver como se comporta la memoria y el procesador
 //TODO: hacer zoom en mapa global cuando se escoja filtro por concejo. Usar coordenadas lat lng
 //TODO: añadir favoritos
 //todo: geolocalizacion y busqueda webcams cercanas
@@ -64,20 +65,18 @@ wcaModule.controller('ListadoCtrl', function($scope, $stateParams, $rootScope, S
 // ====================================================================================================================
 wcaModule.controller('MapaCtrl', function($scope, Mapa, $rootScope, $location){
 
+  var mapa, layer, posicion;
+  if(!$rootScope.cam){
+    $location.path( "#/" );
+    return;
+  }
   $scope.$on('$ionicView.afterEnter', function() {
-    var mapa, layer, posicion;
-
-    if(!$rootScope.cam){
-      $location.path( "#/" );
-      return;
-    } else {
-      mapa = Mapa.crear(document.getElementById('mapa'));
-      layer = Mapa.creaFusionTableLayer().setMap(mapa);
-      posicion = {lat: $rootScope.cam.lat, lng: $rootScope.cam.lng};
-      Mapa.creaMarker(posicion, mapa);
-      mapa.setCenter(posicion);
-      mapa.setZoom(18);
-    }
+    mapa = Mapa.crear(document.getElementById('mapa'));
+    layer = Mapa.creaFusionTableLayer().setMap(mapa);
+    posicion = {lat: $rootScope.cam.lat, lng: $rootScope.cam.lng};
+    Mapa.creaMarker(posicion, mapa);
+    mapa.setCenter(posicion);
+    mapa.setZoom(18);
   });
 });
 // ====================================================================================================================
@@ -85,7 +84,6 @@ wcaModule.controller('MapaGlobalCtrl', function($scope, $rootScope, $filter, Map
   Categorias){
 
   var layer, mapa, sqlQueryConcejos, sqlQueryCategorias, zoomLevel = 7;
-
   sqlQueryConcejos = 'SELECT Concejo FROM '+Cams.TABLE_ID+' GROUP BY Concejo';
   sqlQueryCategorias = 'SELECT Categoria FROM '+Cams.TABLE_ID+' GROUP BY Categoria';
   $scope.filtro = {categoria: '', concejo: ''};
@@ -148,13 +146,11 @@ wcaModule.controller('MapaGlobalCtrl', function($scope, $rootScope, $filter, Map
   };
 
   // Activa manualmente el ciclo de deteccion de cambios de angular (digest cycle) para evaluar javascript externo
-  // (En este caso google maps)
+  // (En este caso google maps). Nota: $scope.$apply() da error.
   setTimeout(function () {
     mapa = Mapa.crear(document.getElementById('mapaglobal'));
     $scope.mostrarTodas(); // por defecto
   }, 0);
-
-
 });
 // ====================================================================================================================
 wcaModule.controller('DetalleCtrl', function($scope, $stateParams, $ionicModal, Clima, $filter, $rootScope,
@@ -162,7 +158,7 @@ wcaModule.controller('DetalleCtrl', function($scope, $stateParams, $ionicModal, 
 
   // Init --------------------------------------------------------------------------------------------------------------
 
-  $scope.info = ' (Obteniendo datos del servidor...)';
+  $scope.infoMeteo = ' (Obteniendo datos del servidor...)';
   Loader.show('Cargando...');
   if(!$rootScope.cams || !$stateParams.rowid){
     $location.path('#/'); // si no hay lista de items (cams) redirigir a root y abortar
@@ -176,7 +172,7 @@ wcaModule.controller('DetalleCtrl', function($scope, $stateParams, $ionicModal, 
   $scope.timerGetClimaData = setTimeout( function(){
     Clima.getData( $rootScope.cam.lat, $rootScope.cam.lng ).success(function(climadata){
       if(climadata.weather){
-        $scope.info = climadata.weather[0].description;
+        $scope.infoMeteo = climadata.weather[0].description;
         $scope.temp = climadata.main.temp;
         $scope.presion = climadata.main.pressure;
         $scope.humedad = climadata.main.humidity;
@@ -188,10 +184,10 @@ wcaModule.controller('DetalleCtrl', function($scope, $stateParams, $ionicModal, 
         //url icono: http://openweathermap.org/img/w/10n.png
         $scope.iconoUrl = 'http://openweathermap.org/img/w/'+climadata.weather[0].icon+'.png' ;
       } else {
-        $scope.info = STRINGS.ERROR;
+        $scope.infoMeteo = STRINGS.ERROR;
       }
     }).error(function(status){
-      $scope.info = STRINGS.ERROR;
+      $scope.infoMeteo = STRINGS.ERROR;
       console.error('Clima.getData(): ', status);
     });
   }, 1000);
@@ -546,9 +542,10 @@ wcaModule.controller('PorCategoriaCtrl', function($scope, $window, $sce){
   $scope.urlGraficoSectores = $sce.trustAsResourceUrl(urlGraficoSectores);
   $scope.urlGraficoBarras = $sce.trustAsResourceUrl(urlGraficoBarras);
 
-  // $scope.cargaFrameTerminada = function(){
-  //   Loader.hide();
-  // }
+  $scope.cargaIFrameTerminada = function(){
+    // Loader.hide();
+    alert();
+  }
 
   });
 // ====================================================================================================================

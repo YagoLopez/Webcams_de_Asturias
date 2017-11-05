@@ -53,7 +53,7 @@
     <inspection_tool class="HtmlUnknownAttribute" enabled="true" level="WARNING" enabled_by_default="true">
       <option name="myValues">
         <value>
-          <list size="7">
+          <list size="8">
             <item index="0" class="java.lang.String" itemvalue="rel:animated_src" />
             <item index="1" class="java.lang.String" itemvalue="rel:auto_play" />
             <item index="2" class="java.lang.String" itemvalue="ng-src" />
@@ -61,6 +61,7 @@
             <item index="4" class="java.lang.String" itemvalue="ng-modal" />
             <item index="5" class="java.lang.String" itemvalue="ng-model" />
             <item index="6" class="java.lang.String" itemvalue="ng-change" />
+            <item index="7" class="java.lang.String" itemvalue="overflow-scroll" />
           </list>
         </value>
       </option>

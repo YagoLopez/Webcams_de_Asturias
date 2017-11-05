@@ -6,10 +6,11 @@
     /*noinspection CssUnknownTarget*/
     .menu-top-img {height:100px; display:block; background:url(img/bckgrnd6.jpg) !important}
     .menu-item {vertical-align:text-top}
-    .ion-content {top:110px}
+    #menu-content {top:110px}
     .credits {font-size:small; text-align:center}
     .font20 {font-size:20px; vertical-align: sub}
     .font25 {font-size:25px; vertical-align: sub}
+    .credits-ico {color: gray; font-size: 21px; vertical-align: text-top}
   </style>
 
   <!-- Side Menu --------------------------------------------------------------------------------------------------- -->
@@ -20,7 +21,7 @@
     <ion-header-bar class="bar-royal menu-top-img">
       <h1 class="title"></h1>
     </ion-header-bar>
-    <ion-content class="ion-content">
+    <ion-content id="menu-content" class="ion-content">
       <ion-list id="left-menu" class="pad-top-10">
         <ion-item menu-close ui-sref="app.listado({idCategoria:7})">
           <i class="icon icon-left ion-ios-sunny menu-item font25"></i> Playas
@@ -52,7 +53,7 @@
       </ion-list>
       <br/>
       <div class="credits">
-        Desarrollado por<br/>
+        <i class="ion-social-codepen credits-ico"></i> Desarrollado por<br/>
         <a href="https://yagolopez.js.org" target="_blank">Yago López</a><br/><br/><br/>
       </div>
     </ion-content>

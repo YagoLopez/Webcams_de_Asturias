@@ -20,8 +20,9 @@
   <!-- [locking="false"] para permitir srcroll simultaneo en ejes x,y. apropiado para hacer zoom -->
   <ion-scroll id="scroll-container" zooming="true" direction="xy" locking="false" overflow-scroll="false">
     <h5 class="gray">Predicción</h5>
-    <div class="loader3"><img class="rotate-center" src="img/clock.png"/></div>
-    <img id="img-meteoblue fade-in" ng-src="{{ ::urlMeteoblue }}" fallback-src="img/imgFail.png"/>
+    <div id="img-meteoblue-loader" class="loader3 fade-in"><img class="rotate-center" src="img/clock.png"/></div>
+    <img id="img-meteoblue fade-in" ng-src="{{ ::urlMeteoblue }}" fallback-src="img/imgFail.png"
+      imageonload="removeDomElementById('img-meteoblue-loader')"/>
   </ion-scroll>
 
 </ion-view>

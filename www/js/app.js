@@ -109,6 +109,15 @@ app.run(function($ionicPlatform, $rootScope, $window) {
 
   $rootScope.screenWidth = $window.innerWidth;
 
+  $rootScope.removeDomElementById = function (id) {
+    var element = document.getElementById(id);
+    try{
+      element.parentNode.removeChild(element);
+    }catch(error){
+      console.warn(error);
+    }
+  };
+
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)

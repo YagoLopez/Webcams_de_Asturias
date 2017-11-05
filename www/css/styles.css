@@ -3,9 +3,11 @@
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24)}
   .card {width: 75%; margin: 32px auto}
 }
+/*.img-cam {height: 64px !important; width: 72px !important; top: 6px !important;*/
+  /*background: transparent url('../img/clock.png') no-repeat center center}*/
 .img-cam {height: 64px !important; width: 72px !important; top: 6px !important;
-  background: transparent url('../img/clock.png') no-repeat center center}
-.img-loading {background: transparent url('../img/clock.png') no-repeat center center; /* cursor: pointer */}
+  background: transparent url('../img/loading-img5-small.png') no-repeat center center}
+.img-loading {background: transparent url('../img/loading-img5-small.png') no-repeat center center}
 .centered {text-align: center}
 .cargando {text-align: center; margin-top: 65%}
 .loader {position: absolute; text-align: center; width: 100%; top: 30%; z-index: -1}
@@ -24,18 +26,27 @@
 
 /* ANIMATIONS --------------------------------------------------------------------------- */
 /* Fade in */
-.fade-in {-webkit-animation: fade 0.4 ease both; animation: fade 0.4s ease both}
+.fade-in {-webkit-animation: fade 0.4s ease both; animation: fade 0.4s ease both}
+@-webkit-keyframes fade {from {opacity: 0 } to { opacity: 1 }}
+@keyframes fade {from {opacity: 0 } to { opacity: 1 }}
+/* Fade in long */
+.fade-in-long {-webkit-animation: fade 2s ease both; animation: fade 2s ease both}
 @-webkit-keyframes fade {from {opacity: 0 } to { opacity: 1 }}
 @keyframes fade {from {opacity: 0 } to { opacity: 1 }}
 /* Rotate Center */
 .rotate-center{-webkit-animation:rotate-center .6s linear .3s 8 both;animation:rotate-center .6s linear .3s 8 both}
-@-webkit-keyframes rotate-center{0%{-webkit-transform:rotate(0);transform:rotate(0)}100%{-webkit-transform:rotate(360deg);transform:rotate(360deg)}}
-@keyframes rotate-center{0%{-webkit-transform:rotate(0);transform:rotate(0)}100%{-webkit-transform:rotate(360deg);transform:rotate(360deg)}}
-/* Scale to left */
-.scale-up-tr{-webkit-animation:scale-up-tr .2s both;animation:scale-up-tr .2s both}
-@-webkit-keyframes scale-up-tr{0%{-webkit-transform:scale(.5);transform:scale(.5);-webkit-transform-origin:100% 0;transform-origin:100% 0}100%{-webkit-transform:scale(1);transform:scale(1);-webkit-transform-origin:100% 0;transform-origin:100% 0}}
-@keyframes scale-up-tr{0%{-webkit-transform:scale(.5);transform:scale(.5);-webkit-transform-origin:100% 0;transform-origin:100% 0}100%{-webkit-transform:scale(1);transform:scale(1);-webkit-transform-origin:100% 0;transform-origin:100% 0}}
-
+@-webkit-keyframes rotate-center{0%{-webkit-transform:rotate(0);
+  transform:rotate(0)}100%{-webkit-transform:rotate(360deg);transform:rotate(360deg)}}
+@keyframes rotate-center{0%{-webkit-transform:rotate(0);transform:rotate(0)}100%{-webkit-transform:rotate(360deg);
+  transform:rotate(360deg)}}
+/* Scale up hor right */
+.scale-up-hor-right{-webkit-animation:scale-up-hor-right .4s both;animation:scale-up-hor-right .4s both}
+@-webkit-keyframes scale-up-hor-right{0%{-webkit-transform:scaleX(.4);transform:scaleX(.4);
+  -webkit-transform-origin:100% 100%;transform-origin:100% 100%}100%{-webkit-transform:scaleX(1);transform:scaleX(1);
+  -webkit-transform-origin:100% 100%;transform-origin:100% 100%}}
+@keyframes scale-up-hor-right{0%{-webkit-transform:scaleX(.4);transform:scaleX(.4);-webkit-transform-origin:100% 100%;
+  transform-origin:100% 100%}100%{-webkit-transform:scaleX(1);transform:scaleX(1);-webkit-transform-origin:100% 100%;
+  transform-origin:100% 100%}}
 /* SCROLLBARS ------------------------------------------------------------------------- */
 body{
 scrollbar-base-color: #C0C0C0; scrollbar-face-color: darkgrey; scrollbar-3dlight-color: #C0C0C0;

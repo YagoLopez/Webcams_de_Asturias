@@ -331,7 +331,7 @@ wcaModule.factory('Cam', function(Categorias){
       this.id = arrayDatosCam[0][4];
       this.lat = arrayDatosCam[0][5];
       this.lng = arrayDatosCam[0][6];
-    }//if
+    }
   }
   return Cam;
 });
