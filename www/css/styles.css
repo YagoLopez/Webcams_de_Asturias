@@ -1,12 +1,9 @@
 @media (min-width: 720px) {
   .responsive-page {width: 75%; margin: 32px auto;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24)}
-  .card {width: 75%; margin: 32px auto}
-}
-/*.img-cam {height: 64px !important; width: 72px !important; top: 6px !important;*/
-  /*background: transparent url('../img/clock.png') no-repeat center center}*/
+  .card {width: 75%; margin: 32px auto}}
 .img-cam {height: 64px !important; width: 72px !important; top: 6px !important;
-  background: transparent url('../img/loading-img5-small.png') no-repeat center center}
+  background: transparent url('../img/loading-img5-small.png') no-repeat center center  }
 .img-loading {background: transparent url('../img/loading-img5-small.png') no-repeat center center}
 .centered {text-align: center}
 .cargando {text-align: center; margin-top: 65%}
@@ -39,14 +36,6 @@
   transform:rotate(0)}100%{-webkit-transform:rotate(360deg);transform:rotate(360deg)}}
 @keyframes rotate-center{0%{-webkit-transform:rotate(0);transform:rotate(0)}100%{-webkit-transform:rotate(360deg);
   transform:rotate(360deg)}}
-/* Scale up hor right */
-.scale-up-hor-right{-webkit-animation:scale-up-hor-right .4s both;animation:scale-up-hor-right .4s both}
-@-webkit-keyframes scale-up-hor-right{0%{-webkit-transform:scaleX(.4);transform:scaleX(.4);
-  -webkit-transform-origin:100% 100%;transform-origin:100% 100%}100%{-webkit-transform:scaleX(1);transform:scaleX(1);
-  -webkit-transform-origin:100% 100%;transform-origin:100% 100%}}
-@keyframes scale-up-hor-right{0%{-webkit-transform:scaleX(.4);transform:scaleX(.4);-webkit-transform-origin:100% 100%;
-  transform-origin:100% 100%}100%{-webkit-transform:scaleX(1);transform:scaleX(1);-webkit-transform-origin:100% 100%;
-  transform-origin:100% 100%}}
 /* SCROLLBARS ------------------------------------------------------------------------- */
 body{
 scrollbar-base-color: #C0C0C0; scrollbar-face-color: darkgrey; scrollbar-3dlight-color: #C0C0C0;

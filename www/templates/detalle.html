@@ -63,12 +63,10 @@
       <!--Tabs bar-->
       <div class="item item-divider tabs tabs-icon-left tabs-color-positive tabs-bar">
         <a class="tab-item fnt-small" ng-click="activeTab = 'meteoTab'"
-          ng-class="{'tab-active': activeTab === 'meteoTab'}">
-            <i class="icon ion-ios-partlysunny"></i> Meteorología
+          ng-class="{'tab-active': activeTab === 'meteoTab'}"><i class="icon ion-ios-partlysunny"></i> Meteorología
         </a>
         <a class="tab-item fnt-small" ng-click="activeTab = 'infoTab'; getWikipediaInfo()"
-          ng-class="{'tab-active': activeTab === 'infoTab'}">
-            <i class="icon ion-document-text"></i> Información
+          ng-class="{'tab-active': activeTab === 'infoTab'}"><i class="icon ion-document-text"></i> Información
         </a>
       </div>
       <!-- /Tabs bar -->
@@ -100,7 +98,7 @@
       <!-- /Tab Meteo Content -->
 
       <!-- Tab Wikipedia Content -->
-      <div ng-show="activeTab === 'infoTab'" class="item-body div-info" ng-class="{active:active}">
+      <div ng-show="activeTab === 'infoTab'" class="item-body div-info" ng-class="{active:active, 'fade-in': true}">
         <div ng-if="infoConcejo">
           <div>{{ infoConcejo }}</div>
           <div><a ng-href="{{ wikiUrl }}" target="_blank">Ampliar Información</a></div>

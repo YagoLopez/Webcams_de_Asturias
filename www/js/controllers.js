@@ -1,4 +1,4 @@
-//todo: refactorizar la comprobacion de existencia de cams en cada vista (en nueva rama). Unificar en un servicio
+//todo: arreglar service worker
 //todo: calcular altura en imagenes en vista mosaico.html
 //todo: cancelar carga de imagen en vista detalle.html como en gif-player.html
 //todo: tamaño e icons en manifest.json
@@ -492,9 +492,9 @@ wcaModule.controller('MeteoDetalleCtrl', function($scope, $stateParams, ItemMete
     $location.path('#/');
     return;
   }
-  $scope.$on('$ionicView.afterEnter', function(){
-    document.getElementById('imgMeteo').style.background = 'none';
-  });
+  // $scope.$on('$ionicView.afterEnter', function(){
+  //   document.getElementById('scroll-img-meteo').style.background = 'none';
+  // });
 });
 // ====================================================================================================================
 wcaModule.controller('PorCategoriaCtrl', function($scope, $window, $sce){
