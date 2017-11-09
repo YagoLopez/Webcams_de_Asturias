@@ -1,8 +1,9 @@
 //todo: arreglar service worker
-//todo: calcular altura en imagenes en vista mosaico.html
-//todo: cancelar carga de imagen en vista detalle.html como en gif-player.html
+//todo: usar google maps embed api. consultar link en carpeta temp
 //todo: tamaño e icons en manifest.json
 //todo: detalles en meteo.html no aparecen
+//todo: calcular altura en imagenes en vista mosaico.html
+//todo: cancelar carga de imagen en vista detalle.html como en gif-player.html
 //todo: info de mareas
 //todo: en vista "detalle.html", "buscar.html", etc. usar resolve para comprobar si hay cams en rootscope y en caso contrario, cargarlas usando el servicio Cams
 //todo: tests para carga de datos de fusion table en listadoCtrl
@@ -297,6 +298,7 @@ wcaModule.controller('GifPlayerCtrl', function($scope, $interval, $stateParams, 
     makeGifAnimadoPanZoom;
   var loadingHtml = 'Cargando...<br/>El proceso puede tardar' +
     '<div id="cancelLinkContainer"><button><a id="cancelLink" href="#/app/meteo">Cancelar</a></div></button>';
+
   Loader.showWithBackdrop(loadingHtml);
   $scope.currentFrame = 0;
   $scope.isGifPlaying = false;
@@ -490,7 +492,6 @@ wcaModule.controller('MeteoDetalleCtrl', function($scope, $stateParams, ItemMete
 
   if(angular.equals({}, $scope.itemMeteo)){
     $location.path('#/');
-    return;
   }
   // $scope.$on('$ionicView.afterEnter', function(){
   //   document.getElementById('scroll-img-meteo').style.background = 'none';
@@ -590,10 +591,6 @@ wcaModule.controller('PorConcejoCtrl', function($scope, $window, $sce){
   $scope.urlConcejosMasCams = $sce.trustAsResourceUrl(urlConcejosMasCams);
   $scope.urlCamsConcejo = $sce.trustAsResourceUrl(urlCamsConcejo);
 
-  // $scope.cargaFrameTerminada = function(){
-  //   Loader.hide();
-  //   $scope.endLoad = true;
-  // }
 });
 // ====================================================================================================================
 wcaModule.controller('WindyCtrl', function($scope, Loader, $sce, $stateParams){
