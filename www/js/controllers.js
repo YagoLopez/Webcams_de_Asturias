@@ -22,8 +22,6 @@ var wcaModule = angular.module('wca.controllers',[]);
 wcaModule.controller('ListadoCtrl', function($scope, $stateParams, $rootScope, STRINGS,
   Cams, $filter, $ionicScrollDelegate, Categorias, Loader) {
 
-  // var concejo = $stateParams.concejo || '';
-  // var idCategoria = $stateParams.idCategoria || '';
   var concejo = $stateParams.concejo;
   var idCategoria = $stateParams.idCategoria;
   var sqlQuery = 'SELECT Lugar, Concejo, Imagen ,Categoria, rowid, latitud, longitud FROM '+ Cams.TABLE_ID;
