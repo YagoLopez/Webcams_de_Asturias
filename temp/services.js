@@ -317,8 +317,7 @@ wcaModule.factory('$exceptionHandler', function($injector) {
   return function(exception, cause) {
     var Popup = $injector.get('Popup');
     console.error(exception);
-    // debugger
-    Popup.show('Error', 'Data: '+exception.data+'<br>'+'Status: '+exception.status+'<br>'+'Text: '+exception.statusText);
+    Popup.show('Error', 'Detalles: '+exception.message);
   };
 });
 // ====================================================================================================================

@@ -1,12 +1,18 @@
+//todo: arreglar service worker
+//todo: usar google maps embed api. consultar link en carpeta temp
+//todo: tamaño e icons en manifest.json
+//todo: detalles en meteo.html no aparecen
+//todo: calcular altura en imagenes en vista mosaico.html
+//todo: cancelar carga de imagen en vista detalle.html como en gif-player.html
+//todo: info de mareas
+//todo: en vista "detalle.html", "buscar.html", etc. usar resolve para comprobar si hay cams en rootscope y en caso contrario, cargarlas usando el servicio Cams
 //todo: tests para carga de datos de fusion table en listadoCtrl
 //todo: borrar comentarios en services.js
-//todo: info de mareas
-//todo: convertir en pwa
 //todo: mejorar orientacion imagenes street view (heading)
-//TODO: podria ser mejor arrojar una excepcion en vez de llamar a SPopup cada vez que hay un error. Ya se encarga el
+//TODO: podria ser mejor arrojar una excepcion en vez de llamar a Popup cada vez que hay un error. Ya se encarga el
 //TODO: servicio de excepciones de capturar la excepcion y mostrar un popup. De esta forma está más centralizado el tratamiento
 //TODO: de errores
-//TODO: hacer perfilado en chrome mobile, ver como se comporta la memoria y el procesador al ejecutar la app
+//TODO: hacer perfilado en chrome mobile, ver como se comporta la memoria y el procesador
 //TODO: hacer zoom en mapa global cuando se escoja filtro por concejo. Usar coordenadas lat lng
 //TODO: añadir favoritos
 //todo: geolocalizacion y busqueda webcams cercanas
@@ -14,39 +20,40 @@
 var wcaModule = angular.module('wca.controllers',[]);
 // ====================================================================================================================
 wcaModule.controller('ListadoCtrl', function($scope, $stateParams, $rootScope, STRINGS,
-   SFusionTable, $filter, $ionicScrollDelegate, SCategorias, SLoader) {
+  Cams, $filter, $ionicScrollDelegate, Categorias, Loader) {
 
-  var concejo = $stateParams.concejo || '';
-  var idCategoria = $stateParams.idCategoria || '';
-  var sqlQuery = 'SELECT Lugar, Concejo, Imagen ,Categoria, rowid, latitud, longitud FROM '+ SFusionTable.TABLE_ID;
+  var concejo = $stateParams.concejo;
+  var idCategoria = $stateParams.idCategoria;
+  var sqlQuery = 'SELECT Lugar, Concejo, Imagen ,Categoria, rowid, latitud, longitud FROM '+ Cams.TABLE_ID;
   $rootScope.cams = [];
   $scope.camsFiltradas = [];
 
-  SLoader.show('Cargando...');
+  Loader.show('Cargando...');
   // $scope.imgError = function () {
   //   $scope.error = STRINGS.ERROR;
   //   $scope.$apply();
   // };
 
   function showError(errorMsg){
-    SLoader.hide();
+    Loader.hide();
     $scope.error = STRINGS.ERROR;
     console.log(errorMsg);
   }
 
-  SFusionTable.getRemoteData(sqlQuery).success(function(data) {
-    if (data.error) {
-      showError(data.error);
-    }
-    // data.error && showError(data.error);
+/*
+  Cams.getRemoteData(sqlQuery).success(function(data) {
+    data.error && showError(data.error);
     // Cams totales sin filtrar
     $rootScope.cams = data.rows;
     // Cams filtradas por parametros url
-    $scope.camsFiltradas = SFusionTable.filtrarListaCams(concejo, idCategoria, data.rows);
-    SLoader.hide();
+    $scope.camsFiltradas = Cams.filtrarListaCams(concejo, idCategoria, data.rows);
+    Loader.hide();
   }).error(function(data, status) {
     showError(status);
   });
+*/
+
+
 
   $scope.$on('$ionicView.afterEnter', function(){
     $scope.concejo = concejo;
@@ -54,46 +61,43 @@ wcaModule.controller('ListadoCtrl', function($scope, $stateParams, $rootScope, S
     if (!idCategoria || idCategoria === '') {
       $scope.tituloVista = 'Todas'
     } else {
-      $scope.tituloVista = SCategorias.idCategoria_a_nombre(idCategoria);
+      $scope.tituloVista = Categorias.idCategoria_a_nombre(idCategoria);
     }
   });
 });
 // ====================================================================================================================
-wcaModule.controller('MapaCtrl', function($scope, SMapa, $rootScope, $location){
+wcaModule.controller('MapaCtrl', function($scope, Mapa, $rootScope, $location){
 
+  var mapa, layer, posicion;
+  if(!$rootScope.cam){
+    $location.path( "#/" );
+    return;
+  }
   $scope.$on('$ionicView.afterEnter', function() {
-    var mapa, layer, posicion;
-
-    if(!$rootScope.cam){
-      $location.path( "#/" );
-      return;
-    } else {
-      mapa = SMapa.crear(document.getElementById('mapa'));
-      layer = SMapa.creaFusionTableLayer().setMap(mapa);
-      posicion = {lat: $rootScope.cam.lat, lng: $rootScope.cam.lng};
-      SMapa.creaMarker(posicion, mapa);
-      mapa.setCenter(posicion);
-      mapa.setZoom(13);
-    }
+    mapa = Mapa.crear(document.getElementById('mapa'));
+    layer = Mapa.creaFusionTableLayer().setMap(mapa);
+    posicion = {lat: $rootScope.cam.lat, lng: $rootScope.cam.lng};
+    Mapa.creaMarker(posicion, mapa);
+    mapa.setCenter(posicion);
+    mapa.setZoom(18);
   });
 });
 // ====================================================================================================================
-wcaModule.controller('MapaGlobalCtrl', function($scope, $rootScope, $filter, SMapa, SFusionTable, SPopup,
-   SCategorias){
+wcaModule.controller('MapaGlobalCtrl', function($scope, $rootScope, $filter, Mapa, Cams, Popup,
+  Categorias){
 
   var layer, mapa, sqlQueryConcejos, sqlQueryCategorias, zoomLevel = 7;
-
-  sqlQueryConcejos = 'SELECT Concejo FROM '+SFusionTable.TABLE_ID+' GROUP BY Concejo';
-  sqlQueryCategorias = 'SELECT Categoria FROM '+SFusionTable.TABLE_ID+' GROUP BY Categoria';
+  sqlQueryConcejos = 'SELECT Concejo FROM '+Cams.TABLE_ID+' GROUP BY Concejo';
+  sqlQueryCategorias = 'SELECT Categoria FROM '+Cams.TABLE_ID+' GROUP BY Categoria';
   $scope.filtro = {categoria: '', concejo: ''};
 
-  SFusionTable.getRemoteData(sqlQueryConcejos).success(function(data){
+  Cams.getRemoteData(sqlQueryConcejos).success(function(data){
     $scope.concejos = data.rows;
   }).error(function(status){
     console.error('MapaGlobalCtrl.getRemoteData() status:', status);
   });
 
-  SFusionTable.getRemoteData(sqlQueryCategorias).success(function(data){
+  Cams.getRemoteData(sqlQueryCategorias).success(function(data){
     $scope.categorias = data.rows;
   }).error(function(status){
     console.error('MapaGlobalCtrl.getRemoteData() status:', status);
@@ -106,7 +110,7 @@ wcaModule.controller('MapaGlobalCtrl', function($scope, $rootScope, $filter, SMa
   // });
 
   $scope.urlCategoria_a_nombre = function(url){
-    return SCategorias.url_a_nombre(url);
+    return Categorias.url_a_nombre(url);
   };
 
   $scope.categoriaEscogida = function(categoria){
@@ -114,9 +118,9 @@ wcaModule.controller('MapaGlobalCtrl', function($scope, $rootScope, $filter, SMa
     categoria = categoria.replace(/(\r\n|\n|\r)/gm,'').trim();
     filtroCategoria = 'Categoria=\'' + categoria + '\'';
     layer.setMap(null); // borra layer antigua si la hubiera
-    layer = SMapa.creaFusionTableLayer(filtroCategoria);
+    layer = Mapa.creaFusionTableLayer(filtroCategoria);
     layer.setMap(mapa);
-    mapa.setCenter(SMapa.OVIEDO);
+    mapa.setCenter(Mapa.OVIEDO);
     mapa.setZoom(zoomLevel);
     $scope.filtro.concejo = '';
   };
@@ -127,60 +131,51 @@ wcaModule.controller('MapaGlobalCtrl', function($scope, $rootScope, $filter, SMa
     concejo = concejo.replace(/(\r\n|\n|\r)/gm,'').trim();
     filtroConcejo = 'Concejo=\'' + concejo + '\''; // el concejo tiene que ir entre comillas
     layer.setMap(null); // borra layer anterior si la hubiera
-    layer = SMapa.creaFusionTableLayer(filtroConcejo);
+    layer = Mapa.creaFusionTableLayer(filtroConcejo);
     layer.setMap(mapa);
-    mapa.setCenter(SMapa.OVIEDO);
+    mapa.setCenter(Mapa.OVIEDO);
     mapa.setZoom(zoomLevel);
     $scope.filtro.categoria = '';
   };
 
   $scope.mostrarTodas = function(){
     layer && layer.setMap(null);
-    layer = SMapa.creaFusionTableLayer();
+    layer = Mapa.creaFusionTableLayer();
     layer.setMap(mapa);
-    mapa.setCenter(SMapa.OVIEDO);
+    mapa.setCenter(Mapa.OVIEDO);
     mapa.setZoom(zoomLevel);
     $scope.filtro.categoria = '';
     $scope.filtro.concejo = '';
   };
 
   // Activa manualmente el ciclo de deteccion de cambios de angular (digest cycle) para evaluar javascript externo
-  // (En este caso google maps)
+  // (En este caso google maps). Nota: $scope.$apply() da error.
   setTimeout(function () {
-    mapa = SMapa.crear(document.getElementById('mapaglobal'));
+    mapa = Mapa.crear(document.getElementById('mapaglobal'));
     $scope.mostrarTodas(); // por defecto
   }, 0);
-
-
 });
 // ====================================================================================================================
-wcaModule.controller('DetalleCtrl', function($scope, $stateParams, $ionicModal, SClima, $filter, $rootScope,
-   SPopup, SWikipedia, $ionicPopover, Cam, SLoader, $location, SFusionTable, STRINGS){
+wcaModule.controller('DetalleCtrl', function($scope, $stateParams, $ionicModal, Clima, $filter, $rootScope,
+  Popup, Wikipedia, $ionicPopover, Cam, Loader, $location, Cams, STRINGS){
 
   // Init --------------------------------------------------------------------------------------------------------------
 
-  var datosCam;
-  $scope.rowid = $stateParams.rowid;
-  $scope.info = ' (Obteniendo datos del servidor...)';
-  SLoader.show('Cargando...');
-  if(!$rootScope.cams || !$scope.rowid){
+  $scope.infoMeteo = ' (Obteniendo datos del servidor...)';
+  Loader.show('Cargando...');
+  if(!$rootScope.cams || !$stateParams.rowid){
     $location.path('#/'); // si no hay lista de items (cams) redirigir a root y abortar
     return;
   }
-
-  datosCam = $filter('filter')($rootScope.cams, function(cam) {
-    return cam[4] == $scope.rowid;
-  });
-
-  $rootScope.cam = new Cam(datosCam);
+  $rootScope.cam = new Cam( Cams.getCamByRowid($stateParams.rowid, $rootScope.cams) );
 
   // Clima Data --------------------------------------------------------------------------------------------------------
 
   // Priority is webcam image load. Wait 1000 ms before loading clima data
   $scope.timerGetClimaData = setTimeout( function(){
-    SClima.getData( $rootScope.cam.lat, $rootScope.cam.lng ).success(function(climadata){
+    Clima.getData( $rootScope.cam.lat, $rootScope.cam.lng ).success(function(climadata){
       if(climadata.weather){
-        $scope.info = climadata.weather[0].description;
+        $scope.infoMeteo = climadata.weather[0].description;
         $scope.temp = climadata.main.temp;
         $scope.presion = climadata.main.pressure;
         $scope.humedad = climadata.main.humidity;
@@ -192,11 +187,11 @@ wcaModule.controller('DetalleCtrl', function($scope, $stateParams, $ionicModal, 
         //url icono: http://openweathermap.org/img/w/10n.png
         $scope.iconoUrl = 'http://openweathermap.org/img/w/'+climadata.weather[0].icon+'.png' ;
       } else {
-        $scope.info = STRINGS.ERROR;
+        $scope.infoMeteo = STRINGS.ERROR;
       }
     }).error(function(status){
-      $scope.info = STRINGS.ERROR;
-      console.error('SClima.getData(): ', status);
+      $scope.infoMeteo = STRINGS.ERROR;
+      console.error('Clima.getData(): ', status);
     });
   }, 1000);
 
@@ -204,7 +199,7 @@ wcaModule.controller('DetalleCtrl', function($scope, $stateParams, $ionicModal, 
 
   $scope.infoConcejo = 'Cargando...';
   $scope.getWikipediaInfo = function(){
-    SWikipedia.info($rootScope.cam.concejo).success(function(data){
+    Wikipedia.info($rootScope.cam.concejo + '_(Asturias)').success(function(data){
       var pageid = data.query.pageids[0];
       if(pageid) {
         $scope.infoConcejo = data.query.pages[pageid].extract;
@@ -212,7 +207,7 @@ wcaModule.controller('DetalleCtrl', function($scope, $stateParams, $ionicModal, 
       }
     }).error(function(status){
       $scope.infoConcejo = STRINGS.ERROR;
-      console.error('SWikipedia.info()', status)
+      console.error('Wikipedia.info()', status)
     })
   };
 
@@ -221,21 +216,21 @@ wcaModule.controller('DetalleCtrl', function($scope, $stateParams, $ionicModal, 
   $ionicPopover.fromTemplateUrl('templates/popover.html', {scope: $scope})
     .then(function(popover) {$scope.popover = popover});
 
-  // Img Reload --------------------------------------------------------------------------------------------------------
+  // Reload image ------------------------------------------------------------------------------------------------------
 
   $scope.reloadImg = function(){
-    SLoader.show('Recargando imagen...');
+    Loader.show('Recargando imagen...');
     setTimeout(function(){
       $scope.$apply(function(){
-        $rootScope.cam.imagen = $rootScope.cam.imagen + '#' + new Date().getTime();
+        $rootScope.cam.imagen = $rootScope.cam.imagen + '#' + new Date().getTime().toString().substring(0, 3);
         console.log('Recargando imagen: ', $rootScope.cam.imagen);
-        SLoader.hide();
+        Loader.hide();
       })
     }, 600);
   };
 
   $scope.imgLoaded = function(){
-    SLoader.hide();
+    Loader.hide();
   };
 
   // Live Cycle Events -------------------------------------------------------------------------------------------------
@@ -267,7 +262,7 @@ wcaModule.controller('MeteoblueCtrl', function ($scope, $rootScope, $location) {
   })
 });
 // ====================================================================================================================
-wcaModule.controller('StreetViewCtrl', function($scope, SMapa, $rootScope, SPopup, $location, $ionicSideMenuDelegate){
+wcaModule.controller('StreetViewCtrl', function($scope, Mapa, $rootScope, Popup, $location, $ionicSideMenuDelegate){
 
   // Initializations
   if(!$rootScope.cam) {
@@ -280,12 +275,12 @@ wcaModule.controller('StreetViewCtrl', function($scope, SMapa, $rootScope, SPopu
   $scope.$on('$ionicView.afterEnter', function() {
     var div = document.getElementById('street-view');
     var streetViewService = new google.maps.StreetViewService();
-    streetViewService.getPanoramaByLocation(coords, SMapa.RADIO_BUSQUEDA, function (data, status) {
+    streetViewService.getPanoramaByLocation(coords, Mapa.RADIO_BUSQUEDA, function (data, status) {
       if (status == google.maps.StreetViewStatus.OK) {
         //todo: revisar
-        SMapa.creaStreetView2(div, data.location.latLng);
+        Mapa.creaStreetView2(div, data.location.latLng);
       } else {
-        SPopup.show('Aviso', 'Panorama StreetView no disponible en esta ubicación<br>' +status);
+        Popup.show('Aviso', 'Panorama StreetView no disponible en esta ubicación<br>' +status);
       }
     })
   });
@@ -296,8 +291,8 @@ wcaModule.controller('StreetViewCtrl', function($scope, SMapa, $rootScope, SPopu
 
 });
 // ====================================================================================================================
-wcaModule.controller('GifPlayerCtrl', function($scope, $interval, $stateParams, ItemsMeteo, ItemMeteo, SLoader,
-  SPopup, $location, STRINGS){
+wcaModule.controller('GifPlayerCtrl', function($scope, $interval, $stateParams, ItemsMeteo, ItemMeteo, Loader,
+  Popup, $location, STRINGS){
 
   // Inicializaciones -------------------------------------------------------------------------------------------------
 
@@ -305,12 +300,13 @@ wcaModule.controller('GifPlayerCtrl', function($scope, $interval, $stateParams, 
     makeGifAnimadoPanZoom;
   var loadingHtml = 'Cargando...<br/>El proceso puede tardar' +
     '<div id="cancelLinkContainer"><button><a id="cancelLink" href="#/app/meteo">Cancelar</a></div></button>';
-  SLoader.showWithBackdrop(loadingHtml);
+
+  Loader.showWithBackdrop(loadingHtml);
   $scope.currentFrame = 0;
   $scope.isGifPlaying = false;
   $scope.itemMeteo = new ItemMeteo(ItemsMeteo.getItemById($stateParams.id_item_meteo));
   if(angular.equals({}, $scope.itemMeteo)){
-    SLoader.hide();
+    Loader.hide();
     $location.path( '#/' );
     return;
   }
@@ -420,7 +416,7 @@ wcaModule.controller('GifPlayerCtrl', function($scope, $interval, $stateParams, 
         gifAnimado.move_to(posicion);
       };
       makeGifAnimadoPanZoom($('.jsgif > canvas'));
-      SLoader.hide();
+      Loader.hide();
     })
   };
 
@@ -433,8 +429,8 @@ wcaModule.controller('GifPlayerCtrl', function($scope, $interval, $stateParams, 
     }
     document.getElementById('gif').src = '';
     console.error(error);
-    SLoader.hide();
-    SPopup.show('Error', STRINGS.ERROR);
+    Loader.hide();
+    Popup.show('Error', STRINGS.ERROR);
     // $location.path(' #/app/meteo' );
   };
 
@@ -461,19 +457,19 @@ wcaModule.controller('GifPlayerCtrl', function($scope, $interval, $stateParams, 
 
 });
 // ====================================================================================================================
-wcaModule.controller('MeteoCtrl', function($scope, SFusionTable, SPopup, ItemsMeteo, SLoader){
+wcaModule.controller('MeteoCtrl', function($scope, Cams, Popup, ItemsMeteo, Loader){
 
   var queryString = 'SELECT * FROM '+ItemsMeteo.FUSION_TABLE_ID+' ORDER BY id ASC';
   var showError = function(status){
-    SPopup.show('Error', ' MeteoCtrl: Compruebe conexión de red. Estado: '+status );
+    Popup.show('Error', ' MeteoCtrl: Compruebe conexión de red. Estado: '+status );
   };
-  SLoader.showWithBackdrop('Cargando...');
+  Loader.showWithBackdrop('Cargando...');
   $scope.loading = true;
 
-  SFusionTable.getRemoteData(queryString).success(
+  Cams.getRemoteData(queryString).success(
     function(data){
       if(!data.rows){
-        SLoader.hide();
+        Loader.hide();
         showError('Respuesta nula');
         $scope.loading = false;
         return;
@@ -482,11 +478,11 @@ wcaModule.controller('MeteoCtrl', function($scope, SFusionTable, SPopup, ItemsMe
       $scope.getItemsByCategoriaId = function(idCategoria){
         return ItemsMeteo.getItemsByCategoriaId(idCategoria);
       };
-      SLoader.hide();
+      Loader.hide();
       $scope.loading = false;
     }
   ).error(function(status){
-    SLoader.hide();
+    Loader.hide();
     $scope.loading = false;
   });
 
@@ -498,11 +494,10 @@ wcaModule.controller('MeteoDetalleCtrl', function($scope, $stateParams, ItemMete
 
   if(angular.equals({}, $scope.itemMeteo)){
     $location.path('#/');
-    return;
   }
-  $scope.$on('$ionicView.afterEnter', function(){
-    document.getElementById('imgMeteo').style.background = 'none';
-  });
+  // $scope.$on('$ionicView.afterEnter', function(){
+  //   document.getElementById('scroll-img-meteo').style.background = 'none';
+  // });
 });
 // ====================================================================================================================
 wcaModule.controller('PorCategoriaCtrl', function($scope, $window, $sce){
@@ -510,7 +505,7 @@ wcaModule.controller('PorCategoriaCtrl', function($scope, $window, $sce){
   var urlGraficoSectores, urlGraficoBarras;
 
   // $scope.$on('$ionicView.beforeEnter', function () {
-  //   SLoader.showWithBackdrop('Cargando...');
+  //   Loader.showWithBackdrop('Cargando...');
   // });
   //Calculo de dimensiones de ventana al redimensionar
   $scope.calculateDimensions = function(gesture) {
@@ -550,9 +545,10 @@ wcaModule.controller('PorCategoriaCtrl', function($scope, $window, $sce){
   $scope.urlGraficoSectores = $sce.trustAsResourceUrl(urlGraficoSectores);
   $scope.urlGraficoBarras = $sce.trustAsResourceUrl(urlGraficoBarras);
 
-  // $scope.cargaFrameTerminada = function(){
-  //   SLoader.hide();
-  // }
+  $scope.cargaIFrameTerminada = function(){
+    // Loader.hide();
+    alert();
+  }
 
   });
 // ====================================================================================================================
@@ -597,23 +593,33 @@ wcaModule.controller('PorConcejoCtrl', function($scope, $window, $sce){
   $scope.urlConcejosMasCams = $sce.trustAsResourceUrl(urlConcejosMasCams);
   $scope.urlCamsConcejo = $sce.trustAsResourceUrl(urlCamsConcejo);
 
-  // $scope.cargaFrameTerminada = function(){
-  //   SLoader.hide();
-  //   $scope.endLoad = true;
-  // }
 });
 // ====================================================================================================================
-wcaModule.controller('VientoCtrl', function($scope, SLoader){
+wcaModule.controller('WindyCtrl', function($scope, Loader, $sce, $stateParams){
 
-  SLoader.show('Cargando...');
+  var windyTipo = $stateParams.tipo;
+  Loader.show('Cargando...');
 
-  $scope.cargaFrameTerminada = function(){
-    SLoader.hide();
+  if(windyTipo === 'viento'){
+    $scope.windyUrl = $sce.trustAsResourceUrl('https://embed.windytv.com/embed2.html?lat=40.280&lon=-3.647&zoom=5&' +
+      'level=surface&overlay=wind&menu=true&message=true&marker=&forecast=12&calendar=now&location=coordinates&' +
+      'type=map&actualGrid=&metricWind=km%2Fh&metricTemp=%C2%B0C');
+    $scope.windyTitle = 'Viento';
   }
 
+  if(windyTipo === 'oleaje'){
+    $scope.windyUrl = $sce.trustAsResourceUrl('https://embed.windytv.com/embed2.html?lat=40.280&lon=-3.647&zoom=5&' +
+      'level=surface&overlay=waves&menu=true&message=true&marker=&forecast=12&calendar=now&location=coordinates&' +
+      'type=map&actualGrid=&metricWind=km%2Fh&metricTemp=%C2%B0C');
+    $scope.windyTitle = 'Oleaje';
+  }
+
+  $scope.cargaIFrameTerminada = function(){
+    Loader.hide();
+  }
 });
 // ====================================================================================================================
-wcaModule.controller('BuscarCtrl', function($scope, $rootScope, $filter, SFusionTable, SLoader, $location){
+wcaModule.controller('BuscarCamsCtrl', function($scope, $rootScope, $filter, Cams, Loader, $location){
 
   var inputBuscaCam = document.getElementById('inputBuscaCam');
   $scope.busqueda = {lugar: ''};
@@ -625,20 +631,14 @@ wcaModule.controller('BuscarCtrl', function($scope, $rootScope, $filter, SFusion
     return;
   }
 
-  $scope.buscarCams = function(){
+  $scope.buscarCams = function(param){
     var matchCondition1, matchCondition2;
     $scope.showImages = false;
     if($scope.busqueda.lugar.length < 1){
       $scope.camsEncontradas = [];
       return;
     }
-    $scope.camsEncontradas = $filter('filter')($rootScope.cams, function(cam) {
-      matchCondition1 = cam[0].toLowerCase().indexOf($scope.busqueda.lugar.toLowerCase()) > -1;
-      matchCondition2 = cam[1].toLowerCase().indexOf($scope.busqueda.lugar.toLowerCase()) > -1;
-      if(matchCondition1 || matchCondition2){
-        return cam;
-      }
-    });
+    $scope.camsEncontradas = Cams.buscarCams($scope.busqueda.lugar, $rootScope.cams);
   };
 
   $scope.resetBusqueda = function($event){

@@ -29,27 +29,23 @@ wcaModule.controller('ListadoCtrl', function($scope, $stateParams, $rootScope, S
   $scope.camsFiltradas = [];
 
   Loader.show('Cargando...');
-  // $scope.imgError = function () {
-  //   $scope.error = STRINGS.ERROR;
-  //   $scope.$apply();
-  // };
-
-  function showError(errorMsg){
-    Loader.hide();
-    $scope.error = STRINGS.ERROR;
-    console.log(errorMsg);
+  if(!$rootScope.cams == 0){
+    Cams.getRemoteData(sqlQuery)
+      .then(function (response) {
+        var listaCams = response.data.rows;
+        // Lista de todas las cams sin filtrar
+        $rootScope.cams = listaCams;
+        // Lista cams filtradas por concejo y categoria
+        $scope.camsFiltradas = Cams.filtrarListaCams(concejo, idCategoria, listaCams);
+        Loader.hide();
+      })
+      .catch(function (error) {
+        $scope.error = STRINGS.ERROR;
+        throw(error);
+      });
+  } else {
+    $scope.camsFiltradas = Cams.filtrarListaCams(concejo, idCategoria, response);
   }
-
-  Cams.getRemoteData(sqlQuery).success(function(data) {
-    data.error && showError(data.error);
-    // Cams totales sin filtrar
-    $rootScope.cams = data.rows;
-    // Cams filtradas por parametros url
-    $scope.camsFiltradas = Cams.filtrarListaCams(concejo, idCategoria, data.rows);
-    Loader.hide();
-  }).error(function(data, status) {
-    showError(status);
-  });
 
   $scope.$on('$ionicView.afterEnter', function(){
     $scope.concejo = concejo;
@@ -270,6 +266,7 @@ wcaModule.controller('StreetViewCtrl', function($scope, Mapa, $rootScope, Popup,
 
   $scope.$on('$ionicView.afterEnter', function() {
     var div = document.getElementById('street-view');
+    var loader = document.querySelector('.loader');
     var streetViewService = new google.maps.StreetViewService();
     streetViewService.getPanoramaByLocation(coords, Mapa.RADIO_BUSQUEDA, function (data, status) {
       if (status == google.maps.StreetViewStatus.OK) {
@@ -278,6 +275,7 @@ wcaModule.controller('StreetViewCtrl', function($scope, Mapa, $rootScope, Popup,
       } else {
         Popup.show('Aviso', 'Panorama StreetView no disponible en esta ubicación<br>' +status);
       }
+      loader.parentNode.removeChild(loader);
     })
   });
 
