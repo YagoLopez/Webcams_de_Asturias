@@ -29,7 +29,7 @@ wcaModule.controller('ListadoCtrl', function($scope, $stateParams, $rootScope, S
   $scope.camsFiltradas = [];
 
   Loader.show('Cargando...');
-  if(!$rootScope.cams == 0){
+  if($rootScope.cams.length === 0){
     Cams.getRemoteData(sqlQuery)
       .then(function (response) {
         var listaCams = response.data.rows;
