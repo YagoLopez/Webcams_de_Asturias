@@ -71,7 +71,10 @@ app.config(function($stateProvider, $urlRouterProvider, $compileProvider, $ionic
   });
 // -------------------------------------------------------------------------------------------------------------------
   $stateProvider.state('app.listado', {url: '/listado?concejo&idCategoria', cache: true,
-    views: {'menuContent': {templateUrl: 'templates/listado.html', controller: 'ListadoCtrl'}}
+    views: {'menuContent': {templateUrl: 'templates/listado.html', controller: 'ListadoCtrl',
+      resolve: {myresolve: function () {
+        console.log('resolve: cams');
+      }}}}
   });
 // -------------------------------------------------------------------------------------------------------------------
   $stateProvider.state('app.mosaico', {url: '/mosaico?concejo&idCategoria', cache: true,

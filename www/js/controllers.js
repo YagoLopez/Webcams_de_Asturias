@@ -19,7 +19,7 @@
 
 var wcaModule = angular.module('wca.controllers',[]);
 // ====================================================================================================================
-wcaModule.controller('ListadoCtrl', function($scope, $stateParams, $rootScope, STRINGS,
+wcaModule.controller('ListadoCtrl', function ListadoCtrl($scope, $stateParams, $rootScope, STRINGS,
   Cams, $filter, $ionicScrollDelegate, Categorias, Loader) {
 
   var concejo = $stateParams.concejo;
@@ -29,23 +29,33 @@ wcaModule.controller('ListadoCtrl', function($scope, $stateParams, $rootScope, S
   $scope.camsFiltradas = [];
 
   Loader.show('Cargando...');
-  if($rootScope.cams.length === 0){
-    Cams.getRemoteData(sqlQuery)
-      .then(function (response) {
-        var listaCams = response.data.rows;
-        // Lista de todas las cams sin filtrar
-        $rootScope.cams = listaCams;
-        // Lista cams filtradas por concejo y categoria
-        $scope.camsFiltradas = Cams.filtrarListaCams(concejo, idCategoria, listaCams);
-        Loader.hide();
-      })
-      .catch(function (error) {
-        $scope.error = STRINGS.ERROR;
-        throw(error);
-      });
-  } else {
-    $scope.camsFiltradas = Cams.filtrarListaCams(concejo, idCategoria, response);
-  }
+  // if($rootScope.cams.length === 0){
+  //   Cams.getRemoteData(sqlQuery)
+  //     .then(function (response) {
+  //       var listaCams = response.data.rows;
+  //       // Lista de todas las cams sin filtrar
+  //       $rootScope.cams = listaCams;
+  //       // Lista cams filtradas por concejo y categoria
+  //       $scope.camsFiltradas = Cams.filtrarListaCams(concejo, idCategoria, listaCams);
+  //       Loader.hide();
+  //     })
+  //     .catch(function (error) {
+  //       $scope.error = STRINGS.ERROR;
+  //       throw(error);
+  //     });
+  // } else {
+  //   $scope.camsFiltradas = Cams.filtrarListaCams(concejo, idCategoria, response);
+  // }
+
+  // debugger
+  // Cams.getAll()
+  //   .then(function () {
+  //     // debugger
+  //     console.log('cams', Cams.listaCams);
+  //     $scope.camsFiltradas = Cams.listaCams;
+  //     Loader.hide();
+  //   });
+
 
   $scope.$on('$ionicView.afterEnter', function(){
     $scope.concejo = concejo;

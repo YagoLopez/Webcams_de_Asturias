@@ -22,11 +22,12 @@ wcaModule.service('Cams', function($http){
 */
 // ====================================================================================================================
 //todo: añadir getCamsById, getCamsByConcejoCategoria
-wcaModule.service('Cams', function($http, $filter){
+wcaModule.service('Cams', function Cams($http, $filter, $q){
 
   // Antiguas claves de identificacion
   var API_ENDPOINT = 'https://www.googleapis.com/fusiontables/v2/query';
   var API_KEY = 'AIzaSyBsdouSTimjrC2xHmbGgOt8VfbLBWc9Gps';
+  var sqlQuery = 'SELECT Lugar, Concejo, Imagen ,Categoria, rowid, latitud, longitud FROM '+ this.TABLE_ID;
 
   // Nuevas claves de identificacion usando OAuth2
   var ID_CLIENT_OAUTH2 = '657321649789-3oh0002a4bnqiflmkmv0q47slvi21jdi.apps.googleusercontent.com';
@@ -40,24 +41,42 @@ wcaModule.service('Cams', function($http, $filter){
       "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
       "client_secret": "gT0WTpsma4NNqhmsAG7owIqA"
     }
-  };
+  }
 
   this.TABLE_ID = '1gX5maFbqFyRziZiUYlpOBYhcC1v9lGkKqCXvZREF';
+
+  this.listaCams = [];
+
+  // this.getAll = function () {
+  //   return Cams.getRemoteData(sqlQuery)
+  //     .then(function (response) {
+  //       this.listaCams = response.data.rows;
+  //     })
+  // }
+
+  this.getAll = function () {
+    var url = API_ENDPOINT+ '?sql=' +(sqlQuery)+ '&key=' +API_KEY+ '&callback=JSON_CALLBACK';
+    return $http.get(sqlQuery)
+      .then(function (response) {
+        this.listaCams = response.data.rows;
+      })
+  }
+
 
   this.getRemoteData = function( sqlQueryString ) {
     var url = API_ENDPOINT+ '?sql=' +(sqlQueryString)+ '&key=' +API_KEY+ '&callback=JSON_CALLBACK';
     // console.log(sqlQueryString);
     return $http.jsonp( encodeURI(url), {cache: true} );
-  };
+  }
 
   this.getRemoteDataOAuth = function( sqlQueryString ) {
     var url = API_ENDPOINT+ '?sql=' +encodeURI(sqlQueryString);
     return $http.get( encodeURI(url), {cache: true, headers: {'Authorization': auth_token}} );
-  };
+  }
 
   this.getLocalData = function(path_fichero){
     return $http.get(path_fichero);
-  };
+  }
 
   function esSubcadena(idCategoria, urlCategoria) {
     return (urlCategoria.indexOf('categoria=' + idCategoria) > -1);
@@ -81,14 +100,14 @@ wcaModule.service('Cams', function($http, $filter){
         }
       }
       return filteredItems;
-    });
-  };
+    })
+  }
 
   this.getCamByRowid = function (rowid, listaCams) {
     return $filter('filter')(listaCams, function(cam) {
       return cam[4] == rowid;
-    });
-  };
+    })
+  }
 
   this.buscarCams = function (searchString, listaAllCams) {
     return $filter('filter')(listaAllCams, function(cam) {
@@ -97,7 +116,7 @@ wcaModule.service('Cams', function($http, $filter){
       if(matchCondition1 || matchCondition2){
         return cam;
       }
-    });
+    })
   }
 });
 // ====================================================================================================================
