@@ -119,9 +119,7 @@ self.addEventListener('fetch', function(event) {
   event.respondWith(
     // test if the request is cached
     caches.match(event.request).then(function(response) {
-      // debugger
       request = event.request;
-      resp = response;
       if(response){
         // 1) if request is cached, response will be returned from browser cache
         // console.log('request is cached: ', event.request.url);
@@ -133,8 +131,8 @@ self.addEventListener('fetch', function(event) {
       }
       // return response || fetch(event.request, {mode: 'no-cors'});
     }).catch(function (err) {
-      console.log('caches.match() error: ', err);
-      console.log('request: ', request);
+      // console.log('caches.match() error: ', err);
+      // console.log('request: ', request);
       // todo: Detectar cuando request es una imagen (sugerencia: inspeccionar: event.request -> mimeType)
       // if response not cached and network not available an error is thrown => return fallback image
       return caches.match('img/offline-img.png');
