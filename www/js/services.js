@@ -103,7 +103,7 @@ wcaModule.service('Cams', function ($http, $filter, $location){
   }
 });
 // ====================================================================================================================
-wcaModule.service('Mapa', function(Cams, Popup){
+wcaModule.service('Mapa', function(Cams){
 
   var placesService, request, mapa;
 
@@ -114,6 +114,7 @@ wcaModule.service('Mapa', function(Cams, Popup){
 
   this.OVIEDO = {lat: 43.4667, lng: -5.8333}; // centro de mapa vista global
   this.RADIO_BUSQUEDA = 500; // radio de búsqueda de panorama StreetView a partir de coordenadas de cam (metros)
+  this.GOOGLE_EMBBED_API_KEY = 'AIzaSyC9mdwZ_BSwmP_aAaTvBGHZC7t_UPYso6k';
 
   this.hallaLatLng = function (domElement, lugar, concejo, fn){
     request = {
@@ -123,12 +124,13 @@ wcaModule.service('Mapa', function(Cams, Popup){
     placesService = new google.maps.places.PlacesService(domElement);
     placesService.textSearch(request, callback);
     function callback(results, status) {
-      if (status == google.maps.places.PlacesServiceStatus.OK) {
+      if (status === google.maps.places.PlacesServiceStatus.OK) {
         //console.log('Debugging resultados de busqueda street view results[0]', results[0]);
         fn(results[0].geometry.location);
       } else {
-        Popup.show('Error', 'No se han podido hallar coordenadas para panorama StreetView');
-        console.error('Mapa.hallaLatLng(): no se han podido hallar coordenadas');
+        // Popup.show('Error', 'No se han podido hallar coordenadas para panorama StreetView');
+        // console.error('Mapa.hallaLatLng(): no se han podido hallar coordenadas');
+        throw('No se han podido hallar coordenadas para panorama StreetView');
       }
     }
   };

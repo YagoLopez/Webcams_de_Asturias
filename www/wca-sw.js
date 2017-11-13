@@ -1,3 +1,4 @@
+// todo: en modo offline mostrar una aviso al usuario
 // todo: 'install' event is for old caches deletion. use it?
 // todo: split filesToCache into two arrays for easy configuration and merge them
 // todo: use es6
@@ -8,9 +9,6 @@ var filesToCache = [
 
   '/',
   'index.html',
-  // '/www/#/app/listado?idCategoria=7',
-  // '/www/index.html#/app/listado?idCategoria=7',
-  // 'https://yagolopez.js.org/Webcams_de_Asturias/www/index.html#/app/listado?idCategoria=7',
   'https://www.googleapis.com/fusiontables/v2/query?sql=SELECT%20Lugar,%20Concejo,%20Imagen%20,Categoria,%20rowid,%20latitud,%20longitud%20FROM%201gX5maFbqFyRziZiUYlpOBYhcC1v9lGkKqCXvZREF&key=AIzaSyBsdouSTimjrC2xHmbGgOt8VfbLBWc9Gps&callback=angular.callbacks._0',
 
   // CSS
@@ -107,7 +105,7 @@ self.addEventListener('install', function(event) {
  *
  */
 self.addEventListener('activate', function (event) {
-  console.log('sw: service worker installed and activated');
+  console.info('sw: service worker installed and activated');
 });
 /** --------------------------------------------------------------------------------------------------------------------
  * 'Fetch' event. Browser tries to get resources making a request
@@ -117,9 +115,13 @@ self.addEventListener('activate', function (event) {
  *
  */
 self.addEventListener('fetch', function(event) {
+  var request;
   event.respondWith(
     // test if the request is cached
     caches.match(event.request).then(function(response) {
+      // debugger
+      request = event.request;
+      resp = response;
       if(response){
         // 1) if request is cached, response will be returned from browser cache
         // console.log('request is cached: ', event.request.url);
@@ -131,7 +133,8 @@ self.addEventListener('fetch', function(event) {
       }
       // return response || fetch(event.request, {mode: 'no-cors'});
     }).catch(function (err) {
-      // console.log('caches.match() error: ', err);
+      console.log('caches.match() error: ', err);
+      console.log('request: ', request);
       // todo: Detectar cuando request es una imagen (sugerencia: inspeccionar: event.request -> mimeType)
       // if response not cached and network not available an error is thrown => return fallback image
       return caches.match('img/offline-img.png');
@@ -139,18 +142,18 @@ self.addEventListener('fetch', function(event) {
   )
 });
 // ---------------------------------------------------------------------------------------------------------------------
-self.addEventListener('foreignfetch', function(event) {
-  console.log('foreign fetch event');
-  // The new Request will have credentials omitted by default.
-  const noCredentialsRequest = new Request(event.request.url);
-event.respondWith(
-  // Replace with your own request logic as appropriate.
-  fetch(noCredentialsRequest)
-    .catch(function(){
-      caches.match(noCredentialsRequest);
-    })
-    .then(function(response){
-      console.log('foreign fetch response', response);
-    })
-);
-});
+// self.addEventListener('foreignfetch', function(event) {
+//   console.log('foreign fetch event');
+//   // The new Request will have credentials omitted by default.
+//   const noCredentialsRequest = new Request(event.request.url);
+// event.respondWith(
+//   // Replace with your own request logic as appropriate.
+//   fetch(noCredentialsRequest)
+//     .catch(function(){
+//       caches.match(noCredentialsRequest);
+//     })
+//     .then(function(response){
+//       console.log('foreign fetch response', response);
+//     })
+// );
+// });

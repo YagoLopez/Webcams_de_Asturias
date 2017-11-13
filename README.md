@@ -13,7 +13,10 @@ se pueden consultar en el siguiente artículo:
 Actualmente, las nuevas versiones de Angular no siguen el patrón MVC ya que se basan en una arquitectura de componentes.
 
 - <div><a href="http://mobt.me/XfKL" target="_blank">Demo para desktop (pantalla grande)</a></div>
-- <div><a href="http://yagolopez.github.io/Webcams_de_Asturias/www/#/" target="_blank">Demo para móvil (pantalla pequeña)</a></div>
+- <div>
+  <a href="http://yagolopez.github.io/Webcams_de_Asturias/www/index.html" target="_blank">
+  Demo para móvil (pantalla pequeña)</a>
+  </div>
 
 Las cámaras están agrupadas según las siguientes categorías:
 
