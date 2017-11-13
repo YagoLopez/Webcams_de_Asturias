@@ -2,66 +2,41 @@
 // https://www.googleapis.com/fusiontables/v2/query?sql=SELECT%20*%20FROM%201gX5maFbqFyRziZiUYlpOBYhcC1v9lGkKqCXvZREF&key=AIzaSyBsdouSTimjrC2xHmbGgOt8VfbLBWc9Gps
 var wcaModule = angular.module('wca.services',[]);
 // ====================================================================================================================
-/*
-wcaModule.service('Cams', function($http){
-
-  var API_ENDPOINT = 'https://www.googleapis.com/fusiontables/v2/query';
-  var API_KEY = 'AIzaSyBsdouSTimjrC2xHmbGgOt8VfbLBWc9Gps';
-
-  this.TABLE_ID = '1gX5maFbqFyRziZiUYlpOBYhcC1v9lGkKqCXvZREF';
-
-  this.getRemoteData = function( sqlQueryString ) {
-    var url = API_ENDPOINT+ '?sql=' +encodeURI(sqlQueryString)+ '&key=' +API_KEY+ '&callback=JSON_CALLBACK';
-    return $http.jsonp( encodeURI(url), {cache: true} );
-  };
-
-  this.getLocalData = function(path_fichero){
-    return $http.get(path_fichero);
-  };
-});
-*/
-// ====================================================================================================================
 //todo: añadir getCamsById, getCamsByConcejoCategoria
-wcaModule.service('Cams', function Cams($http, $filter, $q){
+wcaModule.service('Cams', function ($http, $filter, $location){
 
-  // Antiguas claves de identificacion
   var API_ENDPOINT = 'https://www.googleapis.com/fusiontables/v2/query';
   var API_KEY = 'AIzaSyBsdouSTimjrC2xHmbGgOt8VfbLBWc9Gps';
-  var sqlQuery = 'SELECT Lugar, Concejo, Imagen ,Categoria, rowid, latitud, longitud FROM '+ this.TABLE_ID;
 
   // Nuevas claves de identificacion usando OAuth2
-  var ID_CLIENT_OAUTH2 = '657321649789-3oh0002a4bnqiflmkmv0q47slvi21jdi.apps.googleusercontent.com';
-  var OAUTH2_SECRET = 'gT0WTpsma4NNqhmsAG7owIqA';
-  var auth_token = {
-    "web": {
-      "client_id": "657321649789-3oh0002a4bnqiflmkmv0q47slvi21jdi.apps.googleusercontent.com",
-      "project_id": "webcams-de-asturias",
-      "auth_uri": "https://accounts.google.com/o/oauth2/auth",
-      "token_uri": "https://accounts.google.com/o/oauth2/token",
-      "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
-      "client_secret": "gT0WTpsma4NNqhmsAG7owIqA"
-    }
-  }
-
-  this.TABLE_ID = '1gX5maFbqFyRziZiUYlpOBYhcC1v9lGkKqCXvZREF';
-
-  this.listaCams = [];
-
-  // this.getAll = function () {
-  //   return Cams.getRemoteData(sqlQuery)
-  //     .then(function (response) {
-  //       this.listaCams = response.data.rows;
-  //     })
+  // var ID_CLIENT_OAUTH2 = '657321649789-3oh0002a4bnqiflmkmv0q47slvi21jdi.apps.googleusercontent.com';
+  // var OAUTH2_SECRET = 'gT0WTpsma4NNqhmsAG7owIqA';
+  // var auth_token = {
+  //   "web": {
+  //     "client_id": "657321649789-3oh0002a4bnqiflmkmv0q47slvi21jdi.apps.googleusercontent.com",
+  //     "project_id": "webcams-de-asturias",
+  //     "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  //     "token_uri": "https://accounts.google.com/o/oauth2/token",
+  //     "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  //     "client_secret": "gT0WTpsma4NNqhmsAG7owIqA"
+  //   }
   // }
 
+  this.TABLE_ID = '1gX5maFbqFyRziZiUYlpOBYhcC1v9lGkKqCXvZREF';
+  this.all = [];
+
   this.getAll = function () {
+    var self = this;
+    var sqlQuery = 'SELECT Lugar, Concejo, Imagen ,Categoria, rowid, latitud, longitud FROM '+ this.TABLE_ID;
     var url = API_ENDPOINT+ '?sql=' +(sqlQuery)+ '&key=' +API_KEY+ '&callback=JSON_CALLBACK';
-    return $http.get(sqlQuery)
-      .then(function (response) {
-        this.listaCams = response.data.rows;
+    return $http.jsonp( encodeURI(url), {cache: true} )
+      .success(function (response) {
+        self.all = response.rows;
+      })
+      .error(function (error) {
+        throw(error);
       })
   }
-
 
   this.getRemoteData = function( sqlQueryString ) {
     var url = API_ENDPOINT+ '?sql=' +(sqlQueryString)+ '&key=' +API_KEY+ '&callback=JSON_CALLBACK';
@@ -69,48 +44,56 @@ wcaModule.service('Cams', function Cams($http, $filter, $q){
     return $http.jsonp( encodeURI(url), {cache: true} );
   }
 
-  this.getRemoteDataOAuth = function( sqlQueryString ) {
-    var url = API_ENDPOINT+ '?sql=' +encodeURI(sqlQueryString);
-    return $http.get( encodeURI(url), {cache: true, headers: {'Authorization': auth_token}} );
-  }
+  // this.getRemoteDataOAuth = function( sqlQueryString ) {
+  //   var url = API_ENDPOINT+ '?sql=' +encodeURI(sqlQueryString);
+  //   return $http.get( encodeURI(url), {cache: true, headers: {'Authorization': auth_token}} );
+  // }
 
   this.getLocalData = function(path_fichero){
-    return $http.get(path_fichero);
+    var self = this;
+    return $http.get( path_fichero, {cache: true} )
+      .success(function (response) {
+        self.all = response.rows;
+      })
+      .error(function (error) {
+        throw(error);
+      })
   }
 
   function esSubcadena(idCategoria, urlCategoria) {
     return (urlCategoria.indexOf('categoria=' + idCategoria) > -1);
   }
 
-  this.filtrarListaCams = function(concejo, idCategoria, listaCams){
-    var filteredItems;
-    return $filter('filter')(listaCams, function(cam) {
+  this.filtrarPor = function(concejo, idCategoria){
+    var self = this;
+    var camsFiltradas;
+    return $filter('filter')(this.all, function(cam) {
       if (concejo && idCategoria) {
         // cam[1]: concejo, cam[3]: url categoria (no id de categoria, no confundir)
-        filteredItems = (cam[1].toLowerCase() == concejo.toLowerCase() && esSubcadena(idCategoria, cam[3]));
+        camsFiltradas = (cam[1].toLowerCase() == concejo.toLowerCase() && esSubcadena(idCategoria, cam[3]));
       } else {
         if (concejo){
-          filteredItems = cam[1].toLowerCase() == concejo.toLowerCase();
+          camsFiltradas = cam[1].toLowerCase() == concejo.toLowerCase();
         }
         if (idCategoria){
-          filteredItems = esSubcadena(idCategoria, cam[3]);
+          camsFiltradas = esSubcadena(idCategoria, cam[3]);
         }
         if (!concejo && !idCategoria){
-          filteredItems = listaCams;
+          camsFiltradas = self.all;
         }
       }
-      return filteredItems;
+      return camsFiltradas;
     })
   }
 
-  this.getCamByRowid = function (rowid, listaCams) {
-    return $filter('filter')(listaCams, function(cam) {
-      return cam[4] == rowid;
+  this.getCamByRowid = function (rowid) {
+    return $filter('filter')(this.all, function(cam) {
+      return cam[4] === rowid;
     })
   }
 
-  this.buscarCams = function (searchString, listaAllCams) {
-    return $filter('filter')(listaAllCams, function(cam) {
+  this.buscarCams = function (searchString) {
+    return $filter('filter')(this.all, function(cam) {
       var matchCondition1 = cam[0].toLowerCase().indexOf(searchString.toLowerCase()) > -1;
       var matchCondition2 = cam[1].toLowerCase().indexOf(searchString.toLowerCase()) > -1;
       if(matchCondition1 || matchCondition2){
@@ -336,7 +319,8 @@ wcaModule.factory('$exceptionHandler', function($injector) {
   return function(exception, cause) {
     var Popup = $injector.get('Popup');
     console.error(exception);
-    Popup.show('Error', 'Data: '+exception.data+'<br>'+'Status: '+exception.status+'<br>'+'Text: '+exception.statusText);
+    Popup.show('Error', 'Data: '+exception.data+'<br>Status: '+exception.status+'<br>Text: '+exception.statusText +
+      '<br>Message: '+exception.message);
   };
 });
 // ====================================================================================================================
@@ -378,4 +362,3 @@ wcaModule.constant('STRINGS', {
     '(1) Sin conexión de datos. (2) Fallo de servidor remoto',
   RECARGANDO_IMG: 'Recargando imagen...'
 });
-

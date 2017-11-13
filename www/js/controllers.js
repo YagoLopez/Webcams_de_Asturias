@@ -19,43 +19,21 @@
 
 var wcaModule = angular.module('wca.controllers',[]);
 // ====================================================================================================================
-wcaModule.controller('ListadoCtrl', function ListadoCtrl($scope, $stateParams, $rootScope, STRINGS,
-  Cams, $filter, $ionicScrollDelegate, Categorias, Loader) {
+wcaModule.controller('ListadoCtrl', function ($scope, $stateParams, $rootScope, STRINGS,
+  $filter, $ionicScrollDelegate, Cams, Categorias, Loader) {
 
   var concejo = $stateParams.concejo;
   var idCategoria = $stateParams.idCategoria;
-  var sqlQuery = 'SELECT Lugar, Concejo, Imagen ,Categoria, rowid, latitud, longitud FROM '+ Cams.TABLE_ID;
+
   $rootScope.cams = [];
   $scope.camsFiltradas = [];
-
   Loader.show('Cargando...');
-  // if($rootScope.cams.length === 0){
-  //   Cams.getRemoteData(sqlQuery)
-  //     .then(function (response) {
-  //       var listaCams = response.data.rows;
-  //       // Lista de todas las cams sin filtrar
-  //       $rootScope.cams = listaCams;
-  //       // Lista cams filtradas por concejo y categoria
-  //       $scope.camsFiltradas = Cams.filtrarListaCams(concejo, idCategoria, listaCams);
-  //       Loader.hide();
-  //     })
-  //     .catch(function (error) {
-  //       $scope.error = STRINGS.ERROR;
-  //       throw(error);
-  //     });
-  // } else {
-  //   $scope.camsFiltradas = Cams.filtrarListaCams(concejo, idCategoria, response);
-  // }
 
-  // debugger
-  // Cams.getAll()
-  //   .then(function () {
-  //     // debugger
-  //     console.log('cams', Cams.listaCams);
-  //     $scope.camsFiltradas = Cams.listaCams;
-  //     Loader.hide();
-  //   });
-
+  Cams.getAll()
+    .then(function () {
+      $scope.cams = Cams.filtrarPor(concejo, idCategoria);
+      Loader.hide();
+    });
 
   $scope.$on('$ionicView.afterEnter', function(){
     $scope.concejo = concejo;
@@ -68,13 +46,15 @@ wcaModule.controller('ListadoCtrl', function ListadoCtrl($scope, $stateParams, $
   });
 });
 // ====================================================================================================================
-wcaModule.controller('MapaCtrl', function($scope, Mapa, $rootScope, $location){
+wcaModule.controller('MapaCtrl', function($scope, Mapa, $rootScope, Cams, $location){
 
   var mapa, layer, posicion;
-  if(!$rootScope.cam){
+
+  if(Cams.all.length < 1) {
     $location.path( "#/" );
     return;
   }
+
   $scope.$on('$ionicView.afterEnter', function() {
     mapa = Mapa.crear(document.getElementById('mapa'));
     layer = Mapa.creaFusionTableLayer().setMap(mapa);
@@ -93,6 +73,7 @@ wcaModule.controller('MapaGlobalCtrl', function($scope, $rootScope, $filter, Map
   sqlQueryCategorias = 'SELECT Categoria FROM '+Cams.TABLE_ID+' GROUP BY Categoria';
   $scope.filtro = {categoria: '', concejo: ''};
 
+  //todo: refactorizar y trasladar a servicio Cams
   Cams.getRemoteData(sqlQueryConcejos).success(function(data){
     $scope.concejos = data.rows;
   }).error(function(status){
@@ -128,9 +109,9 @@ wcaModule.controller('MapaGlobalCtrl', function($scope, $rootScope, $filter, Map
   };
 
   $scope.concejoEscogido = function(concejo){
-    // Elimina retornos de carro y espacios en blanco al principio y al final
+
     var filtroConcejo;
-    concejo = concejo.replace(/(\r\n|\n|\r)/gm,'').trim();
+    concejo = concejo.replace(/(\r\n|\n|\r)/gm,'').trim(); // Elimina retornos de carro y espacios en blanco al principio y al final
     filtroConcejo = 'Concejo=\'' + concejo + '\''; // el concejo tiene que ir entre comillas
     layer.setMap(null); // borra layer anterior si la hubiera
     layer = Mapa.creaFusionTableLayer(filtroConcejo);
@@ -163,16 +144,16 @@ wcaModule.controller('DetalleCtrl', function($scope, $stateParams, $ionicModal, 
 
   // Init --------------------------------------------------------------------------------------------------------------
 
-  $scope.infoMeteo = ' (Obteniendo datos del servidor...)';
   Loader.show('Cargando...');
-  if(!$rootScope.cams || !$stateParams.rowid){
-    $location.path('#/'); // si no hay lista de items (cams) redirigir a root y abortar
+  if(Cams.all.length < 1 || !$stateParams.rowid){
+    $location.path('#/'); // si no hay lista de cams redirigir a root
     return;
   }
-  $rootScope.cam = new Cam( Cams.getCamByRowid($stateParams.rowid, $rootScope.cams) );
+  $rootScope.cam = new Cam( Cams.getCamByRowid($stateParams.rowid) );
 
   // Clima Data --------------------------------------------------------------------------------------------------------
 
+  $scope.infoMeteo = ' (Obteniendo datos del servidor...)';
   // Priority is webcam image load. Wait 1000 ms before loading clima data
   $scope.timerGetClimaData = setTimeout( function(){
     Clima.getData( $rootScope.cam.lat, $rootScope.cam.lng ).success(function(climadata){
@@ -237,17 +218,17 @@ wcaModule.controller('DetalleCtrl', function($scope, $stateParams, $ionicModal, 
 
   // Live Cycle Events -------------------------------------------------------------------------------------------------
 
-  // On view exit, clear timers to prevent memory leaks
+  // On view-exit, clear timers to prevent memory leaks
   $scope.$on('$ionicView.beforeLeave', function (event, data) {
     clearTimeout($scope.timerGetClimaData);
   })
 
 });
 // ====================================================================================================================
-wcaModule.controller('MeteoblueCtrl', function ($scope, $rootScope, $location) {
+wcaModule.controller('MeteoblueCtrl', function ($scope, $rootScope, $location, Cams) {
 
-  if(!$rootScope.cam){
-    $location.path('#/'); // si no hay datos de cam redirigir a root y abortar
+  if(Cams.all.length < 1) {
+    $location.path( "#/" );
     return;
   }
 
@@ -264,20 +245,21 @@ wcaModule.controller('MeteoblueCtrl', function ($scope, $rootScope, $location) {
   })
 });
 // ====================================================================================================================
-wcaModule.controller('StreetViewCtrl', function($scope, Mapa, $rootScope, Popup, $location, $ionicSideMenuDelegate){
+wcaModule.controller('StreetViewCtrl', function($scope, Mapa, $rootScope, Popup, $ionicSideMenuDelegate, Cams, $location){
 
-  // Initializations
-  if(!$rootScope.cam) {
+  var coords, div, loader, streetViewService;
+  if(Cams.all.length < 1) {
     $location.path( "#/" );
     return;
   }
-  var coords = {lat: $rootScope.cam.lat, lng: $rootScope.cam.lng};
+  coords = {lat: $rootScope.cam.lat, lng: $rootScope.cam.lng};
+  div = document.getElementById('street-view');
+  loader = document.querySelector('.loader');
+  streetViewService = new google.maps.StreetViewService();
+
   $ionicSideMenuDelegate.canDragContent(false);
 
   $scope.$on('$ionicView.afterEnter', function() {
-    var div = document.getElementById('street-view');
-    var loader = document.querySelector('.loader');
-    var streetViewService = new google.maps.StreetViewService();
     streetViewService.getPanoramaByLocation(coords, Mapa.RADIO_BUSQUEDA, function (data, status) {
       if (status == google.maps.StreetViewStatus.OK) {
         //todo: revisar
@@ -508,9 +490,6 @@ wcaModule.controller('PorCategoriaCtrl', function($scope, $window, $sce){
 
   var urlGraficoSectores, urlGraficoBarras;
 
-  // $scope.$on('$ionicView.beforeEnter', function () {
-  //   Loader.showWithBackdrop('Cargando...');
-  // });
   //Calculo de dimensiones de ventana al redimensionar
   $scope.calculateDimensions = function(gesture) {
     if($window.innerWidth > 765){
@@ -549,18 +528,12 @@ wcaModule.controller('PorCategoriaCtrl', function($scope, $window, $sce){
   $scope.urlGraficoSectores = $sce.trustAsResourceUrl(urlGraficoSectores);
   $scope.urlGraficoBarras = $sce.trustAsResourceUrl(urlGraficoBarras);
 
-  $scope.cargaIFrameTerminada = function(){
-    // Loader.hide();
-    alert();
-  }
-
   });
 // ====================================================================================================================
 wcaModule.controller('PorConcejoCtrl', function($scope, $window, $sce){
 
   var urlConcejosMasCams, urlCamsConcejo, iframeHeigth = 550;
 
-  // $scope.endLoad = false;
   $scope.calculateDimensions = function(gesture) {
     if($window.innerWidth > 765){
       $scope.dev_width = $window.innerWidth - 270;
@@ -623,15 +596,15 @@ wcaModule.controller('WindyCtrl', function($scope, Loader, $sce, $stateParams){
   }
 });
 // ====================================================================================================================
-wcaModule.controller('BuscarCamsCtrl', function($scope, $rootScope, $filter, Cams, Loader, $location){
+wcaModule.controller('BuscarCamsCtrl', function($scope, $rootScope, $filter, Cams, $location){
 
   var inputBuscaCam = document.getElementById('inputBuscaCam');
   $scope.busqueda = {lugar: ''};
   $scope.camsEncontradas = [];
   $scope.showImages = false;
 
-  if(!$rootScope.cams){
-    $location.path('#/'); // si no hay lista de cams redirigir a root y abortar
+  if(Cams.all.length < 1) {
+    $location.path( "#/" );
     return;
   }
 
@@ -642,7 +615,8 @@ wcaModule.controller('BuscarCamsCtrl', function($scope, $rootScope, $filter, Cam
       $scope.camsEncontradas = [];
       return;
     }
-    $scope.camsEncontradas = Cams.buscarCams($scope.busqueda.lugar, $rootScope.cams);
+    // $scope.camsEncontradas = Cams.buscarCams($scope.busqueda.lugar, $rootScope.cams);
+    $scope.camsEncontradas = Cams.buscarCams($scope.busqueda.lugar, Cams.all);
   };
 
   $scope.resetBusqueda = function($event){

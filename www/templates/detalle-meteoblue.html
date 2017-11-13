@@ -5,8 +5,8 @@
     #scroll-container {margin-top: 45px; width: 100%; height: 100%; text-align: center; overflow:hidden}
     #scroll-container > img {width: 35px; vertical-align: middle}
     ion-header-bar > div > img {width: 35px; vertical-align: middle}
-    .gray {color: gray}
-    @media (min-width: 720px) {#img-meteoblue {width: 75%; display: block; margin: auto; cursor: move; padding-bottom: 40px}}
+    #img-meteoblue {cursor: move}
+    @media (min-width: 720px) {#img-meteoblue {width: 75%; display: block; margin: auto; padding-bottom: 40px}}
   </style>
 
   <ion-nav-bar>
@@ -18,11 +18,11 @@
   <!-- Info: -->
   <!-- [overflow-scroll="false"] para permitir scrolling. Permite hacer zoom en imagen -->
   <!-- [locking="false"] para permitir srcroll simultaneo en ejes x,y. apropiado para hacer zoom -->
-  <ion-scroll id="scroll-container" zooming="true" direction="xy" locking="false" overflow-scroll="false fade-in">
-    <h5 class="gray">Predicción</h5>
-    <div id="img-meteoblue-loader" class="loader3"><img class="rotate-center" src="img/clock.png"/></div>
-    <img id="img-meteoblue fade-in" ng-src="{{ ::urlMeteoblue }}" fallback-src="img/imgFail.png"
-      imageonload="removeDomElementById('img-meteoblue-loader')" class="fade-in-long"/>
+  <ion-scroll id="scroll-container" zooming="true" direction="xy" locking="false" overflow-scroll="false">
+    <div id="img-meteoblue-loader" class="loader3 fade-in"><img src="img/clock.png" class="rotate-center"/></div>
+    <img id="img-meteoblue" ng-src="{{ ::urlMeteoblue }}" fallback-src="img/imgFail.png"
+      imageonload="removeDomElementById('img-meteoblue-loader')"/>
+    <div class="info-img">Concejo: {{ ::cam.concejo }}</div>
   </ion-scroll>
 
 </ion-view>

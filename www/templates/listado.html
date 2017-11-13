@@ -8,7 +8,7 @@
 
   <ion-nav-buttons side="left">
     <button ng-if="screenWidth < 760" class="button button-icon button-clear ion-navicon" menu-toggle="left"></button>
-    <div class="cam-counter-left">{{ camsFiltradas.length }}</div>
+    <div class="cam-counter-left">{{ cams.length }}</div>
   </ion-nav-buttons>
   <ion-nav-buttons side="right">
     <a id="btn-mosaico" class="button button-icon icon ion-grid"
@@ -20,7 +20,7 @@
     <div class="responsive-page">
       <div ng-if="error" class="error">{{ ::error }}</div>
       <a class="item item-thumbnail-left item-icon-right"
-         ng-repeat="cam in camsFiltradas track by cam[4]" href="#/app/detalle/{{ camsFiltradas[$index][4] }}">
+         ng-repeat="cam in cams track by cam[4]" href="#/app/detalle/{{ cams[$index][4] }}">
         <!--<img ng-src="{{ cam[2] }}" fallback-src="img/imgFail.png" class="img-cam"/>-->
         <img ng-src="img/imgFail.png" class="img-cam"/>
         <div>
@@ -29,7 +29,7 @@
         </div>
         <i class="icon ion-ios-arrow-right azul"></i>
         <!-- Debug Info -->
-         <!--<p>Categoría: {{cam[3]}}</p> <p>indice: {{$index}}</p> <p>ROWID: {{cam[4]}}</p> -->
+        <!-- <p>Categoría: {{cam[3]}}</p> <p>indice: {{$index}}</p> <p>ROWID: {{cam[4]}}</p> -->
         <!-- /Debug Info -->
       </a>
     </div>

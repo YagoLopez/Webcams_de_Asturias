@@ -19,40 +19,39 @@
 
 var wcaModule = angular.module('wca.controllers',[]);
 // ====================================================================================================================
-wcaModule.controller('ListadoCtrl', function($scope, $stateParams, $rootScope, STRINGS,
-  Cams, $filter, $ionicScrollDelegate, Categorias, Loader) {
+wcaModule.controller('ListadoCtrl', function ($scope, $stateParams, $rootScope, STRINGS,
+  $filter, $ionicScrollDelegate, Cams, Categorias, Loader) {
 
   var concejo = $stateParams.concejo;
   var idCategoria = $stateParams.idCategoria;
-  var sqlQuery = 'SELECT Lugar, Concejo, Imagen ,Categoria, rowid, latitud, longitud FROM '+ Cams.TABLE_ID;
   $rootScope.cams = [];
   $scope.camsFiltradas = [];
 
   Loader.show('Cargando...');
-  // $scope.imgError = function () {
-  //   $scope.error = STRINGS.ERROR;
-  //   $scope.$apply();
-  // };
+  // if($rootScope.cams.length === 0){
+  //   Cams.getRemoteData(sqlQuery)
+  //     .then(function (response) {
+  //       var listaCams = response.data.rows;
+  //       // Lista de todas las cams sin filtrar
+  //       $rootScope.cams = listaCams;
+  //       // Lista cams filtradas por concejo y categoria
+  //       $scope.camsFiltradas = Cams.filtrarPor(concejo, idCategoria, listaCams);
+  //       Loader.hide();
+  //     })
+  //     .catch(function (error) {
+  //       $scope.error = STRINGS.ERROR;
+  //       throw(error);
+  //     });
+  // } else {
+  //   $scope.camsFiltradas = Cams.filtrarPor(concejo, idCategoria, response);
+  // }
 
-  function showError(errorMsg){
-    Loader.hide();
-    $scope.error = STRINGS.ERROR;
-    console.log(errorMsg);
-  }
 
-/*
-  Cams.getRemoteData(sqlQuery).success(function(data) {
-    data.error && showError(data.error);
-    // Cams totales sin filtrar
-    $rootScope.cams = data.rows;
-    // Cams filtradas por parametros url
-    $scope.camsFiltradas = Cams.filtrarListaCams(concejo, idCategoria, data.rows);
-    Loader.hide();
-  }).error(function(data, status) {
-    showError(status);
-  });
-*/
-
+  Cams.getAll()
+    .then(function () {
+      $scope.cams = Cams.filtrarPor(concejo, idCategoria);
+      Loader.hide();
+    });
 
 
   $scope.$on('$ionicView.afterEnter', function(){
@@ -91,6 +90,7 @@ wcaModule.controller('MapaGlobalCtrl', function($scope, $rootScope, $filter, Map
   sqlQueryCategorias = 'SELECT Categoria FROM '+Cams.TABLE_ID+' GROUP BY Categoria';
   $scope.filtro = {categoria: '', concejo: ''};
 
+  //todo: refactorizar y trasladar a servicio Cams
   Cams.getRemoteData(sqlQueryConcejos).success(function(data){
     $scope.concejos = data.rows;
   }).error(function(status){
@@ -161,16 +161,16 @@ wcaModule.controller('DetalleCtrl', function($scope, $stateParams, $ionicModal, 
 
   // Init --------------------------------------------------------------------------------------------------------------
 
-  $scope.infoMeteo = ' (Obteniendo datos del servidor...)';
   Loader.show('Cargando...');
-  if(!$rootScope.cams || !$stateParams.rowid){
-    $location.path('#/'); // si no hay lista de items (cams) redirigir a root y abortar
+  if(Cams.listaCams.length < 1 || !$stateParams.rowid){
+    $location.path('#/'); // si no hay lista de cams redirigir a root
     return;
   }
-  $rootScope.cam = new Cam( Cams.getCamByRowid($stateParams.rowid, $rootScope.cams) );
+  $rootScope.cam = new Cam( Cams.getCamByRowid($stateParams.rowid) );
 
   // Clima Data --------------------------------------------------------------------------------------------------------
 
+  $scope.infoMeteo = ' (Obteniendo datos del servidor...)';
   // Priority is webcam image load. Wait 1000 ms before loading clima data
   $scope.timerGetClimaData = setTimeout( function(){
     Clima.getData( $rootScope.cam.lat, $rootScope.cam.lng ).success(function(climadata){
@@ -235,7 +235,7 @@ wcaModule.controller('DetalleCtrl', function($scope, $stateParams, $ionicModal, 
 
   // Live Cycle Events -------------------------------------------------------------------------------------------------
 
-  // On view exit, clear timers to prevent memory leaks
+  // On view-exit, clear timers to prevent memory leaks
   $scope.$on('$ionicView.beforeLeave', function (event, data) {
     clearTimeout($scope.timerGetClimaData);
   })
@@ -244,6 +244,7 @@ wcaModule.controller('DetalleCtrl', function($scope, $stateParams, $ionicModal, 
 // ====================================================================================================================
 wcaModule.controller('MeteoblueCtrl', function ($scope, $rootScope, $location) {
 
+  // todo: crear una funcion en Servicio Cam: checkCamExists()
   if(!$rootScope.cam){
     $location.path('#/'); // si no hay datos de cam redirigir a root y abortar
     return;
@@ -274,6 +275,7 @@ wcaModule.controller('StreetViewCtrl', function($scope, Mapa, $rootScope, Popup,
 
   $scope.$on('$ionicView.afterEnter', function() {
     var div = document.getElementById('street-view');
+    var loader = document.querySelector('.loader');
     var streetViewService = new google.maps.StreetViewService();
     streetViewService.getPanoramaByLocation(coords, Mapa.RADIO_BUSQUEDA, function (data, status) {
       if (status == google.maps.StreetViewStatus.OK) {
@@ -282,6 +284,7 @@ wcaModule.controller('StreetViewCtrl', function($scope, Mapa, $rootScope, Popup,
       } else {
         Popup.show('Aviso', 'Panorama StreetView no disponible en esta ubicación<br>' +status);
       }
+      loader.parentNode.removeChild(loader);
     })
   });
 
@@ -626,7 +629,7 @@ wcaModule.controller('BuscarCamsCtrl', function($scope, $rootScope, $filter, Cam
   $scope.camsEncontradas = [];
   $scope.showImages = false;
 
-  if(!$rootScope.cams){
+  if(Cams.listaCams.length < 1){
     $location.path('#/'); // si no hay lista de cams redirigir a root y abortar
     return;
   }
@@ -638,7 +641,8 @@ wcaModule.controller('BuscarCamsCtrl', function($scope, $rootScope, $filter, Cam
       $scope.camsEncontradas = [];
       return;
     }
-    $scope.camsEncontradas = Cams.buscarCams($scope.busqueda.lugar, $rootScope.cams);
+    // $scope.camsEncontradas = Cams.buscarCams($scope.busqueda.lugar, $rootScope.cams);
+    $scope.camsEncontradas = Cams.buscarCams($scope.busqueda.lugar, Cams.listaCams);
   };
 
   $scope.resetBusqueda = function($event){

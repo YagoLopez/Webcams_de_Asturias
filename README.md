@@ -7,7 +7,10 @@
 
 <strong>Aplicación que muestra Imágenes de cámaras web situadas en el Principado de Asturias</strong>
 
-permite visualizar las imágenes en tiempo real de 118 web cams situadas a lo largo del Principado de Asturias.
+La arquitectura de esta App esta basada en el Patrón MVC y sigue las directrices de buenas prácticas para AngularJS que
+se pueden consultar en el siguiente artículo:
+<a href="https://toddmotto.com/rethinking-angular-js-controllers/">Link</a>
+Actualmente, las nuevas versiones de Angular no siguen el patrón MVC ya que se basan en una arquitectura de componentes.
 
 - <div><a href="http://mobt.me/XfKL" target="_blank">Demo para desktop (pantalla grande)</a></div>
 - <div><a href="http://yagolopez.github.io/Webcams_de_Asturias/www/#/" target="_blank">Demo para móvil (pantalla pequeña)</a></div>
@@ -19,7 +22,7 @@ Las cámaras están agrupadas según las siguientes categorías:
 - Puertos (marítimos)
 - Montaña
 
-Hay tres formas de visualizar las imágenes:
+Hay tres formas de visualizar las imágenes de las webcams:
 
 - Listado
 - Mosaico
@@ -57,4 +60,7 @@ Probado en:
 <strong>Mobile App showing real time images from webcams located at the Principality of Asturias</strong>
 
 It allows to watch real-time images from 118 webcams located at the Principality of Asturias
+
+The architecture of this App is based on MVC Pattern and follows AngularJS Best Practices:
+<a href="https://toddmotto.com/rethinking-angular-js-controllers/">Link</a>
 
