@@ -133,25 +133,7 @@ self.addEventListener('fetch', function(event) {
     }).catch(function (err) {
       // console.log('caches.match() error: ', err);
       // console.log('request: ', request);
-      // todo: Detectar cuando request es una imagen (sugerencia: inspeccionar: event.request -> mimeType)
-      // if response not cached and network not available an error is thrown => return fallback image
-      return caches.match('img/offline-img.png');
+      return caches.match('index.html');
     })
   )
 });
-// ---------------------------------------------------------------------------------------------------------------------
-// self.addEventListener('foreignfetch', function(event) {
-//   console.log('foreign fetch event');
-//   // The new Request will have credentials omitted by default.
-//   const noCredentialsRequest = new Request(event.request.url);
-// event.respondWith(
-//   // Replace with your own request logic as appropriate.
-//   fetch(noCredentialsRequest)
-//     .catch(function(){
-//       caches.match(noCredentialsRequest);
-//     })
-//     .then(function(response){
-//       console.log('foreign fetch response', response);
-//     })
-// );
-// });
