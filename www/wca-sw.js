@@ -91,10 +91,14 @@ if ('serviceWorker' in navigator) {
  */
 self.addEventListener('install', function(event) {
   event.waitUntil(
-    caches.open(cacheName).then(function(cache) {
-      console.log('sw: writing files to cache');
-      return cache.addAll(filesToCache);
-    })
+    caches.open(cacheName)
+      .then(function(cache) {
+        console.log('sw: writing files to cache');
+        return cache.addAll(filesToCache);
+      })
+      .then(function () {
+        return self.skipWaiting();
+      })
   )
 });
 /** --------------------------------------------------------------------------------------------------------------------
@@ -105,6 +109,8 @@ self.addEventListener('install', function(event) {
  *
  */
 self.addEventListener('activate', function (event) {
+  // To call claim() to force a "controllerchange" event on navigator.serviceWorker
+  event.waitUntil(self.clients.claim());
   console.info('sw: service worker installed and activated');
 });
 /** --------------------------------------------------------------------------------------------------------------------
@@ -114,26 +120,32 @@ self.addEventListener('activate', function (event) {
  * @param {function} Callback function with event data
  *
  */
-self.addEventListener('fetch', function(event) {
-  var request;
-  event.respondWith(
+self.addEventListener('fetch', function(fetchEvent) {
+  var request = fetchEvent.request;
+  //todo: aqui hace falta incluir imagenes cargadas desde ips y peticiones de imagenes a meteoblue
+  // If a request to a webcame image is made in offline mode, return fallback image and exit
+  if(request.url.indexOf('wewebcams') > -1) {
+    // fetchEvent.respondWith(caches.match('img/offline-img.png'));
+    return;
+  }
+  fetchEvent.respondWith(
     // test if the request is cached
-    caches.match(event.request).then(function(response) {
-      request = event.request;
-      if(response){
-        // 1) if request is cached, response will be returned from browser cache
-        // console.log('request is cached: ', event.request.url);
-        return response;
-      } else {
-        // 2) if request is not cached, fetch response from network
-        // console.log('request is not cached: ', event.request.url);
-        return fetch(event.request, {mode: 'no-cors'})
-      }
-      // return response || fetch(event.request, {mode: 'no-cors'});
-    }).catch(function (err) {
-      // console.log('caches.match() error: ', err);
-      // console.log('request: ', request);
-      return caches.match('index.html');
-    })
+    caches.match(request)
+      .then(function(response) {
+        if(response){
+          // 1) if request is cached, response will be returned from browser cache
+          // console.log('request is cached: ', fetchEvent.request.url);
+          return response;
+        } else {
+          // 2) if request is not cached, fetch response from network
+          // console.log('request is not cached: ', fetchEvent.request.url);
+          // todo: intentar hacer aqui la comprobacion de si es una peticion a 'wewebcams' y retornar en caso afirmativo
+          return fetch(request /* ,{mode: 'no-cors'} */)
+        }
+      })
+      .catch(function (error) {
+        // console.log('caches.match() error: ', error);
+        return caches.match('index.html');
+      })
   )
 });
