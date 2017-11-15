@@ -129,9 +129,9 @@ self.addEventListener('fetch', function(fetchEvent) {
 
   //todo: aqui hace falta incluir imagenes cargadas desde ips y peticiones de imagenes a meteoblue
   // If a request to a webcame image is made in offline mode, return fallback image and exit
-  // if(request.url.indexOf('wewebcams') > -1) {
-  //   return;
-  // }
+  if(request.url.indexOf('wewebcams') > -1 || request.url.indexOf('openweather')) {
+    return;
+  }
 
   fetchEvent.respondWith(
     // test if the request is cached
@@ -144,7 +144,7 @@ self.addEventListener('fetch', function(fetchEvent) {
         } else {
           // 2) if request is not cached, fetch response from network
           // console.log('request is not cached: ', fetchEvent.request.url);
-          return fetch(request ,{mode: 'cors'});
+          return fetch(request ,{mode: 'no-cors'});
         }
       })
       .catch(function (error) {
