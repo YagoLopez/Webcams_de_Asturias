@@ -122,18 +122,16 @@ self.addEventListener('activate', function (event) {
  */
 self.addEventListener('fetch', function(fetchEvent) {
   var request = fetchEvent.request;
+
+  // Image requests headers: {"accept", "image/webp,image/*,*/*;q=0.8"}
+  // Html requests headers:  {"accept", "text/html"}
+  // Code Snippet: request.header.get('accept').includes('text/html')
+
   //todo: aqui hace falta incluir imagenes cargadas desde ips y peticiones de imagenes a meteoblue
   // If a request to a webcame image is made in offline mode, return fallback image and exit
   // if(request.url.indexOf('wewebcams') > -1) {
-  //   // fetchEvent.respondWith(caches.match('img/offline-img.png'));
   //   return;
   // }
-
-  // String to discriminate image requests: {"accept", "image/webp,image/*,*/*;q=0.8"}
-  // String to discriminate html requests:  {"accept", "text/html"}
-  console.info("request.headers.get(accept)", request.headers.get('accept'));
-
-
 
   fetchEvent.respondWith(
     // test if the request is cached
@@ -146,12 +144,12 @@ self.addEventListener('fetch', function(fetchEvent) {
         } else {
           // 2) if request is not cached, fetch response from network
           // console.log('request is not cached: ', fetchEvent.request.url);
-          return fetch(request /* ,{mode: 'no-cors'} */)
+          return fetch(request ,{mode: 'cors'});
         }
       })
       .catch(function (error) {
         // console.log('caches.match() error: ', error);
-        return caches.match('img/offline-img.png');
+        return caches.match('index.html');
       })
   )
 });
