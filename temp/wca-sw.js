@@ -1,7 +1,7 @@
+// todo: en modo offline mostrar una aviso al usuario
 // todo: 'install' event is for old caches deletion. use it?
-// todo: split filesToCache in two arrays for easy configuration and merge them
-// todo: use typescript. references:
-// https://github.com/DefinitelyTyped/DefinitelyTyped/tree/HEAD/service_worker_api
+// todo: split filesToCache into two arrays for easy configuration and merge them
+// todo: use es6
 
 var cacheName = 'wca';
 
@@ -45,7 +45,7 @@ var filesToCache = [
   'templates/por_concejo.html',
   'templates/stats.html',
   'templates/detalle-streetview.html',
-  'templates/viento.html',
+  'templates/windy.html',
 
   // IMAGES
   'img/bckgrnd6.jpg',
@@ -71,16 +71,18 @@ var filesToCache = [
 
 ];
 
-// todo: check if service worker is installed before
+/** --------------------------------------------------------------------------------------------------------------------
+ * Service worker registration
+ */
 if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('wca-sw.js').then(function() {
-    console.log('sw: registration ok');
+  // navigator.serviceWorker.register('wca-sw.js', {scope: '/Webcams_de_Asturias/www/'}).then(function() {
+  navigator.serviceWorker.register('wca-sw.js').then(function(registration) {
+    console.log('sw: registration ok, scope: ', registration.scope);
   }).catch(function(err) {
     console.error(err);
   });
 }
-// ---------------------------------------------------------------------------------------------------------------------
-/**
+/** --------------------------------------------------------------------------------------------------------------------
  * 'Install' event. Writing files to browser cache
  *
  * @param {string} Event name ('install')
@@ -89,14 +91,17 @@ if ('serviceWorker' in navigator) {
  */
 self.addEventListener('install', function(event) {
   event.waitUntil(
-    caches.open(cacheName).then(function(cache) {
-      console.log('sw: writing files into cache');
-      return cache.addAll(filesToCache);
-    })
+    caches.open(cacheName)
+      .then(function(cache) {
+        console.log('sw: writing files to cache');
+        return cache.addAll(filesToCache);
+      })
+      .then(function () {
+        return self.skipWaiting();
+      })
   )
 });
-// ---------------------------------------------------------------------------------------------------------------------
-/**
+/** --------------------------------------------------------------------------------------------------------------------
  * 'Activate' event. Service worker is activated
  *
  * @param {string} Event name ('activate')
@@ -104,27 +109,42 @@ self.addEventListener('install', function(event) {
  *
  */
 self.addEventListener('activate', function (event) {
-  console.log('sw: service worker ready and activated', event);
+  // A call to claim() forces a "controllerchange" event on serviceWorker
+  event.waitUntil(self.clients.claim());
+  console.info('sw: service worker installed and activated');
 });
-// ---------------------------------------------------------------------------------------------------------------------
-/**
+/** --------------------------------------------------------------------------------------------------------------------
  * 'Fetch' event. Browser tries to get resources making a request
  *
  * @param {string} Event name ('fetch')
  * @param {function} Callback function with event data
  *
  */
-self.addEventListener('fetch', function(event) {
-  event.respondWith(
+self.addEventListener('fetch', function(fetchEvent) {
+  var request = fetchEvent.request;
+  //todo: aqui hace falta incluir imagenes cargadas desde ips y peticiones de imagenes a meteoblue
+  // If a request to a webcame image is made in offline mode, return fallback image and exit
+  if(request.url.indexOf('wewebcams') > -1) {
+    // fetchEvent.respondWith(caches.match('img/offline-img.png'));
+    return;
+  }
+  fetchEvent.respondWith(
     // test if the request is cached
-    caches.match(event.request).then(function(response) {
-      // 1) if response cached, it will be returned from browser cache
-      // 2) if response not cached, fetch resource from network
-      return response || fetch(event.request);
-    }).catch(function (err) {
-      // if response not cached and network not available an error is thrown => return fallback image
-      return caches.match('img/offline-img.png');
-    })
+    caches.match(request)
+      .then(function(response) {
+        if(response){
+          // 1) if request is cached, response will be returned from browser cache
+          // console.log('request is cached: ', fetchEvent.request.url);
+          return response;
+        } else {
+          // 2) if request is not cached, fetch response from network
+          // console.log('request is not cached: ', fetchEvent.request.url);
+          return fetch(request /* ,{mode: 'no-cors'} */)
+        }
+      })
+      .catch(function (error) {
+        // console.log('caches.match() error: ', error);
+        return caches.match('img/offline-img.png');
+      })
   )
 });
-// ---------------------------------------------------------------------------------------------------------------------

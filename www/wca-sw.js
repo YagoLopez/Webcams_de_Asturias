@@ -109,7 +109,7 @@ self.addEventListener('install', function(event) {
  *
  */
 self.addEventListener('activate', function (event) {
-  // To call claim() to force a "controllerchange" event on navigator.serviceWorker
+  // A call to claim() forces a "controllerchange" event on serviceWorker
   event.waitUntil(self.clients.claim());
   console.info('sw: service worker installed and activated');
 });
@@ -124,10 +124,17 @@ self.addEventListener('fetch', function(fetchEvent) {
   var request = fetchEvent.request;
   //todo: aqui hace falta incluir imagenes cargadas desde ips y peticiones de imagenes a meteoblue
   // If a request to a webcame image is made in offline mode, return fallback image and exit
-  if(request.url.indexOf('wewebcams') > -1) {
-    // fetchEvent.respondWith(caches.match('img/offline-img.png'));
-    return;
-  }
+  // if(request.url.indexOf('wewebcams') > -1) {
+  //   // fetchEvent.respondWith(caches.match('img/offline-img.png'));
+  //   return;
+  // }
+
+  // String to discriminate image requests: {"accept", "image/webp,image/*,*/*;q=0.8"}
+  // String to discriminate html requests:  {"accept", "text/html"}
+  console.info("request.headers.get(accept)", request.headers.get('accept'));
+
+
+
   fetchEvent.respondWith(
     // test if the request is cached
     caches.match(request)
@@ -139,13 +146,12 @@ self.addEventListener('fetch', function(fetchEvent) {
         } else {
           // 2) if request is not cached, fetch response from network
           // console.log('request is not cached: ', fetchEvent.request.url);
-          // todo: intentar hacer aqui la comprobacion de si es una peticion a 'wewebcams' y retornar en caso afirmativo
           return fetch(request /* ,{mode: 'no-cors'} */)
         }
       })
       .catch(function (error) {
         // console.log('caches.match() error: ', error);
-        return caches.match('index.html');
+        return caches.match('img/offline-img.png');
       })
   )
 });
