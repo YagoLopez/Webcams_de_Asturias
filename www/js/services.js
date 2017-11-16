@@ -3,24 +3,7 @@
 var wcaModule = angular.module('wca.services',[]);
 // ====================================================================================================================
 //todo: añadir getCamsById, getCamsByConcejoCategoria
-wcaModule.service('Cams', function ($http, $filter, $location){
-
-  var API_ENDPOINT = 'https://www.googleapis.com/fusiontables/v2/query';
-  var API_KEY = 'AIzaSyBsdouSTimjrC2xHmbGgOt8VfbLBWc9Gps';
-
-  // Nuevas claves de identificacion usando OAuth2
-  // var ID_CLIENT_OAUTH2 = '657321649789-3oh0002a4bnqiflmkmv0q47slvi21jdi.apps.googleusercontent.com';
-  // var OAUTH2_SECRET = 'gT0WTpsma4NNqhmsAG7owIqA';
-  // var auth_token = {
-  //   "web": {
-  //     "client_id": "657321649789-3oh0002a4bnqiflmkmv0q47slvi21jdi.apps.googleusercontent.com",
-  //     "project_id": "webcams-de-asturias",
-  //     "auth_uri": "https://accounts.google.com/o/oauth2/auth",
-  //     "token_uri": "https://accounts.google.com/o/oauth2/token",
-  //     "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
-  //     "client_secret": "gT0WTpsma4NNqhmsAG7owIqA"
-  //   }
-  // }
+wcaModule.service('Cams', function ($http, $filter, STRINGS){
 
   this.TABLE_ID = '1gX5maFbqFyRziZiUYlpOBYhcC1v9lGkKqCXvZREF';
   this.all = [];
@@ -28,7 +11,8 @@ wcaModule.service('Cams', function ($http, $filter, $location){
   this.getAll = function () {
     var self = this;
     var sqlQuery = 'SELECT Lugar, Concejo, Imagen ,Categoria, rowid, latitud, longitud FROM '+ this.TABLE_ID;
-    var url = API_ENDPOINT+ '?sql=' +(sqlQuery)+ '&key=' +API_KEY+ '&callback=JSON_CALLBACK';
+    var url = STRINGS.FUSION_TABLES_ENDPOINT+ '?sql=' +(sqlQuery)+ '&key=' + STRINGS.FUSION_TABLES_API_KEY +
+      '&callback=JSON_CALLBACK';
     return $http.jsonp( encodeURI(url), {cache: true} )
       .success(function (response) {
         self.all = response.rows;
@@ -37,17 +21,6 @@ wcaModule.service('Cams', function ($http, $filter, $location){
         throw(error);
       })
   }
-
-  this.getRemoteData = function( sqlQueryString ) {
-    var url = API_ENDPOINT+ '?sql=' +(sqlQueryString)+ '&key=' +API_KEY+ '&callback=JSON_CALLBACK';
-    // console.log(sqlQueryString);
-    return $http.jsonp( encodeURI(url), {cache: true} );
-  }
-
-  // this.getRemoteDataOAuth = function( sqlQueryString ) {
-  //   var url = API_ENDPOINT+ '?sql=' +encodeURI(sqlQueryString);
-  //   return $http.get( encodeURI(url), {cache: true, headers: {'Authorization': auth_token}} );
-  // }
 
   this.getLocalData = function(path_fichero){
     var self = this;
@@ -114,7 +87,7 @@ wcaModule.service('Mapa', function(Cams){
 
   this.OVIEDO = {lat: 43.4667, lng: -5.8333}; // centro de mapa vista global
   this.RADIO_BUSQUEDA = 500; // radio de búsqueda de panorama StreetView a partir de coordenadas de cam (metros)
-  this.GOOGLE_EMBBED_API_KEY = 'AIzaSyC9mdwZ_BSwmP_aAaTvBGHZC7t_UPYso6k';
+  // this.GOOGLE_EMBBED_API_KEY = 'AIzaSyC9mdwZ_BSwmP_aAaTvBGHZC7t_UPYso6k';
 
   this.hallaLatLng = function (domElement, lugar, concejo, fn){
     request = {
@@ -237,9 +210,9 @@ wcaModule.service('Wikipedia', function($http){
     return $http.jsonp('https://es.wikipedia.org/w/api.php?action=opensearch&'+
       'search='+termino+'&callback=JSON_CALLBACK', {cache: true});
   };
-});
+})
 // ====================================================================================================================
-wcaModule.service('ItemsMeteo', function($filter){
+wcaModule.service('ItemsMeteo', function($http, $filter, STRINGS){
 
   var meteoData = null;
 
@@ -247,24 +220,32 @@ wcaModule.service('ItemsMeteo', function($filter){
 
   this.getData = function(){
     return meteoData;
-  };
+  }
 
   this.setData = function(data){
     meteoData = data;
-  };
+  }
+
+  this.getRemoteData = function( sqlQueryString ) {
+    var url = STRINGS.FUSION_TABLES_ENDPOINT+ '?sql=' +(sqlQueryString)+ '&key=' + STRINGS.FUSION_TABLES_API_KEY +
+      '&callback=JSON_CALLBACK';
+    // console.log(sqlQueryString);
+    return $http.jsonp( encodeURI(url), {cache: true} );
+  }
+
 
   this.getItemsByCategoriaId = function(idCategoria) {
     return $filter('filter')(meteoData, function (item) {
       return (item[7] == idCategoria);
     }, true);
-  };
+  }
 
   this.getItemById = function(idItem) {
     return $filter('filter')(meteoData, function (item) {
       return (item[0] == idItem);
     }, true);
-  };
-});
+  }
+})
 // ====================================================================================================================
 wcaModule.factory('ItemMeteo', function(){
 
@@ -360,6 +341,8 @@ wcaModule.service('Categorias', function(){
 });
 // ====================================================================================================================
 wcaModule.constant('STRINGS', {
+  FUSION_TABLES_API_KEY: 'AIzaSyBsdouSTimjrC2xHmbGgOt8VfbLBWc9Gps',
+  FUSION_TABLES_ENDPOINT: 'https://www.googleapis.com/fusiontables/v2/query',
   ERROR: 'No se han podido obtener datos remotos. Posibles causas: ' +
     '(1) Sin conexión de datos. (2) Fallo de servidor remoto',
   RECARGANDO_IMG: 'Recargando imagen...'

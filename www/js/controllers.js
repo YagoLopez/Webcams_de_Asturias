@@ -19,13 +19,12 @@
 
 var wcaModule = angular.module('wca.controllers',[]);
 // ====================================================================================================================
-wcaModule.controller('ListadoCtrl', function ($scope, $stateParams, $rootScope, STRINGS,
-  $filter, $ionicScrollDelegate, Cams, Categorias, Loader) {
+wcaModule.controller('ListadoCtrl', function ($scope, $stateParams, STRINGS, Cams, Categorias, Loader) {
 
   var concejo = $stateParams.concejo;
   var idCategoria = $stateParams.idCategoria;
 
-  $rootScope.cams = [];
+  $scope.cams = [];
   $scope.camsFiltradas = [];
   Loader.show('Cargando...');
 
@@ -65,8 +64,7 @@ wcaModule.controller('MapaCtrl', function($scope, Mapa, $rootScope, Cams, $locat
   });
 });
 // ====================================================================================================================
-wcaModule.controller('MapaGlobalCtrl', function($scope, $rootScope, $filter, Mapa, Cams, Popup,
-  Categorias){
+wcaModule.controller('MapaGlobalCtrl', function($scope, Mapa, Cams, Popup, Categorias){
 
   var layer, mapa, sqlQueryConcejos, sqlQueryCategorias, zoomLevel = 7;
   sqlQueryConcejos = 'SELECT Concejo FROM '+Cams.TABLE_ID+' GROUP BY Concejo';
@@ -77,13 +75,13 @@ wcaModule.controller('MapaGlobalCtrl', function($scope, $rootScope, $filter, Map
   Cams.getRemoteData(sqlQueryConcejos).success(function(data){
     $scope.concejos = data.rows;
   }).error(function(status){
-    console.error('MapaGlobalCtrl.getRemoteData() status:', status);
+    throw('MapaGlobalCtrl.getRemoteData():' + status);
   });
 
   Cams.getRemoteData(sqlQueryCategorias).success(function(data){
     $scope.categorias = data.rows;
   }).error(function(status){
-    console.error('MapaGlobalCtrl.getRemoteData() status:', status);
+    throw('MapaGlobalCtrl.getRemoteData():' + status);
   });
 
   //todo: sustituir remote queries por filtros sobre datos de $rootScope.cams
@@ -139,7 +137,7 @@ wcaModule.controller('MapaGlobalCtrl', function($scope, $rootScope, $filter, Map
   });
 });
 // ====================================================================================================================
-wcaModule.controller('DetalleCtrl', function($scope, $stateParams, $ionicModal, Clima, $filter, $rootScope,
+wcaModule.controller('DetalleCtrl', function($scope, $stateParams, $ionicModal, Clima, $rootScope,
   Popup, Wikipedia, $ionicPopover, Cam, Loader, $location, Cams, STRINGS){
 
   // Init --------------------------------------------------------------------------------------------------------------
@@ -174,7 +172,8 @@ wcaModule.controller('DetalleCtrl', function($scope, $stateParams, $ionicModal, 
       }
     }).error(function(status){
       $scope.infoMeteo = STRINGS.ERROR;
-      console.error('Clima.getData(): ', status);
+      throw('Clima.getData(): '+ status);
+
     });
   }, 1000);
 
@@ -190,7 +189,7 @@ wcaModule.controller('DetalleCtrl', function($scope, $stateParams, $ionicModal, 
       }
     }).error(function(status){
       $scope.infoConcejo = STRINGS.ERROR;
-      console.error('Wikipedia.info()', status)
+      throw('Wikipedia.info()' + status);
     })
   };
 
@@ -443,34 +442,27 @@ wcaModule.controller('GifPlayerCtrl', function($scope, $interval, $stateParams, 
 
 });
 // ====================================================================================================================
-wcaModule.controller('MeteoCtrl', function($scope, Cams, Popup, ItemsMeteo, Loader){
+wcaModule.controller('MeteoCtrl', function ($scope, Popup, ItemsMeteo, Loader){
 
   var queryString = 'SELECT * FROM '+ItemsMeteo.FUSION_TABLE_ID+' ORDER BY id ASC';
-  var showError = function(status){
-    Popup.show('Error', ' MeteoCtrl: Compruebe conexión de red. Estado: '+status );
-  };
   Loader.showWithBackdrop('Cargando...');
-  $scope.loading = true;
 
-  Cams.getRemoteData(queryString).success(
-    function(data){
-      if(!data.rows){
+  ItemsMeteo.getRemoteData(queryString)
+    .success(function(data){
+        if(!data.rows){
+          Loader.hide();
+          throw('ItemsMeteo: fallo cargando datos');
+        }
+        ItemsMeteo.setData(data.rows);
+        $scope.getItemsByCategoriaId = function(idCategoria){
+          return ItemsMeteo.getItemsByCategoriaId(idCategoria);
+        };
         Loader.hide();
-        showError('Respuesta nula');
-        $scope.loading = false;
-        return;
-      }
-      ItemsMeteo.setData(data.rows);
-      $scope.getItemsByCategoriaId = function(idCategoria){
-        return ItemsMeteo.getItemsByCategoriaId(idCategoria);
-      };
+    })
+    .error(function(status){
       Loader.hide();
-      $scope.loading = false;
-    }
-  ).error(function(status){
-    Loader.hide();
-    $scope.loading = false;
-  });
+      throw(status);
+    });
 
 });
 // ====================================================================================================================
