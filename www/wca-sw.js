@@ -77,7 +77,7 @@ var filesToCache = [
 if ('serviceWorker' in navigator) {
   // navigator.serviceWorker.register('wca-sw.js', {scope: '/Webcams_de_Asturias/www/'}).then(function() {
   navigator.serviceWorker.register('wca-sw.js').then(function(registration) {
-    console.log('sw: registration ok, scope: ', registration.scope);
+    // console.log('sw: registration ok, scope: ', registration.scope);
   }).catch(function(err) {
     console.error(err);
   });
@@ -93,7 +93,7 @@ self.addEventListener('install', function(event) {
   event.waitUntil(
     caches.open(cacheName)
       .then(function(cache) {
-        console.log('sw: writing files to cache');
+        // console.log('sw: installing files into cache');
         return cache.addAll(filesToCache);
       })
       .then(function () {
@@ -122,17 +122,13 @@ self.addEventListener('activate', function (event) {
  */
 self.addEventListener('fetch', function(fetchEvent) {
   var request = fetchEvent.request;
-
-  // Image requests headers: {"accept", "image/webp,image/*,*/*;q=0.8"}
-  // Html requests headers:  {"accept", "text/html"}
-  // Code Snippet: request.header.get('accept').includes('text/html')
-
-  //todo: aqui hace falta incluir imagenes cargadas desde ips y peticiones de imagenes a meteoblue
-  // If a request to a webcame image is made in offline mode, return fallback image and exit
-  if(request.url.indexOf('wewebcams') > -1 || request.url.indexOf('openweather')) {
+  // todo: Refactorizar las peticiones a imagenes para evitar ser controladas por el service worker
+  // todo: averiguar si se esta offline
+  // If a request to a image is made in offline mode, return fallback image and exit
+  if(request.url.indexOf('wewebcams') > -1 || request.url.indexOf('openweather') > -1) {
+    // fetchEvent.respondWith(caches.match('img/offline-img.png'));
     return;
   }
-
   fetchEvent.respondWith(
     // test if the request is cached
     caches.match(request)
@@ -144,7 +140,7 @@ self.addEventListener('fetch', function(fetchEvent) {
         } else {
           // 2) if request is not cached, fetch response from network
           // console.log('request is not cached: ', fetchEvent.request.url);
-          return fetch(request ,{mode: 'no-cors'});
+          return fetch(request /* ,{mode: 'no-cors'} */)
         }
       })
       .catch(function (error) {

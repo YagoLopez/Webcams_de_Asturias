@@ -132,11 +132,11 @@ wcaModule.controller('MapaGlobalCtrl', function($scope, $rootScope, $filter, Map
   };
 
   // Activa manualmente el ciclo de deteccion de cambios de angular (digest cycle) para evaluar javascript externo
-  // (En este caso google maps). Nota: $scope.$apply() da error.
-  setTimeout(function () {
-    mapa = Mapa.crear(document.getElementById('mapaglobal'));
-    $scope.mostrarTodas(); // por defecto
-  }, 0);
+  // Cuando $scope.$apply da error, usar $scope.$applyAsync() o $scope.$evalAsync()
+  $scope.$evalAsync(function () {
+      mapa = Mapa.crear(document.getElementById('mapaglobal'));
+      $scope.mostrarTodas(); // por defecto
+  });
 });
 // ====================================================================================================================
 wcaModule.controller('DetalleCtrl', function($scope, $stateParams, $ionicModal, Clima, $filter, $rootScope,
