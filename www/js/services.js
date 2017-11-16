@@ -78,20 +78,6 @@ wcaModule.service('Cams', function ($http, $filter, Cam, STRINGS){
 // ====================================================================================================================
 wcaModule.service('Cam', function(Categorias){
 
-  // function Cam(arrayDatosCam){
-  //   if(arrayDatosCam.length > 0) {
-  //     this.lugar = arrayDatosCam[0];
-  //     this.concejo = arrayDatosCam[1];
-  //     this.imagen = arrayDatosCam[2];
-  //     this.categoria = Categorias.url_a_nombre( arrayDatosCam[3] );
-  //     this.id = arrayDatosCam[4];
-  //     this.lat = arrayDatosCam[5];
-  //     this.lng = arrayDatosCam[6];
-  //   } else {
-  //     throw new Error('Datos de Cam insuficientes');
-  //   }
-  // }
-
   this.create = function(arrayDatosCam){
     if(arrayDatosCam.length > 0) {
       this.lugar = arrayDatosCam[0][0];
@@ -109,8 +95,6 @@ wcaModule.service('Cam', function(Categorias){
   this.isDefined = function () {
     return this.lat && this.lng;
   }
-
-  // return Cam;
 });
 // ====================================================================================================================
 wcaModule.service('Mapa', function(Cams){
@@ -143,7 +127,7 @@ wcaModule.service('Mapa', function(Cams){
         throw new Error('No se han podido hallar coordenadas para panorama StreetView');
       }
     }
-  };
+  }
 
   this.creaStreetView = function(domElement, locationLatLng){
     return new google.maps.StreetViewPanorama( domElement, {
@@ -151,7 +135,7 @@ wcaModule.service('Mapa', function(Cams){
       position: locationLatLng,
       zoom: 1
     });
-  };
+  }
 
   this.creaStreetView2 = function(domElement, locationLatLng, heading){
     return new google.maps.StreetViewPanorama( domElement, {
@@ -159,7 +143,7 @@ wcaModule.service('Mapa', function(Cams){
       position: locationLatLng,
       zoom: 1
     });
-  };
+  }
 
   this.crear = function (domElement){
     mapa = new google.maps.Map(domElement,  {
@@ -168,7 +152,7 @@ wcaModule.service('Mapa', function(Cams){
       mapTypeId: google.maps.MapTypeId.HYBRID
     });
     return mapa;
-  };
+  }
 
   this.creaFusionTableLayer = function(filtroMarkers){
     var layer = new google.maps.FusionTablesLayer({
@@ -177,7 +161,7 @@ wcaModule.service('Mapa', function(Cams){
       options: { styleId: 6, templateId: 8 }
     });
     return layer;
-  };
+  }
 
   this.creaMarker = function(posicionLatLng, mapa, titulo){
     var marker = new google.maps.Marker({
@@ -188,14 +172,14 @@ wcaModule.service('Mapa', function(Cams){
       //icon: 'https://storage.googleapis.com/support-kms-prod/SNP_2752125_en_v0'
       //animation: google.maps.Animation.DROP
     });
-  };
+  }
 
   this.onMapLoaded = function(mapa, loader){
     google.maps.event.addListenerOnce(mapa, 'idle', function(){
       loader.hide();
     });
-  };
-});
+  }
+})
 // ====================================================================================================================
 wcaModule.service('Clima', function($http){
   this.urlCorsProxy = 'https://cors-anywhere.herokuapp.com/';
@@ -209,8 +193,8 @@ wcaModule.service('Popup', function($ionicPopup, Loader){
   this.show = function(titulo, msg) {
     Loader.hide();
     $ionicPopup.alert({ title: titulo, template: msg });
-  };
-});
+  }
+})
 // ====================================================================================================================
 wcaModule.service('Wikipedia', function($http){
 
@@ -218,35 +202,35 @@ wcaModule.service('Wikipedia', function($http){
     return $http.jsonp('https://es.wikipedia.org/w/api.php?'+
       'action=query&prop=extracts|info&exintro&titles='+termino+
       '&format=json&explaintext&redirects&inprop=url&indexpageids&callback=JSON_CALLBACK', {cache: true});
-  };
+  }
 
   this.infoRelacionada = function(termino){
     return $http.get('https://es.wikipedia.org/w/api.php?'+
       'action=query&list=search&srsearch='+termino+'&utf8=&format=json', {cache: true});
-  };
+  }
 
   /** Respuesta en formato xml */
   this.infoLatLngGeonames = function(lat, lng){
     return $http.get('http://api.geonames.org/findNearbyWikipedia?'+
       'lat='+lat+'&lng='+lng+'&username=yagolopez&lang=es', {cache: true});
-  };
+  }
 
   this.infoLatLngWikipedia = function(lat, lng, radioBusqueda){
     var url = 'https://es.wikipedia.org/w/api.php?action=query&list=geosearch&gsradius='+radioBusqueda+
       '&gscoord='+lat+'|'+lng+'&format=json&callback=JSON_CALLBACK';
     return $http.jsonp(url, {cache: true});
-  };
+  }
 
   this.infoAmpliada = function (termino){
     return $http.get('https://es.wikipedia.org/w/api.php?format=json&action=query&prop=revisions&titles='+termino+
       '&rvprop=content&rvsection=0&rvparse');
-  };
+  }
 
   /** Bueno para lugares concretos con descripción breve */
   this.openSearch = function(termino){
     return $http.jsonp('https://es.wikipedia.org/w/api.php?action=opensearch&'+
       'search='+termino+'&callback=JSON_CALLBACK', {cache: true});
-  };
+  }
 })
 // ====================================================================================================================
 wcaModule.service('ItemsMeteo', function($http, $filter, STRINGS){
@@ -309,7 +293,7 @@ wcaModule.factory('ItemMeteo', function(){
     }
   }
   return ItemMeteo;
-});
+})
 // ====================================================================================================================
 wcaModule.service('Loader', function($ionicLoading){
 
@@ -321,19 +305,19 @@ wcaModule.service('Loader', function($ionicLoading){
       contenidoLoader = texto;
     }
     $ionicLoading.show({template: contenidoLoader, noBackdrop: true, hideOnStateChange: true, duration: 60*1000 });
-  };
+  }
 
   this.showWithBackdrop = function(texto){
     if(texto){
       contenidoLoader = texto;
     }
     $ionicLoading.show({template: contenidoLoader, noBackdrop: false, hideOnStateChange: true, duration: 60*1000});
-  };
+  }
 
   this.hide = function(){
     $ionicLoading.hide();
-  };
-});
+  }
+})
 // ====================================================================================================================
 wcaModule.factory('$exceptionHandler', function($injector) {
   return function(exception, cause) {
@@ -341,8 +325,8 @@ wcaModule.factory('$exceptionHandler', function($injector) {
     console.error(exception);
     Popup.show('Error', 'Data: '+exception.data+'<br>Status: '+exception.status+'<br>Text: '+exception.statusText +
       '<br>Message: '+exception.message);
-  };
-});
+  }
+})
 // ====================================================================================================================
 wcaModule.service('Categorias', function(){
   var nombreCategoria;
@@ -359,8 +343,8 @@ wcaModule.service('Categorias', function(){
 
   this.idCategoria_a_nombre = function(idCategoria){
     return this.url_a_nombre(urlBaseCategoria+idCategoria);
-  };
-});
+  }
+})
 // ====================================================================================================================
 wcaModule.constant('STRINGS', {
   FUSION_TABLES_API_KEY: 'AIzaSyBsdouSTimjrC2xHmbGgOt8VfbLBWc9Gps',
@@ -368,4 +352,4 @@ wcaModule.constant('STRINGS', {
   ERROR: 'No se han podido obtener datos remotos. Posibles causas: ' +
     '(1) Sin conexión de datos. (2) Fallo de servidor remoto',
   RECARGANDO_IMG: 'Recargando imagen...'
-});
+})
