@@ -86,8 +86,8 @@ app.config(function($stateProvider, $urlRouterProvider, $compileProvider, $ionic
     views: {'menuContent': {templateUrl: 'templates/buscar.html', controller: 'BuscarCamsCtrl'}}
   });
 // -------------------------------------------------------------------------------------------------------------------
-  $stateProvider.state('app.imgdetalle', {url: '/img-detalle', cache: true,
-    views: {'menuContent': {templateUrl: 'templates/detalle-img.html'}}
+  $stateProvider.state('app.imgdetalle', {url: '/img-detalle', cache: false,
+    views: {'menuContent': {templateUrl: 'templates/detalle-img.html', controller: 'ImgDetalleCtrl'}}
   });
 // -------------------------------------------------------------------------------------------------------------------
   $stateProvider.state('app.prediccion', {url: '/prediccion', cache: false,

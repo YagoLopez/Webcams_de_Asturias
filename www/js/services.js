@@ -3,7 +3,7 @@
 var wcaModule = angular.module('wca.services',[]);
 // ====================================================================================================================
 //todo: añadir getCamsById, getCamsByConcejoCategoria
-wcaModule.service('Cams', function ($http, $filter, STRINGS){
+wcaModule.service('Cams', function ($http, $filter, Cam, STRINGS){
 
   this.TABLE_ID = '1gX5maFbqFyRziZiUYlpOBYhcC1v9lGkKqCXvZREF';
   this.all = [];
@@ -76,6 +76,27 @@ wcaModule.service('Cams', function ($http, $filter, STRINGS){
   }
 });
 // ====================================================================================================================
+wcaModule.service('Cam', function(Categorias){
+
+  this.create = function(arrayDatosCam){
+    if(arrayDatosCam.length > 0) {
+      this.lugar = arrayDatosCam[0][0];
+      this.concejo = arrayDatosCam[0][1];
+      this.imagen = arrayDatosCam[0][2];
+      this.categoria = Categorias.url_a_nombre( arrayDatosCam[0][3] );
+      this.id = arrayDatosCam[0][4];
+      this.lat = arrayDatosCam[0][5];
+      this.lng = arrayDatosCam[0][6];
+    } else {
+      throw new Error('Datos de Cam insuficientes');
+    }
+  }
+
+  this.isDefined = function () {
+    return this.lat && this.lng;
+  }
+});
+// ====================================================================================================================
 wcaModule.service('Mapa', function(Cams){
 
   var placesService, request, mapa;
@@ -103,7 +124,7 @@ wcaModule.service('Mapa', function(Cams){
       } else {
         // Popup.show('Error', 'No se han podido hallar coordenadas para panorama StreetView');
         // console.error('Mapa.hallaLatLng(): no se han podido hallar coordenadas');
-        throw('No se han podido hallar coordenadas para panorama StreetView');
+        throw new Error('No se han podido hallar coordenadas para panorama StreetView');
       }
     }
   };
@@ -305,21 +326,6 @@ wcaModule.factory('$exceptionHandler', function($injector) {
     Popup.show('Error', 'Data: '+exception.data+'<br>Status: '+exception.status+'<br>Text: '+exception.statusText +
       '<br>Message: '+exception.message);
   };
-});
-// ====================================================================================================================
-wcaModule.factory('Cam', function(Categorias){
-  function Cam(arrayDatosCam){
-    if(arrayDatosCam) {
-      this.lugar = arrayDatosCam[0][0];
-      this.concejo = arrayDatosCam[0][1];
-      this.imagen = arrayDatosCam[0][2];
-      this.categoria = Categorias.url_a_nombre( arrayDatosCam[0][3] );
-      this.id = arrayDatosCam[0][4];
-      this.lat = arrayDatosCam[0][5];
-      this.lng = arrayDatosCam[0][6];
-    }
-  }
-  return Cam;
 });
 // ====================================================================================================================
 wcaModule.service('Categorias', function(){

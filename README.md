@@ -14,6 +14,7 @@ Actualmente, las nuevas versiones de Angular no siguen el patrón MVC ya que se 
 - Incorpora un "Service Worker" que proporciona funcionalidad off-line
 
 - <div><a href="http://mobt.me/XfKL" target="_blank">Demo para desktop (pantalla grande)</a></div>
+
 - <div>
   <a href="http://yagolopez.github.io/Webcams_de_Asturias/www/index.html" target="_blank">
   Demo para móvil (pantalla pequeña)</a>
