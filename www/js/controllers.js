@@ -151,6 +151,7 @@ wcaModule.controller('DetalleCtrl', function($scope, $stateParams, $ionicModal, 
   // $scope.cam = new Cam( Cams.getCamByRowid($stateParams.rowid) );
   Cam.create( Cams.getCamByRowid($stateParams.rowid) );
   $scope.cam = Cam;
+  // $scope.cam = new Cam( Cams.getCamByRowid($stateParams.rowid) );
 
   // Clima Data --------------------------------------------------------------------------------------------------------
 
@@ -229,21 +230,24 @@ wcaModule.controller('DetalleCtrl', function($scope, $stateParams, $ionicModal, 
 // ====================================================================================================================
 wcaModule.controller('MeteoblueCtrl', function ($scope, $location, Cam) {
 
+  var timerMeteoblue;
   if(!Cam.isDefined()) {
     $location.path( "#/" );
     return;
   }
 
-  $scope.timerMeteoblue = setTimeout(function () {
-    $scope.$apply(function () {
+  $scope.cam = Cam;
+
+  timerMeteoblue = setTimeout(function () {
+    // $scope.$apply(function () {
       $scope.urlMeteoblue = 'https://www.meteoblue.com/meteogram-web?' +
         ('lon=' + Cam.lng) + ('&lat=' + Cam.lat) + ('&lang=es&look=CELSIUS,KILOMETER_PER_HOUR');
-    })
+    // })
   }, 500);
 
   // On view exit, clear timers to prevent memory leaks
   $scope.$on('$ionicView.beforeLeave', function (event, data) {
-    clearTimeout($scope.timerMeteoblue);
+    clearTimeout(timerMeteoblue);
   })
 });
 // ====================================================================================================================

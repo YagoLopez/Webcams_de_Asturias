@@ -78,6 +78,20 @@ wcaModule.service('Cams', function ($http, $filter, Cam, STRINGS){
 // ====================================================================================================================
 wcaModule.service('Cam', function(Categorias){
 
+  // function Cam(arrayDatosCam){
+  //   if(arrayDatosCam.length > 0) {
+  //     this.lugar = arrayDatosCam[0];
+  //     this.concejo = arrayDatosCam[1];
+  //     this.imagen = arrayDatosCam[2];
+  //     this.categoria = Categorias.url_a_nombre( arrayDatosCam[3] );
+  //     this.id = arrayDatosCam[4];
+  //     this.lat = arrayDatosCam[5];
+  //     this.lng = arrayDatosCam[6];
+  //   } else {
+  //     throw new Error('Datos de Cam insuficientes');
+  //   }
+  // }
+
   this.create = function(arrayDatosCam){
     if(arrayDatosCam.length > 0) {
       this.lugar = arrayDatosCam[0][0];
@@ -95,6 +109,8 @@ wcaModule.service('Cam', function(Categorias){
   this.isDefined = function () {
     return this.lat && this.lng;
   }
+
+  // return Cam;
 });
 // ====================================================================================================================
 wcaModule.service('Mapa', function(Cams){
