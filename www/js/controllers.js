@@ -144,10 +144,6 @@ wcaModule.controller('DetalleCtrl', function($scope, $stateParams, $ionicModal, 
     return;
   }
 
-  setTimeout(function () {
-    console.log('test');
-  }, 5000);
-
   //todo: borrar
   // $scope.cam = new Cam( Cams.getCamByRowid($stateParams.rowid) );
   Cam.create( Cams.getCamByRowid($stateParams.rowid) );
