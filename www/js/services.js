@@ -234,37 +234,47 @@ wcaModule.service('Wikipedia', function($http){
   }
 })
 // ====================================================================================================================
-wcaModule.service('ItemsMeteo', function($http, $filter, STRINGS){
+wcaModule.service('ItemsMeteo', function($http, $filter, ItemMeteo, STRINGS){
 
   var meteoData = null;
 
+  this.all = [];
+
   this.FUSION_TABLE_ID = '1Y_vt2nTVFSYHpMuwe0u60bQzp4FlLtc33A8qd2_x';
 
-  this.getData = function(){
-    return meteoData;
-  }
+  this.getAll = function() {
 
-  this.setData = function(data){
-    meteoData = data;
-  }
-
-  this.getRemoteData = function( sqlQueryString ) {
+    var self = this;
+    var sqlQueryString = 'SELECT * FROM '+this.FUSION_TABLE_ID+' ORDER BY id ASC';
     var url = STRINGS.FUSION_TABLES_ENDPOINT+ '?sql=' +(sqlQueryString)+ '&key=' + STRINGS.FUSION_TABLES_API_KEY +
       '&callback=JSON_CALLBACK';
-    // console.log(sqlQueryString);
-    return $http.jsonp( encodeURI(url), {cache: true} );
+
+    return $http.jsonp( encodeURI(url), {cache: true} )
+      .success(function (results) {
+        // console.log(results);
+        results.rows.map(function(itemData){
+          self.all.push( new ItemMeteo(itemData) );
+        })
+      })
+      .error(function (error) {
+        console.log(error);
+      });
   }
 
-
   this.getItemsByCategoriaId = function(idCategoria) {
-    return $filter('filter')(meteoData, function (item) {
-      return (item[7] == idCategoria);
+    return $filter('filter')(this.all, function (item) {
+      return (idCategoria.toString() === item.idCategoria);
     }, true);
   }
 
+  // this.getItemById = function(idItem) {
+  //   return $filter('filter')(this.all, function (item) {
+  //     return (item[0] == idItem);
+  //   }, true);
+  // }
   this.getItemById = function(idItem) {
-    return $filter('filter')(meteoData, function (item) {
-      return (item[0] == idItem);
+    return $filter('filter')(this.all, function (item) {
+      return (idItem.toString() === item.id);
     }, true);
   }
 })
@@ -279,18 +289,18 @@ wcaModule.factory('ItemMeteo', function(){
   //var urlProxy = 'http://proxy2974.my-addr.org/myaddrproxy.php/';
 
   function ItemMeteo(arr){
-    if(arr){
-      this.id = arr[0][0];
-      this.info = arr[0][1];
-      this.categoria = arr[0][2];
-      this.nombre = arr[0][3];
-      this.espectro = arr[0][4];
-      this.fuente = arr[0][5];
-      this.urlNoProxy = arr[0][6];
-      this.url = urlProxy + (arr[0][6])+ '&callback=jsonpCallback';
-      this.idCategoria= arr[0][7];
-      this.tipoImagen= arr[0][8];
-      this.urlFuente = arr[0][9];
+    if(arr.length > 0){
+      this.id = arr[0];
+      this.info = arr[1];
+      this.categoria = arr[2]; // No confundir this.categoria con this.idCategoria ni this.id
+      this.nombre = arr[3];
+      this.espectro = arr[4];
+      this.fuente = arr[5];
+      this.urlNoProxy = arr[6];
+      this.url = urlProxy + (arr[6])+ '&callback=jsonpCallback';
+      this.idCategoria= arr[7];
+      this.tipoImagen= arr[8];
+      this.urlFuente = arr[9];
     }
   }
   return ItemMeteo;

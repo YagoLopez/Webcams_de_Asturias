@@ -29,7 +29,7 @@ wcaModule.controller('ListadoCtrl', function ($scope, $stateParams, Cams, Catego
   $scope.camsFiltradas = [];
   Loader.show('Cargando...');
 
-  Cams.getAll()
+  Cams.getAll('data.json')
     .then(function () {
       $scope.cams = Cams.filtrarPor(concejo, idCategoria);
       Loader.hide();
@@ -299,6 +299,7 @@ wcaModule.controller('GifPlayerCtrl', function($scope, $interval, $stateParams, 
   Loader.showWithBackdrop(loadingHtml);
   $scope.currentFrame = 0;
   $scope.isGifPlaying = false;
+  debugger
   $scope.itemMeteo = new ItemMeteo(ItemsMeteo.getItemById($stateParams.id_item_meteo));
   if(angular.equals({}, $scope.itemMeteo)){
     Loader.hide();
@@ -423,7 +424,6 @@ wcaModule.controller('GifPlayerCtrl', function($scope, $interval, $stateParams, 
       return;
     }
     document.getElementById('gif').src = '';
-    console.error(error);
     Loader.hide();
     Popup.show('Error', STRINGS.ERROR);
     // $location.path(' #/app/meteo' );
@@ -454,27 +454,20 @@ wcaModule.controller('GifPlayerCtrl', function($scope, $interval, $stateParams, 
 // ====================================================================================================================
 wcaModule.controller('MeteoCtrl', function ($scope, Popup, ItemsMeteo, Loader){
 
-  var queryString = 'SELECT * FROM '+ItemsMeteo.FUSION_TABLE_ID+' ORDER BY id ASC';
   Loader.showWithBackdrop('Cargando...');
 
-  ItemsMeteo.getRemoteData(queryString)
-    .success(function(data){
-        if(!data.rows){
-          Loader.hide();
-          // throw new Error('ItemsMeteo: fallo cargando datos');
-          console.error('ItemsMeteo: fallo cargando datos');
-        }
-        ItemsMeteo.setData(data.rows);
-        $scope.getItemsByCategoriaId = function(idCategoria){
-          return ItemsMeteo.getItemsByCategoriaId(idCategoria);
-        };
-        Loader.hide();
-    })
-    .error(function(status){
+  $scope.getItemsMeteoByCategoria = function(idCategoria){
+    return ItemsMeteo.getItemsByCategoriaId(idCategoria);
+  }
+
+  ItemsMeteo.getAll()
+    .success(function (result) {
       Loader.hide();
-      // throw new Error(status);
-      console.error(status);
-    });
+    })
+    .error(function (status) {
+      Loader.hide();
+      console.log(status);
+    })
 
 });
 // ====================================================================================================================
