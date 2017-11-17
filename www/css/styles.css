@@ -19,6 +19,8 @@
 .txt-info {color: cornflowerblue; text-align: center; padding-left: 10px; padding-right: 10px}
 .cam-counter-left {background: #11c1f3; display: block; width: 25px; text-align: center; padding: 1px;
   margin: auto 4px; border-radius: 3px}
+#cancelLinkContainer {padding-top: 20px}
+#cancelLink {text-decoration: none; color: grey}
 /*.sombra-inferior {box-shadow: -1px 1px 5px #888888}*/
 
 /* ANIMATIONS --------------------------------------------------------------------------- */

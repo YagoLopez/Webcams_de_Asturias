@@ -5,13 +5,13 @@ var wcaModule = angular.module('wca.services',[]);
 //todo: añadir getCamsById, getCamsByConcejoCategoria
 wcaModule.service('Cams', function ($http, $filter, Cam, STRINGS){
 
-  this.TABLE_ID = '1gX5maFbqFyRziZiUYlpOBYhcC1v9lGkKqCXvZREF';
+  this.FUSION_TABLE_ID = '1gX5maFbqFyRziZiUYlpOBYhcC1v9lGkKqCXvZREF';
   this.all = [];
 
   this.getAll = function (pathToFile) {
     var httpRequest;
     var self = this;
-    var sqlQuery = 'SELECT Lugar, Concejo, Imagen ,Categoria, rowid, latitud, longitud FROM '+ this.TABLE_ID;
+    var sqlQuery = 'SELECT Lugar, Concejo, Imagen ,Categoria, rowid, latitud, longitud FROM '+ this.FUSION_TABLE_ID;
     var url = STRINGS.FUSION_TABLES_ENDPOINT + '?sql=' +(sqlQuery)+ '&key=' + STRINGS.FUSION_TABLES_API_KEY +
       '&callback=JSON_CALLBACK';
     if(pathToFile){
@@ -32,7 +32,7 @@ wcaModule.service('Cams', function ($http, $filter, Cam, STRINGS){
   this.getRemoteData = function( sqlQueryString ) {
     var url = STRINGS.FUSION_TABLES_ENDPOINT+ '?sql=' +(sqlQueryString)+ '&key=' + STRINGS.FUSION_TABLES_API_KEY +
       '&callback=JSON_CALLBACK';
-    // console.log(sqlQueryString);
+    // console.log(url);
     return $http.jsonp( encodeURI(url), {cache: true} );
   }
 
@@ -156,9 +156,9 @@ wcaModule.service('Mapa', function(Cams){
   }
 
   this.creaFusionTableLayer = function(filtroMarkers){
-    var layer = new google.maps.FusionTablesLayer({
+    layer = new google.maps.FusionTablesLayer({
       heatmap: { enabled: false },
-      query  : { select: 'col7', from: Cams.TABLE_ID, where: filtroMarkers },
+      query  : { select: 'col7', from: Cams.FUSION_TABLE_ID, where: filtroMarkers },
       options: { styleId: 6, templateId: 8 }
     });
     return layer;
@@ -236,16 +236,14 @@ wcaModule.service('Wikipedia', function($http){
 // ====================================================================================================================
 wcaModule.service('ItemsMeteo', function($http, $filter, ItemMeteo, STRINGS){
 
-  var meteoData = null;
+  var FUSION_TABLE_ID = '1Y_vt2nTVFSYHpMuwe0u60bQzp4FlLtc33A8qd2_x';
 
   this.all = [];
-
-  this.FUSION_TABLE_ID = '1Y_vt2nTVFSYHpMuwe0u60bQzp4FlLtc33A8qd2_x';
 
   this.getAll = function() {
 
     var self = this;
-    var sqlQueryString = 'SELECT * FROM '+this.FUSION_TABLE_ID+' ORDER BY id ASC';
+    var sqlQueryString = 'SELECT * FROM '+FUSION_TABLE_ID+' ORDER BY id ASC';
     var url = STRINGS.FUSION_TABLES_ENDPOINT+ '?sql=' +(sqlQueryString)+ '&key=' + STRINGS.FUSION_TABLES_API_KEY +
       '&callback=JSON_CALLBACK';
 
@@ -267,11 +265,6 @@ wcaModule.service('ItemsMeteo', function($http, $filter, ItemMeteo, STRINGS){
     }, true);
   }
 
-  // this.getItemById = function(idItem) {
-  //   return $filter('filter')(this.all, function (item) {
-  //     return (item[0] == idItem);
-  //   }, true);
-  // }
   this.getItemById = function(idItem) {
     return $filter('filter')(this.all, function (item) {
       return (idItem.toString() === item.id);

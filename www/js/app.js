@@ -27,7 +27,7 @@ app.config(function($stateProvider, $urlRouterProvider, $compileProvider, $ionic
     url: '/app', abstract: true, templateUrl: 'templates/menu.html'});
 // -------------------------------------------------------------------------------------------------------------------
   $stateProvider.state('app.mapa', {
-    url: '/mapa', cache: true, views: {'menuContent': {templateUrl: 'templates/detalle-mapa.html', controller: 'MapaCtrl'}}
+    url: '/mapa', cache: true, views: {'menuContent': {templateUrl: 'templates/detalle-mapa.html', controller: 'DetalleMapaCtrl'}}
   });
 // -------------------------------------------------------------------------------------------------------------------
   $stateProvider.state('app.mapaglobal', {url: '/mapaglobal', cache: true,
