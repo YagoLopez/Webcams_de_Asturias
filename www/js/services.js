@@ -94,10 +94,25 @@ wcaModule.service('Cam', function(Categorias){
       throw new Error('Datos de Cam insuficientes');
     }
   }
+  // function Cam(arrayDatosCam){
+  //   if(arrayDatosCam.length > 0) {
+  //     this.lugar = arrayDatosCam[0][0];
+  //     this.concejo = arrayDatosCam[0][1];
+  //     this.imagen = arrayDatosCam[0][2];
+  //     this.categoria = Categorias.url_a_nombre( arrayDatosCam[0][3] );
+  //     this.id = arrayDatosCam[0][4];
+  //     this.lat = arrayDatosCam[0][5];
+  //     this.lng = arrayDatosCam[0][6];
+  //   } else {
+  //     throw new Error('Datos de Cam insuficientes');
+  //   }
+  // }
 
   this.isDefined = function () {
     return this.lat && this.lng;
   }
+
+  // return Cam;
 });
 // ====================================================================================================================
 wcaModule.service('Mapa', function(Cams){
