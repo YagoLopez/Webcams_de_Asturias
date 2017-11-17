@@ -3,24 +3,10 @@
 var wcaModule = angular.module('wca.services',[]);
 // ====================================================================================================================
 //todo: añadir getCamsById, getCamsByConcejoCategoria
-wcaModule.service('Cams', function ($http, $filter, $location){
+wcaModule.service('Cams', function ($http, $filter){
 
   var API_ENDPOINT = 'https://www.googleapis.com/fusiontables/v2/query';
   var API_KEY = 'AIzaSyBsdouSTimjrC2xHmbGgOt8VfbLBWc9Gps';
-
-  // Nuevas claves de identificacion usando OAuth2
-  // var ID_CLIENT_OAUTH2 = '657321649789-3oh0002a4bnqiflmkmv0q47slvi21jdi.apps.googleusercontent.com';
-  // var OAUTH2_SECRET = 'gT0WTpsma4NNqhmsAG7owIqA';
-  // var auth_token = {
-  //   "web": {
-  //     "client_id": "657321649789-3oh0002a4bnqiflmkmv0q47slvi21jdi.apps.googleusercontent.com",
-  //     "project_id": "webcams-de-asturias",
-  //     "auth_uri": "https://accounts.google.com/o/oauth2/auth",
-  //     "token_uri": "https://accounts.google.com/o/oauth2/token",
-  //     "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
-  //     "client_secret": "gT0WTpsma4NNqhmsAG7owIqA"
-  //   }
-  // }
 
   this.TABLE_ID = '1gX5maFbqFyRziZiUYlpOBYhcC1v9lGkKqCXvZREF';
   this.all = [];
@@ -49,10 +35,11 @@ wcaModule.service('Cams', function ($http, $filter, $location){
   //   return $http.get( encodeURI(url), {cache: true, headers: {'Authorization': auth_token}} );
   // }
 
-  this.getLocalData = function(path_fichero){
+  this.getLocalData = function(path_file){
     var self = this;
-    return $http.get( path_fichero, {cache: true} )
+    return $http.get( path_file, {cache: true} )
       .success(function (response) {
+        console.log(response.rows);
         self.all = response.rows;
       })
       .error(function (error) {

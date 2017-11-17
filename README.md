@@ -6,9 +6,8 @@
 
 - <strong>Aplicación Web Progresiva (PWA) que muestra Imágenes de cámaras web situadas en el Principado de Asturias</strong>
 
-- Arquitectura basada en el Patrón MVC siguiendo las directrices de buenas prácticas para AngularJS que
-se pueden consultar en el siguiente artículo:
-<a href="https://toddmotto.com/rethinking-angular-js-controllers/">Link</a>
+- Arquitectura basada en el Patrón MVC y las que en su momento eran directrices de buenas prácticas para AngularJS.
+Ref.: <a href="https://toddmotto.com/rethinking-angular-js-controllers/">Link</a>
 Actualmente, las nuevas versiones de Angular no siguen el patrón MVC ya que se basan en una arquitectura de componentes.
 
 - Incorpora un "Service Worker" que proporciona funcionalidad off-line

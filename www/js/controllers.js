@@ -1,4 +1,5 @@
-//todo: arreglar service worker
+//todo: mapear resultado que fusion tables a objetos cam (implica refactorizacion global)
+//todo: quitar las sentencias con throw(error), dan errores no requeridos en modo offline
 //todo: usar google maps embed api. consultar link en carpeta temp
 //todo: tamaño e icons en manifest.json
 //todo: detalles en meteo.html no aparecen
@@ -19,7 +20,7 @@
 
 var wcaModule = angular.module('wca.controllers',[]);
 // ====================================================================================================================
-wcaModule.controller('ListadoCtrl', function ($scope, $stateParams, STRINGS, Cams, Categorias, Loader) {
+wcaModule.controller('ListadoCtrl', function ($scope, $stateParams, Cams, Categorias, Loader) {
 
   var concejo = $stateParams.concejo;
   var idCategoria = $stateParams.idCategoria;
@@ -42,8 +43,8 @@ wcaModule.controller('ListadoCtrl', function ($scope, $stateParams, STRINGS, Cam
     } else {
       $scope.tituloVista = Categorias.idCategoria_a_nombre(idCategoria);
     }
-  });
-});
+  })
+})
 // ====================================================================================================================
 wcaModule.controller('MapaCtrl', function($scope, Mapa, Cam, $location){
 
@@ -75,13 +76,15 @@ wcaModule.controller('MapaGlobalCtrl', function($scope, Mapa, Cams, Popup, Categ
   Cams.getRemoteData(sqlQueryConcejos).success(function(data){
     $scope.concejos = data.rows;
   }).error(function(status){
-    throw new Error('MapaGlobalCtrl.getRemoteData():' + status);
+    // throw new Error('MapaGlobalCtrl.getRemoteData():' + status);
+    console.error(status);
   });
 
   Cams.getRemoteData(sqlQueryCategorias).success(function(data){
     $scope.categorias = data.rows;
   }).error(function(status){
-    throw new Error('MapaGlobalCtrl.getRemoteData():' + status);
+    // throw new Error('MapaGlobalCtrl.getRemoteData():' + status);
+    console.error(status);
   });
 
   //todo: sustituir remote queries por filtros sobre datos de $rootScope.cams
@@ -107,7 +110,6 @@ wcaModule.controller('MapaGlobalCtrl', function($scope, Mapa, Cams, Popup, Categ
   };
 
   $scope.concejoEscogido = function(concejo){
-
     var filtroConcejo;
     concejo = concejo.replace(/(\r\n|\n|\r)/gm,'').trim(); // Elimina retornos de carro y espacios en blanco al principio y al final
     filtroConcejo = 'Concejo=\'' + concejo + '\''; // el concejo tiene que ir entre comillas
@@ -176,7 +178,8 @@ wcaModule.controller('DetalleCtrl', function($scope, $stateParams, $ionicModal, 
       }
     }).error(function(status){
       $scope.infoMeteo = STRINGS.ERROR;
-      throw new Error('Clima.getData(): '+ status);
+      // throw new Error('Clima.getData(): '+ status);
+      console.error(status);
 
     });
   }, 1000);
@@ -193,7 +196,8 @@ wcaModule.controller('DetalleCtrl', function($scope, $stateParams, $ionicModal, 
       }
     }).error(function(status){
       $scope.infoConcejo = STRINGS.ERROR;
-      throw new Error('Wikipedia.info()' + status);
+      // throw new Error('Wikipedia.info()' + status);
+      console.error(status);
     })
   };
 
@@ -239,10 +243,8 @@ wcaModule.controller('MeteoblueCtrl', function ($scope, $location, Cam) {
   $scope.cam = Cam;
 
   timerMeteoblue = setTimeout(function () {
-    // $scope.$apply(function () {
-      $scope.urlMeteoblue = 'https://www.meteoblue.com/meteogram-web?' +
-        ('lon=' + Cam.lng) + ('&lat=' + Cam.lat) + ('&lang=es&look=CELSIUS,KILOMETER_PER_HOUR');
-    // })
+    $scope.urlMeteoblue = 'https://www.meteoblue.com/meteogram-web?' +
+      ('lon=' + Cam.lng) + ('&lat=' + Cam.lat) + ('&lang=es&look=CELSIUS,KILOMETER_PER_HOUR');
   }, 500);
 
   // On view exit, clear timers to prevent memory leaks
@@ -459,7 +461,8 @@ wcaModule.controller('MeteoCtrl', function ($scope, Popup, ItemsMeteo, Loader){
     .success(function(data){
         if(!data.rows){
           Loader.hide();
-          throw new Error('ItemsMeteo: fallo cargando datos');
+          // throw new Error('ItemsMeteo: fallo cargando datos');
+          console.error('ItemsMeteo: fallo cargando datos');
         }
         ItemsMeteo.setData(data.rows);
         $scope.getItemsByCategoriaId = function(idCategoria){
@@ -469,7 +472,8 @@ wcaModule.controller('MeteoCtrl', function ($scope, Popup, ItemsMeteo, Loader){
     })
     .error(function(status){
       Loader.hide();
-      throw new Error(status);
+      // throw new Error(status);
+      console.error(status);
     });
 
 });
@@ -622,9 +626,9 @@ wcaModule.controller('BuscarCamsCtrl', function($scope, $filter, Cams, $location
     $scope.showImages = false;
     $scope.camsEncontradas = [];
     inputBuscaCam.value = '';
-    setTimeout(function () {
-      inputBuscaCam.focus();
-    }, 500);
+    // setTimeout(function () {
+    //   inputBuscaCam.focus();
+    // }, 500);
   };
 
   $scope.toggleShowImages = function () {

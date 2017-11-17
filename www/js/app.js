@@ -97,7 +97,7 @@ app.config(function($stateProvider, $urlRouterProvider, $compileProvider, $ionic
   $urlRouterProvider.otherwise('app/listado?idCategoria=7');
 });
 // Inicializaciones ===================================================================================================
-app.run(function($ionicPlatform, $rootScope, $window) {
+app.run(function($ionicPlatform, $rootScope, $window, Cams) {
 
   // halla anchura de pantalla para dibujar o no menu-button en ion-nav-bar (en 'menu.html')
   ionic.on('resize', function(){

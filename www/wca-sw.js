@@ -1,11 +1,11 @@
 // todo: en modo offline mostrar una aviso al usuario
 // todo: 'install' event is for old caches deletion. use it?
-// todo: split filesToCache into two arrays for easy configuration and merge them
+// todo: split URIS_TO_CACHE into two arrays for easy configuration and merge them
 // todo: use es6
 
-var cacheName = 'wca';
+var CACHE_NAME = 'wca';
 
-var filesToCache = [
+var URIS_TO_CACHE = [
 
   '/',
   'index.html',
@@ -91,10 +91,10 @@ if ('serviceWorker' in navigator) {
  */
 self.addEventListener('install', function(event) {
   event.waitUntil(
-    caches.open(cacheName)
+    caches.open(CACHE_NAME)
       .then(function(cache) {
         // console.log('sw: installing files into cache');
-        return cache.addAll(filesToCache);
+        return cache.addAll(URIS_TO_CACHE);
       })
       .then(function () {
         return self.skipWaiting();
@@ -122,10 +122,12 @@ self.addEventListener('activate', function (event) {
  */
 self.addEventListener('fetch', function(fetchEvent) {
   var request = fetchEvent.request;
+  var url = request.url;
   // todo: Refactorizar las peticiones a imagenes para evitar ser controladas por el service worker
   // todo: averiguar si se esta offline
   // If a request to a image is made in offline mode, return fallback image and exit
-  if(request.url.indexOf('wewebcams') > -1 || request.url.indexOf('openweather') > -1) {
+
+  if(url.indexOf('wewebcams') > -1 || url.indexOf('openweather') > -1 || url.indexOf('meteociel') > -1) {
     // fetchEvent.respondWith(caches.match('img/offline-img.png'));
     return;
   }
@@ -144,6 +146,7 @@ self.addEventListener('fetch', function(fetchEvent) {
         }
       })
       .catch(function (error) {
+        // if request is not cached nor network available, return fallback page
         // console.log('caches.match() error: ', error);
         return caches.match('index.html');
       })

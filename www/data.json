@@ -1,5 +1,4 @@
-// API callback
-angular.callbacks._0({
+{
  "kind": "fusiontables#sqlresponse",
  "columns": [
   "Lugar",
@@ -1075,4 +1074,3 @@ angular.callbacks._0({
   ]
  ]
 }
-);

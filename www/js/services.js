@@ -8,13 +8,20 @@ wcaModule.service('Cams', function ($http, $filter, Cam, STRINGS){
   this.TABLE_ID = '1gX5maFbqFyRziZiUYlpOBYhcC1v9lGkKqCXvZREF';
   this.all = [];
 
-  this.getAll = function () {
+  this.getAll = function (pathToFile) {
+    var httpRequest;
     var self = this;
     var sqlQuery = 'SELECT Lugar, Concejo, Imagen ,Categoria, rowid, latitud, longitud FROM '+ this.TABLE_ID;
-    var url = STRINGS.FUSION_TABLES_ENDPOINT+ '?sql=' +(sqlQuery)+ '&key=' + STRINGS.FUSION_TABLES_API_KEY +
+    var url = STRINGS.FUSION_TABLES_ENDPOINT + '?sql=' +(sqlQuery)+ '&key=' + STRINGS.FUSION_TABLES_API_KEY +
       '&callback=JSON_CALLBACK';
-    return $http.jsonp( encodeURI(url), {cache: true} )
+    if(pathToFile){
+      httpRequest = $http.get( pathToFile, {cache: true} ); // load local json file with data for testing purposes
+    } else {
+      httpRequest = $http.jsonp( encodeURI(url), {cache: true} );
+    }
+    return httpRequest
       .success(function (response) {
+        //todo: aqui habria que mapear el resultado de la llamada http a una lista de objetos cams
         self.all = response.rows;
       })
       .error(function (error) {
@@ -22,15 +29,11 @@ wcaModule.service('Cams', function ($http, $filter, Cam, STRINGS){
       })
   }
 
-  this.getLocalData = function(path_fichero){
-    var self = this;
-    return $http.get( path_fichero, {cache: true} )
-      .success(function (response) {
-        self.all = response.rows;
-      })
-      .error(function (error) {
-        throw(error);
-      })
+  this.getRemoteData = function( sqlQueryString ) {
+    var url = STRINGS.FUSION_TABLES_ENDPOINT+ '?sql=' +(sqlQueryString)+ '&key=' + STRINGS.FUSION_TABLES_API_KEY +
+      '&callback=JSON_CALLBACK';
+    // console.log(sqlQueryString);
+    return $http.jsonp( encodeURI(url), {cache: true} );
   }
 
   function esSubcadena(idCategoria, urlCategoria) {
@@ -122,8 +125,6 @@ wcaModule.service('Mapa', function(Cams){
         //console.log('Debugging resultados de busqueda street view results[0]', results[0]);
         fn(results[0].geometry.location);
       } else {
-        // Popup.show('Error', 'No se han podido hallar coordenadas para panorama StreetView');
-        // console.error('Mapa.hallaLatLng(): no se han podido hallar coordenadas');
         throw new Error('No se han podido hallar coordenadas para panorama StreetView');
       }
     }
@@ -323,8 +324,8 @@ wcaModule.factory('$exceptionHandler', function($injector) {
   return function(exception, cause) {
     var Popup = $injector.get('Popup');
     console.error(exception);
-    Popup.show('Error', 'Data: '+exception.data+'<br>Status: '+exception.status+'<br>Text: '+exception.statusText +
-      '<br>Message: '+exception.message);
+    Popup.show( 'Error', 'Data: '+(exception || exception.data)+ '<br>Status: '+(exception.status)+
+      '<br>Text: '+exception.statusText+ '<br>Message: '+(exception.message) );
   }
 })
 // ====================================================================================================================

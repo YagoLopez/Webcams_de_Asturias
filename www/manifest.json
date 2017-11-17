@@ -2,7 +2,7 @@
   "short_name": "WCA",
   "name": "Webcams de Asturias",
   "start_url": "./index.html",
-  "display": "fullscreen",
+  "display": "standalone",
   "orientation": "portrait",
   "background_color": "#ffffff",
   "lang": "es-ES",
