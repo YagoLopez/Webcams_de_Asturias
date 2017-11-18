@@ -1,3 +1,4 @@
+//todo: incluir enlaces a concejo y categoria en la pagina detalle.html
 //todo: cancelar carga de imagen en vista detalle.html como en gif-player.html
 //todo: futuras refactorizaciones -> usar una base de datos ligera para json
 //todo: usar google maps embed api. consultar link en carpeta temp
@@ -24,8 +25,14 @@ wcaModule.controller('ListadoCtrl', function ($scope, $stateParams, Cams, Catego
 
   Cams.getAll('data.json')
     .then(function () {
-      $scope.cams = Cams.filtrarPor(concejo, idCategoria);
+      console.log(Cams.all);
+      // $scope.cams = Cams.filtrarPor(concejo, idCategoria);
+      $scope.cams = Cams.all;
       Loader.hide();
+    })
+    //todo: borrar
+    .catch(function (error) {
+      throw(error);
     });
 
   $scope.$on('$ionicView.afterEnter', function(){
@@ -39,100 +46,8 @@ wcaModule.controller('ListadoCtrl', function ($scope, $stateParams, Cams, Catego
   })
 })
 // ====================================================================================================================
-wcaModule.controller('DetalleMapaCtrl', function($scope, Mapa, Cam, $location){
-
-  var mapa, layer, posicion;
-
-  if(!Cam.isDefined()) {
-    $location.path( "#/" );
-    return;
-  }
-  $scope.cam = Cam;
-
-  $scope.$on('$ionicView.afterEnter', function() {
-    mapa = Mapa.crear(document.getElementById('mapa'));
-    layer = Mapa.creaFusionTableLayer().setMap(mapa);
-    posicion = {lat: Cam.lat, lng: Cam.lng};
-    Mapa.creaMarker(posicion, mapa);
-    mapa.setCenter(posicion);
-    mapa.setZoom(18);
-  });
-})
-// ====================================================================================================================
-wcaModule.controller('MapaGlobalCtrl', function($scope, Mapa, Cams, Popup, Categorias){
-
-  var layer, mapa, sqlQueryConcejos, sqlQueryCategorias, zoomLevel = 7;
-  sqlQueryConcejos = 'SELECT Concejo FROM '+Cams.FUSION_TABLE_ID+' GROUP BY Concejo';
-  sqlQueryCategorias = 'SELECT Categoria FROM '+Cams.FUSION_TABLE_ID+' GROUP BY Categoria';
-  $scope.filtro = {categoria: '', concejo: ''};
-
-  //todo: refactorizar y trasladar a servicio Cams
-  Cams.getRemoteData(sqlQueryConcejos).success(function(data){
-    $scope.concejos = data.rows;
-  }).error(function(status){
-    console.error(status);
-  });
-
-  Cams.getRemoteData(sqlQueryCategorias).success(function(data){
-    $scope.categorias = data.rows;
-  }).error(function(status){
-    console.error(status);
-  });
-
-  //todo: sustituir remote queries por filtros sobre datos de $rootScope.cams
-  // console.log('rootScope.cams', $rootScope.cams);
-  // $scope.categorias = $filter('filter')($rootScope.cams, function(cam) {
-  //   console.log('filtering categorias', cam[3]);
-  // });
-
-  $scope.urlCategoria_a_nombre = function(url){
-    return Categorias.url_a_nombre(url);
-  };
-
-  $scope.categoriaEscogida = function(categoria){
-    var filtroCategoria;
-    categoria = categoria.replace(/(\r\n|\n|\r)/gm,'').trim();
-    filtroCategoria = 'Categoria=\'' + categoria + '\'';
-    layer.setMap(null); // borra layer antigua si la hubiera
-    layer = Mapa.creaFusionTableLayer(filtroCategoria);
-    layer.setMap(mapa);
-    mapa.setCenter(Mapa.OVIEDO);
-    mapa.setZoom(zoomLevel);
-    $scope.filtro.concejo = '';
-  };
-
-  $scope.concejoEscogido = function(concejo){
-    var filtroConcejo;
-    concejo = concejo.replace(/(\r\n|\n|\r)/gm,'').trim(); // Elimina retornos de carro y espacios en blanco al principio y al final
-    filtroConcejo = 'Concejo=\'' + concejo + '\''; // el concejo tiene que ir entre comillas
-    layer.setMap(null); // borra layer anterior si la hubiera
-    layer = Mapa.creaFusionTableLayer(filtroConcejo);
-    layer.setMap(mapa);
-    mapa.setCenter(Mapa.OVIEDO);
-    mapa.setZoom(zoomLevel);
-    $scope.filtro.categoria = '';
-  };
-
-  $scope.mostrarTodas = function(){
-    layer && layer.setMap(null);
-    layer = Mapa.creaFusionTableLayer();
-    layer.setMap(mapa);
-    mapa.setCenter(Mapa.OVIEDO);
-    mapa.setZoom(zoomLevel);
-    $scope.filtro.categoria = '';
-    $scope.filtro.concejo = '';
-  };
-
-  // Activa manualmente el ciclo de deteccion de cambios de angular (digest cycle) para evaluar javascript externo
-  // Cuando $scope.$apply da error, usar $scope.$applyAsync() o $scope.$evalAsync()
-  $scope.$evalAsync(function () {
-      mapa = Mapa.crear(document.getElementById('mapaglobal'));
-      $scope.mostrarTodas(); // por defecto
-  });
-})
-// ====================================================================================================================
 wcaModule.controller('DetalleCtrl', function($scope, $stateParams, $ionicModal, Clima,
-  Popup, Wikipedia, $ionicPopover, Cam, Cams, Loader, $location, STRINGS){
+   Popup, Wikipedia, $ionicPopover, Cam, Cams, Loader, $location, STRINGS){
 
   // Init --------------------------------------------------------------------------------------------------------------
 
@@ -225,6 +140,98 @@ wcaModule.controller('DetalleCtrl', function($scope, $stateParams, $ionicModal, 
     clearTimeout($scope.timerGetClimaData);
   })
 
+})
+// ====================================================================================================================
+wcaModule.controller('DetalleMapaCtrl', function($scope, Mapa, Cam, $location){
+
+  var mapa, layer, posicion;
+
+  if(!Cam.isDefined()) {
+    $location.path( "#/" );
+    return;
+  }
+  $scope.cam = Cam;
+
+  $scope.$on('$ionicView.afterEnter', function() {
+    mapa = Mapa.crear(document.getElementById('mapa'));
+    layer = Mapa.creaFusionTableLayer().setMap(mapa);
+    posicion = {lat: Cam.lat, lng: Cam.lng};
+    Mapa.creaMarker(posicion, mapa);
+    mapa.setCenter(posicion);
+    mapa.setZoom(18);
+  });
+})
+// ====================================================================================================================
+wcaModule.controller('MapaGlobalCtrl', function($scope, Mapa, Cams, Popup, Categorias){
+
+  var layer, mapa, sqlQueryConcejos, sqlQueryCategorias, zoomLevel = 7;
+  sqlQueryConcejos = 'SELECT Concejo FROM '+Cams.FUSION_TABLE_ID+' GROUP BY Concejo';
+  sqlQueryCategorias = 'SELECT Categoria FROM '+Cams.FUSION_TABLE_ID+' GROUP BY Categoria';
+  $scope.filtro = {categoria: '', concejo: ''};
+
+  //todo: refactorizar y trasladar a servicio Cams
+  Cams.getRemoteData(sqlQueryConcejos).success(function(data){
+    $scope.concejos = data.rows;
+  }).error(function(status){
+    console.error(status);
+  });
+
+  Cams.getRemoteData(sqlQueryCategorias).success(function(data){
+    $scope.categorias = data.rows;
+  }).error(function(status){
+    console.error(status);
+  });
+
+  //todo: sustituir remote queries por filtros sobre datos de $rootScope.cams
+  // console.log('rootScope.cams', $rootScope.cams);
+  // $scope.categorias = $filter('filter')($rootScope.cams, function(cam) {
+  //   console.log('filtering categorias', cam[3]);
+  // });
+
+  $scope.urlCategoria_a_nombre = function(url){
+    return Categorias.url_a_nombre(url);
+  };
+
+  $scope.categoriaEscogida = function(categoria){
+    var filtroCategoria;
+    categoria = categoria.replace(/(\r\n|\n|\r)/gm,'').trim();
+    filtroCategoria = 'Categoria=\'' + categoria + '\'';
+    layer.setMap(null); // borra layer antigua si la hubiera
+    layer = Mapa.creaFusionTableLayer(filtroCategoria);
+    layer.setMap(mapa);
+    mapa.setCenter(Mapa.OVIEDO);
+    mapa.setZoom(zoomLevel);
+    $scope.filtro.concejo = '';
+  };
+
+  $scope.concejoEscogido = function(concejo){
+    var filtroConcejo;
+    concejo = concejo.replace(/(\r\n|\n|\r)/gm,'').trim(); // Elimina retornos de carro y espacios en blanco al principio y al final
+    filtroConcejo = 'Concejo=\'' + concejo + '\''; // el concejo tiene que ir entre comillas
+    layer.setMap(null); // borra layer anterior si la hubiera
+    layer = Mapa.creaFusionTableLayer(filtroConcejo);
+    layer.setMap(mapa);
+    mapa.setCenter(Mapa.OVIEDO);
+    mapa.setZoom(zoomLevel);
+    $scope.filtro.categoria = '';
+  };
+
+  $scope.mostrarTodas = function(){
+    layer && layer.setMap(null);
+    layer = Mapa.creaFusionTableLayer();
+    layer.setMap(mapa);
+    mapa.setCenter(Mapa.OVIEDO);
+    mapa.setZoom(zoomLevel);
+    $scope.filtro.categoria = '';
+    $scope.filtro.concejo = '';
+  };
+
+  // Activa manualmente el ciclo de deteccion de cambios de angular (digest cycle) para evaluar javascript externo
+  // Cuando $scope.$apply da error, usar $scope.$applyAsync() o $scope.$evalAsync()
+  $scope.$evalAsync(function () {
+      mapa = Mapa.crear(document.getElementById('mapaglobal'));
+      $scope.mostrarTodas(); // por defecto
+  });
 })
 // ====================================================================================================================
 wcaModule.controller('MeteoblueCtrl', function ($scope, $location, Cam) {
@@ -449,18 +456,21 @@ wcaModule.controller('GifPlayerCtrl', function($scope, $interval, $stateParams, 
 wcaModule.controller('MeteoCtrl', function ($scope, Popup, ItemsMeteo, Loader){
 
   Loader.showWithBackdrop('Cargando...');
-
+  $scope.loading = true;
   $scope.getItemsMeteoByCategoria = function(idCategoria){
     return ItemsMeteo.getItemsByCategoriaId(idCategoria);
   }
 
+  //todo: renombrar getAll() a loadData() y ItemsMeteo.all a ItemsMeteo.getAll()
   ItemsMeteo.getAll()
     .success(function (result) {
+      $scope.loading = false;
       Loader.hide();
     })
     .error(function (status) {
+      $scope.loading = false;
       Loader.hide();
-      console.log(status);
+      console.error(status);
     })
 
 })

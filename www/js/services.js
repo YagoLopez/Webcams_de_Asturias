@@ -22,7 +22,9 @@ wcaModule.service('Cams', function ($http, $filter, Cam, STRINGS){
     return httpRequest
       .success(function (response) {
         //todo: aqui habria que mapear el resultado de la llamada http a una lista de objetos cams
-        self.all = response.rows;
+        response.rows.map(function(datosCam){
+          self.all.push( new Cam(datosCam) );
+        })
       })
       .error(function (error) {
         throw(error);
@@ -40,6 +42,7 @@ wcaModule.service('Cams', function ($http, $filter, Cam, STRINGS){
     return (urlCategoria.indexOf('categoria=' + idCategoria) > -1);
   }
 
+/*
   this.filtrarPor = function(concejo, idCategoria){
     var self = this;
     var camsFiltradas;
@@ -61,17 +64,41 @@ wcaModule.service('Cams', function ($http, $filter, Cam, STRINGS){
       return camsFiltradas;
     })
   }
+*/
+
+  this.filtrarPor = function(concejo, idCategoria){
+    var self = this;
+    var camsFiltradas;
+    return $filter('filter')(this.all, function(cam) {
+      if (concejo && idCategoria) {
+        // cam[1]: concejo, cam[3]: url categoria (no confundir con "id" de categoria)
+        camsFiltradas = (cam.concejo.toLowerCase() == concejo.toLowerCase() && esSubcadena(idCategoria, cam.categoria));
+      } else {
+        if (concejo){
+          camsFiltradas = cam.concejo.toLowerCase() == concejo.toLowerCase();
+        }
+        if (idCategoria){
+          camsFiltradas = esSubcadena(idCategoria, cam.categoria);
+        }
+        if (!concejo && !idCategoria){
+          camsFiltradas = self.all;
+        }
+      }
+      return camsFiltradas;
+    })
+  }
+
 
   this.getCamByRowid = function (rowid) {
     return $filter('filter')(this.all, function(cam) {
-      return cam[4] === rowid;
+      return cam.id === rowid;
     })
   }
 
   this.buscarCams = function (searchString) {
     return $filter('filter')(this.all, function(cam) {
-      var matchCondition1 = cam[0].toLowerCase().indexOf(searchString.toLowerCase()) > -1;
-      var matchCondition2 = cam[1].toLowerCase().indexOf(searchString.toLowerCase()) > -1;
+      var matchCondition1 = cam.lugar.toLowerCase().indexOf(searchString.toLowerCase()) > -1;
+      var matchCondition2 = cam.concejo.toLowerCase().indexOf(searchString.toLowerCase()) > -1;
       if(matchCondition1 || matchCondition2){
         return cam;
       }
@@ -79,40 +106,27 @@ wcaModule.service('Cams', function ($http, $filter, Cam, STRINGS){
   }
 });
 // ====================================================================================================================
-wcaModule.service('Cam', function(Categorias){
+wcaModule.factory('Cam', function(Categorias){
 
-  this.create = function(arrayDatosCam){
+  function Cam(arrayDatosCam){
     if(arrayDatosCam.length > 0) {
-      this.lugar = arrayDatosCam[0][0];
-      this.concejo = arrayDatosCam[0][1];
-      this.imagen = arrayDatosCam[0][2];
-      this.categoria = Categorias.url_a_nombre( arrayDatosCam[0][3] );
-      this.id = arrayDatosCam[0][4];
-      this.lat = arrayDatosCam[0][5];
-      this.lng = arrayDatosCam[0][6];
+      this.lugar = arrayDatosCam[0];
+      this.concejo = arrayDatosCam[1];
+      this.imagen = arrayDatosCam[2];
+      this.categoria = Categorias.url_a_nombre( arrayDatosCam[3] );
+      this.id = arrayDatosCam[4];
+      this.lat = arrayDatosCam[5];
+      this.lng = arrayDatosCam[6];
     } else {
       throw new Error('Datos de Cam insuficientes');
     }
   }
-  // function Cam(arrayDatosCam){
-  //   if(arrayDatosCam.length > 0) {
-  //     this.lugar = arrayDatosCam[0][0];
-  //     this.concejo = arrayDatosCam[0][1];
-  //     this.imagen = arrayDatosCam[0][2];
-  //     this.categoria = Categorias.url_a_nombre( arrayDatosCam[0][3] );
-  //     this.id = arrayDatosCam[0][4];
-  //     this.lat = arrayDatosCam[0][5];
-  //     this.lng = arrayDatosCam[0][6];
-  //   } else {
-  //     throw new Error('Datos de Cam insuficientes');
-  //   }
-  // }
 
   this.isDefined = function () {
     return this.lat && this.lng;
   }
 
-  // return Cam;
+  return Cam;
 });
 // ====================================================================================================================
 wcaModule.service('Mapa', function(Cams){

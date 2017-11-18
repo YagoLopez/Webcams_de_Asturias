@@ -18,21 +18,22 @@
 
   <ion-content>
     <div class="responsive-page">
-      <div ng-if="error" class="error">{{ ::error }}</div>
+      <!--<div ng-if="error" class="error">{{ ::error }}</div>-->
       <a class="item item-thumbnail-left item-icon-right"
-         ng-repeat="cam in cams track by cam[4]" href="#/app/detalle/{{ cams[$index][4] }}">
-        <!--<img ng-src="{{ cam[2] }}" fallback-src="img/imgFail.png" class="img-cam"/>-->
+         ng-repeat="cam in cams track by cam.id" href="#/app/detalle/{{ cam.id }}">
+        <!--<img ng-src="{{ cam.imagen }}" fallback-src="img/imgFail.png" class="img-cam"/>-->
         <img ng-src="img/imgFail.png" class="img-cam"/>
         <div>
-          <p><span><b class="verde">&bullet;</b> {{ cam[0] }}</span></p>
-          <p><span><b class="verde">&bullet;</b> Concejo: {{ cam[1] }}</span></p>
+          <p><span><b class="verde">&bullet;</b> {{ cam.lugar }}</span></p>
+          <p><span><b class="verde">&bullet;</b> Concejo: {{ cam.concejo }}</span></p>
         </div>
         <i class="icon ion-ios-arrow-right azul"></i>
         <!-- Debug Info -->
-        <!-- <p>Categoría: {{cam[3]}}</p> <p>indice: {{$index}}</p> <p>ROWID: {{cam[4]}}</p> -->
+        <!-- <p>Categoría: {{cam.categoria}}</p> <p>indice: {{$index}}</p> <p>ROWID: {{cam.id}}</p> -->
         <!-- /Debug Info -->
       </a>
     </div>
     <br/><br/>
   </ion-content>
 </ion-view>
+<!--ng-repeat="cam in cams track by cam.id" href="#/app/detalle/{{ cams[$index].id }}">-->

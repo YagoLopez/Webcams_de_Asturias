@@ -8,20 +8,24 @@
   <img alt='Sponsor' width='888' height='68' src='https://app.codesponsor.io/embed/EzE1MgxVeUFQV74og3T6kk1m/YagoLopez/Webcams_de_Asturias.svg' />
 </a>
 
-- <strong>Aplicación Web Progresiva (PWA) que muestra Imágenes de cámaras web situadas en el Principado de Asturias</strong>
+<strong>Aplicación Web Progresiva (PWA) que muestra Imágenes de cámaras web situadas en el Principado de Asturias</strong>
 
-- Arquitectura basada en el Patrón MVC y las que en su momento eran directrices de buenas prácticas para AngularJS.
-Ref.: <a href="https://toddmotto.com/rethinking-angular-js-controllers/">Link</a>
-Actualmente, las nuevas versiones de Angular no siguen el patrón MVC ya que se basan en una arquitectura de componentes.
+Este es un proyecto experimental para poner en práctica diversos patrones, arquitecturas y tecnologías en una
+aplicación desarrollada con el framework AngularJS.
 
-- Incorpora un "Service Worker" que proporciona funcionalidad off-line
+## Características y funcionalidades
 
-- <div><a href="http://mobt.me/XfKL" target="_blank">Demo para desktop (pantalla grande)</a></div>
+- Arquitectura basada en el Patrón MVC y las que en su momento eran directrices de buenas prácticas
+para AngularJS. (Ref.: <a href="https://toddmotto.com/rethinking-angular-js-controllers/">Link</a>).
+Actualmente, las nuevas versiones de Angular no siguen el patrón MVC puesto que se basan en una arquitectura de componentes.
 
-- <div>
-  <a href="http://yagolopez.github.io/Webcams_de_Asturias/www/index.html" target="_blank">
-  Demo para móvil (pantalla pequeña)</a>
-  </div>
+- Incluye un "Service Worker" que proporciona funcionalidad off-line
+
+- Incluye un fichero "manifest.json" para poder instalarse en el escritorio y emular el funcionamiento de las apps móviles
+
+- <div><a href="http://mobt.me/XfKL" target="_blank">Demo para desktop</a></div>
+
+- <div><a href="http://yagolopez.github.io/Webcams_de_Asturias/www/index.html" target="_blank">Demo para móvil</a></div>
 
 Las cámaras están agrupadas según las siguientes categorías:
 
