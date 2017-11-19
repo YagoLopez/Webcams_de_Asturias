@@ -1,3 +1,4 @@
+//todo: user resolvers
 //todo: actualizar a ultima version de angularjs y comprobar si es de menor tamaño
 //todo: por lo visto va a ser necesario usar un cam service
 // usar cam.service en lugar de cam.factory para que pueda funcionar como singleton
@@ -29,26 +30,26 @@ wcaModule.controller('ListadoCtrl', function ($scope, $stateParams, Cams, Loader
   if (Cams.getAll().length < 1) {
     Cams.loadData('data.json')
       .then(function () {
-        $scope.cams = Cams.filterBy(concejo, categoria);
         Loader.hide();
+        $scope.cams = Cams.filterBy(concejo, categoria);
       })
   } else {
-    $scope.cams = Cams.filterBy(concejo, categoria);
     Loader.hide();
+    $scope.cams = Cams.filterBy(concejo, categoria);
   }
 
   $scope.$on('$ionicView.afterEnter', function(){
     $scope.concejo = concejo;
     $scope.categoria = categoria;
     if ($scope.cams.length === 0){
-      $scope.titulo = 'No Results';
+      $scope.titulo = 'Sin Resultados';
     } else if ($scope.cams.length === Cams.getAll().length) {
       $scope.titulo = 'Todas';
     } else {
-      if (categoria){
+      if (categoria) {
         $scope.titulo = Categorias.capitalizeFirstLetter(categoria);
       }
-      if (concejo){
+      if (concejo) {
         $scope.titulo = Categorias.capitalizeFirstLetter(concejo);
       }
     }
