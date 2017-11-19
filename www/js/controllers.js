@@ -40,11 +40,17 @@ wcaModule.controller('ListadoCtrl', function ($scope, $stateParams, Cams, Loader
   $scope.$on('$ionicView.afterEnter', function(){
     $scope.concejo = concejo;
     $scope.categoria = categoria;
-    if (!categoria || categoria === '') {
-      $scope.titulo = 'Todas'
+    if ($scope.cams.length === 0){
+      $scope.titulo = 'No Results';
+    } else if ($scope.cams.length === Cams.getAll().length) {
+      $scope.titulo = 'Todas';
     } else {
-      // $scope.titulo = Categorias.idCategoria_a_nombre(categoria);
-      $scope.titulo = Categorias.capitalizeFirstLetter(categoria);
+      if (categoria){
+        $scope.titulo = Categorias.capitalizeFirstLetter(categoria);
+      }
+      if (concejo){
+        $scope.titulo = Categorias.capitalizeFirstLetter(concejo);
+      }
     }
   })
 })

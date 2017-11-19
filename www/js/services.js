@@ -58,7 +58,7 @@ wcaModule.service('Cams', function ($http, $filter, Cam, STRINGS){
           result = categoria.toLowerCase() === cam.categoria.toLowerCase();
         }
         if (!concejo && !categoria){
-          result = self.all;
+          result = self.listAll;
         }
       }
       return result;
