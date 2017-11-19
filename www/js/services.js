@@ -6,9 +6,14 @@ var wcaModule = angular.module('wca.services',[]);
 wcaModule.service('Cams', function ($http, $filter, Cam, STRINGS){
 
   this.FUSION_TABLE_ID = '1gX5maFbqFyRziZiUYlpOBYhcC1v9lGkKqCXvZREF';
-  this.all = [];
 
-  this.getAll = function (pathToFile) {
+  this.listAll = [];
+
+  this.getAll = function () {
+    return this.listAll;
+  }
+
+  this.loadData = function (pathToFile) {
     var httpRequest;
     var self = this;
     var sqlQuery = 'SELECT Lugar, Concejo, Imagen ,Categoria, rowid, latitud, longitud FROM '+ this.FUSION_TABLE_ID;
@@ -22,7 +27,7 @@ wcaModule.service('Cams', function ($http, $filter, Cam, STRINGS){
     return httpRequest
       .success(function (response) {
         response.rows.map(function(datosCam){
-          self.all.push( new Cam(datosCam) );
+          self.listAll.push( new Cam(datosCam) );
         })
       })
       .error(function (error) {
@@ -42,22 +47,21 @@ wcaModule.service('Cams', function ($http, $filter, Cam, STRINGS){
   }
 
   this.filterBy = function(concejo, categoria){
-    var self = this;
+
     var result;
-    return $filter('filter')(this.all, function(cam) {
+    var self = this;
+
+    return $filter('filter')(this.listAll, function(cam) {
       if (concejo && categoria) {
-        result = (cam.concejo.toLowerCase() === concejo.toLowerCase() && categoria.toLowerCase() === cam.categoria.toLowerCase());
+        result = cam.concejo.toLowerCase() === concejo.toLowerCase() && categoria.toLowerCase() === cam.categoria.toLowerCase();
       } else {
         if (concejo){
-          console.log('filtrando por concejo: ', concejo)
           result = cam.concejo.toLowerCase() === concejo.toLowerCase();
         }
         if (categoria){
-          console.log('filtrando por categoria: ', categoria)
-          result = cam.categoria.toLowerCase() === categoria.toLowerCase();
+          result = categoria.toLowerCase() === cam.categoria.toLowerCase();
         }
         if (!concejo && !categoria){
-          console.log('no hay filtro')
           result = self.all;
         }
       }
@@ -66,13 +70,13 @@ wcaModule.service('Cams', function ($http, $filter, Cam, STRINGS){
   }
 
   this.getCamByRowid = function (rowid) {
-    return $filter('filter')(this.all, function(cam) {
+    return $filter('filter')(this.listAll, function(cam) {
       return cam.id === rowid;
     })
   }
 
   this.buscarCams = function (searchString) {
-    return $filter('filter')(this.all, function(cam) {
+    return $filter('filter')(this.listAll, function(cam) {
       var matchCondition1 = cam.lugar.toLowerCase().indexOf(searchString.toLowerCase()) > -1;
       var matchCondition2 = cam.concejo.toLowerCase().indexOf(searchString.toLowerCase()) > -1;
       if(matchCondition1 || matchCondition2){
@@ -269,7 +273,7 @@ wcaModule.service('ItemsMeteo', function($http, $filter, ItemMeteo, STRINGS){
 
   this.all = [];
 
-  this.getAll = function() {
+  this.loadData = function() {
 
     var self = this;
     var sqlQueryString = 'SELECT * FROM '+FUSION_TABLE_ID+' ORDER BY id ASC';

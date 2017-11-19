@@ -1,3 +1,4 @@
+//todo: actualizar a ultima version de angularjs y comprobar si es de menor tamaño
 //todo: por lo visto va a ser necesario usar un cam service
 // usar cam.service en lugar de cam.factory para que pueda funcionar como singleton
 // intentar que no sea asi, que solo sea un cam service
@@ -25,8 +26,8 @@ wcaModule.controller('ListadoCtrl', function ($scope, $stateParams, Cams, Loader
   var categoria = $stateParams.categoria;
   Loader.show('Cargando...');
 
-  if (Cams.all.length < 1) {
-    Cams.getAll('data.json')
+  if (Cams.getAll().length < 1) {
+    Cams.loadData('data.json')
       .then(function () {
         $scope.cams = Cams.filterBy(concejo, categoria);
         Loader.hide();
@@ -35,7 +36,6 @@ wcaModule.controller('ListadoCtrl', function ($scope, $stateParams, Cams, Loader
     $scope.cams = Cams.filterBy(concejo, categoria);
     Loader.hide();
   }
-
 
   $scope.$on('$ionicView.afterEnter', function(){
     $scope.concejo = concejo;
@@ -54,11 +54,10 @@ wcaModule.controller('DetalleCtrl', function($scope, $stateParams, $ionicModal, 
 
   // Init --------------------------------------------------------------------------------------------------------------
 
-  var cam;
   var loaderContent = 'Cargando...' +
     '<div id="cancelLinkContainer"><button><a id="cancelLink" href="#/">Cancelar</a></div></button>';
   Loader.show(loaderContent);
-  if(Cams.all.length < 1 || !$stateParams.rowid){
+  if(Cams.getAll().length < 1 || !$stateParams.rowid){
     $location.path('#/'); // si no hay lista de cams redirigir a root
     return;
   }
@@ -465,8 +464,8 @@ wcaModule.controller('MeteoCtrl', function ($scope, Popup, ItemsMeteo, Loader){
     return ItemsMeteo.getItemsByCategoriaId(idCategoria);
   }
 
-  //todo: renombrar getAll() a loadData() y ItemsMeteo.all a ItemsMeteo.getAll()
-  ItemsMeteo.getAll()
+  //todo: renombrar loadData() a loadData() y ItemsMeteo.all a ItemsMeteo.loadData()
+  ItemsMeteo.loadData()
     .success(function (result) {
       $scope.loading = false;
       Loader.hide();
@@ -608,7 +607,7 @@ wcaModule.controller('BuscarCamsCtrl', function($scope, $filter, Cams, $location
   $scope.camsEncontradas = [];
   $scope.showImages = false;
 
-  if(Cams.all.length < 1) {
+  if(Cams.getAll().length < 1) {
     $location.path( "#/" );
     return;
   }
@@ -620,7 +619,7 @@ wcaModule.controller('BuscarCamsCtrl', function($scope, $filter, Cams, $location
       $scope.camsEncontradas = [];
       return;
     }
-    $scope.camsEncontradas = Cams.buscarCams($scope.busqueda.lugar, Cams.all);
+    $scope.camsEncontradas = Cams.buscarCams($scope.busqueda.lugar, Cams.getAll());
   };
 
   $scope.resetBusqueda = function($event){
