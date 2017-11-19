@@ -1,3 +1,8 @@
+//todo: por lo visto va a ser necesario usar un cam service
+// usar cam.service en lugar de cam.factory para que pueda funcionar como singleton
+// intentar que no sea asi, que solo sea un cam service
+//todo: probar a crear un CamService además de la factoria Cam para usarlo como singleton (en todo caso revisar)
+//todo: incorporar clausula finally() en peticiones $http
 //todo: incluir enlaces a concejo y categoria en la pagina detalle.html
 //todo: cancelar carga de imagen en vista detalle.html como en gif-player.html
 //todo: futuras refactorizaciones -> usar una base de datos ligera para json
@@ -14,43 +19,42 @@
 
 var wcaModule = angular.module('wca.controllers',[]);
 // ====================================================================================================================
-wcaModule.controller('ListadoCtrl', function ($scope, $stateParams, Cams, Categorias, Loader) {
+wcaModule.controller('ListadoCtrl', function ($scope, $stateParams, Cams, Loader, Categorias) {
 
   var concejo = $stateParams.concejo;
-  var idCategoria = $stateParams.idCategoria;
-
-  $scope.cams = [];
-  $scope.camsFiltradas = [];
+  var categoria = $stateParams.categoria;
   Loader.show('Cargando...');
 
-  Cams.getAll('data.json')
-    .then(function () {
-      console.log(Cams.all);
-      // $scope.cams = Cams.filtrarPor(concejo, idCategoria);
-      $scope.cams = Cams.all;
-      Loader.hide();
-    })
-    //todo: borrar
-    .catch(function (error) {
-      throw(error);
-    });
+  if (Cams.all.length < 1) {
+    Cams.getAll('data.json')
+      .then(function () {
+        $scope.cams = Cams.filterBy(concejo, categoria);
+        Loader.hide();
+      })
+  } else {
+    $scope.cams = Cams.filterBy(concejo, categoria);
+    Loader.hide();
+  }
+
 
   $scope.$on('$ionicView.afterEnter', function(){
     $scope.concejo = concejo;
-    $scope.idCategoria = idCategoria;
-    if (!idCategoria || idCategoria === '') {
-      $scope.tituloVista = 'Todas'
+    $scope.categoria = categoria;
+    if (!categoria || categoria === '') {
+      $scope.titulo = 'Todas'
     } else {
-      $scope.tituloVista = Categorias.idCategoria_a_nombre(idCategoria);
+      // $scope.titulo = Categorias.idCategoria_a_nombre(categoria);
+      $scope.titulo = Categorias.capitalizeFirstLetter(categoria);
     }
   })
 })
 // ====================================================================================================================
 wcaModule.controller('DetalleCtrl', function($scope, $stateParams, $ionicModal, Clima,
-   Popup, Wikipedia, $ionicPopover, Cam, Cams, Loader, $location, STRINGS){
+   Popup, Wikipedia, $ionicPopover, Cams, Cam, Loader, $location, STRINGS){
 
   // Init --------------------------------------------------------------------------------------------------------------
 
+  var cam;
   var loaderContent = 'Cargando...' +
     '<div id="cancelLinkContainer"><button><a id="cancelLink" href="#/">Cancelar</a></div></button>';
   Loader.show(loaderContent);
@@ -58,39 +62,34 @@ wcaModule.controller('DetalleCtrl', function($scope, $stateParams, $ionicModal, 
     $location.path('#/'); // si no hay lista de cams redirigir a root
     return;
   }
-
-  //todo: borrar
-  // $scope.cam = new Cam( Cams.getCamByRowid($stateParams.rowid) );
-  Cam.create( Cams.getCamByRowid($stateParams.rowid) );
-  $scope.cam = Cam;
-  // $scope.cam = new Cam( Cams.getCamByRowid($stateParams.rowid) );
+  $scope.cam = Cam.create( Cams.getCamByRowid($stateParams.rowid)[0] );
 
   // Clima Data --------------------------------------------------------------------------------------------------------
 
   $scope.infoMeteo = ' (Obteniendo datos del servidor...)';
   // Priority is webcam image load. Wait 1000 ms before loading clima data
   $scope.timerGetClimaData = setTimeout( function(){
-    Clima.getData( Cam.lat, Cam.lng ).success(function(climadata){
-      if(climadata.weather){
-        $scope.infoMeteo = climadata.weather[0].description;
-        $scope.temp = climadata.main.temp;
-        $scope.presion = climadata.main.pressure;
-        $scope.humedad = climadata.main.humidity;
-        $scope.nubosidad = climadata.clouds.all;
-        $scope.velocidadViento = climadata.wind.speed;
-        $scope.direccionViento = climadata.wind.deg;
-        //volumen precipitaciones ultimas 3 horas
-        //$scope.precipitacion = climadata.rain['3h'];
-        //url icono: http://openweathermap.org/img/w/10n.png
-        $scope.iconoUrl = 'http://openweathermap.org/img/w/'+climadata.weather[0].icon+'.png' ;
-      } else {
+    Clima.getData( Cam.lat, Cam.lng )
+      .success(function(climadata){
+        if(climadata.weather){
+          $scope.infoMeteo = climadata.weather[0].description;
+          $scope.temp = climadata.main.temp;
+          $scope.presion = climadata.main.pressure;
+          $scope.humedad = climadata.main.humidity;
+          $scope.nubosidad = climadata.clouds.all;
+          $scope.velocidadViento = climadata.wind.speed;
+          $scope.direccionViento = climadata.wind.deg;
+          //volumen precipitaciones ultimas 3 horas
+          //$scope.precipitacion = climadata.rain['3h'];
+          //url icono: http://openweathermap.org/img/w/10n.png
+          $scope.iconoUrl = 'http://openweathermap.org/img/w/'+climadata.weather[0].icon+'.png' ;
+        } else {
+          $scope.infoMeteo = STRINGS.ERROR;
+        }
+    })
+    .error(function(status){
         $scope.infoMeteo = STRINGS.ERROR;
-      }
-    }).error(function(status){
-      $scope.infoMeteo = STRINGS.ERROR;
-      // throw new Error('Clima.getData(): '+ status);
-      console.error(status);
-
+        console.error(status);
     });
   }, 1000);
 
@@ -98,13 +97,15 @@ wcaModule.controller('DetalleCtrl', function($scope, $stateParams, $ionicModal, 
 
   $scope.infoConcejo = 'Cargando...';
   $scope.getWikipediaInfo = function(){
-    Wikipedia.info(Cam.concejo + '_(Asturias)').success(function(data){
-      var pageid = data.query.pageids[0];
-      if(pageid) {
-        $scope.infoConcejo = data.query.pages[pageid].extract;
-        $scope.wikiUrl = data.query.pages[pageid].fullurl;
-      }
-    }).error(function(status){
+    Wikipedia.info(Cam.concejo + '_(Asturias)')
+      .success(function(data){
+        var pageid = data.query.pageids[0];
+        if(pageid) {
+          $scope.infoConcejo = data.query.pages[pageid].extract;
+          $scope.wikiUrl = data.query.pages[pageid].fullurl;
+        }
+    })
+    .error(function(status){
       $scope.infoConcejo = STRINGS.ERROR;
       // throw new Error('Wikipedia.info()' + status);
       console.error(status);
@@ -150,6 +151,7 @@ wcaModule.controller('DetalleMapaCtrl', function($scope, Mapa, Cam, $location){
     $location.path( "#/" );
     return;
   }
+
   $scope.cam = Cam;
 
   $scope.$on('$ionicView.afterEnter', function() {
@@ -262,7 +264,9 @@ wcaModule.controller('StreetViewCtrl', function($scope, Mapa, Popup, $ionicSideM
     $location.path( "#/" );
     return;
   }
+
   $scope.cam = Cam;
+
   coords = {lat: Cam.lat, lng: Cam.lng};
   div = document.getElementById('street-view');
   loader = document.querySelector('.loader');
@@ -623,9 +627,6 @@ wcaModule.controller('BuscarCamsCtrl', function($scope, $filter, Cams, $location
     $scope.showImages = false;
     $scope.camsEncontradas = [];
     inputBuscaCam.value = '';
-    // setTimeout(function () {
-    //   inputBuscaCam.focus();
-    // }, 500);
   };
 
   $scope.toggleShowImages = function () {

@@ -21,7 +21,6 @@ wcaModule.service('Cams', function ($http, $filter, Cam, STRINGS){
     }
     return httpRequest
       .success(function (response) {
-        //todo: aqui habria que mapear el resultado de la llamada http a una lista de objetos cams
         response.rows.map(function(datosCam){
           self.all.push( new Cam(datosCam) );
         })
@@ -42,52 +41,29 @@ wcaModule.service('Cams', function ($http, $filter, Cam, STRINGS){
     return (urlCategoria.indexOf('categoria=' + idCategoria) > -1);
   }
 
-/*
-  this.filtrarPor = function(concejo, idCategoria){
+  this.filterBy = function(concejo, categoria){
     var self = this;
-    var camsFiltradas;
+    var result;
     return $filter('filter')(this.all, function(cam) {
-      if (concejo && idCategoria) {
-        // cam[1]: concejo, cam[3]: url categoria (no id de categoria, no confundir)
-        camsFiltradas = (cam[1].toLowerCase() == concejo.toLowerCase() && esSubcadena(idCategoria, cam[3]));
+      if (concejo && categoria) {
+        result = (cam.concejo.toLowerCase() === concejo.toLowerCase() && categoria.toLowerCase() === cam.categoria.toLowerCase());
       } else {
         if (concejo){
-          camsFiltradas = cam[1].toLowerCase() == concejo.toLowerCase();
+          console.log('filtrando por concejo: ', concejo)
+          result = cam.concejo.toLowerCase() === concejo.toLowerCase();
         }
-        if (idCategoria){
-          camsFiltradas = esSubcadena(idCategoria, cam[3]);
+        if (categoria){
+          console.log('filtrando por categoria: ', categoria)
+          result = cam.categoria.toLowerCase() === categoria.toLowerCase();
         }
-        if (!concejo && !idCategoria){
-          camsFiltradas = self.all;
-        }
-      }
-      return camsFiltradas;
-    })
-  }
-*/
-
-  this.filtrarPor = function(concejo, idCategoria){
-    var self = this;
-    var camsFiltradas;
-    return $filter('filter')(this.all, function(cam) {
-      if (concejo && idCategoria) {
-        // cam[1]: concejo, cam[3]: url categoria (no confundir con "id" de categoria)
-        camsFiltradas = (cam.concejo.toLowerCase() == concejo.toLowerCase() && esSubcadena(idCategoria, cam.categoria));
-      } else {
-        if (concejo){
-          camsFiltradas = cam.concejo.toLowerCase() == concejo.toLowerCase();
-        }
-        if (idCategoria){
-          camsFiltradas = esSubcadena(idCategoria, cam.categoria);
-        }
-        if (!concejo && !idCategoria){
-          camsFiltradas = self.all;
+        if (!concejo && !categoria){
+          console.log('no hay filtro')
+          result = self.all;
         }
       }
-      return camsFiltradas;
+      return result;
     })
   }
-
 
   this.getCamByRowid = function (rowid) {
     return $filter('filter')(this.all, function(cam) {
@@ -108,6 +84,10 @@ wcaModule.service('Cams', function ($http, $filter, Cam, STRINGS){
 // ====================================================================================================================
 wcaModule.factory('Cam', function(Categorias){
 
+  /**
+   * @param arrayDatosCam {array}
+   * @constructor
+   */
   function Cam(arrayDatosCam){
     if(arrayDatosCam.length > 0) {
       this.lugar = arrayDatosCam[0];
@@ -122,7 +102,27 @@ wcaModule.factory('Cam', function(Categorias){
     }
   }
 
-  this.isDefined = function () {
+  /**
+   * Static factory function needed to create Cam singleton object and share cam data between views
+   * @param obj {object}
+   */
+  Cam.create = function(obj){
+    if(!angular.equals({}, obj)) {
+      this.lugar = obj.lugar;
+      this.concejo = obj.concejo;
+      this.imagen = obj.imagen;
+      this.categoria = obj.categoria;
+      this.id = obj.id;
+      this.lat = obj.lat;
+      this.lng = obj.lng;
+      return Cam;
+    } else {
+      throw new Error('Datos de Cam insuficientes');
+    }
+  }
+
+  //todo: comprobar esta funcion
+  Cam.isDefined = function () {
     return this.lat && this.lng;
   }
 
@@ -376,6 +376,10 @@ wcaModule.service('Categorias', function(){
 
   this.idCategoria_a_nombre = function(idCategoria){
     return this.url_a_nombre(urlBaseCategoria+idCategoria);
+  }
+
+  this.capitalizeFirstLetter = function(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
   }
 })
 // ====================================================================================================================

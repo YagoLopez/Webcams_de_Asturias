@@ -16,8 +16,11 @@ aplicación desarrollada con el framework AngularJS.
 ## Características y funcionalidades
 
 - Arquitectura basada en el Patrón MVC y las que en su momento eran directrices de buenas prácticas
-para AngularJS. (Ref.: <a href="https://toddmotto.com/rethinking-angular-js-controllers/">Link</a>).
-Actualmente, las nuevas versiones de Angular no siguen el patrón MVC puesto que se basan en una arquitectura de componentes.
+para AngularJS. NOTA: Actualmente, las nuevas versiones de Angular no siguen el patrón MVC puesto que se basan en una
+arquitectura de componentes. Referencias:
+  - <a href="https://toddmotto.com/rethinking-angular-js-controllers/">Rethinking AngularJS Controllers</a>).
+  - <a href="https://medium.com/opinionated-angularjs/angular-model-objects-with-javascript-classes-2e6a067c73bc">
+    Angular Model Objects with JavaScript Classes</a>).
 
 - Incluye un "Service Worker" que proporciona funcionalidad off-line
 
@@ -71,6 +74,12 @@ Probado en:
 
 <strong>Progressive Web App (PWA) showing real time images from webcams located at the Principality of Asturias</strong>
 
-The architecture of this App is based on MVC Pattern and follows AngularJS Best Practices:
-<a href="https://toddmotto.com/rethinking-angular-js-controllers/">Link</a>
+- This is an experimental project to put in practice several patterns, architectures and technologies using the
+AngularJS framework.
 
+- The architecture of this app is based on the MVC Pattern and follows AngularJS Best Practices. References:
+  - <a href="https://toddmotto.com/rethinking-angular-js-controllers/">Rethinking AngularJS Controllers</a>).
+  - <a href="https://medium.com/opinionated-angularjs/angular-model-objects-with-javascript-classes-2e6a067c73bc">
+    Angular Model Objects with JavaScript Classes</a>).
+
+- It includes a service-worker to enable off-line capabilities

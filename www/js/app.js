@@ -70,11 +70,11 @@ app.config(function($stateProvider, $urlRouterProvider, $compileProvider, $ionic
     views: {'menuContent': {templateUrl: 'templates/por_concejo.html', controller: 'PorConcejoCtrl'}}
   });
 // -------------------------------------------------------------------------------------------------------------------
-  $stateProvider.state('app.listado', {url: '/listado?concejo&idCategoria', cache: true,
+  $stateProvider.state('app.listado', {url: '/listado?concejo&categoria', cache: true,
     views: {'menuContent': {templateUrl: 'templates/listado.html', controller: 'ListadoCtrl'}}
   });
 // -------------------------------------------------------------------------------------------------------------------
-  $stateProvider.state('app.mosaico', {url: '/mosaico?concejo&idCategoria', cache: true,
+  $stateProvider.state('app.mosaico', {url: '/mosaico?concejo&categoria', cache: true,
     views: {'menuContent': {templateUrl: 'templates/mosaico.html', controller: 'ListadoCtrl'}}
   });
 // -------------------------------------------------------------------------------------------------------------------
@@ -94,7 +94,7 @@ app.config(function($stateProvider, $urlRouterProvider, $compileProvider, $ionic
     views: {'menuContent': {templateUrl: 'templates/detalle-meteoblue.html', controller: 'MeteoblueCtrl'}}
   });
 // -------------------------------------------------------------------------------------------------------------------
-  $urlRouterProvider.otherwise('app/listado?idCategoria=7');
+  $urlRouterProvider.otherwise('app/listado?categoria=playas');
 });
 // Inicializaciones ===================================================================================================
 app.run(function($ionicPlatform, $rootScope, $window, Cams) {

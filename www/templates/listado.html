@@ -1,4 +1,4 @@
-<ion-view view-title="{{ tituloVista }}">
+<ion-view view-title="{{ titulo }}">
 
   <style type="text/css">
     .item-thumbnail-left {min-height: 0; padding-left: 90px; padding-top: 18px}
@@ -12,7 +12,7 @@
   </ion-nav-buttons>
   <ion-nav-buttons side="right">
     <a id="btn-mosaico" class="button button-icon icon ion-grid"
-      href="#/app/mosaico?concejo={{ concejo }}&idCategoria={{ idCategoria }}" title="Mosaico"></a>
+      href="#/app/mosaico?concejo={{ concejo }}&categoria={{ categoria }}" title="Mosaico"></a>
     <a class="button button-icon icon ion-ios-search-strong" href="#/app/buscar" title="Buscar"></a>
   </ion-nav-buttons>
 
@@ -20,7 +20,7 @@
     <div class="responsive-page">
       <!--<div ng-if="error" class="error">{{ ::error }}</div>-->
       <a class="item item-thumbnail-left item-icon-right"
-         ng-repeat="cam in cams track by cam.id" href="#/app/detalle/{{ cam.id }}">
+         ng-repeat="cam in cams track by cam.id" href="#/app/detalle/{{cam.id}}">
         <!--<img ng-src="{{ cam.imagen }}" fallback-src="img/imgFail.png" class="img-cam"/>-->
         <img ng-src="img/imgFail.png" class="img-cam"/>
         <div>
@@ -29,11 +29,10 @@
         </div>
         <i class="icon ion-ios-arrow-right azul"></i>
         <!-- Debug Info -->
-        <!-- <p>Categoría: {{cam.categoria}}</p> <p>indice: {{$index}}</p> <p>ROWID: {{cam.id}}</p> -->
+         <!--<p>Categoría: {{cam.categoria}}</p> <p>indice: {{$index}}</p> <p>ROWID: {{cam.id}}</p>-->
         <!-- /Debug Info -->
       </a>
     </div>
     <br/><br/>
   </ion-content>
 </ion-view>
-<!--ng-repeat="cam in cams track by cam.id" href="#/app/detalle/{{ cams[$index].id }}">-->
