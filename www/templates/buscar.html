@@ -39,11 +39,11 @@
       <!-- /Búsqueda -->
       <!-- Item cam -->
       <a class="item item-icon-right" ng-class="{'item-thumbnail-left': showImages}"
-        ng-repeat="cam in camsEncontradas track by cam[4]" href="#/app/detalle/{{ camsEncontradas[$index][4] }}">
-        <img ng-if="showImages" class="img-cam" ng-src="{{ cam[2] }}" fallback-src="img/imgFail.png"/>
+        ng-repeat="cam in camsEncontradas track by cam.id" href="#/app/detalle/{{cam.id}}">
+        <img ng-if="showImages" class="img-cam" ng-src="{{ cam.imagen }}" fallback-src="img/imgFail.png"/>
         <div>
-          <p><span><b>&bullet;</b> {{ cam[0] }}</span></p>
-          <p><span><b>&bullet;</b> Concejo: {{ cam[1] }}</span></p>
+          <p><span><b>&bullet;</b> {{ cam.lugar }}</span></p>
+          <p><span><b>&bullet;</b> Concejo: {{ cam.concejo }}</span></p>
         </div>
         <i class="icon ion-ios-arrow-right"></i>
       </a>

@@ -42,10 +42,6 @@ wcaModule.service('Cams', function ($http, $filter, Cam, STRINGS){
     return $http.jsonp( encodeURI(url), {cache: true} );
   }
 
-  function esSubcadena(idCategoria, urlCategoria) {
-    return (urlCategoria.indexOf('categoria=' + idCategoria) > -1);
-  }
-
   this.filterBy = function(concejo, categoria){
 
     var result;
