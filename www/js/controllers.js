@@ -1,6 +1,7 @@
 //todo: user resolvers
 //todo: actualizar a ultima version de angularjs y comprobar si es de menor tamaño
 //todo: probar ionic native transitions
+//todo: loader material design (estatico, no hace falta que sea animado)
 //todo: por lo visto va a ser necesario usar un cam service
 // usar cam.service en lugar de cam.factory para que pueda funcionar como singleton
 // intentar que no sea asi, que solo sea un cam service
@@ -26,33 +27,22 @@ wcaModule.controller('ListadoCtrl', function ($scope, $stateParams, Cams, Loader
 
   var concejo = $stateParams.concejo;
   var categoria = $stateParams.categoria;
-  Loader.show('Cargando...');
 
-  if (Cams.getAll().length < 1) {
-    Cams.loadData('data.json')
-      .then(function () {
-        Loader.hide();
-        $scope.cams = Cams.filterBy(concejo, categoria);
-      })
-  } else {
-    Loader.hide();
-    $scope.cams = Cams.filterBy(concejo, categoria);
-  }
+  $scope.cams = Cams.filterBy(concejo, categoria);
+  Loader.hide();
 
   $scope.$on('$ionicView.afterEnter', function(){
     $scope.concejo = concejo;
     $scope.categoria = categoria;
-    if ($scope.cams.length === 0){
-      $scope.titulo = 'Sin Resultados';
-    } else if ($scope.cams.length === Cams.getAll().length) {
+    if ($scope.cams.length === Cams.getAll().length) {
       $scope.titulo = 'Todas';
     } else {
-      if (categoria) {
+      if (categoria && $scope.cams.length > 0) {
         $scope.titulo = Categorias.capitalizeFirstLetter(categoria);
       }
-      if (concejo) {
-        $scope.titulo = Categorias.capitalizeFirstLetter(concejo);
-      }
+      // if (concejo) {
+      //   $scope.titulo = Categorias.capitalizeFirstLetter(concejo);
+      // }
     }
   })
 })

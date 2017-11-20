@@ -1,9 +1,9 @@
+<!--suppress CssUnknownTarget -->
 <ion-side-menus enable-menu-with-back-views="true">
 
   <style type="text/css">
     #left-menu > div > ion-item {border-style:none; cursor:pointer}
     #left-menu > div > ion-item > a {padding:12px}
-    /*noinspection CssUnknownTarget*/
     .menu-top-img {height:100px; display:block; background:url(img/bckgrnd6.jpg) !important}
     .menu-item {vertical-align:text-top}
     #menu-content {top:110px}
@@ -15,27 +15,25 @@
 
   <!-- Side Menu --------------------------------------------------------------------------------------------------- -->
 
-  <!-- Ids DE CATEGORIAS: [1] Poblaciones [2] Puertos [3] Montaña [5] Ríos [7] Playas -->
-
   <ion-side-menu side="left" expose-aside-when="large">
     <ion-header-bar class="bar-royal menu-top-img">
       <h1 class="title"></h1>
     </ion-header-bar>
     <ion-content id="menu-content" class="ion-content">
       <ion-list id="left-menu" class="pad-top-10">
-        <ion-item menu-close ui-sref="app.listado({categoria:'playas'})">
+        <ion-item menu-close ui-sref="app.listado({categoria:'playas', concejo: ''})">
           <i class="icon icon-left ion-ios-sunny menu-item font25"></i> Playas
         </ion-item>
-        <ion-item menu-close ui-sref="app.listado({categoria:'puertos'})">
+        <ion-item menu-close ui-sref="app.listado({categoria:'puertos', concejo: ''})">
           <i class="icon icon-left ion-android-boat menu-item font20"></i> Puertos
         </ion-item>
-        <ion-item menu-close ui-sref="app.listado({categoria:'poblaciones'})">
+        <ion-item menu-close ui-sref="app.listado({categoria:'poblaciones', concejo: ''})">
           <i class="icon icon-left ion-ios-home menu-item font25"></i> Poblaciones
         </ion-item>
-        <ion-item menu-close ui-sref="app.listado({categoria:'ríos'})">
+        <ion-item menu-close ui-sref="app.listado({categoria:'ríos', concejo: ''})">
           <img ng-src="img/icon-river.png" width="20" height="20" class="menu-item"> Ríos
         </ion-item>
-        <ion-item menu-close ui-sref="app.listado({categoria:'montaña'})">
+        <ion-item menu-close ui-sref="app.listado({categoria:'montaña', concejo: ''})">
           <i class="icon icon-left ion-android-image menu-item font25"></i> Montaña
         </ion-item>
         <ion-item menu-close ui-sref="app.buscar">

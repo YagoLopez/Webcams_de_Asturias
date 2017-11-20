@@ -15,16 +15,18 @@ aplicación desarrollada con el framework AngularJS.
 
 ## Características y funcionalidades
 
-- Arquitectura basada en el Patrón MVC y las que en su momento eran directrices de buenas prácticas
-para AngularJS. NOTA: Actualmente, las nuevas versiones de Angular no siguen el patrón MVC puesto que se basan en una
-arquitectura de componentes. Referencias:
+- Arquitectura basada en el Patrón MVC y (las que en su momento eran) directrices de buenas prácticas.
+NOTA: Actualmente, las nuevas versiones de Angular no siguen el patrón MVC puesto que se basan en una
+Arquitectura de Componentes. Referencias:
   - <a href="https://toddmotto.com/rethinking-angular-js-controllers/">Rethinking AngularJS Controllers</a>).
   - <a href="https://medium.com/opinionated-angularjs/angular-model-objects-with-javascript-classes-2e6a067c73bc">
-    Angular Model Objects with JavaScript Classes</a>).
+    AngularJS Model Objects with JavaScript Classes</a>).
+  - <a href="https://medium.com/opinionated-angularjs/advanced-routing-and-resolves-a2fcbf874a1c">
+    AngularJS Advanced Routing and Resolvers</a>).
 
 - Incluye un "Service Worker" que proporciona funcionalidad off-line
 
-- Incluye un fichero "manifest.json" para poder instalarse en el escritorio y emular el funcionamiento de las apps móviles
+- Incluye un fichero "manifest.json" que habilita la instalación en el escritorio y emular la instalación de las apps móviles
 
 - <div><a href="http://mobt.me/XfKL" target="_blank">Demo para desktop</a></div>
 
@@ -80,6 +82,8 @@ AngularJS framework.
 - The architecture of this app is based on the MVC Pattern and follows AngularJS Best Practices. References:
   - <a href="https://toddmotto.com/rethinking-angular-js-controllers/">Rethinking AngularJS Controllers</a>).
   - <a href="https://medium.com/opinionated-angularjs/angular-model-objects-with-javascript-classes-2e6a067c73bc">
-    Angular Model Objects with JavaScript Classes</a>).
+    AngularJS Model Objects with JavaScript Classes</a>).
+  - <a href="https://medium.com/opinionated-angularjs/advanced-routing-and-resolves-a2fcbf874a1c">
+    AngularJS Advanced Routing and Resolvers</a>).
 
 - It includes a service-worker to enable off-line capabilities

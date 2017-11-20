@@ -2,12 +2,21 @@
 // https://www.googleapis.com/fusiontables/v2/query?sql=SELECT%20*%20FROM%201gX5maFbqFyRziZiUYlpOBYhcC1v9lGkKqCXvZREF&key=AIzaSyBsdouSTimjrC2xHmbGgOt8VfbLBWc9Gps
 var wcaModule = angular.module('wca.services',[]);
 // ====================================================================================================================
-//todo: añadir getCamsById, getCamsByConcejoCategoria
 wcaModule.service('Cams', function ($http, $filter, Cam, STRINGS){
 
   this.FUSION_TABLE_ID = '1gX5maFbqFyRziZiUYlpOBYhcC1v9lGkKqCXvZREF';
 
+  //todo: convertir en propiedad privada de clase
   this.listAll = [];
+
+  this.getUrlFusionTablesQuery = function (sqlQueryString) {
+    return STRINGS.FUSION_TABLES_ENDPOINT + '?sql=' +(sqlQueryString)+ '&key=' + STRINGS.FUSION_TABLES_API_KEY +
+      '&callback=JSON_CALLBACK';
+  }
+
+  this.add = function (cam) {
+    this.listAll.push(cam);
+  }
 
   this.getAll = function () {
     return this.listAll;
@@ -39,7 +48,19 @@ wcaModule.service('Cams', function ($http, $filter, Cam, STRINGS){
     var url = STRINGS.FUSION_TABLES_ENDPOINT+ '?sql=' +(sqlQueryString)+ '&key=' + STRINGS.FUSION_TABLES_API_KEY +
       '&callback=JSON_CALLBACK';
     // console.log(url);
-    return $http.jsonp( encodeURI(url), {cache: true} );
+    // return $http.jsonp( encodeURI(url), {cache: true} );
+    return $http.get( encodeURI(url), {cache: true} );
+  }
+
+  this.loadAllCams2 = function (pathToFile) {
+    var httpRequest;
+    var sqlQueryString = 'SELECT Lugar, Concejo, Imagen ,Categoria, rowid, latitud, longitud FROM '+ this.FUSION_TABLE_ID;
+    if(pathToFile){
+      httpRequest = $http.get( pathToFile, {cache: true} ); // load local json file with data for testing purposes
+    } else {
+      httpRequest = $http.jsonp( encodeURI(this.getUrlFusionTablesQuery(sqlQueryString)), {cache: true} );
+    }
+    return httpRequest
   }
 
   this.filterBy = function(concejo, categoria){

@@ -24,7 +24,20 @@ app.config(function($stateProvider, $urlRouterProvider, $compileProvider, $ionic
 
 // Estados ------------------------------------------------------------------------------------------------------------
   $stateProvider.state('app', {
-    url: '/app', abstract: true, templateUrl: 'templates/menu.html'});
+    url: '/app', abstract: true, templateUrl: 'templates/menu.html', resolve:
+      {loadAllCamsResolver: function (Cams, Cam, Loader) {
+
+        Loader.show('Cargando...');
+        return Cams.loadAllCams2('data.json')
+          .then(function (response) {
+            response.data.rows.map(function(camData){
+              Cams.add( new Cam(camData) );
+            });
+            return Cams.getAll();
+          })
+
+      }}
+  });
 // -------------------------------------------------------------------------------------------------------------------
   $stateProvider.state('app.mapa', {
     url: '/mapa', cache: true, views: {'menuContent': {templateUrl: 'templates/detalle-mapa.html', controller: 'DetalleMapaCtrl'}}
