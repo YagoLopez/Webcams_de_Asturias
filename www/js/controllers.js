@@ -1,5 +1,6 @@
 //todo: user resolvers
 //todo: actualizar a ultima version de angularjs y comprobar si es de menor tamaño
+//todo: probar ionic native transitions
 //todo: por lo visto va a ser necesario usar un cam service
 // usar cam.service en lugar de cam.factory para que pueda funcionar como singleton
 // intentar que no sea asi, que solo sea un cam service
