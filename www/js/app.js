@@ -28,7 +28,7 @@ app.config(function($stateProvider, $urlRouterProvider, $compileProvider, $ionic
       {loadAllCamsResolver: function (Cams, Cam, Loader) {
 
         Loader.show('Cargando...');
-        return Cams.loadAllCams2('data.json')
+        return Cams.loadAllCams2()
           .then(function (response) {
             response.data.rows.map(function(camData){
               Cams.add( new Cam(camData) );

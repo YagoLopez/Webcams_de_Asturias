@@ -1,5 +1,4 @@
 <!--todo: busqueda con google places-->
-<!--todo: al hacer click en un select box, inicializar a vacio el otro-->
 <!--suppress HtmlUnknownTarget -->
 <ion-view view-title="Mapa Global">
   <style>
@@ -21,7 +20,9 @@
 
   <ion-content>
 
-    <div class="loader fade-in"><img class="rotate-center" src="img/clock.png"/></div>
+    <!--<div class="loader fade-in"><img class="rotate-center" src="img/clock.png"/></div>-->
+    <ion-spinner id="img-meteoblue-loader" icon='android' class='spinner-calm svg-loader'></ion-spinner>
+
     <!-- Mapa Global -->
     <div id="mapaglobal" data-tap-disabled="true"></div>
     <!-- /Mapa Global -->
@@ -36,8 +37,8 @@
           Categoría:
           <select ng-modal="test" id="selectCategoria" class="color-blue"
             ng-model="filtro.categoria" ng-change="categoriaEscogida(filtro.categoria)">
-              <option ng-repeat="categoria in categorias" value="{{ categoria[0] }}">
-                {{ urlCategoria_a_nombre( categoria[0] )}}
+              <option ng-repeat="categoria in categorias track by $index" value="{{ categoria }}">
+                {{ categoria }}
               </option>
           </select>
         </label>
@@ -46,8 +47,9 @@
       <div class="list item-input-inset">
         <label class="item item-input item-select label-content">
           Concejo:
-          <select id="selectConcejo" class="color-blue" ng-model="filtro.concejo" ng-change="concejoEscogido(filtro.concejo)">
-            <option ng-repeat="concejo in concejos">{{ concejo[0] }}</option>
+          <select id="selectConcejo" class="color-blue" ng-model="filtro.concejo"
+            ng-change="concejoEscogido(filtro.concejo)">
+              <option ng-repeat="concejo in concejos track by $index">{{ concejo }}</option>
           </select>
         </label>
       </div>

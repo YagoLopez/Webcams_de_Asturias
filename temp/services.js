@@ -2,92 +2,139 @@
 // https://www.googleapis.com/fusiontables/v2/query?sql=SELECT%20*%20FROM%201gX5maFbqFyRziZiUYlpOBYhcC1v9lGkKqCXvZREF&key=AIzaSyBsdouSTimjrC2xHmbGgOt8VfbLBWc9Gps
 var wcaModule = angular.module('wca.services',[]);
 // ====================================================================================================================
-//todo: añadir getCamsById, getCamsByConcejoCategoria
-wcaModule.service('Cams', function ($http, $filter){
+wcaModule.service('Cams', function ($http, $filter, Cam, STRINGS){
 
-  var API_ENDPOINT = 'https://www.googleapis.com/fusiontables/v2/query';
-  var API_KEY = 'AIzaSyBsdouSTimjrC2xHmbGgOt8VfbLBWc9Gps';
+  var listAll = [];
 
-  this.TABLE_ID = '1gX5maFbqFyRziZiUYlpOBYhcC1v9lGkKqCXvZREF';
-  this.all = [];
+  this.FUSION_TABLE_ID = '1gX5maFbqFyRziZiUYlpOBYhcC1v9lGkKqCXvZREF';
+
+  function getUrlFusionTableQuery(sqlQueryString) {
+    return STRINGS.FUSION_TABLES_ENDPOINT + '?sql=' +(sqlQueryString)+ '&key=' + STRINGS.FUSION_TABLES_API_KEY +
+      '&callback=JSON_CALLBACK';
+  }
+
+  this.add = function (cam) {
+    listAll.push(cam);
+  }
 
   this.getAll = function () {
-    var self = this;
-    var sqlQuery = 'SELECT Lugar, Concejo, Imagen ,Categoria, rowid, latitud, longitud FROM '+ this.TABLE_ID;
-    var url = API_ENDPOINT+ '?sql=' +(sqlQuery)+ '&key=' +API_KEY+ '&callback=JSON_CALLBACK';
-    return $http.jsonp( encodeURI(url), {cache: true} )
-      .success(function (response) {
-        self.all = response.rows;
-      })
-      .error(function (error) {
-        throw(error);
-      })
+    return listAll;
   }
 
   this.getRemoteData = function( sqlQueryString ) {
-    var url = API_ENDPOINT+ '?sql=' +(sqlQueryString)+ '&key=' +API_KEY+ '&callback=JSON_CALLBACK';
-    // console.log(sqlQueryString);
-    return $http.jsonp( encodeURI(url), {cache: true} );
+    return $http.jsonp( encodeURI(getUrlFusionTableQuery(sqlQueryString)), {cache: true} );
   }
 
-  // this.getRemoteDataOAuth = function( sqlQueryString ) {
-  //   var url = API_ENDPOINT+ '?sql=' +encodeURI(sqlQueryString);
-  //   return $http.get( encodeURI(url), {cache: true, headers: {'Authorization': auth_token}} );
-  // }
+  this.loadAllCams2 = function (pathToFile) {
+    var httpRequest;
+    var sqlQueryString = 'SELECT Lugar, Concejo, Imagen ,Categoria, rowid, latitud, longitud FROM '+ this.FUSION_TABLE_ID;
+    if(pathToFile){
+      httpRequest = $http.get( pathToFile, {cache: true} ); // load local json file with data for testing purposes
+    } else {
+      httpRequest = $http.jsonp( encodeURI(getUrlFusionTableQuery(sqlQueryString)), {cache: true} );
+    }
+    return httpRequest
+  }
 
-  this.getLocalData = function(path_file){
+  this.filterBy = function(concejo, categoria){
+
+    var result;
     var self = this;
-    return $http.get( path_file, {cache: true} )
-      .success(function (response) {
-        console.log(response.rows);
-        self.all = response.rows;
-      })
-      .error(function (error) {
-        throw(error);
-      })
-  }
 
-  function esSubcadena(idCategoria, urlCategoria) {
-    return (urlCategoria.indexOf('categoria=' + idCategoria) > -1);
-  }
-
-  this.filtrarPor = function(concejo, idCategoria){
-    var self = this;
-    var camsFiltradas;
-    return $filter('filter')(this.all, function(cam) {
-      if (concejo && idCategoria) {
-        // cam[1]: concejo, cam[3]: url categoria (no id de categoria, no confundir)
-        camsFiltradas = (cam[1].toLowerCase() == concejo.toLowerCase() && esSubcadena(idCategoria, cam[3]));
+    return $filter('filter')(listAll, function(cam) {
+      if (concejo && categoria) {
+        result = cam.concejo.toLowerCase() === concejo.toLowerCase() && categoria.toLowerCase() === cam.categoria.toLowerCase();
       } else {
         if (concejo){
-          camsFiltradas = cam[1].toLowerCase() == concejo.toLowerCase();
+          result = cam.concejo.toLowerCase() === concejo.toLowerCase();
         }
-        if (idCategoria){
-          camsFiltradas = esSubcadena(idCategoria, cam[3]);
+        if (categoria){
+          result = categoria.toLowerCase() === cam.categoria.toLowerCase();
         }
-        if (!concejo && !idCategoria){
-          camsFiltradas = self.all;
+        if (!concejo && !categoria){
+          result = listAll;
         }
       }
-      return camsFiltradas;
+      return result;
     })
   }
 
   this.getCamByRowid = function (rowid) {
-    return $filter('filter')(this.all, function(cam) {
-      return cam[4] === rowid;
+    return $filter('filter')(listAll, function(cam) {
+      return cam.id === rowid;
     })
   }
 
   this.buscarCams = function (searchString) {
-    return $filter('filter')(this.all, function(cam) {
-      var matchCondition1 = cam[0].toLowerCase().indexOf(searchString.toLowerCase()) > -1;
-      var matchCondition2 = cam[1].toLowerCase().indexOf(searchString.toLowerCase()) > -1;
+    return $filter('filter')(listAll, function(cam) {
+      var matchCondition1 = cam.lugar.toLowerCase().indexOf(searchString.toLowerCase()) > -1;
+      var matchCondition2 = cam.concejo.toLowerCase().indexOf(searchString.toLowerCase()) > -1;
       if(matchCondition1 || matchCondition2){
         return cam;
       }
     })
   }
+
+  this.getConcejos = function () {
+    var cam
+    var uniqueNames = [];
+    // var uniqueObj = [];
+    for (i = 0; i < listAll.length; i++) {
+      cam = listAll[i];
+      if (uniqueNames.indexOf(cam.concejo) === -1) {
+        // uniqueObj.push(listAll[i]);
+        uniqueNames.push(listAll[i].concejo);
+      }
+    }
+    return uniqueNames;
+  }
+});
+// ====================================================================================================================
+wcaModule.factory('Cam', function(Categorias){
+
+  /**
+   * @param arrayDatosCam {array}
+   * @constructor
+   */
+  function Cam(arrayDatosCam){
+    if(arrayDatosCam.length > 0) {
+      this.lugar = arrayDatosCam[0];
+      this.concejo = arrayDatosCam[1];
+      this.imagen = arrayDatosCam[2];
+      this.categoria = Categorias.url_a_nombre( arrayDatosCam[3] );
+      this.id = arrayDatosCam[4];
+      this.lat = arrayDatosCam[5];
+      this.lng = arrayDatosCam[6];
+    } else {
+      throw new Error('Datos de Cam insuficientes');
+    }
+  }
+
+  /**
+   * Static factory function needed to create Cam singleton object and share cam data between views
+   * @param obj {object}
+   */
+  Cam.create = function(obj){
+    if(!angular.equals({}, obj)) {
+      this.lugar = obj.lugar;
+      this.concejo = obj.concejo;
+      this.imagen = obj.imagen;
+      this.categoria = obj.categoria;
+      this.id = obj.id;
+      this.lat = obj.lat;
+      this.lng = obj.lng;
+      return Cam;
+    } else {
+      throw new Error('Datos de Cam insuficientes');
+    }
+  }
+
+  //todo: comprobar esta funcion
+  Cam.isDefined = function () {
+    return this.lat && this.lng;
+  }
+
+  return Cam;
 });
 // ====================================================================================================================
 wcaModule.service('Mapa', function(Cams){
@@ -101,7 +148,7 @@ wcaModule.service('Mapa', function(Cams){
 
   this.OVIEDO = {lat: 43.4667, lng: -5.8333}; // centro de mapa vista global
   this.RADIO_BUSQUEDA = 500; // radio de búsqueda de panorama StreetView a partir de coordenadas de cam (metros)
-  this.GOOGLE_EMBBED_API_KEY = 'AIzaSyC9mdwZ_BSwmP_aAaTvBGHZC7t_UPYso6k';
+  // this.GOOGLE_EMBBED_API_KEY = 'AIzaSyC9mdwZ_BSwmP_aAaTvBGHZC7t_UPYso6k';
 
   this.hallaLatLng = function (domElement, lugar, concejo, fn){
     request = {
@@ -115,12 +162,10 @@ wcaModule.service('Mapa', function(Cams){
         //console.log('Debugging resultados de busqueda street view results[0]', results[0]);
         fn(results[0].geometry.location);
       } else {
-        // Popup.show('Error', 'No se han podido hallar coordenadas para panorama StreetView');
-        // console.error('Mapa.hallaLatLng(): no se han podido hallar coordenadas');
-        throw('No se han podido hallar coordenadas para panorama StreetView');
+        throw new Error('No se han podido hallar coordenadas para panorama StreetView');
       }
     }
-  };
+  }
 
   this.creaStreetView = function(domElement, locationLatLng){
     return new google.maps.StreetViewPanorama( domElement, {
@@ -128,7 +173,7 @@ wcaModule.service('Mapa', function(Cams){
       position: locationLatLng,
       zoom: 1
     });
-  };
+  }
 
   this.creaStreetView2 = function(domElement, locationLatLng, heading){
     return new google.maps.StreetViewPanorama( domElement, {
@@ -136,7 +181,7 @@ wcaModule.service('Mapa', function(Cams){
       position: locationLatLng,
       zoom: 1
     });
-  };
+  }
 
   this.crear = function (domElement){
     mapa = new google.maps.Map(domElement,  {
@@ -145,16 +190,16 @@ wcaModule.service('Mapa', function(Cams){
       mapTypeId: google.maps.MapTypeId.HYBRID
     });
     return mapa;
-  };
+  }
 
   this.creaFusionTableLayer = function(filtroMarkers){
-    var layer = new google.maps.FusionTablesLayer({
+    layer = new google.maps.FusionTablesLayer({
       heatmap: { enabled: false },
-      query  : { select: 'col7', from: Cams.TABLE_ID, where: filtroMarkers },
+      query  : { select: 'col7', from: Cams.FUSION_TABLE_ID, where: filtroMarkers },
       options: { styleId: 6, templateId: 8 }
     });
     return layer;
-  };
+  }
 
   this.creaMarker = function(posicionLatLng, mapa, titulo){
     var marker = new google.maps.Marker({
@@ -165,14 +210,14 @@ wcaModule.service('Mapa', function(Cams){
       //icon: 'https://storage.googleapis.com/support-kms-prod/SNP_2752125_en_v0'
       //animation: google.maps.Animation.DROP
     });
-  };
+  }
 
   this.onMapLoaded = function(mapa, loader){
     google.maps.event.addListenerOnce(mapa, 'idle', function(){
       loader.hide();
     });
-  };
-});
+  }
+})
 // ====================================================================================================================
 wcaModule.service('Clima', function($http){
   this.urlCorsProxy = 'https://cors-anywhere.herokuapp.com/';
@@ -186,8 +231,8 @@ wcaModule.service('Popup', function($ionicPopup, Loader){
   this.show = function(titulo, msg) {
     Loader.hide();
     $ionicPopup.alert({ title: titulo, template: msg });
-  };
-});
+  }
+})
 // ====================================================================================================================
 wcaModule.service('Wikipedia', function($http){
 
@@ -195,63 +240,71 @@ wcaModule.service('Wikipedia', function($http){
     return $http.jsonp('https://es.wikipedia.org/w/api.php?'+
       'action=query&prop=extracts|info&exintro&titles='+termino+
       '&format=json&explaintext&redirects&inprop=url&indexpageids&callback=JSON_CALLBACK', {cache: true});
-  };
+  }
 
   this.infoRelacionada = function(termino){
     return $http.get('https://es.wikipedia.org/w/api.php?'+
       'action=query&list=search&srsearch='+termino+'&utf8=&format=json', {cache: true});
-  };
+  }
 
   /** Respuesta en formato xml */
   this.infoLatLngGeonames = function(lat, lng){
     return $http.get('http://api.geonames.org/findNearbyWikipedia?'+
       'lat='+lat+'&lng='+lng+'&username=yagolopez&lang=es', {cache: true});
-  };
+  }
 
   this.infoLatLngWikipedia = function(lat, lng, radioBusqueda){
     var url = 'https://es.wikipedia.org/w/api.php?action=query&list=geosearch&gsradius='+radioBusqueda+
       '&gscoord='+lat+'|'+lng+'&format=json&callback=JSON_CALLBACK';
     return $http.jsonp(url, {cache: true});
-  };
+  }
 
   this.infoAmpliada = function (termino){
     return $http.get('https://es.wikipedia.org/w/api.php?format=json&action=query&prop=revisions&titles='+termino+
       '&rvprop=content&rvsection=0&rvparse');
-  };
+  }
 
   /** Bueno para lugares concretos con descripción breve */
   this.openSearch = function(termino){
     return $http.jsonp('https://es.wikipedia.org/w/api.php?action=opensearch&'+
       'search='+termino+'&callback=JSON_CALLBACK', {cache: true});
-  };
-});
+  }
+})
 // ====================================================================================================================
-wcaModule.service('ItemsMeteo', function($filter){
+wcaModule.service('ItemsMeteo', function($http, $filter, ItemMeteo, STRINGS){
 
-  var meteoData = null;
+  var listAll = [];
+  var ITEMS_METEO_TABLE_ID = '1Y_vt2nTVFSYHpMuwe0u60bQzp4FlLtc33A8qd2_x';
 
-  this.FUSION_TABLE_ID = '1Y_vt2nTVFSYHpMuwe0u60bQzp4FlLtc33A8qd2_x';
+  this.loadData = function() {
 
-  this.getData = function(){
-    return meteoData;
-  };
+    var sqlQueryString = 'SELECT * FROM '+ ITEMS_METEO_TABLE_ID +' ORDER BY id ASC';
+    var url = STRINGS.FUSION_TABLES_ENDPOINT+ '?sql=' +(sqlQueryString)+ '&key=' + STRINGS.FUSION_TABLES_API_KEY +
+      '&callback=JSON_CALLBACK';
 
-  this.setData = function(data){
-    meteoData = data;
-  };
+    return $http.jsonp( encodeURI(url), {cache: true} )
+      .success(function (results) {
+        results.rows.map(function(itemData){
+          listAll.push( new ItemMeteo(itemData) );
+        })
+      })
+      .error(function (error) {
+        console.log(error);
+      });
+  }
 
   this.getItemsByCategoriaId = function(idCategoria) {
-    return $filter('filter')(meteoData, function (item) {
-      return (item[7] == idCategoria);
+    return $filter('filter')(listAll, function (item) {
+      return (idCategoria.toString() === item.idCategoria);
     }, true);
-  };
+  }
 
   this.getItemById = function(idItem) {
-    return $filter('filter')(meteoData, function (item) {
-      return (item[0] == idItem);
+    return $filter('filter')(listAll, function (item) {
+      return (idItem.toString() === item.id);
     }, true);
-  };
-});
+  }
+})
 // ====================================================================================================================
 wcaModule.factory('ItemMeteo', function(){
 
@@ -263,22 +316,22 @@ wcaModule.factory('ItemMeteo', function(){
   //var urlProxy = 'http://proxy2974.my-addr.org/myaddrproxy.php/';
 
   function ItemMeteo(arr){
-    if(arr){
-      this.id = arr[0][0];
-      this.info = arr[0][1];
-      this.categoria = arr[0][2];
-      this.nombre = arr[0][3];
-      this.espectro = arr[0][4];
-      this.fuente = arr[0][5];
-      this.urlNoProxy = arr[0][6];
-      this.url = urlProxy + (arr[0][6])+ '&callback=jsonpCallback';
-      this.idCategoria= arr[0][7];
-      this.tipoImagen= arr[0][8];
-      this.urlFuente = arr[0][9];
+    if(arr.length > 0){
+      this.id = arr[0];
+      this.info = arr[1];
+      this.categoria = arr[2];
+      this.nombre = arr[3];
+      this.espectro = arr[4];
+      this.fuente = arr[5];
+      this.urlNoProxy = arr[6];
+      this.url = urlProxy + (arr[6])+ '&callback=jsonpCallback';
+      this.idCategoria= arr[7];
+      this.tipoImagen= arr[8];
+      this.urlFuente = arr[9];
     }
   }
   return ItemMeteo;
-});
+})
 // ====================================================================================================================
 wcaModule.service('Loader', function($ionicLoading){
 
@@ -290,43 +343,28 @@ wcaModule.service('Loader', function($ionicLoading){
       contenidoLoader = texto;
     }
     $ionicLoading.show({template: contenidoLoader, noBackdrop: true, hideOnStateChange: true, duration: 60*1000 });
-  };
+  }
 
   this.showWithBackdrop = function(texto){
     if(texto){
       contenidoLoader = texto;
     }
     $ionicLoading.show({template: contenidoLoader, noBackdrop: false, hideOnStateChange: true, duration: 60*1000});
-  };
+  }
 
   this.hide = function(){
     $ionicLoading.hide();
-  };
-});
+  }
+})
 // ====================================================================================================================
 wcaModule.factory('$exceptionHandler', function($injector) {
   return function(exception, cause) {
     var Popup = $injector.get('Popup');
     console.error(exception);
-    Popup.show('Error', 'Data: '+exception.data+'<br>Status: '+exception.status+'<br>Text: '+exception.statusText +
-      '<br>Message: '+exception.message);
-  };
-});
-// ====================================================================================================================
-wcaModule.factory('Cam', function(Categorias){
-  function Cam(arrayDatosCam){
-    if(arrayDatosCam) {
-      this.lugar = arrayDatosCam[0][0];
-      this.concejo = arrayDatosCam[0][1];
-      this.imagen = arrayDatosCam[0][2];
-      this.categoria = Categorias.url_a_nombre( arrayDatosCam[0][3] );
-      this.id = arrayDatosCam[0][4];
-      this.lat = arrayDatosCam[0][5];
-      this.lng = arrayDatosCam[0][6];
-    }
+    Popup.show( 'Error', 'Data: '+(exception || exception.data)+ '<br>Status: '+(exception.status)+
+      '<br>Text: '+exception.statusText+ '<br>Message: '+(exception.message) );
   }
-  return Cam;
-});
+})
 // ====================================================================================================================
 wcaModule.service('Categorias', function(){
   var nombreCategoria;
@@ -343,11 +381,17 @@ wcaModule.service('Categorias', function(){
 
   this.idCategoria_a_nombre = function(idCategoria){
     return this.url_a_nombre(urlBaseCategoria+idCategoria);
-  };
-});
+  }
+
+  this.capitalizeFirstLetter = function(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+  }
+})
 // ====================================================================================================================
 wcaModule.constant('STRINGS', {
+  FUSION_TABLES_API_KEY: 'AIzaSyBsdouSTimjrC2xHmbGgOt8VfbLBWc9Gps',
+  FUSION_TABLES_ENDPOINT: 'https://www.googleapis.com/fusiontables/v2/query',
   ERROR: 'No se han podido obtener datos remotos. Posibles causas: ' +
     '(1) Sin conexión de datos. (2) Fallo de servidor remoto',
   RECARGANDO_IMG: 'Recargando imagen...'
-});
+})

@@ -4,61 +4,38 @@ var wcaModule = angular.module('wca.services',[]);
 // ====================================================================================================================
 wcaModule.service('Cams', function ($http, $filter, Cam, STRINGS){
 
+  // var sqlQueryConcejos = 'SELECT Concejo FROM '+Cams.FUSION_TABLE_ID+' GROUP BY Concejo';
+  // var sqlQueryCategorias = 'SELECT Categoria FROM '+Cams.FUSION_TABLE_ID+' GROUP BY Categoria';
+
+  var listAllCams = [];
+
   this.FUSION_TABLE_ID = '1gX5maFbqFyRziZiUYlpOBYhcC1v9lGkKqCXvZREF';
 
-  //todo: convertir en propiedad privada de clase
-  this.listAll = [];
-
-  this.getUrlFusionTablesQuery = function (sqlQueryString) {
+  function getUrlFusionTableQuery(sqlQueryString) {
     return STRINGS.FUSION_TABLES_ENDPOINT + '?sql=' +(sqlQueryString)+ '&key=' + STRINGS.FUSION_TABLES_API_KEY +
       '&callback=JSON_CALLBACK';
   }
 
   this.add = function (cam) {
-    this.listAll.push(cam);
+    listAllCams.push(cam);
   }
 
   this.getAll = function () {
-    return this.listAll;
-  }
-
-  this.loadData = function (pathToFile) {
-    var httpRequest;
-    var self = this;
-    var sqlQuery = 'SELECT Lugar, Concejo, Imagen ,Categoria, rowid, latitud, longitud FROM '+ this.FUSION_TABLE_ID;
-    var url = STRINGS.FUSION_TABLES_ENDPOINT + '?sql=' +(sqlQuery)+ '&key=' + STRINGS.FUSION_TABLES_API_KEY +
-      '&callback=JSON_CALLBACK';
-    if(pathToFile){
-      httpRequest = $http.get( pathToFile, {cache: true} ); // load local json file with data for testing purposes
-    } else {
-      httpRequest = $http.jsonp( encodeURI(url), {cache: true} );
-    }
-    return httpRequest
-      .success(function (response) {
-        response.rows.map(function(datosCam){
-          self.listAll.push( new Cam(datosCam) );
-        })
-      })
-      .error(function (error) {
-        throw(error);
-      })
+    return listAllCams;
   }
 
   this.getRemoteData = function( sqlQueryString ) {
-    var url = STRINGS.FUSION_TABLES_ENDPOINT+ '?sql=' +(sqlQueryString)+ '&key=' + STRINGS.FUSION_TABLES_API_KEY +
-      '&callback=JSON_CALLBACK';
-    // console.log(url);
-    // return $http.jsonp( encodeURI(url), {cache: true} );
-    return $http.get( encodeURI(url), {cache: true} );
+    return $http.jsonp( encodeURI(getUrlFusionTableQuery(sqlQueryString)), {cache: true} );
   }
 
+  //todo: renombrar
   this.loadAllCams2 = function (pathToFile) {
     var httpRequest;
     var sqlQueryString = 'SELECT Lugar, Concejo, Imagen ,Categoria, rowid, latitud, longitud FROM '+ this.FUSION_TABLE_ID;
     if(pathToFile){
       httpRequest = $http.get( pathToFile, {cache: true} ); // load local json file with data for testing purposes
     } else {
-      httpRequest = $http.jsonp( encodeURI(this.getUrlFusionTablesQuery(sqlQueryString)), {cache: true} );
+      httpRequest = $http.jsonp( encodeURI(getUrlFusionTableQuery(sqlQueryString)), {cache: true} );
     }
     return httpRequest
   }
@@ -68,7 +45,7 @@ wcaModule.service('Cams', function ($http, $filter, Cam, STRINGS){
     var result;
     var self = this;
 
-    return $filter('filter')(this.listAll, function(cam) {
+    return $filter('filter')(listAllCams, function(cam) {
       if (concejo && categoria) {
         result = cam.concejo.toLowerCase() === concejo.toLowerCase() && categoria.toLowerCase() === cam.categoria.toLowerCase();
       } else {
@@ -79,7 +56,7 @@ wcaModule.service('Cams', function ($http, $filter, Cam, STRINGS){
           result = categoria.toLowerCase() === cam.categoria.toLowerCase();
         }
         if (!concejo && !categoria){
-          result = self.listAll;
+          result = listAllCams;
         }
       }
       return result;
@@ -87,13 +64,13 @@ wcaModule.service('Cams', function ($http, $filter, Cam, STRINGS){
   }
 
   this.getCamByRowid = function (rowid) {
-    return $filter('filter')(this.listAll, function(cam) {
+    return $filter('filter')(listAllCams, function(cam) {
       return cam.id === rowid;
     })
   }
 
   this.buscarCams = function (searchString) {
-    return $filter('filter')(this.listAll, function(cam) {
+    return $filter('filter')(listAllCams, function(cam) {
       var matchCondition1 = cam.lugar.toLowerCase().indexOf(searchString.toLowerCase()) > -1;
       var matchCondition2 = cam.concejo.toLowerCase().indexOf(searchString.toLowerCase()) > -1;
       if(matchCondition1 || matchCondition2){
@@ -101,6 +78,19 @@ wcaModule.service('Cams', function ($http, $filter, Cam, STRINGS){
       }
     })
   }
+
+  this.getUniqueValuesFromField = function (key) {
+    var cam, uniqueValuesList = [];
+    for (i = 0; i < listAllCams.length; i++) {
+      cam = listAllCams[i];
+      if (uniqueValuesList.indexOf( cam[key]) === -1 ) {
+        uniqueValuesList.push( cam[key] );
+      }
+    }
+    return uniqueValuesList;
+  }
+
+
 });
 // ====================================================================================================================
 wcaModule.factory('Cam', function(Categorias){
@@ -115,6 +105,7 @@ wcaModule.factory('Cam', function(Categorias){
       this.concejo = arrayDatosCam[1];
       this.imagen = arrayDatosCam[2];
       this.categoria = Categorias.url_a_nombre( arrayDatosCam[3] );
+      this.urlCategoria = arrayDatosCam[3];
       this.id = arrayDatosCam[4];
       this.lat = arrayDatosCam[5];
       this.lng = arrayDatosCam[6];
@@ -133,6 +124,7 @@ wcaModule.factory('Cam', function(Categorias){
       this.concejo = obj.concejo;
       this.imagen = obj.imagen;
       this.categoria = obj.categoria;
+      this.urlCategoria = obj.urlCategoria;
       this.id = obj.id;
       this.lat = obj.lat;
       this.lng = obj.lng;
@@ -286,22 +278,19 @@ wcaModule.service('Wikipedia', function($http){
 // ====================================================================================================================
 wcaModule.service('ItemsMeteo', function($http, $filter, ItemMeteo, STRINGS){
 
-  var FUSION_TABLE_ID = '1Y_vt2nTVFSYHpMuwe0u60bQzp4FlLtc33A8qd2_x';
-
-  this.all = [];
+  var listAll = [];
+  var ITEMS_METEO_TABLE_ID = '1Y_vt2nTVFSYHpMuwe0u60bQzp4FlLtc33A8qd2_x';
 
   this.loadData = function() {
 
-    var self = this;
-    var sqlQueryString = 'SELECT * FROM '+FUSION_TABLE_ID+' ORDER BY id ASC';
+    var sqlQueryString = 'SELECT * FROM '+ ITEMS_METEO_TABLE_ID +' ORDER BY id ASC';
     var url = STRINGS.FUSION_TABLES_ENDPOINT+ '?sql=' +(sqlQueryString)+ '&key=' + STRINGS.FUSION_TABLES_API_KEY +
       '&callback=JSON_CALLBACK';
 
     return $http.jsonp( encodeURI(url), {cache: true} )
       .success(function (results) {
-        // console.log(results);
         results.rows.map(function(itemData){
-          self.all.push( new ItemMeteo(itemData) );
+          listAll.push( new ItemMeteo(itemData) );
         })
       })
       .error(function (error) {
@@ -310,13 +299,13 @@ wcaModule.service('ItemsMeteo', function($http, $filter, ItemMeteo, STRINGS){
   }
 
   this.getItemsByCategoriaId = function(idCategoria) {
-    return $filter('filter')(this.all, function (item) {
+    return $filter('filter')(listAll, function (item) {
       return (idCategoria.toString() === item.idCategoria);
     }, true);
   }
 
   this.getItemById = function(idItem) {
-    return $filter('filter')(this.all, function (item) {
+    return $filter('filter')(listAll, function (item) {
       return (idItem.toString() === item.id);
     }, true);
   }
@@ -335,7 +324,7 @@ wcaModule.factory('ItemMeteo', function(){
     if(arr.length > 0){
       this.id = arr[0];
       this.info = arr[1];
-      this.categoria = arr[2]; // No confundir this.categoria con this.idCategoria ni this.id
+      this.categoria = arr[2];
       this.nombre = arr[3];
       this.espectro = arr[4];
       this.fuente = arr[5];
@@ -351,7 +340,7 @@ wcaModule.factory('ItemMeteo', function(){
 // ====================================================================================================================
 wcaModule.service('Loader', function($ionicLoading){
 
-  var spinnerIco = "<ion-spinner icon='lines' class='spinner-calm'></ion-spinner><br/>";
+  // var spinnerIco = "<ion-spinner icon='lines' class='spinner-calm'></ion-spinner><br/>";
   var contenidoLoader = "Cargando datos...";
 
   this.show = function(texto){
@@ -383,10 +372,11 @@ wcaModule.factory('$exceptionHandler', function($injector) {
 })
 // ====================================================================================================================
 wcaModule.service('Categorias', function(){
-  var nombreCategoria;
+
   var urlBaseCategoria = 'http://webcamsdeasturias.com/interior.php?categoria=';
 
   this.url_a_nombre = function(urlCategoria){
+    var nombreCategoria;
     (urlCategoria === urlBaseCategoria+'1') && (nombreCategoria = 'Poblaciones');
     (urlCategoria === urlBaseCategoria+'2') &&  (nombreCategoria = 'Puertos');
     (urlCategoria === urlBaseCategoria+'3') &&  (nombreCategoria = 'Montaña');
@@ -395,9 +385,19 @@ wcaModule.service('Categorias', function(){
     return nombreCategoria;
   };
 
-  this.idCategoria_a_nombre = function(idCategoria){
-    return this.url_a_nombre(urlBaseCategoria+idCategoria);
+  this.nombre_a_url = function(nombreCategoria){
+    var result;
+    (nombreCategoria.toLowerCase() === 'poblaciones') && (result = urlBaseCategoria + '1');
+    (nombreCategoria .toLowerCase() === 'puertos') && (result = urlBaseCategoria + '2');
+    (nombreCategoria .toLowerCase() === 'montaña') && (result = urlBaseCategoria + '3');
+    (nombreCategoria .toLowerCase() === 'ríos') && (result = urlBaseCategoria + '5');
+    (nombreCategoria .toLowerCase() === 'playas') && (result = urlBaseCategoria + '7');
+    return result;
   }
+
+  // this.idCategoria_a_nombre = function(idCategoria){
+  //   return this.url_a_nombre(urlBaseCategoria+idCategoria);
+  // }
 
   this.capitalizeFirstLetter = function(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);

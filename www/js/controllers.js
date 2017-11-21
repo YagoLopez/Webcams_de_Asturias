@@ -1,15 +1,11 @@
-//todo: user resolvers
+//todo: incluir enlaces a concejo y categoria en la pagina detalle.html
 //todo: actualizar a ultima version de angularjs y comprobar si es de menor tamaño
 //todo: probar ionic native transitions
 //todo: loader material design (estatico, no hace falta que sea animado)
-//todo: por lo visto va a ser necesario usar un cam service
-// usar cam.service en lugar de cam.factory para que pueda funcionar como singleton
-// intentar que no sea asi, que solo sea un cam service
-//todo: probar a crear un CamService además de la factoria Cam para usarlo como singleton (en todo caso revisar)
+//todo: usar una base de datos json como lokijs, etc.
 //todo: incorporar clausula finally() en peticiones $http
-//todo: incluir enlaces a concejo y categoria en la pagina detalle.html
+//todo: convertir la actual arquitectura a componentes
 //todo: cancelar carga de imagen en vista detalle.html como en gif-player.html
-//todo: futuras refactorizaciones -> usar una base de datos ligera para json
 //todo: usar google maps embed api. consultar link en carpeta temp
 //todo: calcular altura en imagenes en vista mosaico.html
 //todo: info de mareas
@@ -48,17 +44,13 @@ wcaModule.controller('ListadoCtrl', function ($scope, $stateParams, Cams, Loader
 })
 // ====================================================================================================================
 wcaModule.controller('DetalleCtrl', function($scope, $stateParams, $ionicModal, Clima,
-   Popup, Wikipedia, $ionicPopover, Cams, Cam, Loader, $location, STRINGS){
+  Popup, Wikipedia, $ionicPopover, Cams, Cam, Loader, $location, STRINGS){
 
   // Init --------------------------------------------------------------------------------------------------------------
 
   var loaderContent = 'Cargando...' +
     '<div id="cancelLinkContainer"><button><a id="cancelLink" href="#/">Cancelar</a></div></button>';
   Loader.show(loaderContent);
-  if(Cams.getAll().length < 1 || !$stateParams.rowid){
-    $location.path('#/'); // si no hay lista de cams redirigir a root
-    return;
-  }
   $scope.cam = Cam.create( Cams.getCamByRowid($stateParams.rowid)[0] );
 
   // Clima Data --------------------------------------------------------------------------------------------------------
@@ -104,7 +96,6 @@ wcaModule.controller('DetalleCtrl', function($scope, $stateParams, $ionicModal, 
     })
     .error(function(status){
       $scope.infoConcejo = STRINGS.ERROR;
-      // throw new Error('Wikipedia.info()' + status);
       console.error(status);
     })
   };
@@ -164,37 +155,12 @@ wcaModule.controller('DetalleMapaCtrl', function($scope, Mapa, Cam, $location){
 wcaModule.controller('MapaGlobalCtrl', function($scope, Mapa, Cams, Popup, Categorias){
 
   var layer, mapa, sqlQueryConcejos, sqlQueryCategorias, zoomLevel = 7;
-  sqlQueryConcejos = 'SELECT Concejo FROM '+Cams.FUSION_TABLE_ID+' GROUP BY Concejo';
-  sqlQueryCategorias = 'SELECT Categoria FROM '+Cams.FUSION_TABLE_ID+' GROUP BY Categoria';
   $scope.filtro = {categoria: '', concejo: ''};
-
-  //todo: refactorizar y trasladar a servicio Cams
-  Cams.getRemoteData(sqlQueryConcejos).success(function(data){
-    $scope.concejos = data.rows;
-  }).error(function(status){
-    console.error(status);
-  });
-
-  Cams.getRemoteData(sqlQueryCategorias).success(function(data){
-    $scope.categorias = data.rows;
-  }).error(function(status){
-    console.error(status);
-  });
-
-  //todo: sustituir remote queries por filtros sobre datos de $rootScope.cams
-  // console.log('rootScope.cams', $rootScope.cams);
-  // $scope.categorias = $filter('filter')($rootScope.cams, function(cam) {
-  //   console.log('filtering categorias', cam[3]);
-  // });
-
-  $scope.urlCategoria_a_nombre = function(url){
-    return Categorias.url_a_nombre(url);
-  };
+  $scope.concejos = Cams.getUniqueValuesFromField('concejo');
+  $scope.categorias = Cams.getUniqueValuesFromField('categoria');
 
   $scope.categoriaEscogida = function(categoria){
-    var filtroCategoria;
-    categoria = categoria.replace(/(\r\n|\n|\r)/gm,'').trim();
-    filtroCategoria = 'Categoria=\'' + categoria + '\'';
+    var filtroCategoria = 'Categoria=\'' + Categorias.nombre_a_url(categoria) + '\'';
     layer.setMap(null); // borra layer antigua si la hubiera
     layer = Mapa.creaFusionTableLayer(filtroCategoria);
     layer.setMap(mapa);
@@ -204,9 +170,7 @@ wcaModule.controller('MapaGlobalCtrl', function($scope, Mapa, Cams, Popup, Categ
   };
 
   $scope.concejoEscogido = function(concejo){
-    var filtroConcejo;
-    concejo = concejo.replace(/(\r\n|\n|\r)/gm,'').trim(); // Elimina retornos de carro y espacios en blanco al principio y al final
-    filtroConcejo = 'Concejo=\'' + concejo + '\''; // el concejo tiene que ir entre comillas
+    var filtroConcejo = 'Concejo=\'' + concejo + '\''; // el concejo tiene que ir entre comillas en el filtro
     layer.setMap(null); // borra layer anterior si la hubiera
     layer = Mapa.creaFusionTableLayer(filtroConcejo);
     layer.setMap(mapa);
@@ -462,7 +426,6 @@ wcaModule.controller('MeteoCtrl', function ($scope, Popup, ItemsMeteo, Loader){
     return ItemsMeteo.getItemsByCategoriaId(idCategoria);
   }
 
-  //todo: renombrar loadData() a loadData() y ItemsMeteo.all a ItemsMeteo.loadData()
   ItemsMeteo.loadData()
     .success(function (result) {
       $scope.loading = false;
