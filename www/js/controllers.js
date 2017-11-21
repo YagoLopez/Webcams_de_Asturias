@@ -1,15 +1,13 @@
 //todo: incluir enlaces a concejo y categoria en la pagina detalle.html
 //todo: actualizar a ultima version de angularjs y comprobar si es de menor tamaño
 //todo: probar ionic native transitions
-//todo: loader material design (estatico, no hace falta que sea animado)
 //todo: usar una base de datos json como lokijs, etc.
 //todo: incorporar clausula finally() en peticiones $http
 //todo: convertir la actual arquitectura a componentes
-//todo: cancelar carga de imagen en vista detalle.html como en gif-player.html
+//todo: cancelar carga de imagen en vista detalle.html como en gif-player.html (usar img[onLoad])
 //todo: usar google maps embed api. consultar link en carpeta temp
 //todo: calcular altura en imagenes en vista mosaico.html
 //todo: info de mareas
-//todo: en vista "detalle.html", "buscar.html", etc. usar resolve para comprobar si hay cams y en caso contrario, cargarlas usando el servicio Cams
 //todo: tests para carga de datos de fusion table en listadoCtrl
 //todo: mejorar orientacion imagenes street view (heading)
 //TODO: hacer perfilado en chrome mobile, ver como se comporta la memoria y el procesador
