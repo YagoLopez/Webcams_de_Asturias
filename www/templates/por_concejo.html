@@ -1,4 +1,3 @@
-<!--suppress HtmlUnknownTarget -->
 <ion-view view-title="Concejos">
   <style type="text/css">
     #concejosMasCams, #camsConcejo {width: 100%; height: 100%; margin: auto; display: block}
@@ -9,21 +8,21 @@
     <ion-nav-back-button class="button-icon ion-android-arrow-back"></ion-nav-back-button>
   </ion-nav-bar>
 
-  <ion-content class="fade-in-long">
+  <ion-content>
 
     <div class="item item-divider">Concejos con más cámaras</div>
-    <div id="concejo-loader1" class="loader2 fade-in"><img class="rotate-center" src="img/clock.png"/></div>
     <iframe id="concejosMasCams" ng-src="{{ ::urlConcejosMasCams  }}" scrolling="no" marginwidth="0"
-      marginheight="0" frameborder="0" allowfullscreen iframe-onload="removeDomElementById('concejo-loader1')">
+      marginheight="0" frameborder="0" allowfullscreen iframe-onload="setConcejosConMasCamsLoaded()">
     </iframe>
 
     <div class="item item-divider">Nº webcams por concejo</div>
-    <div id="concejo-loader2" class="loader2"><img src="img/clock.png"/></div>
     <iframe id="camsConcejo" ng-src="{{ ::urlCamsConcejo }}" scrolling="no" marginwidth="0"
-      marginheight="0" frameborder="0" allowfullscreen iframe-onload="removeDomElementById('concejo-loader2')">
+      marginheight="0" frameborder="0" allowfullscreen iframe-onload="setCamsPorConcejoLoaded()">
     </iframe>
 
-    <div class="padding pie-diagrama">Toque en sectores del diagrama para más información</div>
+    <div class="padding pie-diagrama txt-info">
+      <i class="ion-information-circled"></i> Toque en sectores del diagrama para más información
+    </div>
 
   </ion-content>
 </ion-view>

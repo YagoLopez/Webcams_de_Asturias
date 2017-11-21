@@ -129,14 +129,9 @@ wcaModule.controller('DetalleCtrl', function($scope, $stateParams, $ionicModal, 
 
 })
 // ====================================================================================================================
-wcaModule.controller('DetalleMapaCtrl', function($scope, Mapa, Cam, $location){
+wcaModule.controller('DetalleMapaCtrl', function($scope, Mapa, Cam){
 
   var mapa, layer, posicion;
-
-  // if(!Cam.isDefined()) {
-  //   $location.path( "#/" );
-  //   return;
-  // }
 
   $scope.cam = Cam;
 
@@ -449,9 +444,23 @@ wcaModule.controller('MeteoDetalleCtrl', function($scope, $stateParams, ItemsMet
   // });
 })
 // ====================================================================================================================
-wcaModule.controller('PorCategoriaCtrl', function($scope, $window, $sce){
+wcaModule.controller('PorCategoriaCtrl', function($scope, $window, $sce, Loader){
 
   var urlGraficoSectores, urlGraficoBarras;
+  var graficoSectoresLoaded = false;
+  var graficoBarrasLoaded = false;
+
+  Loader.showWithBackdrop('Cargando...');
+
+  $scope.setGraficoSectoresLoaded = function () {
+    graficoSectoresLoaded = true;
+    graficoBarrasLoaded && Loader.hide();
+  }
+
+  $scope.setGraficoBarrasLoaded = function () {
+    graficoBarrasLoaded = true;
+    graficoSectoresLoaded && Loader.hide();
+  }
 
   //Calculo de dimensiones de ventana al redimensionar
   $scope.calculateDimensions = function(gesture) {
@@ -493,9 +502,11 @@ wcaModule.controller('PorCategoriaCtrl', function($scope, $window, $sce){
 
   })
 // ====================================================================================================================
-wcaModule.controller('PorConcejoCtrl', function($scope, $window, $sce){
+wcaModule.controller('PorConcejoCtrl', function($scope, $window, $sce, Loader){
 
   var urlConcejosMasCams, urlCamsConcejo, iframeHeigth = 550;
+  var concejosConMasCamsLoaded = false;
+  var camsPorConcejoLoaded = false;
 
   $scope.calculateDimensions = function(gesture) {
     if($window.innerWidth > 765){
@@ -511,6 +522,17 @@ wcaModule.controller('PorConcejoCtrl', function($scope, $window, $sce){
   });
   $scope.calculateDimensions();
 
+  Loader.showWithBackdrop('Cargando...');
+
+  $scope.setConcejosConMasCamsLoaded = function () {
+    concejosConMasCamsLoaded = true;
+    camsPorConcejoLoaded && Loader.hide();
+  }
+
+  $scope.setCamsPorConcejoLoaded = function () {
+    camsPorConcejoLoaded = true;
+    concejosConMasCamsLoaded && Loader.hide();
+  }
   urlConcejosMasCams = 'https://www.google.com/fusiontables/embedviz?containerId=googft-gviz-canvas&' +
     'q=select+col3%3E%3E0%2C+count()+from+13UohUM23CESgCHVm8LZdhEQOieWzd96oImsgc1qH+group+by+col3%3E%3E0+order+by+count()+desc+limit+10' +
     '&viz=GVIZ&t=COLUMN&uiversion=2&gco_forceIFrame=false&gco_hasLabelsColumn=true&' +

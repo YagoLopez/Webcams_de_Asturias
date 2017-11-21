@@ -25,19 +25,20 @@ app.config(function($stateProvider, $urlRouterProvider, $compileProvider, $ionic
 // Estados ------------------------------------------------------------------------------------------------------------
   $stateProvider.state('app', {
     url: '/app', abstract: true, templateUrl: 'templates/menu.html', resolve:
-      {loadAllCamsResolver: function (Cams, Cam, Loader) {
-
-        Loader.showWithBackdrop('<img src="res/36x36.png"/><div>Webcams de Asturias</div>');
-        // Loader.show('Webcams de Asturias');
-        return Cams.loadAllCams2('data.json')
-          .then(function (response) {
-            response.data.rows.map(function(camData){
-              Cams.add( new Cam(camData) );
-            });
-            return Cams.getAll();
-          })
-
-      }}
+      {
+        loadAllCamsResolver: function (Cams, Cam, Loader) {
+          var loaderContent = '<div><img src="/www/res/36x36.png" class="splash-screen-icon"/>Webcams de Asturias</div>';
+          Loader.showWithBackdrop(loaderContent);
+          // Loader.show('Webcams de Asturias');
+          return Cams.loadAllCams2()
+            .then(function (response) {
+              response.data.rows.map(function(camData){
+                Cams.add( new Cam(camData) );
+              });
+              return Cams.getAll();
+            })
+        }
+      }
   });
 // -------------------------------------------------------------------------------------------------------------------
   $stateProvider.state('app.mapa', {
