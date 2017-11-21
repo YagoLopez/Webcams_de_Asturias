@@ -133,10 +133,10 @@ wcaModule.controller('DetalleMapaCtrl', function($scope, Mapa, Cam, $location){
 
   var mapa, layer, posicion;
 
-  if(!Cam.isDefined()) {
-    $location.path( "#/" );
-    return;
-  }
+  // if(!Cam.isDefined()) {
+  //   $location.path( "#/" );
+  //   return;
+  // }
 
   $scope.cam = Cam;
 
@@ -219,16 +219,16 @@ wcaModule.controller('MeteoblueCtrl', function ($scope, $location, Cam) {
 wcaModule.controller('StreetViewCtrl', function($scope, Mapa, Popup, $ionicSideMenuDelegate, Cam, $location){
 
   var coords, div, loader, streetViewService;
-  if(!Cam.isDefined()) {
-    $location.path( "#/" );
-    return;
-  }
+  // if(!Cam.isDefined()) {
+  //   $location.path( "#/" );
+  //   return;
+  // }
 
   $scope.cam = Cam;
 
   coords = {lat: Cam.lat, lng: Cam.lng};
   div = document.getElementById('street-view');
-  loader = document.querySelector('.loader');
+  loader = document.querySelector('.svg-loader');
   streetViewService = new google.maps.StreetViewService();
 
   $ionicSideMenuDelegate.canDragContent(false);

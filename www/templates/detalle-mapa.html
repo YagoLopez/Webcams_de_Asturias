@@ -1,5 +1,4 @@
 <!--TODO: poner búsqueda en google places de sitios de interes cercanos a la cámara-->
-<!--suppress HtmlUnknownTarget -->
 <ion-view view-title="Mapa">
   <style>
     #mapa {width: 100%; height: 70%}
@@ -13,7 +12,8 @@
   </ion-nav-bar>
 
   <ion-content>
-    <div class="loader fade-in"><img class="rotate-center" src="img/clock.png"/></div>
+    <!--<div class="loader fade-in"><img class="rotate-center" src="img/clock.png"/></div>-->
+    <ion-spinner icon='android' class='spinner-calm svg-loader'></ion-spinner>
     <div id="mapa" data-tap-disabled="true"></div>
     <div class="card">
       <div class="item item-text-wrap">{{ ::cam.lugar }}</div>

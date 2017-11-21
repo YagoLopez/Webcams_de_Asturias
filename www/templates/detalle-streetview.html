@@ -8,7 +8,8 @@
     <ion-nav-back-button class="button-icon ion-android-arrow-back"></ion-nav-back-button>
   </ion-nav-bar>
   <ion-content>
-    <div class="loader fade-in"><img class="rotate-center" src="img/clock.png"/></div>
+    <!--<div class="loader fade-in"><img class="rotate-center" src="img/clock.png"/></div>-->
+    <ion-spinner icon='android' class='spinner-calm svg-loader'></ion-spinner>
     <div id="street-view" data-tap-disabled="true"></div>
     <div class="card">
       <div class="item item-text-wrap">{{ ::cam.lugar }}</div>
