@@ -28,8 +28,7 @@ wcaModule.service('Cams', function ($http, $filter, Cam, STRINGS){
     return $http.jsonp( encodeURI(getUrlFusionTableQuery(sqlQueryString)), {cache: true} );
   }
 
-  //todo: renombrar
-  this.loadAllCams2 = function (pathToFile) {
+  this.loadRemoteData = function (pathToFile) {
     var httpRequest;
     var sqlQueryString = 'SELECT Lugar, Concejo, Imagen ,Categoria, rowid, latitud, longitud FROM '+ this.FUSION_TABLE_ID;
     if(pathToFile){
@@ -134,7 +133,6 @@ wcaModule.factory('Cam', function(Categorias){
     }
   }
 
-  //todo: comprobar esta funcion
   Cam.isDefined = function () {
     return this.lat && this.lng;
   }

@@ -1,10 +1,8 @@
-//todo: incluir enlaces a concejo y categoria en la pagina detalle.html
-//todo: actualizar a ultima version de angularjs y comprobar si es de menor tamaño
+//todo: posicionar bien en el centro ion-loader android
+//todo: convertir la actual arquitectura a componentes
 //todo: probar ionic native transitions
 //todo: usar una base de datos json como lokijs, etc.
 //todo: incorporar clausula finally() en peticiones $http
-//todo: convertir la actual arquitectura a componentes
-//todo: cancelar carga de imagen en vista detalle.html como en gif-player.html (usar img[onLoad])
 //todo: usar google maps embed api. consultar link en carpeta temp
 //todo: calcular altura en imagenes en vista mosaico.html
 //todo: info de mareas
@@ -34,9 +32,9 @@ wcaModule.controller('ListadoCtrl', function ($scope, $stateParams, Cams, Loader
       if (categoria && $scope.cams.length > 0) {
         $scope.titulo = Categorias.capitalizeFirstLetter(categoria);
       }
-      // if (concejo) {
-      //   $scope.titulo = Categorias.capitalizeFirstLetter(concejo);
-      // }
+      if (concejo) {
+        $scope.titulo = Categorias.capitalizeFirstLetter(concejo);
+      }
     }
   })
 })
@@ -129,16 +127,20 @@ wcaModule.controller('DetalleCtrl', function($scope, $stateParams, $ionicModal, 
 
 })
 // ====================================================================================================================
-wcaModule.controller('DetalleMapaCtrl', function($scope, Mapa, Cam){
+wcaModule.controller('DetalleMapaCtrl', function($scope, Mapa, Cams, Cam, $stateParams){
 
   var mapa, layer, posicion;
 
-  $scope.cam = Cam;
+  if (!Cam.isDefined()) {
+    $scope.cam = Cams.getCamByRowid($stateParams.camId)[0];
+  } else {
+    $scope.cam = Cam;
+  }
 
   $scope.$on('$ionicView.afterEnter', function() {
     mapa = Mapa.crear(document.getElementById('mapa'));
     layer = Mapa.creaFusionTableLayer().setMap(mapa);
-    posicion = {lat: Cam.lat, lng: Cam.lng};
+    posicion = {lat: $scope.cam.lat, lng: $scope.cam.lng};
     Mapa.creaMarker(posicion, mapa);
     mapa.setCenter(posicion);
     mapa.setZoom(18);
@@ -211,32 +213,32 @@ wcaModule.controller('MeteoblueCtrl', function ($scope, $location, Cam) {
   })
 })
 // ====================================================================================================================
-wcaModule.controller('StreetViewCtrl', function($scope, Mapa, Popup, $ionicSideMenuDelegate, Cam, $location){
+wcaModule.controller('StreetViewCtrl', function($scope, Mapa, Popup, $ionicSideMenuDelegate, Cams, Cam, $stateParams){
 
-  var coords, div, loader, streetViewService;
-  // if(!Cam.isDefined()) {
-  //   $location.path( "#/" );
-  //   return;
-  // }
+  var camCoords, div, ionSpinner, streetViewService;
 
-  $scope.cam = Cam;
 
-  coords = {lat: Cam.lat, lng: Cam.lng};
-  div = document.getElementById('street-view');
-  loader = document.querySelector('.svg-loader');
+  if (!Cam.isDefined()) {
+    $scope.cam = Cams.getCamByRowid($stateParams.camId)[0];
+  } else {
+    $scope.cam = Cam;
+  }
+
+  camCoords = {lat: $scope.cam.lat, lng: $scope.cam.lng};
   streetViewService = new google.maps.StreetViewService();
 
-  $ionicSideMenuDelegate.canDragContent(false);
-
   $scope.$on('$ionicView.afterEnter', function() {
-    streetViewService.getPanoramaByLocation(coords, Mapa.RADIO_BUSQUEDA, function (data, status) {
+    div = document.getElementById('street-view');
+    ionSpinner = document.querySelector('ion-spinner');
+    $ionicSideMenuDelegate.canDragContent(false);
+    streetViewService.getPanoramaByLocation(camCoords, Mapa.RADIO_BUSQUEDA, function (data, status) {
       if (status == google.maps.StreetViewStatus.OK) {
         //todo: revisar
         Mapa.creaStreetView2(div, data.location.latLng);
       } else {
         Popup.show('Aviso', 'Panorama StreetView no disponible en esta ubicación<br>' +status);
       }
-      loader.parentNode.removeChild(loader);
+      ionSpinner && ionSpinner.parentNode.removeChild(ionSpinner);
     })
   });
 

@@ -40,9 +40,12 @@
         </a>
       </div>
       <div class="item item-body fnt-small">
-        <i class="icon ion-checkmark-circled i-item"></i> Lugar: {{ ::cam.lugar }}<br>
-        <i class="icon ion-checkmark-circled i-item"></i> Concejo: {{ ::cam.concejo }}<br>
-        <i class="icon ion-checkmark-circled i-item"></i> Categoría: {{ ::cam.categoria }}
+        <i class="icon ion-checkmark-circled i-item"></i>&nbsp;
+          Lugar: {{ ::cam.lugar }}<br>
+        <i class="icon ion-checkmark-circled i-item"></i>&nbsp;
+          Concejo: <a href="#/app/listado?concejo={{::cam.concejo}}">{{ ::cam.concejo }}</a><br>
+        <i class="icon ion-checkmark-circled i-item"></i>&nbsp;
+          Categoria: <a href="#/app/listado?categoria={{::cam.categoria}}">{{ ::cam.categoria }}</a><br>
       </div>
       <!-- Botones -->
       <div class="centered">

@@ -26,11 +26,10 @@ app.config(function($stateProvider, $urlRouterProvider, $compileProvider, $ionic
   $stateProvider.state('app', {
     url: '/app', abstract: true, templateUrl: 'templates/menu.html', resolve:
       {
-        loadAllCamsResolver: function (Cams, Cam, Loader) {
+        loadRemoteDataResolver: function (Cams, Cam, Loader) {
           var loaderContent = '<div><img src="res/36x36.png" class="splash-screen-icon"/>Webcams de Asturias</div>';
           Loader.showWithBackdrop(loaderContent);
-          // Loader.show('Webcams de Asturias');
-          return Cams.loadAllCams2()
+          return Cams.loadRemoteData()
             .then(function (response) {
               response.data.rows.map(function(camData){
                 Cams.add( new Cam(camData) );
@@ -42,14 +41,15 @@ app.config(function($stateProvider, $urlRouterProvider, $compileProvider, $ionic
   });
 // -------------------------------------------------------------------------------------------------------------------
   $stateProvider.state('app.mapa', {
-    url: '/mapa', cache: true, views: {'menuContent': {templateUrl: 'templates/detalle-mapa.html', controller: 'DetalleMapaCtrl'}}
+    url: '/mapa/:camId', cache: true, views: {
+      'menuContent': {templateUrl: 'templates/detalle-mapa.html', controller: 'DetalleMapaCtrl'}}
   });
 // -------------------------------------------------------------------------------------------------------------------
   $stateProvider.state('app.mapaglobal', {url: '/mapaglobal', cache: true,
     views: {'menuContent': {templateUrl: 'templates/mapa-global.html', controller: 'MapaGlobalCtrl'}}
   });
 // -------------------------------------------------------------------------------------------------------------------
-  $stateProvider.state('app.streetview', {url: '/streetview', cache: true,
+  $stateProvider.state('app.streetview', {url: '/streetview/:camId', cache: true,
     views: {'menuContent': {templateUrl: 'templates/detalle-streetview.html', controller: 'StreetViewCtrl'}}
   });
 // -------------------------------------------------------------------------------------------------------------------
@@ -114,13 +114,13 @@ app.config(function($stateProvider, $urlRouterProvider, $compileProvider, $ionic
 // Inicializaciones ===================================================================================================
 app.run(function($ionicPlatform, $rootScope, $window, Cams) {
 
-  // halla anchura de pantalla para dibujar o no menu-button en ion-nav-bar (en 'menu.html')
+  // Halla anchura de pantalla para dibujar o no menu-button en ion-nav-bar (en 'menu.html')
   ionic.on('resize', function(){
     $rootScope.$apply(function(){
       $rootScope.screenWidth = $window.innerWidth;
       // console.log('resize event', $rootScope.screenWidth);
     })
-  });
+  })
 
   $rootScope.screenWidth = $window.innerWidth;
 
@@ -131,7 +131,7 @@ app.run(function($ionicPlatform, $rootScope, $window, Cams) {
     }catch(error){
       console.warn(error);
     }
-  };
+  }
 
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
@@ -145,6 +145,21 @@ app.run(function($ionicPlatform, $rootScope, $window, Cams) {
     //   StatusBar.styleDefault();
     //   ionic.Platform.isFullScreen = true;
     // }
-  });
+  })
+
+  // Detect Internet Explorer
+  var ms_ie = false;
+  var ua = window.navigator.userAgent;
+  var old_ie = ua.indexOf('MSIE ');
+  var new_ie = ua.indexOf('Trident/');
+
+  if ((old_ie > -1) || (new_ie > -1)) {
+    ms_ie = true;
+  }
+
+  if ( ms_ie ) {
+    //IE specific code goes here
+    alert("IE Browser detected. Not completely supported");
+  }
 });
 

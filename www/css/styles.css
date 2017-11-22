@@ -6,7 +6,7 @@
   background: transparent url('../img/loading-img5-small.png') no-repeat center center  }
 /*.img-loading {background: transparent url('../img/loading-img5-small.png') no-repeat center center}*/
 .splash-screen-icon {vertical-align: middle; padding-right: 10px}
-.svg-loader {position: absolute; top: 230px; left: 49%}
+.svg-loader {position: absolute; top: 230px; left: 48.5%}
 .centered {text-align: center}
 .loader {position: absolute; text-align: center; width: 100%; top: 30%; z-index: -1}
 .loader2 {position: relative; top: 25%; left: 45%; z-index: -1}
@@ -18,8 +18,8 @@
 .verde {color: #28a54c}
 .bg-blue {background: cornflowerblue}
 .txt-info {color: cornflowerblue; text-align: center; padding-left: 10px; padding-right: 10px}
-.cam-counter-left {background: #11c1f3; display: block; width: 25px; text-align: center; padding: 1px;
-  margin: auto 4px; border-radius: 3px}
+.cam-counter-left {background: #11c1f3; display: block; text-align: center; padding-left: 5px; margin: auto 4px;
+  border-radius: 3px; padding-right: 5px}
 #cancelLinkContainer {padding-top: 20px}
 #cancelLink {text-decoration: none; color: grey}
 /*.sombra-inferior {box-shadow: -1px 1px 5px #888888}*/
