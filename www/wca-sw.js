@@ -58,6 +58,7 @@ var URIS_TO_CACHE = [
   'img/red-marker.png',
   'img/spain2.png',
   'img/loader/6.gif',
+  'res/36x36.png',
 
   // FONTS
   'lib/fonts/ionicons.svg?v=2.0.1',

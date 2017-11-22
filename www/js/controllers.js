@@ -127,7 +127,7 @@ wcaModule.controller('DetalleCtrl', function($scope, $stateParams, $ionicModal, 
 
 })
 // ====================================================================================================================
-wcaModule.controller('DetalleMapaCtrl', function($scope, Mapa, Cams, Cam, $stateParams){
+wcaModule.controller('DetalleMapaCtrl', function($scope, Mapa, Cams, Cam, $stateParams, $ionicSideMenuDelegate){
 
   var mapa, layer, posicion;
 
@@ -140,6 +140,7 @@ wcaModule.controller('DetalleMapaCtrl', function($scope, Mapa, Cams, Cam, $state
   $scope.$on('$ionicView.afterEnter', function() {
     mapa = Mapa.crear(document.getElementById('mapa'));
     layer = Mapa.creaFusionTableLayer().setMap(mapa);
+    $ionicSideMenuDelegate.canDragContent(false);
     posicion = {lat: $scope.cam.lat, lng: $scope.cam.lng};
     Mapa.creaMarker(posicion, mapa);
     mapa.setCenter(posicion);

@@ -159,7 +159,7 @@ app.run(function($ionicPlatform, $rootScope, $window, Cams) {
 
   if ( ms_ie ) {
     //IE specific code goes here
-    alert("IE Browser detected. Not completely supported");
+    alert("IE Browser detected. Not completely supported. This could have unexpected effects");
   }
 });
 
