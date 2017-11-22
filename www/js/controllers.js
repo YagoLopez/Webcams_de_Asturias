@@ -129,7 +129,7 @@ wcaModule.controller('DetalleCtrl', function($scope, $stateParams, $ionicModal, 
 // ====================================================================================================================
 wcaModule.controller('DetalleMapaCtrl', function($scope, Mapa, Cams, Cam, $stateParams, $ionicSideMenuDelegate){
 
-  var mapa, layer, posicion;
+  var mapa, mapaLayer, posicion;
 
   if (!Cam.isDefined()) {
     $scope.cam = Cams.getCamByRowid($stateParams.camId)[0];
@@ -139,7 +139,7 @@ wcaModule.controller('DetalleMapaCtrl', function($scope, Mapa, Cams, Cam, $state
 
   $scope.$on('$ionicView.afterEnter', function() {
     mapa = Mapa.crear(document.getElementById('mapa'));
-    layer = Mapa.creaFusionTableLayer().setMap(mapa);
+    mapaLayer = Mapa.creaFusionTableLayer().setMap(mapa);
     $ionicSideMenuDelegate.canDragContent(false);
     posicion = {lat: $scope.cam.lat, lng: $scope.cam.lng};
     Mapa.creaMarker(posicion, mapa);
