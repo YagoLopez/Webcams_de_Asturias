@@ -223,10 +223,15 @@ wcaModule.service('Mapa', function(Cams){
 })
 // ====================================================================================================================
 wcaModule.service('Clima', function($http){
-  this.urlCorsProxy = 'https://cors-anywhere.herokuapp.com/';
+  var lat, lng;
+  var urlCorsProxy = 'https://cors-anywhere.herokuapp.com/';
+  var urlNoCorsProxy = 'http://api.openweathermap.org/data/2.5/weather?lat='+lat+'&lon='+lng+
+    '&appid=b7514b5aaf43d023c350462fd57a1791&lang=es&units=metric';
+  var urlGoogleAppsScriptProxy = 'https://script.google.com/macros/s/AKfycbyX6ViYZ2IuHEurQXJ' +
+    '--t_UOqRTyQZ9yGeSeLcbiM7ZSVcTujTw/exec?url=';
+
   this.getData = function(lat, lng){
-    return $http.get( this.urlCorsProxy + 'http://api.openweathermap.org/data/2.5/weather?lat='+lat+'&lon='+lng+
-      '&appid=b7514b5aaf43d023c350462fd57a1791&lang=es&units=metric', {cache:true} );
+    return $http.get( urlNoCorsProxy, {cache:true} );
   };
 });
 // ====================================================================================================================
