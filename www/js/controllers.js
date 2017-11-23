@@ -1,3 +1,4 @@
+//todo: aumentar el tamaño de fallback img
 //todo: posicionar bien en el centro ion-loader android
 //todo: convertir la actual arquitectura a componentes
 //todo: probar ionic native transitions
@@ -47,7 +48,7 @@ wcaModule.controller('DetalleCtrl', function($scope, $stateParams, $ionicModal, 
   var loaderContent = 'Cargando...' +
     '<div id="cancelLinkContainer"><button><a id="cancelLink" href="#/">Cancelar</a></div></button>';
   Loader.show(loaderContent);
-  $scope.cam = Cam.create( Cams.getCamByRowid($stateParams.rowid)[0] );
+  $scope.cam = Cam.create( Cams.getCamByRowid($stateParams.rowIdCam)[0] );
 
   // Clima Data --------------------------------------------------------------------------------------------------------
 
@@ -139,12 +140,13 @@ wcaModule.controller('DetalleMapaCtrl', function($scope, Mapa, Cams, Cam, $state
 
   $scope.$on('$ionicView.afterEnter', function() {
     mapa = Mapa.crear(document.getElementById('mapa'));
-    mapaLayer = Mapa.creaFusionTableLayer().setMap(mapa);
-    $ionicSideMenuDelegate.canDragContent(false);
+    mapaLayer = Mapa.creaFusionTableLayer();
+    mapaLayer.setMap(mapa);
     posicion = {lat: $scope.cam.lat, lng: $scope.cam.lng};
     Mapa.creaMarker(posicion, mapa);
     mapa.setCenter(posicion);
     mapa.setZoom(18);
+    $ionicSideMenuDelegate.canDragContent(false);
   });
 })
 // ====================================================================================================================
@@ -606,9 +608,12 @@ wcaModule.controller('BuscarCamsCtrl', function($scope, $filter, Cams, $location
   }
 
   $scope.resetBusqueda = function($event){
-    $scope.showImages = false;
-    $scope.camsEncontradas = [];
-    inputBuscaCam.value = '';
+    if (inputBuscaCam.value) {
+      $scope.showImages = false;
+      $scope.camsEncontradas = [];
+      inputBuscaCam.value = '';
+      inputBuscaCam.focus();
+    }
   }
 
   $scope.toggleShowImages = function () {

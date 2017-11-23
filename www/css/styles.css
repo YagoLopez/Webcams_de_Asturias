@@ -4,8 +4,7 @@
   .card {width: 75%; margin: 32px auto}}
 .img-cam {height: 64px !important; width: 72px !important; top: 6px !important;
   background: transparent url('../img/loading-img5-small.png') no-repeat center center  }
-/*.img-loading {background: transparent url('../img/loading-img5-small.png') no-repeat center center}*/
-.splash-screen-icon {vertical-align: middle; padding-right: 10px}
+.splash-screen-icon {vertical-align: middle; margin-right: 10px; background: url('../res/36x36.png') center center}
 .svg-loader {position: absolute; top: 230px; left: 48.5%}
 .centered {text-align: center}
 .loader {position: absolute; text-align: center; width: 100%; top: 30%; z-index: -1}

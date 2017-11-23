@@ -15,8 +15,10 @@ sugerencia puede ser formulada en la sección de "Issues".
   - Business Layer diseñada en base a Programación Orientada a Objetos
   - Uso del Patrón MVC para separación de responsabilidades
   - Uso de "Route Resolvers"
-  - Uso de una base de datos JSON ligera para mantener el estado en memoria (LokiDB, LowDB, etc). En este caso las
-    consultas han sido creadas ad hoc debido a su simplicidad.
+  - Uso de una base de datos JSON ligera para mantener el estado en memoria (LokiDB, LowDB, etc). Debido a su simplicidad,
+  en este caso el estado de la aplicaión consiste en una colección de objetos JSON en memoria con las consultas diseñadas
+  ad hoc sin ninguna otra capa de abstracción intermedia. La persistencia en servidor se lleva a cabo mediante una
+  base de datos NoSQL de Google Fusion Tables.
   - Uso de un "Service Worker" para ofrecer funcionalidad off-line (PWA)
 
   NOTA: las nuevas versiones de Angular utilizan una arquitectura basada en componentes en lugar del Patrón MVC.
@@ -75,15 +77,15 @@ agrupación de cámaras web por concejo, categoría, distribución geográfica, 
 <b>Progressive Web App (PWA) showing real time images from webcams located at the Principality of Asturias</b>
 
 - This is an experimental project to put in practice several patterns, best practices and technologies using the
-AngularJS framework. It has been created as reference and model for the author or anyone interested in this topic.
+AngularJS framework. It has been created as reference for the author or anyone interested in this topic.
 Feel free to send any comment or sugerence in the Issues section.
 
 - Architecture and features:
     - Business Layer design based on Object Oriented Programming
     - Use of MVC Pattern for separation of concerns
     - Use of Route Resolvers
-    - Use of a lightweight in memory JSON database to keep state in memory (LokiJS, LowDB, etc)
-    - Use of Service Worker to offer off-line capabilities (PWA)
+    - Use of a designed ad hoc and lightweight JSON in memory database.
+    - Use of Service Worker to enable off-line capabilities (PWA)
 
     NOTE: Modern versions of Angular use a component-based architecture instead of MVC Pattern.
 

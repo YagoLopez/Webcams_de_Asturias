@@ -72,6 +72,9 @@ var URIS_TO_CACHE = [
 
 ];
 
+// Url containing this strings will be bypassed by the service worker. They wont be served through the sw.
+var WHITE_LIST = ['wewebcams', 'openweather', 'meteociel', 'meteogram'];
+
 /** --------------------------------------------------------------------------------------------------------------------
  * Service worker registration
  */
@@ -115,6 +118,22 @@ self.addEventListener('activate', function (event) {
   console.info('sw: service worker installed and activated');
 });
 /** --------------------------------------------------------------------------------------------------------------------
+/**
+ * Helper fn. If a url is in WHITE_LIST then avoid loading it through the service worker
+ * Avoids CORS problems
+
+ * @param url
+ * @returns {boolean}
+ */
+var isInWhiteList = function (url) {
+  var i;
+  for (i = 0; i < WHITE_LIST.length; i++) {
+    if (url.indexOf(WHITE_LIST[i]) > -1) {
+      return true;
+    }
+  }
+}
+/** --------------------------------------------------------------------------------------------------------------------
  * 'Fetch' event. Browser tries to get resources making a request
  *
  * @param {string} Event name ('fetch')
@@ -126,12 +145,11 @@ self.addEventListener('fetch', function(fetchEvent) {
   var url = request.url;
   // todo: Refactorizar las peticiones a imagenes para evitar ser controladas por el service worker
   // todo: averiguar si se esta offline
-  // If a request to a image is made in offline mode, return fallback image and exit
 
-  if(url.indexOf('wewebcams') > -1 || url.indexOf('openweather') > -1 || url.indexOf('meteociel') > -1) {
-    // fetchEvent.respondWith(caches.match('img/offline-img.png'));
+  if (isInWhiteList(url)) {
     return;
   }
+
   fetchEvent.respondWith(
     // test if the request is cached
     caches.match(request)

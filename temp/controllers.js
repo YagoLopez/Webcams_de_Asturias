@@ -51,7 +51,7 @@ wcaModule.controller('DetalleCtrl', function($scope, $stateParams, $ionicModal, 
   var loaderContent = 'Cargando...' +
     '<div id="cancelLinkContainer"><button><a id="cancelLink" href="#/">Cancelar</a></div></button>';
   Loader.show(loaderContent);
-  $scope.cam = Cam.create( Cams.getCamByRowid($stateParams.rowid)[0] );
+  $scope.cam = Cam.create( Cams.getCamByRowid($stateParams.rowidCam)[0] );
 
   // Clima Data --------------------------------------------------------------------------------------------------------
 

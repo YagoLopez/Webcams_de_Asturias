@@ -40,21 +40,25 @@ app.config(function($stateProvider, $urlRouterProvider, $compileProvider, $ionic
       }
   });
 // -------------------------------------------------------------------------------------------------------------------
+  $stateProvider.state('app.listado', {url: '/listado?concejo&categoria', cache: true,
+    views: {'menuContent': {templateUrl: 'templates/listado.html', controller: 'ListadoCtrl'}}
+  });
+// -------------------------------------------------------------------------------------------------------------------
+  $stateProvider.state('app.detalle', {url: '/detalle/:rowIdCam', cache: true,
+    views: {'menuContent': {templateUrl: 'templates/detalle.html', controller: 'DetalleCtrl'}}
+  });
+// -------------------------------------------------------------------------------------------------------------------
   $stateProvider.state('app.mapa', {
     url: '/mapa/:camId', cache: true, views: {
       'menuContent': {templateUrl: 'templates/detalle-mapa.html', controller: 'DetalleMapaCtrl'}}
-  });
-// -------------------------------------------------------------------------------------------------------------------
-  $stateProvider.state('app.mapaglobal', {url: '/mapaglobal', cache: true,
-    views: {'menuContent': {templateUrl: 'templates/mapa-global.html', controller: 'MapaGlobalCtrl'}}
   });
 // -------------------------------------------------------------------------------------------------------------------
   $stateProvider.state('app.streetview', {url: '/streetview/:camId', cache: true,
     views: {'menuContent': {templateUrl: 'templates/detalle-streetview.html', controller: 'StreetViewCtrl'}}
   });
 // -------------------------------------------------------------------------------------------------------------------
-  $stateProvider.state('app.detalle', {url: '/detalle/:rowid', cache: true,
-    views: {'menuContent': {templateUrl: 'templates/detalle.html', controller: 'DetalleCtrl'}}
+  $stateProvider.state('app.mapaglobal', {url: '/mapaglobal', cache: true,
+    views: {'menuContent': {templateUrl: 'templates/mapa-global.html', controller: 'MapaGlobalCtrl'}}
   });
 // -------------------------------------------------------------------------------------------------------------------
   $stateProvider.state('app.gif-player', {url: '/gif-player/:id_item_meteo', cache: false,
@@ -83,10 +87,6 @@ app.config(function($stateProvider, $urlRouterProvider, $compileProvider, $ionic
 // -------------------------------------------------------------------------------------------------------------------
   $stateProvider.state('app.por_concejo', {url: '/por_concejo', cache: true,
     views: {'menuContent': {templateUrl: 'templates/por_concejo.html', controller: 'PorConcejoCtrl'}}
-  });
-// -------------------------------------------------------------------------------------------------------------------
-  $stateProvider.state('app.listado', {url: '/listado?concejo&categoria', cache: true,
-    views: {'menuContent': {templateUrl: 'templates/listado.html', controller: 'ListadoCtrl'}}
   });
 // -------------------------------------------------------------------------------------------------------------------
   $stateProvider.state('app.mosaico', {url: '/mosaico?concejo&categoria', cache: true,
@@ -159,7 +159,7 @@ app.run(function($ionicPlatform, $rootScope, $window, Cams) {
 
   if ( ms_ie ) {
     //IE specific code goes here
-    alert("IE Browser detected. Not completely supported. This could have unexpected effects");
+    alert("IE Browser detected. Not completely supported");
   }
 });
 
