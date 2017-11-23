@@ -1,3 +1,4 @@
+//todo: revisar datos de openweathermap y su carga a traves de proxy. puede que funione usando jsonp
 //todo: posicionar bien en el centro ion-loader android
 //todo: convertir la actual arquitectura a componentes
 //todo: usar una base de datos json como lokijs, etc.

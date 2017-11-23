@@ -78,12 +78,12 @@ wcaModule.service('Cams', function ($http, $filter, Cam, STRINGS){
     })
   }
 
-  this.getUniqueValuesFromField = function (key) {
+  this.getUniqueValuesFromField = function (objKey) {
     var cam, uniqueValuesList = [];
     for (i = 0; i < listAllCams.length; i++) {
       cam = listAllCams[i];
-      if (uniqueValuesList.indexOf( cam[key]) === -1 ) {
-        uniqueValuesList.push( cam[key] );
+      if (uniqueValuesList.indexOf( cam[objKey]) === -1 ) {
+        uniqueValuesList.push( cam[objKey] );
       }
     }
     return uniqueValuesList;
@@ -215,9 +215,9 @@ wcaModule.service('Mapa', function(Cams){
     });
   }
 
-  this.onMapLoaded = function(mapa, loader){
+  this.onMapLoaded = function(mapa, ionLoader){
     google.maps.event.addListenerOnce(mapa, 'idle', function(){
-      loader.hide();
+      ionLoader.hide();
     });
   }
 })
@@ -366,12 +366,15 @@ wcaModule.service('Loader', function($ionicLoading){
 })
 // ====================================================================================================================
 wcaModule.factory('$exceptionHandler', function($injector) {
-  return function(exception, cause) {
+  //noinspection UnnecessaryLocalVariableJS
+  var catchAndThrowException = function (exception, cause) {
     var Popup = $injector.get('Popup');
+    var popupContent = 'Data: '+(exception || exception.data)+ '<br>Status: '+(exception.status)+
+      '<br>Text: '+exception.statusText+ '<br>Message: '+(exception.message);
     console.error(exception);
-    Popup.show( 'Error', 'Data: '+(exception || exception.data)+ '<br>Status: '+(exception.status)+
-      '<br>Text: '+exception.statusText+ '<br>Message: '+(exception.message) );
+    Popup.show( 'Error', popupContent );
   }
+  return catchAndThrowException;
 })
 // ====================================================================================================================
 wcaModule.service('Categorias', function(){
