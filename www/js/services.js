@@ -231,7 +231,7 @@ wcaModule.service('Clima', function($http){
     '--t_UOqRTyQZ9yGeSeLcbiM7ZSVcTujTw/exec?url=';
 
   this.getData = function(lat, lng){
-    return $http.get( urlNoCorsProxy, {cache:true} );
+    return $http.get( urlGoogleAppsScriptProxy + urlNoCorsProxy, {cache:true} );
   };
 });
 // ====================================================================================================================

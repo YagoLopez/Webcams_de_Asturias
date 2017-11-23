@@ -1,18 +1,18 @@
-//todo: aumentar el tamaño de fallback img
 //todo: posicionar bien en el centro ion-loader android
 //todo: convertir la actual arquitectura a componentes
-//todo: probar ionic native transitions
 //todo: usar una base de datos json como lokijs, etc.
-//todo: incorporar clausula finally() en peticiones $http
-//todo: usar google maps embed api. consultar link en carpeta temp
+//todo: usar clausula finally() en peticiones $http para simplificar tratamiento errores
+//todo: posibilidad de usar google maps embed api. consultar link en carpeta temp
 //todo: calcular altura en imagenes en vista mosaico.html
-//todo: info de mareas
+//todo: new feature: info de mareas
 //todo: tests para carga de datos de fusion table en listadoCtrl
 //todo: mejorar orientacion imagenes street view (heading)
 //TODO: hacer perfilado en chrome mobile, ver como se comporta la memoria y el procesador
 //TODO: hacer zoom en mapa global cuando se escoja filtro por concejo. Usar coordenadas lat lng
-//TODO: añadir favoritos
-//todo: geolocalizacion y busqueda webcams cercanas
+//TODO: new feature: añadir favoritos
+//todo: new feature: geolocalizacion y busqueda webcams cercanas
+//todo: probar ionic native transitions
+//todo: new feature: flickr api images
 
 var wcaModule = angular.module('wca.controllers',[]);
 // ====================================================================================================================
