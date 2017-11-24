@@ -72,7 +72,7 @@ var URIS_TO_CACHE = [
 
 ];
 
-// Url containing this strings will be bypassed by the service worker. They wont be served through the sw.
+// Urls containing this strings will be bypassed by the service worker. They wont be served through the sw.
 var WHITE_LIST = ['wewebcams', 'openweather', 'meteociel', 'meteogram'];
 
 /** --------------------------------------------------------------------------------------------------------------------

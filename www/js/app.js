@@ -27,8 +27,12 @@ app.config(function($stateProvider, $urlRouterProvider, $compileProvider, $ionic
     url: '/app', abstract: true, templateUrl: 'templates/menu.html', resolve:
       {
         loadRemoteDataResolver: function (Cams, Cam, Loader) {
-          var loaderContent = '<i class="ion-image"></i> Webcams de Asturias';
+
+          var loaderContent = '<img src="res/36x36.png" width="36" height="36" class="splash-screen-icon"/>' +
+            'Webcams de Asturias';
+          // var loaderContent = '<i class="ion-image"></i> Webcams de Asturias';
           // var loaderContent = 'Webcams de Asturias';
+
           Loader.showWithBackdrop(loaderContent);
           return Cams.loadRemoteData()
             .then(function (response) {
