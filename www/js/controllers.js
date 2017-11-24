@@ -188,11 +188,13 @@ wcaModule.controller('MapaGlobalCtrl', function($scope, Mapa, Cams, Popup, Categ
     $scope.filtro.concejo = '';
   };
 
-  // Activa manualmente el ciclo de deteccion de cambios de angular (digest cycle) para evaluar javascript externo
-  // Cuando $scope.$apply da error, usar $scope.$applyAsync() o $scope.$evalAsync()
+  // Activa manualmente el ciclo de deteccion de cambios de AngularJS (digest cycle) para evaluar javascript externo
+  // (En este caso Google Maps). Nota: cuando $scope.$apply() da error, usar $scope.$applyAsync() o $scope.$evalAsync()
   $scope.$evalAsync(function () {
+    if (!angular.equals({}, Mapa)) {
       mapa = Mapa.crear(document.getElementById('mapaglobal'));
       $scope.mostrarTodas(); // por defecto
+    }
   });
 })
 // ====================================================================================================================
