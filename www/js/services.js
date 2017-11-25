@@ -223,16 +223,22 @@ wcaModule.service('Mapa', function(Cams){
 })
 // ====================================================================================================================
 wcaModule.service('Clima', function($http){
-  var lat, lng;
-  var urlCorsProxy = 'https://cors-anywhere.herokuapp.com/';
-  var urlNoCorsProxy = 'http://api.openweathermap.org/data/2.5/weather?lat='+lat+'&lon='+lng+
-    '&appid=b7514b5aaf43d023c350462fd57a1791&lang=es&units=metric';
-  var urlGoogleAppsScriptProxy = 'https://script.google.com/macros/s/AKfycbyX6ViYZ2IuHEurQXJ' +
-    '--t_UOqRTyQZ9yGeSeLcbiM7ZSVcTujTw/exec?url=';
+
+  var createUrlOpenWheatherMap = function (lat, lng) {
+    return 'http://api.openweathermap.org/data/2.5/weather?lat='+lat+'&lon='+lng+
+      '&appid=b7514b5aaf43d023c350462fd57a1791&lang=es&units=metric'+ '&callback=JSON_CALLBACK';
+  }
 
   this.getData = function(lat, lng){
-    return $http.get( urlGoogleAppsScriptProxy + urlNoCorsProxy, {cache:true} );
+    return $http.jsonp( createUrlOpenWheatherMap(lat, lng), {cache:true} );
   };
+
+  this.loadData = function () {
+    $timeout(function () {
+
+    }, 1000)
+
+  }
 });
 // ====================================================================================================================
 wcaModule.service('Popup', function($ionicPopup, Loader){
@@ -316,7 +322,13 @@ wcaModule.service('ItemsMeteo', function($http, $filter, ItemMeteo, STRINGS){
 // ====================================================================================================================
 wcaModule.factory('ItemMeteo', function(){
 
+  // Url proxy google de App Script
   var urlProxy = 'https://script.google.com/macros/s/AKfycbyX6ViYZ2IuHEurQXJ--t_UOqRTyQZ9yGeSeLcbiM7ZSVcTujTw/exec?url=';
+
+  // Otro proxy de google por si falla el anterior
+  var urlProxy2 = 'https://script.google.com/macros/s/AKfycby_WcmX-_rrdqP8tKPwlz1Gw3amIJ3lZQUVYRaIkAKWQZbauNo/exec?url=';
+
+  // Antiguos proxies como referncia
   //var urlProxy = 'https://cors-anywhere.herokuapp.com/';
   //var urlProxy = 'http://www.whateverorigin.org/get?url='
   //var urlProxy = 'http://anyorigin.com/get?url=';
@@ -417,3 +429,7 @@ wcaModule.constant('STRINGS', {
     '(1) Sin conexión de datos. (2) Fallo de servidor remoto',
   RECARGANDO_IMG: 'Recargando imagen...'
 })
+
+// Http proxies, por si hicieran falta en el futuro
+// var urlGoogleAppsScriptHttpProxy = 'https://script.google.com/macros/s/AKfycby_WcmX-_rrdqP8tKPwlz1Gw3amIJ3lZQUVYRaIkAKWQZbauNo/exec?url=';
+// var urlGoogleAppsScriptHttpProxy2 = 'https://script.google.com/macros/s/AKfycbyX6ViYZ2IuHEurQXJ--t_UOqRTyQZ9yGeSeLcbiM7ZSVcTujTw/exec?url=';

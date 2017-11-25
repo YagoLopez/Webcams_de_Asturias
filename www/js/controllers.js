@@ -14,6 +14,9 @@
 //todo: new feature: geolocalizacion y busqueda webcams cercanas
 //todo: probar ionic native transitions
 //todo: new feature: flickr api images
+// todo: mejorar street view, añadir columna 'heading' en bbdd y mejorar precision localizaciones
+// todo: revisar los estilos inline que quedan
+// todo: probar a sustituir jquery panzoom por greensock pan and zoom
 
 var wcaModule = angular.module('wca.controllers',[]);
 // ====================================================================================================================
@@ -48,12 +51,14 @@ wcaModule.controller('DetalleCtrl', function($scope, $stateParams, $ionicModal, 
 
   var loaderContent = 'Cargando...' +
     '<div id="cancelLinkContainer"><button><a id="cancelLink" href="#/">Cancelar</a></div></button>';
+
   Loader.show(loaderContent);
   $scope.cam = Cam.create( Cams.getCamByRowid($stateParams.rowIdCam)[0] );
 
   // Clima Data --------------------------------------------------------------------------------------------------------
 
   $scope.infoMeteo = ' (Obteniendo datos del servidor...)';
+
   // Priority is webcam image load. Wait 1000 ms before loading clima data
   $scope.timerGetClimaData = setTimeout( function(){
     Clima.getData( Cam.lat, Cam.lng )
