@@ -233,12 +233,6 @@ wcaModule.service('Clima', function($http){
     return $http.jsonp( createUrlOpenWheatherMap(lat, lng), {cache:true} );
   };
 
-  this.loadData = function () {
-    $timeout(function () {
-
-    }, 1000)
-
-  }
 });
 // ====================================================================================================================
 wcaModule.service('Popup', function($ionicPopup, Loader){
