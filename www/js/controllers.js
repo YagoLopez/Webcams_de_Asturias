@@ -1,5 +1,4 @@
-//todo: usar versim simplificada de proxy google (2) en gif-player
-//todo: revisar datos de openweathermap y su carga a traves de proxy. puede que funione usando jsonp
+//todo: usar versio simplificada de proxy google (2) en gif-player
 //todo: posicionar bien en el centro ion-loader android
 //todo: convertir la actual arquitectura a componentes
 //todo: usar una base de datos json como lokijs, etc.
