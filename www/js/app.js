@@ -33,7 +33,7 @@ app.config(function($stateProvider, $urlRouterProvider, $compileProvider, $ionic
           var loaderContent = 'Webcams de Asturias';
           Loader.showWithBackdrop(loaderContent);
 
-          return Cams.loadRemoteData()
+          return Cams.loadRemoteData('data.json')
             .then(function (response) {
               response.data.rows.map(function(camData){
                 Cams.add( new Cam(camData) );

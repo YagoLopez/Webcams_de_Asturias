@@ -51,6 +51,7 @@ var URIS_TO_CACHE = [
   'img/red-marker.png',
   'img/spain2.png',
   'img/loader/6.gif',
+  'img/loading-img5-small.png',
   'res/36x36.png',
 
   // FONTS
@@ -61,6 +62,7 @@ var URIS_TO_CACHE = [
 
   // RESOURCES
   'manifest.json',
-  'favicon.png'
+  'favicon.png',
+  'data.json'
 
 ];

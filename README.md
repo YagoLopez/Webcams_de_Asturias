@@ -20,7 +20,9 @@ Se ha creado con la intención de que sirva como referencia para posteriores con
     - La persistencia en servidor se lleva a cabo mediante una base de datos NoSQL de Google Fusion Tables.
   - Uso de un **Service Worker** para ofrecer funcionalidad off-line (**PWA**)
 
-  NOTA: las nuevas versiones de Angular utilizan una arquitectura basada en componentes en lugar del Patrón MVC. Referencias:
+  NOTA: las nuevas versiones de Angular utilizan una arquitectura basada en componentes en lugar del Patrón MVC. 
+
+  Referencias:
 
   - <a href="https://toddmotto.com/rethinking-angular-js-controllers/">Rethinking AngularJS Controllers</a>.
   - <a href="https://medium.com/opinionated-angularjs/angular-model-objects-with-javascript-classes-2e6a067c73bc">AngularJS Model Objects with JavaScript Classes</a>.

@@ -1,9 +1,11 @@
+// todo: eliminar el evento window.onload
 // todo: en modo offline mostrar una aviso al usuario
-// todo: 'install' event is for old caches deletion. use it?
+// todo: note: 'install' event is for old caches deletion.
+// todo: evitar que ser cacheen las url cuando ya estan en cache
 
 var CACHE_NAME = 'wca';
 // Urls containing this strings will be bypassed by the service worker. They wont be served through the sw.
-var WHITE_LIST = ['wewebcams', 'openweather', 'meteociel', 'meteogram'];
+var WHITE_LIST = ['wewebcams', 'openweather', 'meteociel', 'meteogram', 'googleapis'];
 
 if( 'undefined' === typeof window){
   importScripts('uris-to-cache.js');
@@ -13,12 +15,16 @@ if( 'undefined' === typeof window){
  * Service worker registration
  */
 if ('serviceWorker' in navigator) {
-  // navigator.serviceWorker.register('wca-sw.js', {scope: '/Webcams_de_Asturias/www/'}).then(function() {
-  navigator.serviceWorker.register('wca-sw.js').then(function(registration) {
-    // console.log('sw: registration ok, scope: ', registration.scope);
-  }).catch(function(err) {
-    console.error(err);
-  });
+  window.addEventListener('load', function () {
+    // navigator.serviceWorker.register('wca-sw.js', {scope: '/Webcams_de_Asturias/www/'})
+    navigator.serviceWorker.register('wca-sw.js')
+      .then(function (registration) {
+        console.log('sw: registration ok, scope: ', registration.scope);
+      })
+      .catch(function(err) {
+        console.error(err);
+      });
+  })
 }
 /** --------------------------------------------------------------------------------------------------------------------
  * 'Install' event. Writing files to browser cache
@@ -31,7 +37,7 @@ self.addEventListener('install', function(event) {
   event.waitUntil(
     caches.open(CACHE_NAME)
       .then(function(cache) {
-        // console.log('sw: installing files into cache');
+        console.log('sw: files installed into cache');
         return cache.addAll(URIS_TO_CACHE);
       })
       .then(function () {
@@ -49,13 +55,10 @@ self.addEventListener('install', function(event) {
 self.addEventListener('activate', function (event) {
   // A call to claim() forces a "controllerchange" event on serviceWorker
   event.waitUntil(self.clients.claim());
-  console.info('sw: service worker installed and activated');
+  console.info('sw: service worker activated');
 });
 /** --------------------------------------------------------------------------------------------------------------------
-/**
- * Helper fn. If a url is in WHITE_LIST then avoid loading it through the service worker
- * Avoids CORS problems
-
+ * Helper fn. If a url is in WHITE_LIST then avoid loading it through the service worker. It Avoids CORS problems
  * @param url
  * @returns {boolean}
  */
@@ -68,21 +71,83 @@ var isInWhiteList = function (url) {
   }
 }
 /** --------------------------------------------------------------------------------------------------------------------
- * 'Fetch' event. Browser tries to get resources making a request
- *
- * @param {string} Event name ('fetch')
- * @param {function} Callback function with event data
- *
+ * @param fetchEvent {object}
  */
-self.addEventListener('fetch', function(fetchEvent) {
+// var getRequestHeaders = function (fetchEvent) {
+//   var request = fetchEvent.request;
+//   var url = request.url;
+//   var headers = request.headers;
+//   console.log('URL', url);
+//   console.log('--------------------------------------------');
+//   Array.from(headers.entries()).forEach(function (entry) {
+//     console.log(entry[0]+ ': ' + entry[1]);
+//   });
+//   console.log('--------------------------------------------');
+// }
+
+
+
+var isImageRequest = function (fetchEvent) {
   var request = fetchEvent.request;
   var url = request.url;
-  // todo: Refactorizar las peticiones a imagenes para evitar ser controladas por el service worker
-  // todo: averiguar si se esta offline
+  var headers = request.headers;
+  var result = false;
+  Array.from(headers.entries()).forEach(function (entry) {
+    if (entry[1] === 'image/webp,image/*,*/*;q=0.8'){
+      console.log('--------------------------------------------');
+      console.info('request url: ' + url);
+      console.log(entry[0]+ ': ' + entry[1]);
+      console.log('--------------------------------------------');
+      result = true;
+    }
+  });
+  return result;
+}
 
-  if (isInWhiteList(url)) {
-    return;
-  }
+
+
+var isHtmlRequest = function (fetchEvent) {
+  var request = fetchEvent.request;
+  var url = request.url;
+  var headers = request.headers;
+  var result = false;
+  Array.from(headers.entries()).forEach(function (entry) {
+    if (entry[1].indexOf('text/html') > -1){
+      console.log('--------------------------------------------');
+      console.info('request url es HTML: ' + url);
+      console.log(entry[0]+ ': ' + entry[1]);
+      console.log('--------------------------------------------');
+      result = true;
+    }
+  });
+  return result;
+}
+
+/** --------------------------------------------------------------------------------------------------------------------
+ * Find out if the browser is in onLine mode
+ */
+var isOnline = function () {
+  return navigator.onLine
+}
+/** --------------------------------------------------------------------------------------------------------------------
+ * Find out if the browser is in off-line mode
+ */
+var isOffline = function () {
+  return !navigator.onLine
+}
+/** --------------------------------------------------------------------------------------------------------------------
+ * 'Fetch' event. Browser tries to get resources making a request
+ * @param {string} Event name ('fetch')
+ * @param {function} Callback function with event data
+ */
+self.addEventListener('fetch', function(fetchEvent) {
+
+  var request = fetchEvent.request;
+  var url = request.url;
+
+  // if (isInWhiteList(url)) {
+  //   return;
+  // }
 
   fetchEvent.respondWith(
     // test if the request is cached
@@ -93,15 +158,37 @@ self.addEventListener('fetch', function(fetchEvent) {
           // console.log('request is cached: ', fetchEvent.request.url);
           return response;
         } else {
+
+
+          if (isOffline() && isImageRequest(fetchEvent)) {
+            return caches.match('img/offline-img.png');
+          } else {
+            // request no encontrada en cache, hacer peticion de red
+            return fetch(request /* ,{mode: 'no-cors'} */)
+          }
+
+
+
           // 2) if request is not cached, fetch response from network
           // console.log('request is not cached: ', fetchEvent.request.url);
-          return fetch(request /* ,{mode: 'no-cors'} */)
+          // return fetch(request /* ,{mode: 'no-cors'} */)
         }
       })
       .catch(function (error) {
-        // if request is not cached nor network available, return fallback page
-        // console.log('caches.match() error: ', error);
-        return caches.match('index.html');
+        var result;
+        console.error('caches.match() error: ', error);
+
+        // debugger
+        if (isHtmlRequest(fetchEvent)) {
+          // if request is not cached nor network available and is html request, return fallback html page
+          result = caches.match('index.html');
+        }
+        if (isImageRequest(fetchEvent)) {
+          // if request is not cached nor network available and is image request, return fallback image
+          result = caches.match('img/offline-img.png');
+        }
+        return result;
       })
   )
+
 });
