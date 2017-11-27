@@ -153,6 +153,44 @@ wcaModule.controller('DetalleMapaCtrl', function($scope, Mapa, Cams, Cam, $state
     mapa.setCenter(posicion);
     mapa.setZoom(18);
     $ionicSideMenuDelegate.canDragContent(false);
+  })
+
+  $scope.$on('$ionicView.leave', function(){
+    $ionicSideMenuDelegate.canDragContent(true);
+  })
+})
+// ====================================================================================================================
+wcaModule.controller('StreetViewCtrl', function($scope, Mapa, Popup, $ionicSideMenuDelegate, Cams, Cam, $stateParams){
+
+  var camCoords, div, ionSpinner, streetViewService;
+
+
+  if (!Cam.isDefined()) {
+    $scope.cam = Cams.getCamByRowid($stateParams.camId)[0];
+  } else {
+    $scope.cam = Cam;
+  }
+
+  camCoords = {lat: $scope.cam.lat, lng: $scope.cam.lng};
+  streetViewService = new google.maps.StreetViewService();
+
+  $scope.$on('$ionicView.afterEnter', function() {
+    div = document.getElementById('street-view');
+    ionSpinner = document.querySelector('ion-spinner');
+    $ionicSideMenuDelegate.canDragContent(false);
+    streetViewService.getPanoramaByLocation(camCoords, Mapa.RADIO_BUSQUEDA, function (data, status) {
+      if (status == google.maps.StreetViewStatus.OK) {
+        //todo: revisar
+        Mapa.creaStreetView2(div, data.location.latLng);
+      } else {
+        Popup.show('Aviso', 'Panorama StreetView no disponible en esta ubicación<br>' +status);
+      }
+      ionSpinner && ionSpinner.parentNode.removeChild(ionSpinner);
+    })
+  });
+
+  $scope.$on('$ionicView.leave', function(){
+    $ionicSideMenuDelegate.canDragContent(true);
   });
 })
 // ====================================================================================================================
@@ -222,41 +260,6 @@ wcaModule.controller('MeteoblueCtrl', function ($scope, $location, Cam) {
   $scope.$on('$ionicView.beforeLeave', function (event, data) {
     clearTimeout(timerMeteoblue);
   })
-})
-// ====================================================================================================================
-wcaModule.controller('StreetViewCtrl', function($scope, Mapa, Popup, $ionicSideMenuDelegate, Cams, Cam, $stateParams){
-
-  var camCoords, div, ionSpinner, streetViewService;
-
-
-  if (!Cam.isDefined()) {
-    $scope.cam = Cams.getCamByRowid($stateParams.camId)[0];
-  } else {
-    $scope.cam = Cam;
-  }
-
-  camCoords = {lat: $scope.cam.lat, lng: $scope.cam.lng};
-  streetViewService = new google.maps.StreetViewService();
-
-  $scope.$on('$ionicView.afterEnter', function() {
-    div = document.getElementById('street-view');
-    ionSpinner = document.querySelector('ion-spinner');
-    $ionicSideMenuDelegate.canDragContent(false);
-    streetViewService.getPanoramaByLocation(camCoords, Mapa.RADIO_BUSQUEDA, function (data, status) {
-      if (status == google.maps.StreetViewStatus.OK) {
-        //todo: revisar
-        Mapa.creaStreetView2(div, data.location.latLng);
-      } else {
-        Popup.show('Aviso', 'Panorama StreetView no disponible en esta ubicación<br>' +status);
-      }
-      ionSpinner && ionSpinner.parentNode.removeChild(ionSpinner);
-    })
-  });
-
-  $scope.$on('$ionicView.leave', function(){
-    $ionicSideMenuDelegate.canDragContent(true);
-  });
-
 })
 // ====================================================================================================================
 wcaModule.controller('GifPlayerCtrl', function($scope, $interval, $stateParams, ItemsMeteo, ItemMeteo, Loader,

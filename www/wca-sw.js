@@ -3,6 +3,7 @@
 // todo: notificaciones en general
 // todo: note: 'install' event is for old caches deletion.
 // todo: evitar que escriban en cache las url cuando ya estan cacheadas
+// todo: probar a solucionar los problemas cors usando la siguiente cabecera en las peticiones: 'access-control-allow-origin: *'
 
 var CACHE_NAME = 'wca';
 
@@ -19,9 +20,9 @@ if( 'undefined' === typeof window){
  */
 if ('serviceWorker' in navigator) {
   // navigator.serviceWorker.register('wca-sw.js', {scope: '/Webcams_de_Asturias/www/'})
-  navigator.serviceWorker.register('wca-sw.js')
+  navigator.serviceWorker.register('wca-sw.js', {scope: '/www/'})
     .then(function (registration) {
-      console.log('sw: registration ok, scope: ', registration.scope);
+      // console.log('sw: registration ok, scope: ', registration.scope);
     })
     .catch(function(err) {
       console.error(err);
@@ -38,7 +39,7 @@ self.addEventListener('install', function(event) {
   event.waitUntil(
     caches.open(CACHE_NAME)
       .then(function(cache) {
-        console.log('sw: files installed into cache');
+        // console.log('sw: files installed into cache');
         return cache.addAll(URIS_TO_CACHE);
       })
       .then(function () {
@@ -71,9 +72,6 @@ var isInWhiteList = function (url) {
     }
   }
 }
-/** --------------------------------------------------------------------------------------------------------------------
- * @param fetchEvent {object}
- */
 /** --------------------------------------------------------------------------------------------------------------------
  * Finds out if is image request
  * @param fetchEvent
@@ -129,12 +127,12 @@ self.addEventListener('fetch', function(fetchEvent) {
   var url = request.url;
 
   // Urls in white list are not processed by service worker in online mode
-  // if (isOnline() && isInWhiteList(url)) {
-  //   return;
-  // }
-  if (isOnline() && isImageRequest(fetchEvent)) {
+  if (isOnline() && isInWhiteList(url)) {
     return;
   }
+  // if (isOnline() && isImageRequest(fetchEvent)) {
+  //   return;
+  // }
 
   // todo: para mas claridad puede que sea mejor separar la respuesta de fetchEvent en dos partes: online y offline
   fetchEvent.respondWith(
@@ -146,9 +144,9 @@ self.addEventListener('fetch', function(fetchEvent) {
           // console.log('request is cached: ', fetchEvent.request.url);
           return response;
         } else {
-          // 2) if request is not cached, fetch response from network
+          // 2) if request is not cached, to fetch response from network
           // console.log('request is not cached: ', fetchEvent.request.url);
-          return fetch(request /* ,{mode: 'no-cors'} */)
+          return fetch(request /*,{mode: 'no-cors'} */)
         }
       })
       .catch(function (error) {
@@ -156,7 +154,7 @@ self.addEventListener('fetch', function(fetchEvent) {
         // console.error('Request not found in cache', error);
         if (isHtmlRequest(fetchEvent)) {
           // if request is not cached nor network available and is html request, return fallback html page
-          result = caches.match('index.html');
+          result = caches.match('./index.html');
         }
         if (isImageRequest(fetchEvent)) {
           // if request is not cached nor network available and is image request, return fallback image
