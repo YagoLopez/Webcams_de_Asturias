@@ -9,10 +9,12 @@ var CACHE_NAME = 'wca';
 
 // Urls containing this strings will be bypassed by the service worker. They wont be served through the sw.
 // This can be useful for avoiding cors problems for example. (In this case webcam images give cors problems)
-var WHITE_LIST = ['wewebcams', 'openweather', 'meteociel', 'meteogram', 'googleapis'];
+var WHITE_LIST = ['wewebcams', 'openweathermap', 'meteociel', 'meteogram', 'googleapis'];
 
 if( 'undefined' === typeof window){
-  importScripts('uris-to-cache.js');
+  setTimeout(function () {
+    importScripts('uris-to-cache.js');
+  }, 2000)
 }
 
 /** --------------------------------------------------------------------------------------------------------------------

@@ -6171,6 +6171,7 @@
 							"isDerived": false
 						}
 					],
+					"documentation": "Service with a collection of cams objects and relative operations as filters, etc.",
 					"stereotype": "Service",
 					"visibility": "public",
 					"attributes": [
@@ -6495,6 +6496,7 @@
 						"$ref": "AAAAAAFF+qBWK6M3Z8Y="
 					},
 					"name": "Cam",
+					"documentation": "Entitty with data associated to Cam model",
 					"stereotype": "Factory",
 					"visibility": "public",
 					"operations": [
@@ -6640,6 +6642,7 @@
 							"isDerived": false
 						}
 					],
+					"documentation": "Service with a collection of ItemMeteo objects and relative operations",
 					"stereotype": "Service",
 					"visibility": "public",
 					"attributes": [
@@ -6772,6 +6775,7 @@
 						"$ref": "AAAAAAFF+qBWK6M3Z8Y="
 					},
 					"name": "ItemMeteo",
+					"documentation": "Entity with data associated to ItemMeteo object",
 					"stereotype": "Factory",
 					"visibility": "public",
 					"operations": [
@@ -6803,6 +6807,7 @@
 						"$ref": "AAAAAAFF+qBWK6M3Z8Y="
 					},
 					"name": "Mapa",
+					"documentation": "Service for Google Maps creation and management",
 					"stereotype": "Service",
 					"visibility": "public",
 					"attributes": [
@@ -7232,6 +7237,7 @@
 						"$ref": "AAAAAAFF+qBWK6M3Z8Y="
 					},
 					"name": "Categorias",
+					"documentation": "Categorias management\n",
 					"stereotype": "Service",
 					"visibility": "public",
 					"attributes": [
@@ -7364,6 +7370,7 @@
 						"$ref": "AAAAAAFF+qBWK6M3Z8Y="
 					},
 					"name": "Clima",
+					"documentation": "Communication with Open Weather Map API",
 					"stereotype": "Service",
 					"visibility": "public",
 					"operations": [
@@ -7476,6 +7483,7 @@
 						"$ref": "AAAAAAFF+qBWK6M3Z8Y="
 					},
 					"name": "Wikipedia",
+					"documentation": "Comunication with Wikipedia API",
 					"stereotype": "Service",
 					"visibility": "public",
 					"operations": [
@@ -7668,6 +7676,7 @@
 						"$ref": "AAAAAAFF+qBWK6M3Z8Y="
 					},
 					"name": "Popup",
+					"documentation": "Creation/show/hide popup dialog",
 					"stereotype": "Service",
 					"visibility": "public",
 					"operations": [
@@ -7732,6 +7741,7 @@
 						"$ref": "AAAAAAFF+qBWK6M3Z8Y="
 					},
 					"name": "Loader",
+					"documentation": "Service for creating, showing and hiding a notification to the user when the page loads",
 					"stereotype": "Service",
 					"visibility": "public",
 					"attributes": [
@@ -7846,6 +7856,7 @@
 						"$ref": "AAAAAAFF+qBWK6M3Z8Y="
 					},
 					"name": "$exceptionHandler",
+					"documentation": "Exception Management",
 					"stereotype": "Factory",
 					"visibility": "public",
 					"operations": [
@@ -8434,7 +8445,7 @@
 									"containerExtending": false,
 									"left": 349,
 									"top": 236.5,
-									"width": 105,
+									"width": 105.3671875,
 									"height": 25,
 									"autoResize": false,
 									"stereotypeLabel": {
@@ -8749,7 +8760,7 @@
 									"containerExtending": false,
 									"left": 347,
 									"top": 316.5,
-									"width": 110,
+									"width": 110.42626953125,
 									"height": 25,
 									"autoResize": false,
 									"stereotypeLabel": {
@@ -9064,7 +9075,7 @@
 									"containerExtending": false,
 									"left": 324.5,
 									"top": 156.5,
-									"width": 155,
+									"width": 155.18359375,
 									"height": 25,
 									"autoResize": false,
 									"stereotypeLabel": {
@@ -11533,7 +11544,7 @@
 									"containerExtending": false,
 									"left": 361,
 									"top": 266.5,
-									"width": 105,
+									"width": 105.3671875,
 									"height": 25,
 									"autoResize": false,
 									"stereotypeLabel": {
@@ -11848,7 +11859,7 @@
 									"containerExtending": false,
 									"left": 359,
 									"top": 356.5,
-									"width": 110,
+									"width": 110.42626953125,
 									"height": 25,
 									"autoResize": false,
 									"stereotypeLabel": {
@@ -12163,7 +12174,7 @@
 									"containerExtending": false,
 									"left": 336.5,
 									"top": 154.5,
-									"width": 155,
+									"width": 155.18359375,
 									"height": 25,
 									"autoResize": false,
 									"stereotypeLabel": {
@@ -13741,7 +13752,7 @@
 									"containerExtending": false,
 									"left": 89,
 									"top": 268.5,
-									"width": 158,
+									"width": 158.8271484375,
 									"height": 25,
 									"autoResize": false,
 									"stereotypeLabel": {
@@ -15073,7 +15084,7 @@
 									"containerExtending": false,
 									"left": 618.5,
 									"top": 300.5,
-									"width": 125,
+									"width": 126.3017578125,
 									"height": 25,
 									"autoResize": false,
 									"stereotypeLabel": {
