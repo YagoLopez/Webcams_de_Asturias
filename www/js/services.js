@@ -225,7 +225,7 @@ wcaModule.service('Mapa', function(Cams){
 wcaModule.service('Clima', function($http){
 
   var createUrlOpenWheatherMap = function (lat, lng) {
-    return 'http://api.openweathermap.org/data/2.5/weather?lat='+lat+'&lon='+lng+
+    return 'https://api.openweathermap.org/data/2.5/weather?lat='+lat+'&lon='+lng+
       '&appid=b7514b5aaf43d023c350462fd57a1791&lang=es&units=metric'+ '&callback=JSON_CALLBACK';
   }
 
