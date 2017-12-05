@@ -29,8 +29,9 @@ app.config(function($stateProvider, $urlRouterProvider, $compileProvider, $ionic
         loadRemoteDataResolver: function (Cams, Cam, Loader) {
 
           // var loaderContent = '<img src="res/36x36.png" width="36" height="36" class="splash-screen-icon"/>Webcams de Asturias';
-          // var loaderContent = '<i class="ion-image"></i> Webcams de Asturias';
+          // var loaderContent = '<i class="ion-image" style="font-size: 28px; vertical-align: middle"></i> Webcams de Asturias';
           var loaderContent = 'Webcams de Asturias';
+
           Loader.showWithBackdrop(loaderContent);
 
           return Cams.loadRemoteData()
@@ -162,8 +163,8 @@ app.run(function($ionicPlatform, $rootScope, $window, Cams) {
   }
 
   if ( ms_ie ) {
-    //IE specific code goes here
-    alert("IE Browser detected. Not completely supported");
+    // http://ionicframework.com/docs/v1/overview/#browser-support
+    alert("IE Browser detected. Not completely supported by Ionic Framework");
   }
 });
 

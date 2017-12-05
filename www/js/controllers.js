@@ -24,9 +24,7 @@ wcaModule.controller('ListadoCtrl', function ($scope, $stateParams, Cams, Loader
 
   var concejo = $stateParams.concejo;
   var categoria = $stateParams.categoria;
-
   $scope.cams = Cams.filterBy(concejo, categoria);
-  Loader.hide();
 
   $scope.$on('$ionicView.afterEnter', function(){
     $scope.concejo = concejo;
@@ -41,6 +39,7 @@ wcaModule.controller('ListadoCtrl', function ($scope, $stateParams, Cams, Loader
         $scope.titulo = Categorias.capitalizeFirstLetter(concejo);
       }
     }
+    Loader.hide();
   })
 })
 // ====================================================================================================================

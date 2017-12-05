@@ -12,9 +12,7 @@ var CACHE_NAME = 'wca';
 var WHITE_LIST = ['wewebcams', 'openweathermap', 'meteociel', 'meteogram', 'googleapis', 'forecast.uoa.gr'];
 
 if( 'undefined' === typeof window){
-  setTimeout(function () {
-    importScripts('uris-to-cache.js');
-  }, 2000)
+  importScripts('uris-to-cache.js');
 }
 
 /** --------------------------------------------------------------------------------------------------------------------
@@ -22,7 +20,7 @@ if( 'undefined' === typeof window){
  */
 if ('serviceWorker' in navigator) {
   // navigator.serviceWorker.register('wca-sw.js', {scope: '/Webcams_de_Asturias/www/'})
-  navigator.serviceWorker.register('wca-sw.js', {scope: '/www/'})
+  navigator.serviceWorker.register('wca-sw.js')
     .then(function (registration) {
       // console.log('sw: registration ok, scope: ', registration.scope);
     })
