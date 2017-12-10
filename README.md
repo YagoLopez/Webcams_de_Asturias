@@ -8,19 +8,21 @@ Este es un proyecto experimental que pone en práctica diversos patrones, arquit
 
 Se ha creado con la intención de que sirva como referencia para posteriores consultas del autor o de cualquier persona interesada en el tema. Cualquier comentario o sugerencia puede ser formulada en la sección de "*Issues*".
 
+
+
 ## Características
 
 - Arquitectura:
   - Business Layer diseñada en base a **Programación Orientada a Objetos**
   - Uso del **Patrón MVC** para separación de responsabilidades
+  - Uso de los patrones **Data Mapper** y **Repository** para las consultas a la base de datos
   - Uso de **Route Resolvers**
-  - Uso de una **base de datos NoSQL** ligera para mantener el estado en memoria (LokiDB, LowDB, etc).
-    - En este caso y debido a su simplicidad, el estado de la aplicación consiste en una colección de objetos JSON que se mantiene en memoria. 
+  - Uso de una **base de datos NoSQL** ligera para mantener el estado en memoria
+    - En este caso y debido a su simplicidad, el estado de la aplicación consiste en una colección de objetos JSON que se cargan desde el backend y se mantiene en memoria. 
     - Las consultas han sido diseñadas ad hoc sin ninguna otra capa de abstracción adicional.
-    - La persistencia en servidor se lleva a cabo mediante una base de datos NoSQL de Google Fusion Tables.
-  - Uso de un **Service Worker** para ofrecer funcionalidad off-line (**PWA**)
+    - La persistencia en servidor se lleva a cabo mediante una base de datos de Google Fusion Tables.
 
-  NOTA: las nuevas versiones de Angular utilizan una arquitectura basada en componentes en lugar del Patrón MVC. 
+  (NOTA: las nuevas versiones de Angular utilizan una arquitectura basada en componentes en lugar del Patrón MVC). 
 
   Referencias:
 
@@ -28,12 +30,19 @@ Se ha creado con la intención de que sirva como referencia para posteriores con
   - <a href="https://medium.com/opinionated-angularjs/angular-model-objects-with-javascript-classes-2e6a067c73bc">AngularJS Model Objects with JavaScript Classes</a>.
   - <a href="https://medium.com/opinionated-angularjs/advanced-routing-and-resolves-a2fcbf874a1c">AngularJS Advanced Routing and Resolvers</a>.
 
-- Incluye un fichero `manifest.json` que habilita la instalación en el escritorio y emular la instalación de las apps móviles
+- Posibiliad de instalación local (tanto móvil como desktop) gracias al uso de un fichero `manifest.json` 
+
+- Capacidad de funcionamiento off-line por medio de un **Service Worker**
+
+  ​
 
 ## Demo
 
 - <a href="http://mobt.me/XfKL" target="_blank">Simulador móvil</a>
+
 - <a href="http://yagolopez.github.io/Webcams_de_Asturias/www/" target="_blank">Pantalla grande</a>
+
+  ​
 
 ## Funcionalidad
 
@@ -59,6 +68,8 @@ También se pueden filtrar según distintos criterios:
 Como valor añadido se pueden consultar diversas informaciones, como la temperatura,
 imágenes de satélite, y estadísticas de la base de datos.
 
+
+
 ## Modelo UML
 
 <p aplign="center"><img src="uml/wca-uml.png" /></p>
@@ -66,6 +77,8 @@ imágenes de satélite, y estadísticas de la base de datos.
 ## Documentación
 
 <a href="https://yagolopez.js.org/Webcams_de_Asturias/uml/html-docs/index.html">Documentación</a>
+
+
 
 ## Tecnologías
 
