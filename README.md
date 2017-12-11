@@ -72,7 +72,7 @@ imágenes de satélite, y estadísticas de la base de datos.
 
 ## Modelo UML
 
-<p aplign="center"><img src="uml/wca-uml.png" /></p>
+<p aplign="center"><img src="uml/uml-diagram.png" /></p>
 
 ## Documentación
 
