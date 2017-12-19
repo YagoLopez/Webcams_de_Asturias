@@ -40,6 +40,7 @@ var URIS_TO_CACHE = [
   'templates/windy.html',
 
   // IMAGES
+  'img/icons/wca-logo.svg',
   'img/bckgrnd6.jpg',
   'img/clock.png',
   'img/eu.png',

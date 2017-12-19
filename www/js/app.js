@@ -28,9 +28,7 @@ app.config(function($stateProvider, $urlRouterProvider, $compileProvider, $ionic
       {
         loadRemoteDataResolver: function (Cams, Cam, Loader) {
 
-          // var loaderContent = '<img src="res/36x36.png" width="36" height="36" class="splash-screen-icon"/>Webcams de Asturias';
-          // var loaderContent = '<i class="ion-image" style="font-size: 28px; vertical-align: middle"></i> Webcams de Asturias';
-          var loaderContent = 'Webcams de Asturias';
+          var loaderContent = '<img src="img/icons/wca-logo.svg" class="splash-screen-icon"/>Webcams de Asturias';
 
           Loader.showWithBackdrop(loaderContent);
 
@@ -62,7 +60,7 @@ app.config(function($stateProvider, $urlRouterProvider, $compileProvider, $ionic
     views: {'menuContent': {templateUrl: 'templates/detalle-streetview.html', controller: 'StreetViewCtrl'}}
   });
 // -------------------------------------------------------------------------------------------------------------------
-  $stateProvider.state('app.mapaglobal', {url: '/mapaglobal', cache: true,
+  $stateProvider.state('app.mapaglobal', {url: '/mapaglobal', cache: false,
     views: {'menuContent': {templateUrl: 'templates/mapa-global.html', controller: 'MapaGlobalCtrl'}}
   });
 // -------------------------------------------------------------------------------------------------------------------
