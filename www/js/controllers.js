@@ -133,7 +133,7 @@ wcaModule.controller('DetalleCtrl', function($scope, $stateParams, $ionicModal, 
 
 })
 // ====================================================================================================================
-wcaModule.controller('DetalleMapaCtrl', function($scope, Mapa, Cams, Cam, $stateParams, $ionicSideMenuDelegate){
+wcaModule.controller('DetalleMapaCtrl', function($scope, Mapa, Cams, Cam, $stateParams, $ionicSideMenuDelegate, Loader){
 
   var mapa, mapaLayer, posicion;
 
@@ -145,6 +145,9 @@ wcaModule.controller('DetalleMapaCtrl', function($scope, Mapa, Cams, Cam, $state
 
   $scope.$on('$ionicView.afterEnter', function() {
     mapa = Mapa.crear(document.getElementById('mapa'));
+    google.maps.event.addListenerOnce(mapa, 'idle', function(){
+      Loader.removeDomElementById('loader');
+    });
     mapaLayer = Mapa.creaFusionTableLayer();
     mapaLayer.setMap(mapa);
     posicion = {lat: $scope.cam.lat, lng: $scope.cam.lng};
@@ -161,8 +164,7 @@ wcaModule.controller('DetalleMapaCtrl', function($scope, Mapa, Cams, Cam, $state
 // ====================================================================================================================
 wcaModule.controller('StreetViewCtrl', function($scope, Mapa, Popup, $ionicSideMenuDelegate, Cams, Cam, $stateParams){
 
-  var camCoords, div, ionSpinner, streetViewService;
-
+  var camCoords, div, loader, streetViewService;
 
   if (!Cam.isDefined()) {
     $scope.cam = Cams.getCamByRowid($stateParams.camId)[0];
@@ -175,7 +177,7 @@ wcaModule.controller('StreetViewCtrl', function($scope, Mapa, Popup, $ionicSideM
 
   $scope.$on('$ionicView.afterEnter', function() {
     div = document.getElementById('street-view');
-    ionSpinner = document.querySelector('ion-spinner');
+    loader = document.getElementById('loader');
     $ionicSideMenuDelegate.canDragContent(false);
     streetViewService.getPanoramaByLocation(camCoords, Mapa.RADIO_BUSQUEDA, function (data, status) {
       if (status == google.maps.StreetViewStatus.OK) {
@@ -184,7 +186,7 @@ wcaModule.controller('StreetViewCtrl', function($scope, Mapa, Popup, $ionicSideM
       } else {
         Popup.show('Aviso', 'Panorama StreetView no disponible en esta ubicación<br>' +status);
       }
-      ionSpinner && ionSpinner.parentNode.removeChild(ionSpinner);
+      loader && loader.parentNode.removeChild(loader);
     })
   });
 
@@ -193,7 +195,7 @@ wcaModule.controller('StreetViewCtrl', function($scope, Mapa, Popup, $ionicSideM
   });
 })
 // ====================================================================================================================
-wcaModule.controller('MapaGlobalCtrl', function($scope, Mapa, Cams, Popup, Categorias){
+wcaModule.controller('MapaGlobalCtrl', function($scope, Mapa, Cams, Popup, Categorias, Loader){
 
   var layer, mapa, sqlQueryConcejos, sqlQueryCategorias, zoomLevel = 7;
   $scope.filtro = {categoria: '', concejo: ''};
@@ -235,12 +237,15 @@ wcaModule.controller('MapaGlobalCtrl', function($scope, Mapa, Cams, Popup, Categ
   $scope.$evalAsync(function () {
     if (!angular.equals({}, Mapa)) {
       mapa = Mapa.crear(document.getElementById('mapaglobal'));
+      google.maps.event.addListenerOnce(mapa, 'idle', function(){
+        Loader.removeDomElementById('loader');
+      });
       $scope.mostrarTodas(); // por defecto
     }
-  });
+  })
 })
 // ====================================================================================================================
-wcaModule.controller('MeteoblueCtrl', function ($scope, $location, Cam) {
+wcaModule.controller('MeteoblueCtrl', function ($scope, $location, Cam, Loader) {
 
   var timerMeteoblue;
   if(!Cam.isDefined()) {
@@ -254,6 +259,8 @@ wcaModule.controller('MeteoblueCtrl', function ($scope, $location, Cam) {
     $scope.urlMeteoblue = 'https://www.meteoblue.com/meteogram-web?' +
       ('lon=' + Cam.lng) + ('&lat=' + Cam.lat) + ('&lang=es&look=CELSIUS,KILOMETER_PER_HOUR');
   }, 500);
+
+  $scope.removeDomElementById = Loader.removeDomElementById;
 
   // On view exit, clear timers to prevent memory leaks
   $scope.$on('$ionicView.beforeLeave', function (event, data) {

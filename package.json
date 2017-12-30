@@ -2,10 +2,11 @@
   "name": "Webcams_de_Asturias",
   "version": "3.0.0",
   "description": "Realtime images from webcams located in Asturias, Spain",
+  "license": "MIT",
   "scripts": {
     "serve": "live-server",
     "lite-server": "lite-server",
-    "build": "node C:\\Users\\Yago\\WebstormProjects\\Webcams_de_Asturias\\node_modules\\webpack\\bin\\webpack.js"
+    "build:webpack": "node C:\\Users\\Yago\\WebstormProjects\\Webcams_de_Asturias\\node_modules\\webpack\\bin\\webpack.js"
   },
   "dependencies": {
     "gulp": "^3.5.6",

@@ -220,6 +220,7 @@ wcaModule.service('Mapa', function(Cams){
       ionLoader.hide();
     });
   }
+
 })
 // ====================================================================================================================
 wcaModule.service('Clima', function($http){
@@ -369,6 +370,17 @@ wcaModule.service('Loader', function($ionicLoading){
   this.hide = function(){
     $ionicLoading.hide();
   }
+
+
+  this.removeDomElementById = function (id) {
+    var element = document.getElementById(id);
+    try{
+      element.parentNode.removeChild(element);
+    }catch(error){
+      console.warn(error);
+    }
+  }
+
 })
 // ====================================================================================================================
 wcaModule.factory('$exceptionHandler', function($injector) {

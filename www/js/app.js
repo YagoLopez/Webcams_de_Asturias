@@ -32,7 +32,7 @@ app.config(function($stateProvider, $urlRouterProvider, $compileProvider, $ionic
 
           Loader.showWithBackdrop(loaderContent);
 
-          return Cams.loadRemoteData()
+          return Cams.loadRemoteData('data.json')
             .then(function (response) {
               response.data.rows.map(function(camData){
                 Cams.add( new Cam(camData) );
@@ -126,15 +126,6 @@ app.run(function($ionicPlatform, $rootScope, $window, Cams) {
   })
 
   $rootScope.screenWidth = $window.innerWidth;
-
-  $rootScope.removeDomElementById = function (id) {
-    var element = document.getElementById(id);
-    try{
-      element.parentNode.removeChild(element);
-    }catch(error){
-      console.warn(error);
-    }
-  }
 
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard

@@ -1,4 +1,3 @@
-<!--suppress HtmlUnknownTarget -->
 <ion-view view-title="{{ ::cam.lugar }}">
 
   <style type="text/css">
@@ -6,7 +5,8 @@
     #scroll-container > img {width: 35px; vertical-align: middle}
     ion-header-bar > div > img {width: 35px; vertical-align: middle}
     #img-meteoblue {cursor: move}
-    @media (min-width: 720px) {#img-meteoblue {width: 75%; display: block; margin: auto; padding-bottom: 40px}}
+    @media (min-width: 720px) {#img-meteoblue {width: 75%; display: block; margin: auto; padding-bottom: 40px} }
+    #img-footer {padding: 20px}
   </style>
 
   <ion-nav-bar>
@@ -15,12 +15,14 @@
     </ion-header-bar>
   </ion-nav-bar>
 
+  <div id="img-meteoblue-loader" class="spinner-circle-container">
+    <div class="spinner-circle"></div>
+  </div>
+
   <ion-scroll id="scroll-container" zooming="true" direction="xy" locking="false" overflow-scroll="false">
-    <!-- posible values for ion-spinner[icon]: https://codepen.io/ionic/pen/GgwVON -->
-    <ion-spinner id="img-meteoblue-loader" icon='android' class='spinner-calm svg-loader'></ion-spinner>
     <img id="img-meteoblue" ng-src="{{ ::urlMeteoblue }}" fallback-src="img/imgFail.png"
       imageonload="removeDomElementById('img-meteoblue-loader')"/>
-    <div class="info-img">Concejo: {{ ::cam.concejo }}</div>
+    <div id="img-footer">Concejo: {{ ::cam.concejo }}</div>
   </ion-scroll>
 
 </ion-view>

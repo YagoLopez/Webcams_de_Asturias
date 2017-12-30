@@ -12,8 +12,13 @@
   </ion-nav-bar>
 
   <ion-content>
-    <ion-spinner icon='android' class='spinner-calm svg-loader'></ion-spinner>
+
+    <div id="loader" class="spinner-circle-container">
+      <div class="spinner-circle"></div>
+    </div>
+
     <div id="mapa" data-tap-disabled="true"></div>
+
     <div class="card">
       <div class="item item-text-wrap">{{ ::cam.lugar }}</div>
       <div class="item item-text-wrap">Concejo: {{ ::cam.concejo }}</div>
