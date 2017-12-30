@@ -30,9 +30,9 @@ app.config(function($stateProvider, $urlRouterProvider, $compileProvider, $ionic
 
           var loaderContent = '<img src="img/icons/wca-logo.svg" class="splash-screen-icon"/>Webcams de Asturias';
 
-          Loader.showWithBackdrop();
+          Loader.showWithBackdrop(loaderContent);
 
-          return Cams.loadRemoteData('data.json')
+          return Cams.loadRemoteData()
             .then(function (response) {
               response.data.rows.map(function(camData){
                 Cams.add( new Cam(camData) );
