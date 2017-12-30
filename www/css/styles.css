@@ -5,10 +5,10 @@
 .img-cam {height: 64px !important; width: 72px !important; top: 6px !important;
   background: transparent url('../img/loading-img5-small.png') no-repeat center center  }
 .splash-screen-icon {vertical-align: middle; margin-right: 10px}
-.svg-loader {position: absolute; top: 230px; left: 48.5%}
+/*.svg-loader {position: absolute; top: 230px; left: 48.5%}*/
 .centered {text-align: center}
-.loader {position: absolute; text-align: center; width: 100%; top: 30%; z-index: -1}
-.loader2 {position: relative; top: 25%; left: 45%; z-index: -1}
+/*.loader {position: absolute; text-align: center; width: 100%; top: 30%; z-index: -1}*/
+/*.loader2 {position: relative; top: 25%; left: 45%; z-index: -1}*/
 .loader3 {position: absolute; width: 100%; top: 225px; z-index: -1}
 .pad-10 {padding: 10px}
 .pad-5 {padding: 5px}
@@ -45,7 +45,10 @@
   100% { -webkit-transform: scale(1.0); transform: scale(1.0); opacity: 0 }
 }
 /* --- /spinner --- */
-
+.iframe-chart {
+  width: 100%; height: 50%; margin: auto; display: block;
+  background: url(../img/bar-chart.svg) no-repeat center center;
+}
 /*.sombra-inferior {box-shadow: -1px 1px 5px #888888}*/
 
 /* ANIMATIONS --------------------------------------------------------------------------- */

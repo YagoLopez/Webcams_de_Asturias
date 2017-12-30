@@ -30,7 +30,7 @@ app.config(function($stateProvider, $urlRouterProvider, $compileProvider, $ionic
 
           var loaderContent = '<img src="img/icons/wca-logo.svg" class="splash-screen-icon"/>Webcams de Asturias';
 
-          Loader.showWithBackdrop(loaderContent);
+          Loader.showWithBackdrop();
 
           return Cams.loadRemoteData('data.json')
             .then(function (response) {
@@ -81,7 +81,7 @@ app.config(function($stateProvider, $urlRouterProvider, $compileProvider, $ionic
   });
 // -------------------------------------------------------------------------------------------------------------------
   $stateProvider.state('app.heatmap', {
-    url: '/heatmap', cache: true, views: {'menuContent': {templateUrl: 'templates/heatmap.html'}}
+    url: '/heatmap', cache: true, views: {'menuContent': {templateUrl: 'templates/heatmap.html', controller: 'HeatmapCtrl'}}
   });
 // -------------------------------------------------------------------------------------------------------------------
   $stateProvider.state('app.por_categoria', {url: '/por_categoria', cache: true,

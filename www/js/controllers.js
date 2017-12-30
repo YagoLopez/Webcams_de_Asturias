@@ -645,3 +645,9 @@ wcaModule.controller('ImgDetalleCtrl', function ($scope, $location, Cam) {
   }
   $scope.cam = Cam;
 })
+// ====================================================================================================================
+wcaModule.controller('HeatmapCtrl', function ($scope, Loader) {
+  // debugger
+  $scope.removeDomElementById = Loader.removeDomElementById;
+
+})

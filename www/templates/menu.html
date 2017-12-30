@@ -7,10 +7,11 @@
     .menu-top-img {height:100px; display:block; background:url(img/bckgrnd6.jpg) !important}
     .menu-item {vertical-align:text-top}
     #menu-content {top:110px}
-    .credits {font-size:small; text-align:center}
+    .credits {font-size:small; text-align:center; margin: auto;width: 135px}
     .font20 {font-size:20px; vertical-align: sub}
     .font25 {font-size:25px; vertical-align: sub}
-    .credits-ico {color: crimson; font-size: 21px; vertical-align: text-top}
+    .img-logo {width: 30px;height: 30px;float: left;margin-top: 6px;margin-bottom: 6px}
+    .lnk-logo {text-decoration: none}
   </style>
 
   <!-- Side Menu --------------------------------------------------------------------------------------------------- -->
@@ -53,10 +54,14 @@
         </ion-item>
       </ion-list>
       <br/>
+
       <div class="credits">
-        <i class="ion-social-nodejs credits-ico"></i> Desarrollado por<br/>
-        <a href="https://yagolopez.js.org" target="_blank">Yago López</a><br/><br/><br/>
+        <img src="img/logo.svg" class="img-logo">
+        <div>
+          <div>Desarrollado por</div>
+          <a href="https://yagolopez.js.org" target="_blank" class="lnk-logo">Yago López</a></div>
       </div>
+
     </ion-content>
   </ion-side-menu>
 

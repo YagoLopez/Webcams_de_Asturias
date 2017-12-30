@@ -12,12 +12,12 @@
 
     <div class="item item-divider">Concejos con más cámaras</div>
     <iframe id="concejosMasCams" ng-src="{{ ::urlConcejosMasCams  }}" scrolling="no" marginwidth="0"
-      marginheight="0" frameborder="0" allowfullscreen iframe-onload="setConcejosConMasCamsLoaded()">
+      marginheight="0" frameborder="0" allowfullscreen iframe-onload="setConcejosConMasCamsLoaded()" class="iframe-chart">
     </iframe>
 
     <div class="item item-divider">Nº webcams por concejo</div>
     <iframe id="camsConcejo" ng-src="{{ ::urlCamsConcejo }}" scrolling="no" marginwidth="0"
-      marginheight="0" frameborder="0" allowfullscreen iframe-onload="setCamsPorConcejoLoaded()">
+      marginheight="0" frameborder="0" allowfullscreen iframe-onload="setCamsPorConcejoLoaded()" class="iframe-chart">
     </iframe>
 
     <div class="padding pie-diagrama txt-info">
