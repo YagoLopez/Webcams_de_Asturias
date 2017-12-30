@@ -371,7 +371,6 @@ wcaModule.service('Loader', function($ionicLoading){
     $ionicLoading.hide();
   }
 
-
   this.removeDomElementById = function (id) {
     var element = document.getElementById(id);
     try{

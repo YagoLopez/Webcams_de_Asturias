@@ -1,3 +1,4 @@
+//todo: imagen de fondo de imagenes de cam en formato svg
 //todo: usar versio simplificada de proxy google (2) en gif-player
 //todo: posicionar bien en el centro ion-loader android
 //todo: convertir la actual arquitectura a componentes
@@ -647,7 +648,6 @@ wcaModule.controller('ImgDetalleCtrl', function ($scope, $location, Cam) {
 })
 // ====================================================================================================================
 wcaModule.controller('HeatmapCtrl', function ($scope, Loader) {
-  // debugger
   $scope.removeDomElementById = Loader.removeDomElementById;
 
 })
