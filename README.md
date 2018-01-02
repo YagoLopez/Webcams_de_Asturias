@@ -1,4 +1,4 @@
-![Status](https://img.shields.io/badge/status-ok-green.svg) ![Maintenance](https://img.shields.io/maintenance/yes/2017.svg?maxAge=2592000) ![License](https://img.shields.io/dub/l/vibe-d.svg?maxAge=2592000)
+![Status](https://img.shields.io/badge/status-ok-green.svg) ![Maintenance](https://img.shields.io/maintenance/yes/2020.svg?maxAge=2592000) ![License](https://img.shields.io/dub/l/vibe-d.svg?maxAge=2592000)
 
 # Webcams de Asturias
 
@@ -74,12 +74,6 @@ imágenes de satélite, y estadísticas de la base de datos.
 
 <p aplign="center"><img src="uml/uml-diagram.png" /></p>
 
-## Documentación
-
-<a href="https://yagolopez.js.org/Webcams_de_Asturias/uml/html-docs/index.html">Documentación</a>
-
-
-
 ## Tecnologías
 
 - Ionic Framework 1+ (Interfaz de usuario)
@@ -118,4 +112,4 @@ imágenes de satélite, y estadísticas de la base de datos.
 
     ​
 
-<a href="#">Back to top</a>
+<p align="center"><a href="#">Back to top</a></p>
