@@ -1,12 +1,12 @@
 ![Status](https://img.shields.io/badge/status-ok-green.svg) ![Maintenance](https://img.shields.io/maintenance/yes/2020.svg?maxAge=2592000) ![License](https://img.shields.io/dub/l/vibe-d.svg?maxAge=2592000)
 
-# Webcams de Asturias
+# Webcams del Principado
 
 **Aplicación Web Progresiva (PWA) que muestra Imágenes de cámaras web situadas en el Principado de Asturias**
 
 Este es un proyecto experimental que pone en práctica diversos patrones, arquitecturas y tecnologías en una aplicación desarrollada en AngularJS.
 
-Se ha creado con la intención de que sirva como referencia para posteriores consultas del autor o de cualquier persona interesada en el tema. Cualquier comentario o sugerencia puede ser formulada en la sección de "*Issues*".
+> **NOTA**: Las imágenes han tenido que ser omitidas por reclamaciones de copyright pero se ha dejado el proyecto online como referencia para posteriores consultas del autor o de cualquier programador interesado en los conceptos técnicos que se utilizan. Cualquier comentario o sugerencia puede ser formulado en la sección de "*Issues*".
 
 
 
@@ -103,7 +103,7 @@ imágenes de satélite, y estadísticas de la base de datos.
 
     NOTE: Modern versions of Angular use a component-based architecture instead of MVC Pattern.
 
-- Referencias:
+- References:
   - <a href="https://toddmotto.com/rethinking-angular-js-controllers/">Rethinking AngularJS Controllers</a>
 
   - <a href="https://medium.com/opinionated-angularjs/angular-model-objects-with-javascript-classes-2e6a067c73bc">AngularJS Model Objects with JavaScript Classes</a>

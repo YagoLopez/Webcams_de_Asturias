@@ -28,7 +28,7 @@ app.config(function($stateProvider, $urlRouterProvider, $compileProvider, $ionic
       {
         loadRemoteDataResolver: function (Cams, Cam, Loader) {
 
-          var loaderContent = '<img src="img/icons/wca-logo.svg" class="splash-screen-icon"/>Webcams de Asturias';
+          var loaderContent = '<img src="img/icons/wca-logo.svg" class="splash-screen-icon"/>Webcams del Principado';
 
           Loader.showWithBackdrop(loaderContent);
 
