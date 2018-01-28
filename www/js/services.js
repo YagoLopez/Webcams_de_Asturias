@@ -179,7 +179,6 @@ wcaModule.service('Mapa', function(Cams){
   }
 
   this.creaStreetView2 = function(domElement, locationLatLng, heading){
-    debugger
     return new google.maps.StreetViewPanorama( domElement, {
       pov: {heading: heading || 0, pitch: 0},
       position: locationLatLng,
