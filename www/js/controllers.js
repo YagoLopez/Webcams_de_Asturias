@@ -646,7 +646,24 @@ wcaModule.controller('ImgDetalleCtrl', function ($scope, $location, Cam) {
   $scope.cam = Cam;
 })
 // ====================================================================================================================
-wcaModule.controller('HeatmapCtrl', function ($scope, Loader) {
+wcaModule.controller('HeatmapCtrl', function ($scope, Loader, $sce, STRINGS) {
+
+  var urlHeatmap;
+
+  window.onLoadCallback = function(){
+    gapi.auth2.init({
+      client_id: STRINGS.FUSION_TABLES_API_KEY + '.apps.googleusercontent.com'
+    });
+  };
+
+  urlHeatmap = 'https://www.google.com/fusiontables/embedviz?q=select+' +
+    'col16%2C+col19+from+1gX5maFbqFyRziZiUYlpOBYhcC1v9lGkKqCXvZREF+limit+1000&viz=HEATMAP&h=true&' +
+    'lat=43.38847504207232&lng=-5.828221488395675&t=3&z=8&l=col16&y=6&tmplt=8&hmd=true&' +
+    'hmg=%2366ff0000%2C%2393ff00ff%2C%23c1ff00ff%2C%23eeff00ff%2C%23f4e300ff%2C%23f4e300ff%2C%' +
+    '23f9c600ff%2C%23ffaa00ff%2C%23ff7100ff%2C%23ff3900ff%2C%23ff0000ff&' +
+    'hmo=0.69&hmr=28&hmw=0&hml=TWO_COL_LAT_LNG';
+
+  $scope.urlHeatmap = $sce.trustAsResourceUrl(urlHeatmap);
   $scope.removeDomElementById = Loader.removeDomElementById;
 
 })
