@@ -150,7 +150,7 @@ wcaModule.controller('DetalleMapaCtrl', function($scope, Mapa, Cams, Cam, $state
     });
     mapaLayer = Mapa.creaFusionTableLayer();
     mapaLayer.setMap(mapa);
-    posicion = {lat: $scope.cam.lat, lng: $scope.cam.lng};
+    posicion = {lat: parseFloat($scope.cam.lat), lng: parseFloat($scope.cam.lng)};
     Mapa.creaMarker(posicion, mapa);
     mapa.setCenter(posicion);
     mapa.setZoom(18);
