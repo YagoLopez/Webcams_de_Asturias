@@ -6,9 +6,6 @@
   background: transparent url('../img/loading-img5-small.png') no-repeat center center  }
 .splash-screen-icon {vertical-align: middle; margin-right: 10px}
 .centered {text-align: center}
-/*.svg-loader {position: absolute; top: 230px; left: 48.5%}*/
-/*.loader {position: absolute; text-align: center; width: 100%; top: 30%; z-index: -1}*/
-/*.loader2 {position: relative; top: 25%; left: 45%; z-index: -1}*/
 .loader3 {position: absolute; width: 100%; top: 225px; z-index: -1}
 .pad-10 {padding: 10px}
 .pad-5 {padding: 5px}
