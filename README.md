@@ -6,7 +6,7 @@
 
 Este es un proyecto experimental que pone en práctica diversos patrones, arquitecturas y tecnologías en una aplicación desarrollada en AngularJS.
 
-> **NOTA**: Las imágenes han tenido que ser omitidas por reclamaciones de copyright pero se ha dejado el proyecto online como referencia para posteriores consultas del autor o de cualquier programador interesado en los conceptos técnicos que se utilizan. Cualquier comentario o sugerencia puede ser formulado en la sección de "*Issues*".
+> **NOTA**: Las imágenes han sido omitidas por reclamaciones de copyright pero se ha dejado el proyecto online como referencia para posteriores consultas del autor o de cualquier programador interesado en los conceptos técnicos que se utilizan. Cualquier comentario o sugerencia puede ser formulado en la sección de "*Issues*".
 
 
 

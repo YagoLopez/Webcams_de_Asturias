@@ -1,0 +1,37 @@
+<!--TODO: poner búsqueda en google places de sitios de interes cercanos a la cámara-->
+<ion-view view-title="Mapa">
+  <style>
+    #mapa {width: 100%; height: 70%}
+    @media (min-width: 720px) {
+      #mapa {height: 70%; max-width: 75%; margin-left: auto; margin-right: auto; margin-top: 30px}
+    }
+  </style>
+
+  <ion-nav-bar class="bar-positive">
+    <ion-nav-back-button class="button-icon ion-android-arrow-back"></ion-nav-back-button>
+  </ion-nav-bar>
+
+  <ion-content>
+
+    <!--<div id="loader" class="spinner-circle-container">-->
+      <!--<div class="spinner-circle"></div>-->
+    <!--</div>-->
+    <div id="loader" class="spinner-circle-container">
+      <div class="spinner-circle"></div>
+    </div>
+
+    <!--<div id="mapa" data-tap-disabled="true"></div>-->
+
+    <div class="card">
+      <div class="item item-text-wrap">{{ ::cam.lugar }}</div>
+      <div class="item item-text-wrap">Concejo: {{ ::cam.concejo }}</div>
+    </div>
+    <div class="txt-info">
+      <div><i class="ion-information-circled"></i> Doble toque o pinza, para aumentar</div>
+      <div>Arrastrar, para desplazarse</div>
+      <br/>
+    </div>
+  </ion-content>
+</ion-view>
+
+
