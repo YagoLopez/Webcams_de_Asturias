@@ -650,11 +650,11 @@ wcaModule.controller('HeatmapCtrl', function ($scope, Loader, $sce, STRINGS) {
 
   var urlHeatmap;
 
-  window.onLoadCallback = function(){
-    gapi.auth2.init({
-      client_id: STRINGS.FUSION_TABLES_API_KEY + '.apps.googleusercontent.com'
-    });
-  };
+  // window.onLoadCallback = function(){
+  //   gapi.auth2.init({
+  //     client_id: STRINGS.FUSION_TABLES_API_KEY + '.apps.googleusercontent.com'
+  //   });
+  // };
 
   urlHeatmap = 'https://www.google.com/fusiontables/embedviz?q=select+' +
     'col16%2C+col19+from+1gX5maFbqFyRziZiUYlpOBYhcC1v9lGkKqCXvZREF+limit+1000&viz=HEATMAP&h=true&' +

@@ -4,7 +4,7 @@
     .item-thumbnail-left {min-height: 0; padding-left: 90px; padding-top: 18px}
     .error {text-align: center; color: red; padding: 40px}
     #btn-mosaico{padding:0; border:0}
-    .warning-no-imgs {text-align: center; padding: 10px; color: cornflowerblue}
+    .warning-no-imgs {text-align: center; padding: 15px; color: cornflowerblue}
   </style>
 
   <ion-nav-buttons side="left">
@@ -18,12 +18,12 @@
   </ion-nav-buttons>
 
   <ion-content class="fade-in">
+    <div class="warning-no-imgs">
+      <div>Imágenes omitidas por reclamación de copyright</div>
+      <div>Images omited by copyright claims</div>
+    </div>
     <div class="responsive-page">
       <!--<div ng-if="error" class="error">{{ ::error }}</div>-->
-      <div class="warning-no-imgs">
-        <p>Imágenes omitidas por reclamación de copyright</p>
-        <p>Images omited by copyright claims</p>
-      </div>
       <a class="item item-thumbnail-left item-icon-right"
          ng-repeat="cam in cams track by cam.id" href="#/app/detalle/{{cam.id}}">
         <!--<img ng-src="{{ cam.imagen }}" fallback-src="img/imgFail.png" class="img-cam"/>-->
