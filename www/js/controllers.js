@@ -1,5 +1,5 @@
 //todo: imagen de fondo de imagenes de cam en formato svg
-//todo: usar versio simplificada de proxy google (2) en gif-player
+//todo: usar version simplificada de proxy google (2) en gif-player
 //todo: convertir la actual arquitectura a componentes
 //todo: usar una base de datos json como lokijs, etc.
 //todo: usar clausula finally() en peticiones $http para simplificar tratamiento errores
@@ -649,12 +649,6 @@ wcaModule.controller('ImgDetalleCtrl', function ($scope, $location, Cam) {
 wcaModule.controller('HeatmapCtrl', function ($scope, Loader, $sce, STRINGS) {
 
   var urlHeatmap;
-
-  // window.onLoadCallback = function(){
-  //   gapi.auth2.init({
-  //     client_id: STRINGS.FUSION_TABLES_API_KEY + '.apps.googleusercontent.com'
-  //   });
-  // };
 
   urlHeatmap = 'https://www.google.com/fusiontables/embedviz?q=select+' +
     'col16%2C+col19+from+1gX5maFbqFyRziZiUYlpOBYhcC1v9lGkKqCXvZREF+limit+1000&viz=HEATMAP&h=true&' +
