@@ -14,9 +14,9 @@
 //todo: new feature: geolocalizacion y busqueda webcams cercanas
 //todo: probar ionic native transitions
 //todo: new feature: flickr api images
-// todo: mejorar street view, añadir columna 'heading' en bbdd y mejorar precision localizaciones
-// todo: revisar los estilos inline que quedan
-// todo: probar a sustituir jquery panzoom por greensock pan and zoom
+//todo: mejorar street view, añadir columna 'heading' en bbdd y mejorar precision localizaciones
+//todo: revisar los estilos inline que quedan
+//todo: probar a sustituir jquery panzoom por greensock pan and zoom
 
 var wcaModule = angular.module('wca.controllers',[]);
 // ====================================================================================================================
@@ -41,7 +41,7 @@ wcaModule.controller('ListadoCtrl', function ($scope, $stateParams, Cams, Loader
     }
     Loader.hide();
   })
-})
+});
 // ====================================================================================================================
 wcaModule.controller('DetalleCtrl', function($scope, $stateParams, $ionicModal, Clima,
   Popup, Wikipedia, $ionicPopover, Cams, Cam, Loader, $location, STRINGS){
@@ -131,7 +131,7 @@ wcaModule.controller('DetalleCtrl', function($scope, $stateParams, $ionicModal, 
     clearTimeout($scope.timerGetClimaData);
   })
 
-})
+});
 // ====================================================================================================================
 wcaModule.controller('DetalleMapaCtrl', function($scope, Mapa, Cams, Cam, $stateParams, $ionicSideMenuDelegate, Loader){
 
@@ -160,7 +160,7 @@ wcaModule.controller('DetalleMapaCtrl', function($scope, Mapa, Cams, Cam, $state
   $scope.$on('$ionicView.leave', function(){
     $ionicSideMenuDelegate.canDragContent(true);
   })
-})
+});
 // ====================================================================================================================
 wcaModule.controller('StreetViewCtrl', function($scope, Mapa, Popup, $ionicSideMenuDelegate, Cams, Cam, $stateParams){
 
@@ -193,7 +193,7 @@ wcaModule.controller('StreetViewCtrl', function($scope, Mapa, Popup, $ionicSideM
   $scope.$on('$ionicView.leave', function(){
     $ionicSideMenuDelegate.canDragContent(true);
   });
-})
+});
 // ====================================================================================================================
 wcaModule.controller('MapaGlobalCtrl', function($scope, Mapa, Cams, Popup, Categorias, Loader){
 
@@ -243,7 +243,7 @@ wcaModule.controller('MapaGlobalCtrl', function($scope, Mapa, Cams, Popup, Categ
       $scope.mostrarTodas(); // por defecto
     }
   })
-})
+});
 // ====================================================================================================================
 wcaModule.controller('MeteoblueCtrl', function ($scope, $location, Cam, Loader) {
 
@@ -266,7 +266,7 @@ wcaModule.controller('MeteoblueCtrl', function ($scope, $location, Cam, Loader) 
   $scope.$on('$ionicView.beforeLeave', function (event, data) {
     clearTimeout(timerMeteoblue);
   })
-})
+});
 // ====================================================================================================================
 wcaModule.controller('GifPlayerCtrl', function($scope, $interval, $stateParams, ItemsMeteo, ItemMeteo, Loader,
   Popup, $location, STRINGS){
@@ -431,28 +431,26 @@ wcaModule.controller('GifPlayerCtrl', function($scope, $interval, $stateParams, 
   });
   // Fin evento destroy view ------------------------------------------------------------------------------------------
 
-})
+});
 // ====================================================================================================================
-wcaModule.controller('MeteoCtrl', function ($scope, Popup, ItemsMeteo, Loader){
+wcaModule.controller('MeteoCtrl', function ($scope, Popup, ItemsMeteo){
 
-  Loader.showWithBackdrop('Cargando...');
   $scope.loading = true;
+
   $scope.getItemsMeteoByCategoria = function(idCategoria){
     return ItemsMeteo.getItemsByCategoriaId(idCategoria);
-  }
+  };
 
   ItemsMeteo.loadData()
     .success(function (result) {
       $scope.loading = false;
-      Loader.hide();
     })
     .error(function (status) {
       $scope.loading = false;
-      Loader.hide();
       console.error(status);
     })
 
-})
+});
 // ====================================================================================================================
 wcaModule.controller('MeteoDetalleCtrl', function($scope, $stateParams, ItemsMeteo, $location){
 
@@ -464,7 +462,7 @@ wcaModule.controller('MeteoDetalleCtrl', function($scope, $stateParams, ItemsMet
   // $scope.$on('$ionicView.afterEnter', function(){
   //   document.getElementById('scroll-img-meteo').style.background = 'none';
   // });
-})
+});
 // ====================================================================================================================
 wcaModule.controller('PorCategoriaCtrl', function($scope, $window, $sce, Loader){
 
@@ -522,7 +520,7 @@ wcaModule.controller('PorCategoriaCtrl', function($scope, $window, $sce, Loader)
   $scope.urlGraficoSectores = $sce.trustAsResourceUrl(urlGraficoSectores);
   $scope.urlGraficoBarras = $sce.trustAsResourceUrl(urlGraficoBarras);
 
-  })
+  });
 // ====================================================================================================================
 wcaModule.controller('PorConcejoCtrl', function($scope, $window, $sce, Loader){
 
@@ -577,7 +575,7 @@ wcaModule.controller('PorConcejoCtrl', function($scope, $window, $sce, Loader){
   $scope.urlConcejosMasCams = $sce.trustAsResourceUrl(urlConcejosMasCams);
   $scope.urlCamsConcejo = $sce.trustAsResourceUrl(urlCamsConcejo);
 
-})
+});
 // ====================================================================================================================
 wcaModule.controller('WindyCtrl', function($scope, Loader, $sce, $stateParams){
 
@@ -601,7 +599,7 @@ wcaModule.controller('WindyCtrl', function($scope, Loader, $sce, $stateParams){
   $scope.cargaIFrameTerminada = function(){
     Loader.hide();
   }
-})
+});
 // ====================================================================================================================
 wcaModule.controller('BuscarCamsCtrl', function($scope, $filter, Cams, $location){
 
@@ -636,7 +634,7 @@ wcaModule.controller('BuscarCamsCtrl', function($scope, $filter, Cams, $location
   $scope.toggleShowImages = function () {
     $scope.showImages = !$scope.showImages;
   }
-})
+});
 // ====================================================================================================================
 wcaModule.controller('ImgDetalleCtrl', function ($scope, $location, Cam) {
   if(!Cam.isDefined()){
@@ -644,7 +642,7 @@ wcaModule.controller('ImgDetalleCtrl', function ($scope, $location, Cam) {
     return;
   }
   $scope.cam = Cam;
-})
+});
 // ====================================================================================================================
 wcaModule.controller('HeatmapCtrl', function ($scope, Loader, $sce, STRINGS) {
 
@@ -660,4 +658,4 @@ wcaModule.controller('HeatmapCtrl', function ($scope, Loader, $sce, STRINGS) {
   $scope.urlHeatmap = $sce.trustAsResourceUrl(urlHeatmap);
   $scope.removeDomElementById = Loader.removeDomElementById;
 
-})
+});

@@ -14,6 +14,10 @@
   </style>
   <ion-content>
 
+    <div id="meteo-loader" class="spinner-circle-container" ng-hide="!loading">
+      <div class="spinner-circle"></div>
+    </div>
+
     <div id="meteo_list_container" ng-hide="loading">
       <ion-list id="lista-meteo">
 
