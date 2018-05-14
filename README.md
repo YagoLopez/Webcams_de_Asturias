@@ -2,11 +2,11 @@
 
 # Webcams del Principado
 
-**Aplicación Web Progresiva (PWA) que muestra Imágenes de cámaras web situadas en el Principado de Asturias**
+**Aplicación Web Progresiva ([PWA](https://developers.google.com/web/progressive-web-apps/)) que muestra Imágenes de cámaras web situadas en el Principado de Asturias**
 
 Este es un proyecto experimental que pone en práctica diversos patrones, arquitecturas y tecnologías en una aplicación desarrollada en AngularJS.
 
-> **NOTA**: Las imágenes han sido omitidas por reclamaciones de copyright pero se ha dejado el proyecto online como referencia para posteriores consultas del autor o de cualquier programador interesado en los conceptos técnicos que se utilizan. Cualquier comentario o sugerencia puede ser formulado en la sección de "*Issues*".
+> **NOTA**: Las imágenes han sido omitidas por reclamaciones de copyright pero se ha dejado el proyecto online como referencia para posteriores consultas del autor o de cualquier persona interesada en los conceptos técnicos que se utilizan. Cualquier comentario o sugerencia puede ser formulado en la sección "*Issues*".
 
 
 
@@ -15,12 +15,12 @@ Este es un proyecto experimental que pone en práctica diversos patrones, arquit
 - Arquitectura:
   - Business Layer diseñada en base a **Programación Orientada a Objetos**
   - Uso del **Patrón MVC** para separación de responsabilidades
-  - Uso de los patrones **Data Mapper** y **Repository** para las consultas a la base de datos
+  - Uso de los patrones **Data Mapper** / **Repository** para gestionar las consultas a la base de datos
   - Uso de **Route Resolvers**
   - Uso de una **base de datos NoSQL** ligera para mantener el estado en memoria
-    - En este caso y debido a su simplicidad, el estado de la aplicación consiste en una colección de objetos JSON que se cargan desde el backend y se mantiene en memoria. 
+    - En este caso y debido a su simplicidad, el estado de la aplicación consiste en una colección de objetos JSON que se cargan desde el backend y se mantienen en memoria. 
     - Las consultas han sido diseñadas ad hoc sin ninguna otra capa de abstracción adicional.
-    - La persistencia en servidor se lleva a cabo mediante una base de datos de Google Fusion Tables.
+    - La persistencia se lleva a cabo mediante una base de datos de Google Fusion Tables.
 
   (NOTA: las nuevas versiones de Angular utilizan una arquitectura basada en componentes en lugar del Patrón MVC). 
 
@@ -32,9 +32,8 @@ Este es un proyecto experimental que pone en práctica diversos patrones, arquit
 
 - Posibiliad de instalación local (tanto móvil como desktop) gracias al uso de un fichero `manifest.json` 
 
-- Capacidad de funcionamiento off-line por medio de un **Service Worker**
+- Capacidad de funcionamiento off-line por medio de un [service worker](https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API)
 
-  ​
 
 ## Demo
 
@@ -42,7 +41,10 @@ Este es un proyecto experimental que pone en práctica diversos patrones, arquit
 
 - <a href="http://yagolopez.github.io/Webcams_de_Asturias/www/" target="_blank">Pantalla grande</a>
 
-  ​
+- Use QR code para cargar en smartphone:
+
+<center>![QR code](qrcode.jpg)</center>
+
 
 ## Funcionalidad
 
@@ -112,4 +114,4 @@ imágenes de satélite, y estadísticas de la base de datos.
 
     ​
 
-<p align="center"><a href="#">Back to top</a></p>
+<center><a href="#">Back to top :arrow_up:</a></center>
