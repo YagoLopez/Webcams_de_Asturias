@@ -41,10 +41,9 @@ Este es un proyecto experimental que pone en práctica diversos patrones, arquit
 
 - <a href="http://yagolopez.github.io/Webcams_de_Asturias/www/" target="_blank">Pantalla grande</a>
 
-- Use QR code para cargar en smartphone:
+- Usar QR code para ver en smartphone:
 
-<div align="center">![QR code](qrcode.jpg)</div>
-
+<div align="center"><img src="qrcode.jpg"/></div>
 
 ## Funcionalidad
 
