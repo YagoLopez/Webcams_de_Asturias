@@ -113,4 +113,4 @@ imágenes de satélite, y estadísticas de la base de datos.
 
     ​
 
-<center><a href="#">Back to top :arrow_up:</a></center>
+<div align="center"><a href="#">Back to top :arrow_up:</a></div>
