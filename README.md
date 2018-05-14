@@ -43,7 +43,7 @@ Este es un proyecto experimental que pone en práctica diversos patrones, arquit
 
 - Use QR code para cargar en smartphone:
 
-<div align="center">![](qrcode.jpg)</div>
+<div align="center"><img src="qrcode.jpg" /></div>
 
 
 ## Funcionalidad
