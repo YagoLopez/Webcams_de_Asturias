@@ -72,7 +72,7 @@ wcaModule.controller('DetalleCtrl', function($scope, $stateParams, $ionicModal, 
           $scope.direccionViento = climadata.wind.deg;
           //volumen precipitaciones ultimas 3 horas
           //$scope.precipitacion = climadata.rain['3h'];
-          //url icono: http://openweathermap.org/img/w/10n.png
+          //example url icono: http://openweathermap.org/img/w/10n.png
           $scope.iconoUrl = 'http://openweathermap.org/img/w/'+climadata.weather[0].icon+'.png' ;
         } else {
           $scope.infoMeteo = STRINGS.ERROR;
@@ -247,7 +247,6 @@ wcaModule.controller('MapaGlobalCtrl', function($scope, Mapa, Cams, Popup, Categ
 // ====================================================================================================================
 wcaModule.controller('MeteoblueCtrl', function ($scope, $location, Cam, Loader) {
 
-  var timerMeteoblue;
   if(!Cam.isDefined()) {
     $location.path( "#/" );
     return;
@@ -255,17 +254,11 @@ wcaModule.controller('MeteoblueCtrl', function ($scope, $location, Cam, Loader) 
 
   $scope.cam = Cam;
 
-  timerMeteoblue = setTimeout(function () {
-    $scope.urlMeteoblue = 'https://www.meteoblue.com/meteogram-web?' +
-      ('lon=' + Cam.lng) + ('&lat=' + Cam.lat) + ('&lang=es&look=CELSIUS,KILOMETER_PER_HOUR');
-  }, 500);
+  $scope.urlMeteoblue = 'https://www.meteoblue.com/meteogram-web?' +
+    ('lon=' + Cam.lng) + ('&lat=' + Cam.lat) + ('&lang=es&look=CELSIUS,KILOMETER_PER_HOUR');
 
   $scope.removeDomElementById = Loader.removeDomElementById;
 
-  // On view exit, clear timers to prevent memory leaks
-  $scope.$on('$ionicView.beforeLeave', function (event, data) {
-    clearTimeout(timerMeteoblue);
-  })
 });
 // ====================================================================================================================
 wcaModule.controller('GifPlayerCtrl', function($scope, $interval, $stateParams, ItemsMeteo, ItemMeteo, Loader,
