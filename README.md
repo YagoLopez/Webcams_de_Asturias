@@ -1,6 +1,6 @@
 ![Status](https://img.shields.io/badge/status-ok-green.svg) ![Maintenance](https://img.shields.io/maintenance/yes/2020.svg?maxAge=2592000) ![License](https://img.shields.io/dub/l/vibe-d.svg?maxAge=2592000)
 
-# Webcams del Principado
+# Webcams de Asturias
 
 **Aplicación Web Progresiva ([PWA](https://developers.google.com/web/progressive-web-apps/)) que muestra Imágenes de cámaras web situadas en el Principado de Asturias**
 
@@ -15,11 +15,11 @@ Este es un proyecto experimental que pone en práctica diversos patrones, arquit
 - Arquitectura:
   - Business Layer diseñada en base a **Programación Orientada a Objetos**
   - Uso del **Patrón MVC** para separación de responsabilidades
-  - Uso de los patrones **Data Mapper** / **Repository** para gestionar las consultas a la base de datos
+  - Uso del patrón**Repository** para gestionar las consultas a la base de datos
   - Uso de **Route Resolvers**
   - Uso de una **base de datos NoSQL** ligera para mantener el estado en memoria
-    - En este caso y debido a su simplicidad, el estado de la aplicación consiste en una colección de objetos JSON que se cargan desde el backend y se mantienen en memoria. 
-    - Las consultas han sido diseñadas ad hoc sin ninguna otra capa de abstracción adicional.
+    - El estado de la aplicación consiste en una colección de objetos JSON que se cargan desde el backend y se mantienen en memoria. 
+    - Las consultas han sido diseñadas *ad hoc* sin ninguna otra capa de abstracción adicional.
     - La persistencia se lleva a cabo mediante una base de datos de Google Fusion Tables.
 
   (NOTA: las nuevas versiones de Angular utilizan una arquitectura basada en componentes en lugar del Patrón MVC). 
@@ -99,8 +99,10 @@ imágenes de satélite, y estadísticas de la base de datos.
     - Business Layer design based on **Object Oriented Programming**
     - Use of **MVC Pattern** for separation of concerns
     - Use of **Route Resolvers**
-    - Use of a designed ad hoc and lightweight **JSON in memory database**.
-    - Use of **Service Worker** to enable off-line capabilities (**PWA**)
+    - Use of a ** in-memory JSON database** to keep app state
+    - Use of *ad hoc* designed queries
+    - User of Google Fusion Tables as database back-end for **persistence**
+    - Use of a **Service Worker** to enable off-line capabilities (**PWA**)
 
     NOTE: Modern versions of Angular use a component-based architecture instead of MVC Pattern.
 
