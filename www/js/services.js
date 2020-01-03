@@ -26,6 +26,7 @@ wcaModule.service('Cams', function ($http, $filter, Cam, STRINGS){
 
   this.getRemoteData = function( sqlQueryString ) {
     return $http.jsonp( encodeURI(getUrlFusionTableQuery(sqlQueryString)), {cache: true} );
+    // return $http.get( './data.json', {cache: true} );
   };
 
   this.loadRemoteData = function (pathToFile) {

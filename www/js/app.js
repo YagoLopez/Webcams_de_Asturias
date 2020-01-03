@@ -32,7 +32,8 @@ app.config(function($stateProvider, $urlRouterProvider, $compileProvider, $ionic
 
           Loader.showWithBackdrop(loaderContent);
 
-          return Cams.loadRemoteData()
+          // debugger
+          return Cams.loadRemoteData('data.json')
             .then(function (response) {
               response.data.rows.map(function(camData){
                 Cams.add( new Cam(camData) );
