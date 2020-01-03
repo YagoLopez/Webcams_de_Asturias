@@ -16,6 +16,16 @@ if( 'undefined' === typeof window){
 }
 
 /** --------------------------------------------------------------------------------------------------------------------
+ * Service worker un-registration
+ */
+navigator.serviceWorker.getRegistrations().then(
+  function(registrations) {
+    for(var registration in registrations) {
+        registration.unregister();
+  }
+});
+
+/** --------------------------------------------------------------------------------------------------------------------
  * Service worker registration
  */
 if ('serviceWorker' in navigator) {
