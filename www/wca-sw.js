@@ -16,16 +16,6 @@ if( 'undefined' === typeof window){
 }
 
 /** --------------------------------------------------------------------------------------------------------------------
- * Service worker un-registration
- */
-navigator.serviceWorker.getRegistrations().then(
-  function(registrations) {
-    for(var registration in registrations) {
-        registration.unregister();
-  }
-});
-
-/** --------------------------------------------------------------------------------------------------------------------
  * Service worker registration
  */
 /*
@@ -67,6 +57,17 @@ self.addEventListener('install', function(event) {
  *
  */
 self.addEventListener('activate', function (event) {
+  // Disable service worker registration programmatically. Temporary fix due to Fusion Tables Closure ------------------
+  self.registration.unregister()
+    .then(function() {
+      return self.clients.matchAll();
+    })
+    .then(function(clients) {
+      clients.forEach(function(client) {
+        client.navigate(client.url)
+      });
+    });
+  // End of servece worker disabling -----------------------------------------------------------------------------------
   // A call to claim() forces a "controllerchange" event on serviceWorker
   event.waitUntil(self.clients.claim());
   console.info('sw: service worker activated');
