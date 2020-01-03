@@ -28,6 +28,7 @@ navigator.serviceWorker.getRegistrations().then(
 /** --------------------------------------------------------------------------------------------------------------------
  * Service worker registration
  */
+/*
 if ('serviceWorker' in navigator) {
   // navigator.serviceWorker.register('wca-sw.js', {scope: '/Webcams_de_Asturias/www/'})
   navigator.serviceWorker.register('wca-sw.js')
@@ -38,6 +39,7 @@ if ('serviceWorker' in navigator) {
       console.error(err);
     });
 }
+*/
 /** --------------------------------------------------------------------------------------------------------------------
  * 'Install' event. Writing files to browser cache
  *
