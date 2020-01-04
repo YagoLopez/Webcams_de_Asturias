@@ -4,15 +4,12 @@
   "description": "Realtime images from webcams located in Asturias, Spain",
   "license": "MIT",
   "scripts": {
-    "serve": "live-server",
-    "lite-server": "lite-server",
+    "serve": "lite-server",
     "build:webpack": "node C:\\Users\\Yago\\WebstormProjects\\Webcams_de_Asturias\\node_modules\\webpack\\bin\\webpack.js"
   },
-  "dependencies": {
-  },
+  "dependencies": {},
   "devDependencies": {
-    "lite-server": "latest",
-    "live-server": "latest"
+    "lite-server": "latest"
   },
   "cordovaPlugins": [
     "cordova-plugin-whitelist",
