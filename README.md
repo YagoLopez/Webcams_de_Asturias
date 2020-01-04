@@ -38,8 +38,10 @@ Este es un proyecto experimental que pone en práctica diversos patrones, arquit
 ## Demo
 
 - **Nota:** en caso de que la applicación no cargue correctamente debido a 
-  conflictos con la caché del service worker usar una ventana de
-  incógnito del navegador o borrar la caché
+  conflictos con la caché del service worker, intentar estas opciones:
+  - Intentar recargar la app varias veces
+  - Usar una ventana de incógnito del navegador
+  - Borrar los recursos cacheados por el service worker
 
 - <a href="http://mobt.me/XfKL" target="_blank">Simulador móvil</a>
 
@@ -99,8 +101,11 @@ imágenes de satélite, y estadísticas de la base de datos.
 
 - This is an experimental project to put in practice several patterns, best practices and technologies using the AngularJS framework. It has been created as reference for the author or anyone interested in this topic. Feel free to send any comment or sugerence in the Issues section.
 
-- **Waring:** In case of problems loading the app, use an incongito
-  window or clear manually the browser cache
+- **Waring:** In case of problems loading the app caused by the service 
+  worker cache, try this options:
+  - Try to reload several times the page
+  - Use an incongito window
+  - Clear manually the browser cache
   
 - Architecture and features:
     - Business Layer design based on **Object Oriented Programming**
