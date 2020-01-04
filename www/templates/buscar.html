@@ -21,8 +21,8 @@
       <button ng-if="screenWidth < 760" menu-toggle="left" class="button button-icon button-clear ion-navicon"></button>
     </ion-nav-buttons>
     <ion-nav-buttons side="right">
-      <button ng-click="toggleShowImages()" class="button button-icon button-clear ion-images"
-        title="Imágenes sí/no"></button>
+      <button ng-if="camsEncontradas.length > 0" ng-click="toggleShowImages()"
+        class="button button-icon button-clear ion-images" title="Imágenes sí/no"></button>
       <div class="cam-counter-right">{{ camsEncontradas.length }}</div>
     </ion-nav-buttons>
   </ion-nav-bar>
