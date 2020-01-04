@@ -55,17 +55,6 @@ self.addEventListener('install', function(event) {
  *
  */
 self.addEventListener('activate', function (event) {
-  // Disable service worker registration programmatically. Temporary fix due to Fusion Tables Closure ------------------
-  // self.registration.unregister()
-  //   .then(function() {
-  //     return self.clients.matchAll();
-  //   })
-  //   .then(function(clients) {
-  //     clients.forEach(function(client) {
-  //       client.navigate(client.url)
-  //     });
-  //   });
-  // End of servece worker disabling -----------------------------------------------------------------------------------
   // A call to claim() forces a "controllerchange" event on serviceWorker
   event.waitUntil(self.clients.claim());
   console.info('sw: service worker activated');
@@ -89,18 +78,7 @@ var isInWhiteList = function (url) {
  * @returns {boolean}
  */
 var isImageRequest = function (fetchEvent) {
-  var request = fetchEvent.request;
-  var url = request.url;
-  var headers = request.headers;
-  var result = false;
-  Array.from(headers.entries()).forEach(function (entry) {
-    if (entry[1] === 'image/webp,image/*,*/*;q=0.8'){
-      // console.info('url image request: ' + url);
-      // console.log(entry[0]+ ': ' + entry[1]);
-      result = true;
-    }
-  });
-  return result;
+  return fetchEvent.request.destination === 'image';
 }
 /** --------------------------------------------------------------------------------------------------------------------
  * Finds out if is html request
@@ -114,8 +92,6 @@ var isHtmlRequest = function (fetchEvent) {
   var result = false;
   Array.from(headers.entries()).forEach(function (entry) {
     if (entry[1].indexOf('text/html') > -1){
-      // console.info('html url request: ' + url);
-      // console.log(entry[0]+ ': ' + entry[1]);
       result = true;
     }
   });
@@ -162,10 +138,9 @@ self.addEventListener('fetch', function(fetchEvent) {
       })
       .catch(function (error) {
         var result;
-        // console.error('Request not found in cache', error);
         if (isHtmlRequest(fetchEvent)) {
           // if request is not cached nor network available and is html request, return fallback html page
-          // result = caches.match('./index.html');
+          result = caches.match('./index.html');
         }
         if (isImageRequest(fetchEvent)) {
           // if request is not cached nor network available and is image request, return fallback image
