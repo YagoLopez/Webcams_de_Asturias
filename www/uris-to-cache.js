@@ -16,7 +16,6 @@ var URIS_TO_CACHE = [
   'lib/jquery/jquery-3.2.1.min.js',
   'lib/jquery/jquery.panzoom.3.1.1.min.js',
   'lib/libgif-js/libgif.js',
-  'wca-sw.js',
 
   // TEMPLATES
   'templates/buscar.html',
