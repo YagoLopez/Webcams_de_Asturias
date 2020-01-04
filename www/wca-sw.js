@@ -165,7 +165,7 @@ self.addEventListener('fetch', function(fetchEvent) {
         // console.error('Request not found in cache', error);
         if (isHtmlRequest(fetchEvent)) {
           // if request is not cached nor network available and is html request, return fallback html page
-          result = caches.match('./index.html');
+          // result = caches.match('./index.html');
         }
         if (isImageRequest(fetchEvent)) {
           // if request is not cached nor network available and is image request, return fallback image
