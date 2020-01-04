@@ -37,6 +37,10 @@ Este es un proyecto experimental que pone en práctica diversos patrones, arquit
 
 ## Demo
 
+- **Nota:** en caso de que la applicación no cargue correctamente debido a 
+  conflictos con la caché del service worker usar una ventana de
+  incógnito del navegador o borrar la caché
+
 - <a href="http://mobt.me/XfKL" target="_blank">Simulador móvil</a>
 
 - <a href="http://yagolopez.github.io/Webcams_de_Asturias/www/" target="_blank">Pantalla grande</a>
@@ -95,6 +99,9 @@ imágenes de satélite, y estadísticas de la base de datos.
 
 - This is an experimental project to put in practice several patterns, best practices and technologies using the AngularJS framework. It has been created as reference for the author or anyone interested in this topic. Feel free to send any comment or sugerence in the Issues section.
 
+- **Waring:** In case of problems loading the app, use an incongito
+  window or clear manually the browser cache
+  
 - Architecture and features:
     - Business Layer design based on **Object Oriented Programming**
     - Use of **MVC Pattern** for separation of concerns
