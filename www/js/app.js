@@ -69,13 +69,13 @@ app.config(function($stateProvider, $urlRouterProvider, $compileProvider, $ionic
 //     views: {'menuContent': {templateUrl: 'templates/gif-player.html', controller: 'GifPlayerCtrl'}}
 //   });
 // -------------------------------------------------------------------------------------------------------------------
-//   $stateProvider.state('app.meteo', {url: '/meteo', cache: true,
-//     views: {'menuContent': {templateUrl: 'templates/meteo.html', controller: 'MeteoCtrl'}}
-//   });
+  $stateProvider.state('app.meteo', {url: '/meteo', cache: true,
+    views: {'menuContent': {templateUrl: 'templates/meteo.html', controller: 'MeteoCtrl'}}
+  });
 // -------------------------------------------------------------------------------------------------------------------
-//   $stateProvider.state('app.meteo-detalle', {url: '/meteo-detalle/:id_item_meteo', cache: false,
-//     views: {'menuContent': {templateUrl: 'templates/meteo-detalle.html', controller: 'MeteoDetalleCtrl'}}
-//   });
+  $stateProvider.state('app.meteo-detalle', {url: '/meteo-detalle/:id_item_meteo', cache: false,
+    views: {'menuContent': {templateUrl: 'templates/meteo-detalle.html', controller: 'MeteoDetalleCtrl'}}
+  });
 // -------------------------------------------------------------------------------------------------------------------
 //   $stateProvider.state('app.stats', {
 //     url: '/stats', cache: true, views: {'menuContent': {templateUrl: 'templates/stats.html'}}

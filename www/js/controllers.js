@@ -428,26 +428,34 @@ wcaModule.controller('GifPlayerCtrl', function($scope, $interval, $stateParams, 
 // ====================================================================================================================
 wcaModule.controller('MeteoCtrl', function ($scope, Popup, ItemsMeteo){
 
-  $scope.loading = true;
+  $scope.itemsMeteo = ItemsMeteo.getAll();
 
-  $scope.getItemsMeteoByCategoria = function(idCategoria){
-    return ItemsMeteo.getItemsByCategoriaId(idCategoria);
-  };
+  /*
+    $scope.loading = true;
 
-  ItemsMeteo.loadData()
-    .success(function (result) {
-      $scope.loading = false;
-    })
-    .error(function (status) {
-      $scope.loading = false;
-      console.error(status);
-    })
+    $scope.getItemsMeteoByCategoria = function(idCategoria){
+      return ItemsMeteo.getItemsByCategoriaId(idCategoria);
+    };
+
+    ItemsMeteo.loadData()
+      .success(function (result) {
+        $scope.loading = false;
+      })
+      .error(function (status) {
+        $scope.loading = false;
+        console.error(status);
+      })
+  */
 
 });
 // ====================================================================================================================
 wcaModule.controller('MeteoDetalleCtrl', function($scope, $stateParams, ItemsMeteo, $location){
 
-  $scope.itemMeteo = ItemsMeteo.getItemById($stateParams.id_item_meteo)[0];
+  // $scope.itemMeteo = ItemsMeteo.getItemById($stateParams.id_item_meteo)[0];
+
+  var itemMeteoIndex = parseInt($stateParams.id_item_meteo);
+  var itemsMeteo = ItemsMeteo.getAll();
+  $scope.itemMeteo = itemsMeteo[itemMeteoIndex];
 
   if(!$scope.itemMeteo){
     $location.path('#/');

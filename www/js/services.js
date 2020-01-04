@@ -283,7 +283,24 @@ wcaModule.service('Wikipedia', function($http){
 // ====================================================================================================================
 wcaModule.service('ItemsMeteo', function($http, $filter, ItemMeteo, STRINGS){
 
-  var listAll = [];
+  var listAll = [
+    {
+      id: 0,
+      urlNoProxy: 'https://www.meteociel.fr/cartes_obs/temp_sp.png',
+      nombre: 'Temperatura del aire en superficie',
+      fuente: 'Meteociel',
+      urlFuente: 'https://www.meteociel.fr',
+      tipoImagen: 'Estática'
+    },
+    {
+      id: 1,
+      urlNoProxy: 'https://www.meteociel.fr/cartes_obs/sstsp.gif',
+      nombre: 'Temperatura del mar en superficie',
+      urlFuente: 'https://www.meteociel.fr',
+      fuente: 'Meteociel',
+      tipoImagen: 'Estática'
+    }
+  ];
   var ITEMS_METEO_TABLE_ID = '1Y_vt2nTVFSYHpMuwe0u60bQzp4FlLtc33A8qd2_x';
 
   this.loadData = function() {
@@ -313,6 +330,10 @@ wcaModule.service('ItemsMeteo', function($http, $filter, ItemMeteo, STRINGS){
     return $filter('filter')(listAll, function (item) {
       return (idItem.toString() === item.id);
     }, true);
+  }
+
+  this.getAll = function () {
+    return listAll
   }
 });
 // ====================================================================================================================
