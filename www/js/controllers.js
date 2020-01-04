@@ -613,7 +613,7 @@ wcaModule.controller('BuscarCamsCtrl', function($scope, $filter, Cams, $location
       return;
     }
     $scope.camsEncontradas = Cams.buscarCams($scope.busqueda.lugar, Cams.getAll());
-  }
+  };
 
   $scope.resetBusqueda = function($event){
     if (inputBuscaCam.value) {
@@ -622,7 +622,7 @@ wcaModule.controller('BuscarCamsCtrl', function($scope, $filter, Cams, $location
       inputBuscaCam.value = '';
       inputBuscaCam.focus();
     }
-  }
+  };
 
   $scope.toggleShowImages = function () {
     $scope.showImages = !$scope.showImages;
