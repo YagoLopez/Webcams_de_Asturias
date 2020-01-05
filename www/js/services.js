@@ -281,7 +281,7 @@ wcaModule.service('Wikipedia', function($http){
   }
 });
 // ====================================================================================================================
-wcaModule.service('ItemsMeteo', function($http, $filter, ItemMeteo, STRINGS){
+wcaModule.service('ItemsMeteo', function($http, $filter){
 
   var listAll = [
     {
@@ -301,6 +301,7 @@ wcaModule.service('ItemsMeteo', function($http, $filter, ItemMeteo, STRINGS){
       tipoImagen: 'Estática'
     }
   ];
+/*
   var ITEMS_METEO_TABLE_ID = '1Y_vt2nTVFSYHpMuwe0u60bQzp4FlLtc33A8qd2_x';
 
   this.loadData = function() {
@@ -319,6 +320,7 @@ wcaModule.service('ItemsMeteo', function($http, $filter, ItemMeteo, STRINGS){
         console.log(error);
       });
   };
+*/
 
   this.getItemsByCategoriaId = function(idCategoria) {
     return $filter('filter')(listAll, function (item) {
@@ -330,11 +332,11 @@ wcaModule.service('ItemsMeteo', function($http, $filter, ItemMeteo, STRINGS){
     return $filter('filter')(listAll, function (item) {
       return (idItem.toString() === item.id);
     }, true);
-  }
+  };
 
   this.getAll = function () {
     return listAll
-  }
+  };
 });
 // ====================================================================================================================
 wcaModule.factory('ItemMeteo', function(){
